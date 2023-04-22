@@ -342,6 +342,7 @@ public:
 public:
 			void			remove_objects				();
 	virtual void			OnSessionTerminate			(LPCSTR reason);
+	virtual void OnChangeCurrentWeather(const char* sect) override;
 
 	DECLARE_SCRIPT_REGISTER_FUNCTION
 };

@@ -121,7 +121,7 @@ void Fvisual::Load		(const char* N, IReader *data, u32 dwFlags)
 			vCount				= data->r_u32				();
 			u32 vStride			= D3DXGetFVFVertexSize		(fvf);
 
-			BOOL	bSoft		= HW.Caps.geometry.bSoftware || (dwFlags&VLOAD_FORCESOFTWARE);
+			BOOL	bSoft       = HW.Caps.geometry.bSoftware;
 			u32		dwUsage		= D3DUSAGE_WRITEONLY | (bSoft?D3DUSAGE_SOFTWAREPROCESSING:0);
 			BYTE*	bytes		= 0;
 			VERIFY				(NULL==p_rm_Vertices);
@@ -133,7 +133,7 @@ void Fvisual::Load		(const char* N, IReader *data, u32 dwFlags)
 	}
 
 	// indices
-	if (!loaded_v && (dwFlags&VLOAD_NOINDICES)==0) {
+	if (!loaded_v) {
 		dwPrimitives = 0;
 		if (data->find_chunk(OGF_ICONTAINER)) {
 #ifndef _EDITOR
@@ -151,7 +151,7 @@ void Fvisual::Load		(const char* N, IReader *data, u32 dwFlags)
 			iCount				= data->r_u32();
 			dwPrimitives		= iCount/3;
 
-			BOOL	bSoft		= HW.Caps.geometry.bSoftware || (dwFlags&VLOAD_FORCESOFTWARE);
+			BOOL	bSoft		= HW.Caps.geometry.bSoftware;
 			u32		dwUsage		= /*D3DUSAGE_WRITEONLY |*/ (bSoft?D3DUSAGE_SOFTWAREPROCESSING:0);	// indices are read in model-wallmarks code
 			BYTE*	bytes		= 0;
 
@@ -163,7 +163,7 @@ void Fvisual::Load		(const char* N, IReader *data, u32 dwFlags)
 		}
 	}
 
-	if (dwFlags&VLOAD_NOVERTICES || dwFlags&VLOAD_NOINDICES)	return;
+	if (dwFlags&VLOAD_NOVERTICES)	return;
 	else	
 		rm_geom.create		(vFormat,p_rm_Vertices,p_rm_Indices);
 }

@@ -171,6 +171,9 @@ public:
 };
 
 extern		ENGINE_API		CRenderDevice		Device;
+
+#define RDEVICE Device
+
 extern		ENGINE_API		bool				g_bBenchmark;
 
 typedef fastdelegate::FastDelegate0<bool>		LOADING_EVENT;

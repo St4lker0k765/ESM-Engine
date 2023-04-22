@@ -4,6 +4,7 @@
 //#include "CameraManager.h"
 #include "xr_object_list.h"
 #include "xr_area.h"
+#include "xrGame/alife_space.h"
 
 // refs
 class ENGINE_API CCameraManager;
@@ -55,6 +56,7 @@ protected:
 	u32							Sounds_Random_dwNextTime;
 	BOOL						Sounds_Random_Enabled;
 	CCameraManager*				m_pCameras;
+	xr_string on_change_weather_callback;
 
 	// temporary
 	xr_vector<ISpatial*>		snd_ER;
@@ -107,6 +109,8 @@ public:
 
 	// Loader interface
 	void						LL_CheckTextures		();
+	virtual void SetEnvironmentGameTimeFactor(ALife::_TIME_ID GameTime, float const fTimeFactor) = 0;
+	virtual void OnChangeCurrentWeather(const char* sect) = 0;
 };
 
 //-----------------------------------------------------------------------------------------------------------

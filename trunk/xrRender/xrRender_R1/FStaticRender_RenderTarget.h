@@ -39,6 +39,9 @@ private:
 public:
 	IDirect3DSurface9*	pTempZB;
 
+	//	Igor: for async screenshots
+	IDirect3DSurface9* pFB;				//32bit		(r,g,b,a) is situated in the system memory
+
 private:
 	BOOL				Create				()	;
 	BOOL				NeedPostProcess		()	;
@@ -51,6 +54,8 @@ private:
 public:
 	CRenderTarget		();
 	~CRenderTarget		();
+
+	void				DoAsyncScreenshot();
 
 	void				Begin				();
 	void				End					();
@@ -69,4 +74,7 @@ public:
 
 	virtual u32			get_width			()				{ return curWidth;											}
 	virtual u32			get_height			()				{ return curHeight;											}
+
+	        u32			get_rtwidth         ()              { return rtWidth;                                           }
+	        u32			get_rtheight        ()              { return rtHeight;                                          }
 };

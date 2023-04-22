@@ -119,6 +119,8 @@ public:
 	float														o_sun			;
 	IDirect3DQuery9*											q_sync_point[2]	;
 	u32															q_sync_count	;
+
+	bool														m_bMakeAsyncSS;
 private:
 	// Loading / Unloading
 	void							LoadBuffers					(CStreamReader	*fs,	BOOL	_alternative);
@@ -267,6 +269,9 @@ public:
 	virtual void					Calculate					();
 	virtual void					Render						();
 	virtual void					Screenshot					(ScreenshotMode mode=SM_NORMAL, LPCSTR name = 0);
+	virtual void					Screenshot(ScreenshotMode mode, CMemoryWriter& memory_writer);
+	virtual void					ScreenshotAsyncBegin();
+	virtual void					ScreenshotAsyncEnd(CMemoryWriter& memory_writer);
 	virtual void					OnFrame					();
 
 	// Render mode
@@ -277,6 +282,8 @@ public:
 	// Constructor/destructor/loader
 	CRender							();
 	virtual ~CRender				();
+protected:
+	virtual	void					ScreenshotImpl(ScreenshotMode mode, LPCSTR name, CMemoryWriter* memory_writer);
 
 private:
 		FS_FileSet m_file_set;

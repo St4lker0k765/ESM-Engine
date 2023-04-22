@@ -75,6 +75,8 @@ void					CRender::create					()
 	o.forceskinw				= (strstr(Core.Params,"-skinw"))?		TRUE	:FALSE	;
 	c_ldynamic_props			= "L_dynamic_props";
 
+	m_bMakeAsyncSS              = false;
+
 //---------
 	Target						= xr_new<CRenderTarget>		();
 //---------
@@ -90,6 +92,7 @@ void					CRender::create					()
 
 void					CRender::destroy				()
 {
+	m_bMakeAsyncSS               = false;
 	::PortalTraverser.destroy	();
 //.	HWOCC.occq_destroy			();
 	PSLibrary.OnDestroy			();

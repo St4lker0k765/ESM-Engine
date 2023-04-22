@@ -78,6 +78,7 @@ public:
 	cl_light_C													r1_dlight_binder_color	;
 	cl_light_XFORM												r1_dlight_binder_xform	;
 	shared_str													c_ldynamic_props		;
+	bool														m_bMakeAsyncSS;
 private:
 	// Loading / Unloading
 	void								LoadBuffers				(CStreamReader	*fs);
@@ -189,6 +190,9 @@ public:
 	virtual void					Calculate				();
 	virtual void					Render					();
 	virtual void					Screenshot				(ScreenshotMode mode=SM_NORMAL, LPCSTR name = 0);
+	virtual void					Screenshot(ScreenshotMode mode, CMemoryWriter& memory_writer);
+	virtual void					ScreenshotAsyncBegin();
+	virtual void					ScreenshotAsyncEnd(CMemoryWriter& memory_writer);
 	virtual void					OnFrame					();
 	
 	// Render mode
@@ -199,6 +203,9 @@ public:
 	// Constructor/destructor/loader
 	CRender							();
 	virtual ~CRender				();
+protected:
+	virtual	void					ScreenshotImpl(ScreenshotMode mode, LPCSTR name, CMemoryWriter* memory_writer);
+
 private:
 	FS_FileSet						m_file_set;
 };

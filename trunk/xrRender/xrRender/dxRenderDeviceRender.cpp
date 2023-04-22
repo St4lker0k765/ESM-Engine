@@ -328,7 +328,7 @@ void dxRenderDeviceRender::Clear()
 #endif	//	USE_DX10
 }
 
-//void DoAsyncScreenshot(); //morrazzzz: We need to think about whether to leave it or not
+void DoAsyncScreenshot();
 
 void dxRenderDeviceRender::End()
 {
@@ -339,7 +339,7 @@ void dxRenderDeviceRender::End()
 	RCache.OnFrameEnd	();
 	Memory.dbg_check		();
 
-//	DoAsyncScreenshot();
+	DoAsyncScreenshot();
 
 #if defined(USE_DX10) || defined(USE_DX11)
 	HW.m_pSwapChain->Present( 0, 0 );

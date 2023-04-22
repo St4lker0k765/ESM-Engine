@@ -97,6 +97,9 @@ LPCSTR get_weather_prev()
 
 void set_weather	(LPCSTR weather_name, bool forced)
 {
+	if (!g_pGamePersistent->Environment().USED_COP_WEATHER)
+		forced = true;
+
 	g_pGamePersistent->Environment().SetWeather(weather_name, forced);
 }
 
@@ -112,6 +115,8 @@ bool is_wfx_playing	()
 {
 	return			(g_pGamePersistent->Environment().IsWFXPlaying());
 }
+
+float get_wfx_time() { return (g_pGamePersistent->Environment().wfx_time); }
 
 void set_time_factor(float time_factor)
 {
@@ -535,7 +540,8 @@ void CLevel::script_register(lua_State *L)
 {
 	class_<CEnvDescriptor>("CEnvDescriptor")
 		.def_readonly("fog_density",			&CEnvDescriptor::fog_density)
-		.def_readonly("far_plane",				&CEnvDescriptor::far_plane),
+		.def_readonly("far_plane",				&CEnvDescriptor::far_plane)
+		.def("load", (void(CEnvDescriptor::*) (float, LPCSTR, CEnvironment&)) & CEnvDescriptor::load_shoc),
 
 	class_<CEnvironment>("CEnvironment")
 		.def("current",							current_environment);
@@ -555,7 +561,7 @@ void CLevel::script_register(lua_State *L)
 		def("set_weather",						set_weather),
 		def("set_weather_next", set_weather_next),
 		def("set_weather_fx",					set_weather_fx),
-		def("is_wfx_playing",					is_wfx_playing),
+		def("is_wfx_playing",					is_wfx_playing), def("get_wfx_time", &get_wfx_time),
 
 		def("environment",						environment),
 		

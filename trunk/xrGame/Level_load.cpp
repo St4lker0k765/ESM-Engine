@@ -96,7 +96,10 @@ BOOL CLevel::Load_GameSpecific_After()
 		else
 			ai().script_engine().add_script_process(ScriptEngine::eScriptProcessorLevel,xr_new<CScriptProcess>("level",""));
 	}
-		
+
+	if (pSettings->section_exist("engine_callbacks") && pSettings->line_exist("engine_callbacks", "on_change_weather"))
+		on_change_weather_callback = pSettings->r_string("engine_callbacks", "on_change_weather");
+
 	BlockCheatLoad();
 	return TRUE;
 }

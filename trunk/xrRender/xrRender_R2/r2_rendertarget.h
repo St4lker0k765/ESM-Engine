@@ -51,6 +51,9 @@ public:
 	ref_rt						rt_LUM_64;			// 64bit, 64x64,	log-average in all components
 	ref_rt						rt_LUM_8;			// 64bit, 8x8,		log-average in all components
 
+	//	Igor: for async screenshots
+	IDirect3DSurface9* pFB;				//32bit		(r,g,b,a) is situated in the system memory
+
 	ref_rt						rt_LUM_pool	[4]	;	// 1xfp32,1x1,		exp-result -> scaler
 	ref_texture					t_LUM_src		;	// source
 	ref_texture					t_LUM_dest		;	// destination & usage for current frame
@@ -201,6 +204,8 @@ public:
 
 	virtual u32					get_width				()				{ return dwWidth;					}
 	virtual u32					get_height				()				{ return dwHeight;					}
+
+	void						DoAsyncScreenshot();
 
 #ifdef DEBUG
 	IC void						dbg_addline				(Fvector& P0, Fvector& P1, u32 c)					{

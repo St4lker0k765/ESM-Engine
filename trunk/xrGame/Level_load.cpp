@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "ai_space.h"
 #include "ParticlesObject.h"
 #include "script_process.h"
@@ -10,8 +10,9 @@
 #include "PhysicsCommon.h"
 #include "level_sounds.h"
 #include "GamePersistent.h"
+#include "../xr_3da/Rain.h"
 
-ENGINE_API	bool g_dedicated_server;
+ENGINE_API bool g_dedicated_server;
 
 BOOL CLevel::Load_GameSpecific_Before()
 {
@@ -86,6 +87,15 @@ BOOL CLevel::Load_GameSpecific_After()
 			Sounds_Random_Enabled	= FALSE;
 		}
 	}	
+
+	// Ñáðàñûâàåì ñîñòîÿíèÿ äîæäÿ ïðè çàãðóçêå óðîâíÿ âî èçáåæàíèå ïðîïàæè çâóêà. Real Wolf.
+	if (g_pGamePersistent->pEnvironment)
+	{
+		if (auto rain = g_pGamePersistent->pEnvironment->eff_Rain)
+		{
+			rain->InvalidateState();
+		}
+	}
 
 	if (!g_dedicated_server) {
 		// loading scripts

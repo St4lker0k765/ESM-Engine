@@ -1,3 +1,5 @@
+#ifndef	UIShader_included
+#define	UIShader_included
 #pragma once
 
 class IUIShader
@@ -9,3 +11,5 @@ public:
 	virtual bool inited() = 0;
 	virtual void destroy() = 0;
 };
+
+#endif	//	UIShader_included

@@ -1,19 +1,19 @@
+#ifndef	FactoryPtr_included
+#define FactoryPtr_included
 #pragma once
 
 #include "RenderFactory.h"
 #include "../../Include/xrAPI/xrAPI.h"
 
 #define FACTORY_PTR_INSTANCIATE(Class) \
-template<> \
-inline void FactoryPtr<I##Class>::CreateObject() \
+	inline void FactoryPtr<I##Class>::CreateObject(void) \
 { \
 	m_pObject = RenderFactory->Create##Class(); \
 } \
-template<> \
-inline void FactoryPtr<I##Class>::DestroyObject() \
+	inline void FactoryPtr<I##Class>::DestroyObject(void) \
 { \
 	RenderFactory->Destroy##Class(m_pObject); \
-	m_pObject = nullptr; \
+	m_pObject = NULL; \
 }
 	
 
@@ -53,9 +53,11 @@ private:
 };
 
 
+#ifndef _EDITOR
 	FACTORY_PTR_INSTANCIATE(UISequenceVideoItem)
 	FACTORY_PTR_INSTANCIATE(UIShader)
 	FACTORY_PTR_INSTANCIATE(StatGraphRender)
+	FACTORY_PTR_INSTANCIATE(ConsoleRender)
 	FACTORY_PTR_INSTANCIATE(RenderDeviceRender)
 #	ifdef DEBUG
 		FACTORY_PTR_INSTANCIATE(ObjectSpaceRender)
@@ -63,7 +65,9 @@ private:
 	FACTORY_PTR_INSTANCIATE(ApplicationRender)
 	FACTORY_PTR_INSTANCIATE(WallMarkArray)
 	FACTORY_PTR_INSTANCIATE(StatsRender);
+#endif // _EDITOR
 
+#ifndef _EDITOR
     FACTORY_PTR_INSTANCIATE(FlareRender)
     FACTORY_PTR_INSTANCIATE(ThunderboltRender)
     FACTORY_PTR_INSTANCIATE(ThunderboltDescRender)
@@ -72,7 +76,8 @@ private:
     FACTORY_PTR_INSTANCIATE(EnvironmentRender)
     FACTORY_PTR_INSTANCIATE(EnvDescriptorRender)
     FACTORY_PTR_INSTANCIATE(EnvDescriptorMixerRender)
-    FACTORY_PTR_INSTANCIATE(FontRender)
+#endif // _EDITOR
+	FACTORY_PTR_INSTANCIATE(FontRender)
 /*
 void FactoryPtr<IStatsRender>::CreateObject(void)
 {
@@ -85,3 +90,6 @@ void FactoryPtr<IStatsRender>::DestroyObject(void)
 	m_pObject = NULL;
 }
 */
+
+
+#endif	//	FactoryPtr_included

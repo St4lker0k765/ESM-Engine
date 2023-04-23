@@ -1,3 +1,5 @@
+#ifndef ApplicationRender_included
+#define ApplicationRender_included
 #pragma once
 
 class CApplication;
@@ -15,3 +17,5 @@ public:
 	//	?????
 	virtual void KillHW() = 0;
 };
+
+#endif	//	ApplicationRender_included

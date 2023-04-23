@@ -2,7 +2,7 @@
 #define FBasicVisualH
 #pragma once
 
-#include "../../xr_3da/vis_common.h"
+#include "../../xrEngine/vis_common.h"
 
 #include "../../Include/xrRender/RenderVisual.h"
 

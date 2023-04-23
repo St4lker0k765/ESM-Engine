@@ -15,8 +15,9 @@
 #include "lightProjector.h"
 #include "lightPPA.h"
 #include "../xrRender/light_DB.h"
+#include "../../xr_3da/fmesh.h"
 
-#include "../../xr_3da/Fmesh.h"
+class dxRender_Visual;
 
 // definition
 class CRender													:	public R_dsgraph_structure
@@ -29,10 +30,11 @@ public:
 	};
 	struct		_options	{
 		u32		vis_intersect		: 1;	// config
-
 		u32		distortion			: 1;	// run-time modified
+		u32		color_mapping		: 1;	// true if SM 1.4 and higher
 		u32		disasm				: 1;	// config
 		u32		forceskinw			: 1;	// config
+		u32		no_detail_textures	: 1;	// config
 	}			o;
 	struct		_stats		{
 		u32		o_queries,	o_culled;
@@ -79,6 +81,8 @@ public:
 	cl_light_XFORM												r1_dlight_binder_xform	;
 	shared_str													c_ldynamic_props		;
 	bool														m_bMakeAsyncSS;
+	bool														m_bFirstFrameAfterReset;	// Determines weather the frame is the first after resetting device.
+
 private:
 	// Loading / Unloading
 	void								LoadBuffers				(CStreamReader	*fs);
@@ -108,6 +112,9 @@ public:
 public:
 	// feature level
 	virtual	GenerationLevel			get_generation			()	{ return IRender_interface::GENERATION_R1; }
+	virtual DWORD					get_dx_level			()	{ return 0x00090000; }
+
+	virtual bool					is_sun_static			() {return true;}
 
 	// Loading / Unloading
 	virtual	void					create					();
@@ -119,14 +126,14 @@ public:
 	virtual void					level_Unload			();
 	
 	virtual IDirect3DBaseTexture9*	texture_load			(LPCSTR	fname, u32& msize);
-	virtual HRESULT					shader_compile(
+	virtual HRESULT					shader_compile			(
 		LPCSTR							name,
-		DWORD const* pSrcData,
+		DWORD const*                    pSrcData,
 		UINT                            SrcDataLen,
 		LPCSTR                          pFunctionName,
 		LPCSTR                          pTarget,
 		DWORD                           Flags,
-		void*& result
+		void*&							result
 	);
 
 	// Information
@@ -136,6 +143,7 @@ public:
 	virtual IRender_Sector*			getSector				(int id);
 	virtual IRenderVisual*			getVisual				(int id);
 	virtual IRender_Sector*			detectSector			(const Fvector& P);
+	int								translateSector			(IRender_Sector* pSector);
 	virtual IRender_Target*			getTarget				();
 	
 	// Main 
@@ -147,13 +155,13 @@ public:
 
 	// wallmarks
 	virtual void					add_StaticWallmark		(ref_shader& S, const Fvector& P, float s, CDB::TRI* T, Fvector* V);
-	virtual void                    add_StaticWallmark(IWallMarkArray* pArray, const Fvector& P, float s, CDB::TRI* T, Fvector* V);
-	virtual void                    add_StaticWallmark(const wm_shader& S, const Fvector& P, float s, CDB::TRI* T, Fvector* V);
+	virtual void					add_StaticWallmark			(IWallMarkArray *pArray, const Fvector& P, float s, CDB::TRI* T, Fvector* V);
+	virtual void					add_StaticWallmark			(const wm_shader& S, const Fvector& P, float s, CDB::TRI* T, Fvector* V);
 	virtual void					clear_static_wallmarks	();
 	virtual void					add_SkeletonWallmark	(intrusive_ptr<CSkeletonWallmark> wm);
 	virtual void					add_SkeletonWallmark	(const Fmatrix* xf, CKinematics* obj, ref_shader& sh, const Fvector& start, const Fvector& dir, float size);
-	virtual void                    add_SkeletonWallmark(const Fmatrix* xf, IKinematics* obj, IWallMarkArray* pArray, const Fvector& start, const Fvector& dir, float size);
-
+	virtual void					add_SkeletonWallmark		(const Fmatrix* xf, IKinematics* obj, IWallMarkArray *pArray, const Fvector& start, const Fvector& dir, float size);
+	
 	//
 	virtual IBlender*				blender_create			(CLASS_ID cls);
 	virtual void					blender_destroy			(IBlender* &);
@@ -190,10 +198,10 @@ public:
 	virtual void					Calculate				();
 	virtual void					Render					();
 	virtual void					Screenshot				(ScreenshotMode mode=SM_NORMAL, LPCSTR name = 0);
-	virtual void					Screenshot(ScreenshotMode mode, CMemoryWriter& memory_writer);
-	virtual void					ScreenshotAsyncBegin();
-	virtual void					ScreenshotAsyncEnd(CMemoryWriter& memory_writer);
-	virtual void					OnFrame					();
+	virtual void					Screenshot				(ScreenshotMode mode, CMemoryWriter& memory_writer);
+	virtual void					ScreenshotAsyncBegin	();
+	virtual void					ScreenshotAsyncEnd		(CMemoryWriter& memory_writer);
+	virtual void	_BCL			OnFrame					();
 	
 	// Render mode
 	virtual void					rmNear					();
@@ -204,7 +212,7 @@ public:
 	CRender							();
 	virtual ~CRender				();
 protected:
-	virtual	void					ScreenshotImpl(ScreenshotMode mode, LPCSTR name, CMemoryWriter* memory_writer);
+	virtual	void					ScreenshotImpl			(ScreenshotMode mode, LPCSTR name, CMemoryWriter* memory_writer);
 
 private:
 	FS_FileSet						m_file_set;

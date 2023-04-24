@@ -2,6 +2,8 @@
 #define	dx103DFluidRenderer_included
 #pragma once
 
+#ifdef DX10_FLUID_ENABLE
+
 class dx103DFluidData;
 
 class dx103DFluidRenderer
@@ -110,3 +112,4 @@ private:
 };
 
 #endif	//	dx103DFluidRenderer_included
+#endif

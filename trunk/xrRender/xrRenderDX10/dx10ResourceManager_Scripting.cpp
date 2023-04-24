@@ -157,7 +157,7 @@ static void* lua_alloc_xr(void* ud, void* ptr, size_t osize, size_t nsize) {
 #	endif // DEBUG_MEMORY_MANAGER
 }
 #else // USE_DL_ALLOCATOR
-#include "../xr_3da/doug_lea_memory_allocator.h"
+#include "../xrRender/doug_lea_memory_allocator.h"
 #include <Luabind/luabind/luabind_memory.h>
 #include <Luabind/luabind/luabind_delete.h>
 

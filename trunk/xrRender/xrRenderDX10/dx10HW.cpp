@@ -322,7 +322,7 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 
 	UINT createDeviceFlags = 0;
 #ifdef DEBUG
-	//createDeviceFlags |= D3Dxx_CREATE_DEVICE_DEBUG;
+	createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 #endif
    HRESULT R;
 	// Create the device
@@ -356,6 +356,8 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
                                           &sd,
                                           &m_pSwapChain,
 		                                    &pDevice );
+
+  
 
    pContext = pDevice;
    FeatureLevel = D3D_FEATURE_LEVEL_10_0;
@@ -391,6 +393,31 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 	};
 	R_CHK(R);
 
+	ID3D10Debug* pDebug = nullptr;
+
+    if (SUCCEEDED(pDevice->QueryInterface(__uuidof(ID3D10Debug), (void**)&pDebug)))
+     {
+	    ID3D10InfoQueue* pDebug_InFo_Queue = nullptr;
+
+	    if (SUCCEEDED(pDebug->QueryInterface(__uuidof(ID3D10InfoQueue), (void**)&pDebug_InFo_Queue)))
+	    {
+		    pDebug_InFo_Queue->SetBreakOnSeverity(D3D10_MESSAGE_SEVERITY_CORRUPTION, true);
+		    pDebug_InFo_Queue->SetBreakOnSeverity(D3D10_MESSAGE_SEVERITY_ERROR, true);
+
+		    D3D10_MESSAGE_ID hide[] =
+		    {
+			    D3D10_MESSAGE_ID_SETPRIVATEDATA_CHANGINGPARAMS,
+		    };
+
+		    D3D10_INFO_QUEUE_FILTER filter = {};
+		    filter.DenyList.NumIDs = _countof(hide);
+		    filter.DenyList.pIDList = hide;
+		    pDebug_InFo_Queue->AddStorageFilterEntries(&filter);
+		    pDebug_InFo_Queue->Release();
+
+	    }
+	    pDebug_InFo_Queue->Release();
+    }
 	_SHOW_REF	("* CREATE: DeviceREF:",HW.pDevice);
 	/*
 	switch (GPU)

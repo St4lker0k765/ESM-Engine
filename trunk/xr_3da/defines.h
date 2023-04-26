@@ -39,9 +39,10 @@ enum {
 	rsCameraPos						= (1ul<<18ul),
 	rsR2							= (1ul<<19ul),
 	rsR3                            = (1ul << 20ul),
+	rsR4                            = (1ul << 21ul),
 
-	rsDrawFPS = (1ul << 21ul),
-	rsDrawMemory = (1ul << 22ul),
+	rsDrawFPS = (1ul << 22ul),
+	rsDrawMemory = (1ul << 23ul),
 
 	// 20-32 bit - reserved to Editor
 };

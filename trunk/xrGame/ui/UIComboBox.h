@@ -51,7 +51,8 @@ public:
 	virtual void		OnFocusReceive			();
 			int			CurrentID				()	{return m_itoken_id;}
 protected:
-	virtual void		SetState				(UIState state);	
+	virtual void		SetState				(UIState state);
+	virtual bool		OnKeyboard(int dik, EUIMessages keyboard_action);
 	virtual bool		OnMouse					(float x, float y, EUIMessages mouse_action);
 	virtual void		OnBtnClicked			();
 			void		ShowList				(bool bShow);

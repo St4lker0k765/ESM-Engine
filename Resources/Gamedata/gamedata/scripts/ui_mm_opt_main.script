@@ -112,15 +112,15 @@ function options_dialog:UpdateDependControls()
 	for i,j in pairs(self.m_preconditions) do
 		j				(i, _current_id)
 	end
---[[	
-	if self.combo_r2:CurrentID()==1 then
-		self.ch_r2_sun:Enable			(true)
-		self.ch_r2_sun_det:Enable		(true)
-	else
-		self.ch_r2_sun:Enable			(false)
-		self.ch_r2_sun_det:Enable		(false)
+
+    local max_texture_lod = 4
+	local min_texture_lod = 0
+
+	if _current_id ~= 0 then
+		if not is_enough_address_space_available()	then
+			min_texture_lod = 1
+		end
 	end
-]]
 end
 
 function options_dialog:InitCallBacks()
@@ -134,7 +134,7 @@ function options_dialog:InitCallBacks()
 	self:AddCallback("combo_preset",		ui_events.LIST_ITEM_SELECT,	self.OnPresetChanged,		self)	
 	self:AddCallback("btn_simply_graphic",	ui_events.BUTTON_CLICKED,	self.OnSimplyGraphic,		self)	
 	self:AddCallback("btn_keyb_default",	ui_events.BUTTON_CLICKED,	self.OnBtnDefault,			self)
-	self:AddCallback("btn_check_updates",	ui_events.BUTTON_CLICKED,	self.OnBtnCheckUpdates,		self)
+--	self:AddCallback("btn_check_updates",	ui_events.BUTTON_CLICKED,	self.OnBtnCheckUpdates,		self)  --Выкинем это, уже давно не используется
 
 	self:AddCallback("btn_cancel_download",	ui_events.BUTTON_CLICKED,	self.OnBtn_CancelDownload,	self)
 	

@@ -7,9 +7,6 @@
     <Filter Include="Core">
       <UniqueIdentifier>{c8703f66-b714-4609-97a3-6e1752dda874}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\memory">
-      <UniqueIdentifier>{01110b1e-4195-41c3-9b46-f8923f8bb984}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Details">
       <UniqueIdentifier>{b8c95f18-3550-42c2-8e2e-e6dc6e34a726}</UniqueIdentifier>
     </Filter>
@@ -188,9 +185,6 @@
     </ClInclude>
     <ClInclude Include="..\xrRender\r__pixel_calculator.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="doug_lea_memory_allocator.h">
-      <Filter>Core\memory</Filter>
     </ClInclude>
     <ClInclude Include="DetailFormat.h">
       <Filter>Details</Filter>
@@ -697,9 +691,6 @@
     </ClCompile>
     <ClCompile Include="..\xrRender\tga.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xrRender\doug_lea_memory_allocator.c">
-      <Filter>Core\memory</Filter>
     </ClCompile>
     <ClCompile Include="..\xrRender\DetailManager.cpp">
       <Filter>Details</Filter>

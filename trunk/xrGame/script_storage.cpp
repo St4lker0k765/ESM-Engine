@@ -59,29 +59,7 @@ LPCSTR	file_header = 0;
 #	endif // USE_MEMORY_MONITOR
 #endif // PURE_ALLOC
 
-#ifndef USE_DL_ALLOCATOR
-static void *lua_alloc_xr	(void *ud, void *ptr, size_t osize, size_t nsize) {
-  (void)ud;
-  (void)osize;
-  if (nsize == 0) {
-    xr_free	(ptr);
-    return	NULL;
-  }
-  else
-#ifdef DEBUG_MEMORY_NAME
-    return Memory.mem_realloc		(ptr, nsize, "LUA");
-#else // DEBUG_MEMORY_MANAGER
-    return Memory.mem_realloc		(ptr, nsize);
-#endif // DEBUG_MEMORY_MANAGER
-}
-#else // USE_DL_ALLOCATOR
-static void *lua_alloc_dl	(void *ud, void *ptr, size_t osize, size_t nsize) {
-  (void)ud;
-  (void)osize;
-  if (nsize == 0)	{	dlfree			(ptr);	 return	NULL;  }
-  else				return dlrealloc	(ptr, nsize);
-}
-
+#ifdef USE_DL_ALLOCATOR
 u32 game_lua_memory_usage	()
 {
 	return					((u32)dlmallinfo().uordblks);
@@ -105,24 +83,12 @@ CScriptStorage::~CScriptStorage		()
 		lua_close			(m_virtual_machine);
 }
 
-void CScriptStorage::reinit	()
+void CScriptStorage::reinit(lua_State* LSVM)
 {
 	if (m_virtual_machine)
 		lua_close			(m_virtual_machine);
 
-#ifndef USE_DL_ALLOCATOR
-	m_virtual_machine		= lua_newstate(lua_alloc_xr, NULL);
-#else // USE_DL_ALLOCATOR
-	m_virtual_machine		= lua_newstate(lua_alloc_dl, NULL);
-#endif // USE_DL_ALLOCATOR
-
-	if (!m_virtual_machine) {
-		Msg					("! ERROR : Cannot initialize script virtual machine!");
-		return;
-	}
-
-	// initialize lua standard library functions
-	luaL_openlibs(m_virtual_machine);
+	m_virtual_machine = LSVM;
 
 	if (strstr(Core.Params,"-_g"))
 		file_header			= file_header_new;

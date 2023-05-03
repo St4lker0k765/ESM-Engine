@@ -228,9 +228,7 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	if (!inherited::net_Spawn(DC))
 		return				(FALSE);
 	
-	bool b_r2				= !!psDeviceFlags.test(rsR2);
-	b_r2                    |= !!psDeviceFlags.test(rsR3);
-	b_r2                    |= !!psDeviceFlags.test(rsR4);
+	bool b_r2				= !!psDeviceFlags.test(rsR2) || !!psDeviceFlags.test(rsR3) || !!psDeviceFlags.test(rsR4);
 
 	IKinematics* K			= smart_cast<IKinematics*>(Visual());
 	CInifile* pUserData		= K->LL_UserData(); 

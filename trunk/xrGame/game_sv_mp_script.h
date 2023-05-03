@@ -1,7 +1,7 @@
 #pragma once
 
 #include "game_sv_mp.h"
-
+/*
 class game_sv_mp_script : public game_sv_mp
 {
 	typedef game_sv_mp inherited;
@@ -40,3 +40,4 @@ add_to_type_list(game_sv_mp_script)
 #undef script_type_list
 #define script_type_list save_type_list(game_sv_mp_script)
 
+*/

@@ -277,33 +277,9 @@ void CScriptEngine::process_file	(LPCSTR file_name, bool reload_modules)
 
 void CScriptEngine::register_script_classes		()
 {
-#ifdef DBG_DISABLE_SCRIPTS
-	return;
-#endif
-	string_path					S;
-	FS.update_path				(S,"$game_config$","script.ltx");
-	CInifile					*l_tpIniFile = xr_new<CInifile>(S);
-	R_ASSERT					(l_tpIniFile);
-
-	if (!l_tpIniFile->section_exist("common")) {
-		xr_delete				(l_tpIniFile);
-		return;
-	}
-
-	m_class_registrators		= READ_IF_EXISTS(l_tpIniFile,r_string,"common","class_registrators","");
-	xr_delete					(l_tpIniFile);
-
-	u32							n = _GetItemCount(*m_class_registrators);
-	string256					I;
-	for (u32 i=0; i<n; ++i) {
-		_GetItem				(*m_class_registrators,i,I);
-		luabind::functor<void>	result;
-		if (!functor(I,result)) {
-			script_log			(eLuaMessageTypeError,"Cannot load class registrator %s!",I);
-			continue;
-		}
-		result					(const_cast<CObjectFactory*>(&object_factory()));
-	}
+	luabind::functor<void> result;
+	R_ASSERT2(functor("class_registrator.register", result), "[Script Engine]: Cannot load class_registrator!");
+	result(const_cast<CObjectFactory*>(&object_factory()));
 }
 
 bool CScriptEngine::function_object(LPCSTR function_to_call, luabind::object &object, int type)

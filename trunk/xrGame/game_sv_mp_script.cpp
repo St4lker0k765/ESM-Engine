@@ -9,6 +9,8 @@
 
 using namespace luabind;
 
+/*
+
 void game_sv_mp_script::SetHitParams (NET_Packet* P, float impulse, float power)
 {
 	u32 PowRPos = 16;
@@ -229,3 +231,4 @@ void game_sv_mp_script::script_register(lua_State *L)
 			.def("createPlayerState",	&BaseType::createPlayerState, &WrapType::createPlayerState_static, adopt<result>() )
 	];
 }
+*/

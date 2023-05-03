@@ -10,7 +10,7 @@
 #include "ui/UIDialogWnd.h"
 
 using namespace luabind;
-
+/*
 #pragma warning(push)
 #pragma warning(disable:4709)
 
@@ -130,3 +130,4 @@ void game_cl_mp_script::script_register(lua_State *L)
 			.def("createGameUI",		&BaseType::createGameUI, &WrapType::createGameUI_static, adopt<result>())
 	];
 }
+*/

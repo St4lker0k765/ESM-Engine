@@ -80,15 +80,21 @@ void MODEL::build(Fvector* V, int Vcnt, TRI* T, int Tcnt, build_callback* bc, vo
 #ifdef _EDITOR    
 	build_internal				(V,Vcnt,T,Tcnt,bc,bcp);
 #else
-	if (!strstr(Core.Params, "-mt_cdb"))
-		build_internal(V, Vcnt, T, Tcnt, bc, bcp, rebuildTrisRequired);
-	else
+//	if (!strstr(Core.Params, "-mt_cdb"))
+//		build_internal(V, Vcnt, T, Tcnt, bc, bcp, rebuildTrisRequired);
+//	else
+//	{
+//		
+//	}
+	BTHREAD_params P = { this, V, Vcnt, T, Tcnt, bc, bcp, rebuildTrisRequired };
+	thread_spawn				(build_thread,"CDB-construction",0,&P);
+	while						(S_INIT	== status)
 	{
-		BTHREAD_params P = { this, V, Vcnt, T, Tcnt, bc, bcp, rebuildTrisRequired };
-		thread_spawn				(build_thread,"CDB-construction",0,&P);
-		while						(S_INIT	== status)	
-			Sleep	(5);
+		if(status != S_INIT)
+			break;
+		Sleep	(5);
 	}
+		
 #endif
 }
 

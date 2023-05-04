@@ -405,6 +405,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="string_concatenations.h" />
     <ClInclude Include="string_concatenations_inline.h" />
+    <ClInclude Include="Threading\xrThreadingCriticalSection.h" />
     <ClInclude Include="xrCore.h" />
     <ClInclude Include="xrCore_platform.h" />
     <ClInclude Include="_bitwise.h" />

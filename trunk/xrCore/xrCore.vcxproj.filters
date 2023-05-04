@@ -73,6 +73,9 @@
     <Filter Include="Math\Extensions\buffer_vector">
       <UniqueIdentifier>{219c1dfc-43a1-4a66-a56d-b44223d3bb23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{a5a2ae52-27b8-405b-9e93-50ad22508fb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FTimer.cpp">
@@ -494,6 +497,9 @@
     </ClInclude>
     <ClInclude Include="dump_string.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Threading\xrThreadingCriticalSection.h">
+      <Filter>Threading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@
 #include "../Include/xrRender/ParticleCustom.h"
 #include "../xr_3da/render.h"
 #include "../xr_3da/IGame_Persistent.h"
+#include "Level.h"
 
 const Fvector zero_vel		= {0.f,0.f,0.f};
 
@@ -67,16 +68,12 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 	shedule_register		();
 
 	dwLastTime				= Device.dwTimeGlobal;
-	mt_dt					= 0;
 }
 
 //----------------------------------------------------
 CParticlesObject::~CParticlesObject()
 {
-	VERIFY					(0==mt_dt);
-
-//	we do not need this since CPS_Instance does it
-//	shedule_unregister		();
+	Device.RemoveFromAuxthread5Pool(fastdelegate::FastDelegate0<>(this, &CParticlesObject::PerformAllTheWork_mt));
 }
 
 void CParticlesObject::UpdateSpatial()
@@ -164,18 +161,20 @@ void CParticlesObject::shedule_Update	(u32 _dt)
 
 	// Update
 	if (m_bDead)					return;
-	u32 dt							= Device.dwTimeGlobal - dwLastTime;
-	if (dt)							{
-		if (0){//.psDeviceFlags.test(mtParticles))	{    //. AlexMX comment this line// NO UNCOMMENT - DON'T WORK PROPERLY
-			mt_dt					= dt;
-			fastdelegate::FastDelegate0<>		delegate	(this,&CParticlesObject::PerformAllTheWork_mt);
-			Device.seqParallel.emplace_back(delegate);
-		} else {
-			mt_dt					= 0;
-			IParticleCustom* V		= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
-			V->OnFrame				(dt);
-		}
-		dwLastTime					= Device.dwTimeGlobal;
+	if (psDeviceFlags.test(mtParticles))
+	{
+		fastdelegate::FastDelegate0<> delegate(this, &CParticlesObject::PerformAllTheWork_mt);
+
+		if (::Random.randI(1, 4) == 1)
+			Device.AddToAuxThread_Pool(1, delegate);
+		else
+			Device.AddToAuxThread_Pool(1, delegate);
+
+		UpdateSpatial();
+	}
+	else
+	{
+		PerformAllTheWork(0);
 	}
 	UpdateSpatial					();
 }

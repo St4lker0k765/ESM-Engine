@@ -92,7 +92,7 @@ IC	void CProfiler::convert_string	(LPCSTR str, shared_str &out, u32 max_string_s
 void CProfiler::setup_timer			(LPCSTR timer_id, const u64 &timer_time, const u32 &call_count)
 {
 	string256					m_temp;
-	float						_time = float(timer_time)*1000.f/CPU::qpc_freq;
+	float						_time = timer_time;
 	TIMERS::iterator			i = m_timers.find(timer_id);
 	if (i == m_timers.end()) {
 		strcpy					(m_temp,timer_id);

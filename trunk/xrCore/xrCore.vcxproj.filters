@@ -7,9 +7,6 @@
     <Filter Include="Math">
       <UniqueIdentifier>{22c5a9c0-179b-4fbb-808a-6990eb5e607b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Math\CPU">
-      <UniqueIdentifier>{88420827-9008-4a78-b3c8-877d21602214}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Math\STLext">
       <UniqueIdentifier>{8d9ac3fd-1091-4176-8e0b-254ba4531646}</UniqueIdentifier>
     </Filter>
@@ -76,6 +73,9 @@
     <Filter Include="Threading">
       <UniqueIdentifier>{a5a2ae52-27b8-405b-9e93-50ad22508fb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CPU">
+      <UniqueIdentifier>{7566596f-6f94-41ed-93eb-cfd53432bfb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FTimer.cpp">
@@ -95,9 +95,6 @@
     </ClCompile>
     <ClCompile Include="_sphere.cpp">
       <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="cpuid.cpp">
-      <Filter>Math\CPU</Filter>
     </ClCompile>
     <ClCompile Include="_std_extensions.cpp">
       <Filter>Math\Extensions</Filter>
@@ -237,6 +234,9 @@
     <ClCompile Include="_cylinder.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="CPU.cpp">
+      <Filter>CPU</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FTimer.h">
@@ -319,9 +319,6 @@
     </ClInclude>
     <ClInclude Include="vector.h">
       <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="cpuid.h">
-      <Filter>Math\CPU</Filter>
     </ClInclude>
     <ClInclude Include="FixedMap.h">
       <Filter>Math\STLext</Filter>
@@ -500,6 +497,12 @@
     </ClInclude>
     <ClInclude Include="Threading\xrThreadingCriticalSection.h">
       <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="CPU.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="CPU_Misc.h">
+      <Filter>CPU</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

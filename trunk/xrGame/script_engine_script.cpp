@@ -98,7 +98,9 @@ struct profile_timer_script {
 	u64							m_accumulator;
 	u64							m_count;
 	int							m_recurse_mark;
-	
+
+	CTimer measure;
+
 	IC								profile_timer_script	()
 	{
 		m_start_cpu_tick_count	= 0;
@@ -135,7 +137,8 @@ struct profile_timer_script {
 
 		++m_recurse_mark;
 		++m_count;
-		m_start_cpu_tick_count	= CPU::GetCLK();
+
+		measure.Start();
 	}
 
 	IC		void					stop					()
@@ -146,17 +149,15 @@ struct profile_timer_script {
 		if (m_recurse_mark)
 			return;
 		
-		u64						finish = CPU::GetCLK();
-		if (finish > m_start_cpu_tick_count)
-			m_accumulator		+= finish - m_start_cpu_tick_count;
+		m_accumulator += measure.GetElapsed_mcs();
 	}
 
 	IC		float					time					() const
 	{
 		FPU::m64r				();
-		float					result = (float(double(m_accumulator)/double(CPU::clk_per_second))*1000000.f);
+		float res = float(double(m_accumulator));
 		FPU::m24r				();
-		return					(result);
+		return (res);
 	}
 };
 

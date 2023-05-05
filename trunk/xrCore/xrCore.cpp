@@ -17,15 +17,12 @@ XRCORE_API		xrCore	Core;
 XRCORE_API		u32		build_id;
 XRCORE_API		LPCSTR	build_date;
 
-namespace CPU
-{
-	extern	void			Detect	();
-};
-
 static u32	init_counter	= 0;
 
 void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname)
 {
+	CTimer T; T.Start();
+
 	strcpy_s					(ApplicationName,_ApplicationName);
 	if (!init_counter) {
 		// Init COM so we can use CoCreateInstance
@@ -60,7 +57,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		GetComputerName		(CompName,&sz_comp);
 
 		// Mathematics & PSI detection
-		CPU::Detect			();
+		CPU::InitProcessorInfo();
 		
 		Memory._initialize	(strstr(Params,"-mem_debug") ? TRUE : FALSE);
 
@@ -68,6 +65,14 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 
 		InitLog				();
 		_initialize_cpu		();
+
+		CPU::DumpInfo();
+
+		Msg("* Core Params: %s", Core.Params);
+		Msg("* Core preinitialization completed: %f ms \n", T.GetElapsed_sec() * 1000.f);
+		Msg("* Core location: %s", Core.ApplicationPath);
+
+		T.Start();
 
 		rtc_initialize		();
 

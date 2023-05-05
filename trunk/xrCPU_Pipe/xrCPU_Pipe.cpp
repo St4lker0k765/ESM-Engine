@@ -44,8 +44,6 @@ extern "C" {
 		// analyze features
 		// DWORD dwFeatures = CPU::ID.feature & CPU::ID.os_support;
 
-		if(strstr(strlwr(GetCommandLine()),"-x86"))	dwFeatures &= ~(_CPU_FEATURE_SSE+_CPU_FEATURE_3DNOW);
-
 		// generic
 		T->skin1W	= xrSkin1W_x86;
 		T->skin2W	= xrSkin2W_x86;

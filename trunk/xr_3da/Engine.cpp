@@ -27,10 +27,11 @@ extern	void msCreate		(LPCSTR name);
 void CEngine::Initialize	(void)
 {
 	// Bind PSGP
-	hPSGP		= LoadLibrary("xrCPU_Pipe.dll");
-	R_ASSERT	(hPSGP);
-	xrBinder*	bindCPU	= (xrBinder*)	GetProcAddress(hPSGP,"xrBind_PSGP");	R_ASSERT(bindCPU);
-	bindCPU		(&PSGP, CPU::ID.feature & CPU::ID.os_support);
+	hPSGP = LoadLibrary("xrCPU_Pipe.dll");
+	R_ASSERT(hPSGP);
+	xrBinder* bindCPU = (xrBinder*)GetProcAddress(hPSGP, "xrBind_PSGP");
+	R_ASSERT(bindCPU);
+	bindCPU(&PSGP);
 
 	// Other stuff
 	Engine.Sheduler.Initialize			( );

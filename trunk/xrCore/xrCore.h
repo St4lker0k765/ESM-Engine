@@ -199,6 +199,7 @@
 #include "rt_compressor.h"
 #include "xr_shared.h"
 #include "string_concatenations.h"
+#include "CPU.h"
 
 // stl ext
 struct XRCORE_API xr_rtoken{

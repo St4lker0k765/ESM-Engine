@@ -291,6 +291,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CPU.cpp" />
     <ClCompile Include="dump_string.cpp" />
     <ClCompile Include="FTimer.cpp" />
     <ClCompile Include="os_clipboard.cpp" />
@@ -310,7 +311,6 @@
     <ClCompile Include="_cylinder.cpp" />
     <ClCompile Include="_math.cpp" />
     <ClCompile Include="_sphere.cpp" />
-    <ClCompile Include="cpuid.cpp" />
     <ClCompile Include="_std_extensions.cpp" />
     <ClCompile Include="clsid.cpp" />
     <ClCompile Include="xr_trims.cpp" />
@@ -398,6 +398,8 @@
   <ItemGroup>
     <ClInclude Include="buffer_vector.h" />
     <ClInclude Include="buffer_vector_inline.h" />
+    <ClInclude Include="CPU.h" />
+    <ClInclude Include="CPU_Misc.h" />
     <ClInclude Include="dump_string.h" />
     <ClInclude Include="FTimer.h" />
     <ClInclude Include="os_clipboard.h" />
@@ -430,7 +432,6 @@
     <ClInclude Include="_vector3d.h" />
     <ClInclude Include="_vector4.h" />
     <ClInclude Include="vector.h" />
-    <ClInclude Include="cpuid.h" />
     <ClInclude Include="FixedMap.h" />
     <ClInclude Include="FixedSet.h" />
     <ClInclude Include="FixedVector.h" />

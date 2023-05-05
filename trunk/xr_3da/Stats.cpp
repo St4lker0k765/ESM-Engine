@@ -297,8 +297,8 @@ void CStats::Show()
 		CPU::qpc_counter	=	0		;
 #else // DEBUG_MEMORY_MANAGER
 		F.OutSkip	();
-		F.OutNext	("qpc[%3d]",CPU::qpc_counter);
-		CPU::qpc_counter	=	0		;
+		F.OutNext	("qpc[%3d]",CPU::qpc_inquiry_counter);
+		CPU::qpc_inquiry_counter = 0;
 #endif // DEBUG_MEMORY_MANAGER
 
 		F.OutSkip();

@@ -689,6 +689,9 @@
     <ClCompile Include="DiscordRPC.cpp">
       <Filter>DiscordRPC</Filter>
     </ClCompile>
+    <ClCompile Include="EngineThreadsManager.cpp">
+      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="OutOfVirtError.RES">

@@ -80,7 +80,7 @@ void register_mp_console_commands();
 
 		BOOL	g_bCheckTime			= FALSE;
 		int		net_cl_inputupdaterate	= 50;
-		Flags32	g_mt_config				= {mtLevelPath | mtDetailPath | mtObjectHandler | mtSoundPlayer | mtAiVision | mtBullets | mtLUA_GC | mtLevelSounds | mtALife};
+		Flags32	g_mt_config				= {mtLevelPath | mtDetailPath | mtObjectHandler | mtSoundPlayer | mtAiVision | mtBullets | mtLUA_GC | mtLevelSounds | mtALife | mtMap};
 #ifdef DEBUG
 		Flags32	dbg_net_Draw_Flags		= {0};
 #endif
@@ -1505,6 +1505,7 @@ void CCC_RegisterCommands()
 	// ai
 	CMD3(CCC_Mask,				"mt_ai_vision",			&g_mt_config,	mtAiVision);
 	CMD3(CCC_Mask,				"mt_level_path",		&g_mt_config,	mtLevelPath);
+	CMD3(CCC_Mask, "mt_level_map", &g_mt_config, mtMap);
 	CMD3(CCC_Mask,				"mt_detail_path",		&g_mt_config,	mtDetailPath);
 	CMD3(CCC_Mask,				"mt_object_handler",	&g_mt_config,	mtObjectHandler);
 	CMD3(CCC_Mask,				"mt_sound_player",		&g_mt_config,	mtSoundPlayer);

@@ -406,7 +406,7 @@ void CCustomMonster::UpdateCL	()
 	*/
 
 	if (g_mt_config.test(mtSoundPlayer))
-		Device.seqParallel.emplace_back(fastdelegate::FastDelegate0<>(this,&CCustomMonster::update_sound_player));
+		Device.AddToAuxThread_Pool(1, fastdelegate::FastDelegate0<>(this, &CCustomMonster::update_sound_player));
 	else {
 		START_PROFILE("CustomMonster/client_update/sound_player")
 		update_sound_player	();
@@ -737,12 +737,8 @@ void CCustomMonster::net_Destroy()
 	sound().unload				();
 	movement().net_Destroy		();
 	
-	Device.remove_from_seq_parallel	(
-		fastdelegate::FastDelegate0<>(
-			this,
-			&CCustomMonster::update_sound_player
-		)
-	);
+	Device.RemoveFromAuxthread1Pool(fastdelegate::FastDelegate0<>(this, &CCustomMonster::update_sound_player));
+
 	Device.remove_from_seq_parallel	(
 		fastdelegate::FastDelegate0<>(
 			this,

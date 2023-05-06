@@ -208,10 +208,6 @@ public:
 	virtual void			GetServerInfo		( CServerInfo* si );
 public:
 	xr_string				ent_name_safe		(u16 eid);
-#ifdef DEBUG
-			bool			verify_entities		() const;
-			void			verify_entity		(const CSE_Abstract *entity) const;
-#endif
 };
 
 #endif // !defined(AFX_XRSERVER_H__65728A25_16FC_4A7B_8CCE_D798CA5EC64E__INCLUDED_)

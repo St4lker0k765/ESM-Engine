@@ -20,6 +20,16 @@ ENGINE_API BOOL g_bRendering = FALSE;
 
 BOOL		g_bLoaded = FALSE;
 ref_light	precache_light = 0;
+CRenderDevice::CRenderDevice()  : auxThread_1_Allowed_(THREADING_EVENT_NAME_1), auxThread_1_Ready_(THREADING_EVENT_NAME_2),
+aux1ExitSync_(THREADING_EVENT_NAME_3)
+{
+	m_hWnd = NULL;
+	b_is_Active = FALSE;
+	b_is_Ready = FALSE;
+	Timer.Start();
+	m_bNearer = FALSE;
+	m_pRender = nullptr;
+};
 
 BOOL CRenderDevice::Begin	()
 {
@@ -103,7 +113,7 @@ void 			mt_Thread	(void *ptr)	{
 		for (u32 pit=0; pit<Device.seqParallel.size(); pit++)
 			Device.seqParallel[pit]	();
 		Device.seqParallel.clear_not_free	();
-		Device.seqFrameMT.Process	(rp_Frame);
+//		Device.seqFrameMT.Process	(rp_Frame);
 
 		// now we give control to device - signals that we are ended our work
 		Device.mt_csEnter.Leave	();
@@ -195,6 +205,8 @@ void CRenderDevice::on_idle()
 	// *** Resume threads
 	// Capture end point - thread must run only ONE cycle
 	// Release start point - allow thread to run
+
+	auxThread_1_Allowed_.Set();
 	mt_csLeave.Enter();
 	mt_csEnter.Leave();
 	Sleep(0);
@@ -221,6 +233,7 @@ void CRenderDevice::on_idle()
 	// *** Suspend threads
 	// Capture startup point
 	// Release end point - allow thread to wait for startup point
+	auxThread_1_Ready_.Wait();
 	mt_csEnter.Enter();
 	mt_csLeave.Leave();
 
@@ -316,13 +329,19 @@ void CRenderDevice::Run			()
 		Timer_MM_Delta		= time_system-time_local;
 	}
 
+	Msg("# Threading Start...");
+
+	
+
 	// Start all threads
 //	InitializeCriticalSection	(&mt_csEnter);
 //	InitializeCriticalSection	(&mt_csLeave);
 	mt_csEnter.Enter			();
 	mt_bMustExit				= FALSE;
-	thread_spawn				(mt_Thread,"X-RAY Secondary thread",0,0);
+	SetAuxThreadsMustExit(false);
 
+	thread_spawn				(mt_Thread,"X-RAY Secondary thread",0,0);
+    thread_spawn(AuxThread_1, "X-RAY AUX thread 1", 0, this);
 	// Message cycle
     PeekMessage					( &msg, nullptr, 0U, 0U, PM_NOREMOVE );
 
@@ -333,6 +352,13 @@ void CRenderDevice::Run			()
 	message_loop();
 
 	seqAppEnd.Process		(rp_AppEnd);
+
+	// Stop Aux-Thread
+	SetAuxThreadsMustExit(true);
+
+	auxThread_1_Allowed_.Set();
+
+	aux1ExitSync_.Wait(3000);
 
 	// Stop Balance-Thread
 	mt_bMustExit			= TRUE;

@@ -527,6 +527,7 @@
     <ClCompile Include="defines.cpp" />
     <ClCompile Include="DiscordRPC.cpp" />
     <ClCompile Include="edit_actions.cpp" />
+    <ClCompile Include="EngineThreadsManager.cpp" />
     <ClCompile Include="GameMtlLib.cpp" />
     <ClCompile Include="GameMtlLib_Engine.cpp" />
     <ClCompile Include="line_editor.cpp" />

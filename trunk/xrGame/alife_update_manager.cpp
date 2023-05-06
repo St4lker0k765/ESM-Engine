@@ -71,12 +71,8 @@ CALifeUpdateManager::CALifeUpdateManager	(xrServer *server, LPCSTR section) :
 CALifeUpdateManager::~CALifeUpdateManager	()
 {
 	shedule_unregister		();
-	Device.remove_from_seq_parallel	(
-		fastdelegate::FastDelegate0<>(
-			this,
-			&CALifeUpdateManager::update
-		)
-	);
+
+	Device.RemoveFromAuxthread1Pool(fastdelegate::FastDelegate0<>(this, &CALifeUpdateManager::update));
 }
 
 float CALifeUpdateManager::shedule_Scale	()
@@ -117,12 +113,8 @@ void CALifeUpdateManager::shedule_Update	(u32 dt)
 		return;
 
 	if (!m_first_time && g_mt_config.test(mtALife)) {
-		Device.seqParallel.emplace_back(
-			fastdelegate::FastDelegate0<>(
-				this,
-				&CALifeUpdateManager::update
-			)
-		);
+		Device.AddToAuxThread_Pool(1, fastdelegate::FastDelegate0<>(this, &CALifeUpdateManager::update));
+
 		return;
 	}
 

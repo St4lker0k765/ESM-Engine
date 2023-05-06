@@ -237,6 +237,9 @@
     <ClCompile Include="CPU.cpp">
       <Filter>CPU</Filter>
     </ClCompile>
+    <ClCompile Include="Threading\EventThreading.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FTimer.h">
@@ -503,6 +506,12 @@
     </ClInclude>
     <ClInclude Include="CPU_Misc.h">
       <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Threading\EventThreading.hpp">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Threading\EventThreadingID.h">
+      <Filter>Threading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

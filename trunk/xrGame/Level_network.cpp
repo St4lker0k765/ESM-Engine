@@ -22,6 +22,8 @@ extern bool	g_b_ClearGameCaptions;
 
 void CLevel::remove_objects	()
 {
+	Device.auxThreadPool_1_.clear_not_free();
+
 	if (!IsGameTypeSingle()) Msg("CLevel::remove_objects - Start");
 	BOOL						b_stored = psDeviceFlags.test(rsDisableObjectsAsCrows);
 

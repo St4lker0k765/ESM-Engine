@@ -458,19 +458,14 @@ void CAI_Stalker::net_Destroy()
 	CInventoryOwner::net_Destroy		();
 	m_pPhysics_support->in_NetDestroy	();
 
-	Device.remove_from_seq_parallel	(
-		fastdelegate::FastDelegate0<>(
-			this,
-			&CAI_Stalker::update_object_handler
-		)
-	);
+	Device.RemoveFromAuxthread1Pool(fastdelegate::FastDelegate0<>(this, &CAI_Stalker::update_object_handler));
 
 #ifdef DEBUG
-	fastdelegate::FastDelegate0<>	f = fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler);
+	fastdelegate::FastDelegate0<>	f = fastdelegate::FastDelegate0<>(this, &CAI_Stalker::update_object_handler);
 	xr_vector<fastdelegate::FastDelegate0<> >::const_iterator	I;
-	I	= std::find(Device.seqParallel.begin(),Device.seqParallel.end(),f);
-	VERIFY							(I == Device.seqParallel.end());
-#endif // DEBUG
+	I = std::find(Device.auxThreadPool_1_.begin(), Device.auxThreadPool_1_.end(), f);
+	VERIFY(I == Device.auxThreadPool_1_.end());
+#endif
 
 	xr_delete						(m_ce_close);
 	xr_delete						(m_ce_far);
@@ -641,13 +636,19 @@ void CAI_Stalker::UpdateCL()
 
 	if (g_Alive()) {
 		if (g_mt_config.test(mtObjectHandler) /*&& CObjectHandler::planner().initialized()*/) {
-			auto f = fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler);
 #ifdef DEBUG
-			xr_vector<fastdelegate::FastDelegate0<> >::const_iterator	I;
-			I	= std::find(Device.seqParallel.begin(),Device.seqParallel.end(),f);
-			VERIFY							(I == Device.seqParallel.end());
+			
+			fastdelegate::FastDelegate0<> f = fastdelegate::FastDelegate0<>(this, &CAI_Stalker::update_object_handler);
+
+			xr_vector<fastdelegate::FastDelegate0<> >::const_iterator I;
+			I = std::find(Device.auxThreadPool_1_.begin(), Device.auxThreadPool_1_.end(), f);
+			
+
+			VERIFY(I == Device.auxThreadPool_1_.end());
+            
 #endif
-			Device.seqParallel.emplace_back(f);
+
+			Device.AddToAuxThread_Pool(1, fastdelegate::FastDelegate0<>(this, &CAI_Stalker::update_object_handler));
 		}
 		else {
 			START_PROFILE("stalker/client_update/object_handler")

@@ -166,9 +166,9 @@ void CParticlesObject::shedule_Update	(u32 _dt)
 		fastdelegate::FastDelegate0<> delegate(this, &CParticlesObject::PerformAllTheWork_mt);
 
 		if (::Random.randI(1, 4) == 1)
-			Device.AddToAuxThread_Pool(2, delegate);
+			Device.AddToAuxThread_Pool(1, delegate);
 		else
-			Device.AddToAuxThread_Pool(2, delegate);
+			Device.AddToAuxThread_Pool(1, delegate);
 
 		UpdateSpatial();
 	}

@@ -20,8 +20,6 @@ xr_token							vid_bpp_token							[ ]={
 	{ 0,							0											}
 };
 
-ENGINE_API BOOL mtUseCustomAffinity_ = 0;
-
 void IConsole_Command::add_to_LRU(shared_str const& arg)
 {
 	if (arg.size() == 0 || bEmptyArgsHandled)
@@ -535,8 +533,7 @@ void CCC_Register()
 	CMD3(CCC_Mask,		"mt_sound",				&psDeviceFlags,			mtSound);
 	CMD3(CCC_Mask,		"mt_physics",			&psDeviceFlags,			mtPhysics);
 	CMD3(CCC_Mask,		"mt_network",			&psDeviceFlags,			mtNetwork);
-	CMD4(CCC_Integer, "mt_use_custom_threads_affinity_mask", &mtUseCustomAffinity_, 0, 1);
-
+	
 	// Events
 	CMD1(CCC_E_Dump,	"e_list"				);
 	CMD1(CCC_E_Signal,	"e_signal"				);

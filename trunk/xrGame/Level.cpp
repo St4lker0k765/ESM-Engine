@@ -477,10 +477,8 @@ void CLevel::OnFrame	()
 
 	if (m_bNeed_CrPr)					make_NetCorrectionPrediction();
 
-	if (g_mt_config.test(mtMap))
-		Device.AddToAuxThread_Pool(1, fastdelegate::FastDelegate0<>(m_map_manager, &CMapManager::Update));
-	else
-		MapManager().Update();
+	if(!g_dedicated_server)
+		MapManager().Update		();
 	// Inherited update
 	inherited::OnFrame		();
 
@@ -566,7 +564,7 @@ void CLevel::OnFrame	()
 	if(!g_dedicated_server)
 	{
 		if (g_mt_config.test(mtLevelSounds)) 
-			Device.AddToAuxThread_Pool(1, fastdelegate::FastDelegate0<>(m_level_sound_manager, &CLevelSoundManager::Update));
+			Device.seqParallel.emplace_back(fastdelegate::FastDelegate0<>(m_level_sound_manager,&CLevelSoundManager::Update));
 		else								
 			m_level_sound_manager->Update	();
 	}
@@ -574,9 +572,8 @@ void CLevel::OnFrame	()
 	if (!g_dedicated_server)
 	{
 		if (g_mt_config.test(mtLUA_GC))
-			Device.AddToAuxThread_Pool(1, fastdelegate::FastDelegate0<>(this, &CLevel::script_gc));
-		else							
-			script_gc	()	;
+			Device.seqParallel.emplace_back(fastdelegate::FastDelegate0<>(this,&CLevel::script_gc));
+		else							script_gc	()	;
 	}
 	//-----------------------------------------------------
 	if (pStatGraphR)

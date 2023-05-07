@@ -14,8 +14,6 @@
 
 #include "../Include/xrRender/RenderDeviceRender.h"
 #include "Threading/xrThreadingCriticalSection.h"
-#include "Threading/EventThreading.hpp"
-#include "Threading/EventThreadingID.h"
 
 // refs
 class ENGINE_API CRenderDevice 
@@ -108,7 +106,19 @@ public:
 	float									fFOV;
 	float									fASPECT;
 	
-	CRenderDevice();
+	CRenderDevice			()
+		#ifdef PROFILE_CRITICAL_SECTIONS
+			: mt_csEnter(MUTEX_PROFILE_ID(CRenderDevice::mt_csEnter))
+			,mt_csLeave(MUTEX_PROFILE_ID(CRenderDevice::mt_csLeave))
+		#endif // PROFILE_CRITICAL_SECTIONS
+	{
+	    m_hWnd              = NULL;
+		b_is_Active			= FALSE;
+		b_is_Ready			= FALSE;
+		Timer.Start			();
+		m_bNearer			= FALSE;
+		m_pRender = nullptr;
+	};
 
 	void	Pause							(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason);
 	BOOL	Paused							();
@@ -152,38 +162,17 @@ public:
 		return					(Timer.time_factor());
 	}
 
-#define SEQUANTIAL_AUX_THREADS_COUNT 2
+#define SEQUANTIAL_AUX_THREADS_COUNT 1
 	// Multi-threading
 	xrCriticalSection	mt_csEnter;
 	xrCriticalSection	mt_csLeave;
 	volatile BOOL		mt_bMustExit;
 
-	// Dependable from MainThread Aux thread 1 workload pool
-	xr_vector		<fastdelegate::FastDelegate0<>>	auxThreadPool_1_;
 	// Dependable from MainThread Aux thread 5 workload pool
 	xr_vector		<fastdelegate::FastDelegate0<>>	auxThreadPool_5_;
 
-	// Processing copies of threads workload pools
-
-	xr_vector		<fastdelegate::FastDelegate0<>>	AuxThreadPool_1_TempCopy_;
-
 	// Locks
-	AccessLock		AuxPool_1_Protection_;
 	AccessLock		AuxPool_5_Protection_;
-private:
-    //depended from main thread auxilary thread 1
-	static void AuxThread_1(void* context);
-public:
-
-	Event auxThread_1_Allowed_;
-	Event auxThread_1_Ready_;
-
-	Event aux1ExitSync_; // Aux thread 1 exit event sync
-
-	void				SetAuxThreadsMustExit(bool val);
-	bool				IsAuxThreadsMustExit();
-
-	volatile bool		auxTreadsMustExit_;
 
 	ICF		void			remove_from_seq_parallel	(const fastdelegate::FastDelegate0<> &delegate)
 	{
@@ -202,36 +191,12 @@ public:
 
 		if (aux_thread_no == 1)
 		{
-			AuxPool_1_Protection_.Enter();
-			auxThreadPool_1_.push_back(delegate);
-			AuxPool_1_Protection_.Leave();
-		}
-		else if (aux_thread_no == 2)
-		{
 			AuxPool_5_Protection_.Enter();
 			auxThreadPool_5_.push_back(delegate);
 			AuxPool_5_Protection_.Leave();
 		}
 		else
 			R_ASSERT(false);
-	}
-
-	//// Individual thread object removal
-
-	ICF	void			RemoveFromAuxthread1Pool(const fastdelegate::FastDelegate0<>& delegate)
-	{
-		AuxPool_1_Protection_.Enter();
-
-		xr_vector<fastdelegate::FastDelegate0<> >::iterator I = std::find(
-			auxThreadPool_1_.begin(),
-			auxThreadPool_1_.end(),
-			delegate
-		);
-
-		if (I != auxThreadPool_1_.end())
-			auxThreadPool_1_.erase(I);
-
-		AuxPool_1_Protection_.Leave();
 	}
 
 	ICF	void			RemoveFromAuxthread5Pool(const fastdelegate::FastDelegate0<>& delegate)

@@ -40,7 +40,6 @@ void CRenderDevice::Destroy	(void) {
 	seqFrameMT.R.clear			();
 	seqDeviceReset.R.clear		();
 	seqParallel.clear			();
-	auxThreadPool_1_.clear();
 
 	RenderFactory->DestroyRenderDeviceRender(m_pRender);
 	m_pRender = 0;

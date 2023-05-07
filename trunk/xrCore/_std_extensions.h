@@ -217,19 +217,6 @@ inline int __cdecl xr_sprintf(char(&destination)[count], LPCSTR format_string, .
 	return						vsprintf_s(destination, count, format_string, args);
 }
 
-template <typename StrType, typename StrType2, typename... Args>
-inline char* xr_strconcat(StrType& dest, const StrType2& arg1, const Args&... args)
-{
-	static_assert(std::is_array_v<StrType>);
-	static_assert(std::is_same_v<std::remove_extent_t<StrType>, char>);
-
-	strcpy_s(dest, arg1);
-
-	(strcat_s(dest, args), ...);
-
-	return &dest[0];
-}
-
 XRCORE_API	char*				timestamp				(string64& dest);
 
 extern XRCORE_API u32			crc32					(const void* P, u32 len);

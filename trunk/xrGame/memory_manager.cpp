@@ -90,25 +90,33 @@ void CMemoryManager::update_enemies	(const bool &registered_in_combat)
 #ifdef _DEBUG
 	g_enemy_manager_second_update	= false;
 #endif // _DEBUG
+	enemy().update		();
 
-	bool enemy_unselected_or_enemy_wounded = (!enemy().selected() || (smart_cast<const CAI_Stalker*>(enemy().selected()) && smart_cast<const CAI_Stalker*>(enemy().selected())->wounded()));
-
-	if	(m_stalker && enemy_unselected_or_enemy_wounded && registered_in_combat)
+	if	(
+			m_stalker && 
+			(
+				!enemy().selected() || 
+				(
+					smart_cast<const CAI_Stalker*>(enemy().selected()) && 
+					smart_cast<const CAI_Stalker*>(enemy().selected())->wounded()
+				)
+			) &&
+			registered_in_combat
+		)
 	{
 		m_stalker->agent_manager().enemy().distribute_enemies	();
 
-//		if (visual().enabled())
-//			update		(visual().objects(),true);
+		if (visual().enabled())
+			update		(visual().objects(),true);
 
-//		update			(sound().objects(),true);
-//		update			(hit().objects(),true);
+		update			(sound().objects(),true);
+		update			(hit().objects(),true);
 
 #ifdef _DEBUG
 		g_enemy_manager_second_update	= true;
 #endif // _DEBUG
-		
+		enemy().update	();
 	}
-     enemy().update	();
 }
 
 void CMemoryManager::update			(float time_delta)
@@ -121,16 +129,16 @@ void CMemoryManager::update			(float time_delta)
 	
 	bool				registered_in_combat = false;
 	if (m_stalker)
-		registered_in_combat	= m_stalker->agent_manager().member().registered_in_combat(m_stalker) && !m_stalker->wounded();
+		registered_in_combat	= m_stalker->agent_manager().member().registered_in_combat(m_stalker);
 
 	// update enemies and items
-	item().reset();
-	enemy().reset();
+	enemy().reset		();
+	item().reset		();
 
 	if (visual().enabled())
 		update			(visual().objects(),true);
 
-	update				(sound().objects(), registered_in_combat ? true : false);
+	update				(sound().objects(),registered_in_combat ? true : false);
 	update				(hit().objects(),registered_in_combat ? true : false);
 	
 	update_enemies		(registered_in_combat);

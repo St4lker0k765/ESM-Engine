@@ -404,11 +404,8 @@ void CStalkerCombatPlanner::add_actions			()
 	add_condition			(action,eWorldPropertyCriticallyWounded,false);
 	add_condition			(action,eWorldPropertyDangerGrenade,	false);
 	add_condition			(action,eWorldPropertyUseSuddenness,	true);
-	add_condition           (action, eWorldPropertyPureEnemy, true);
 	add_condition			(action,eWorldPropertyEnemyWounded,		false);
-
 	add_effect				(action,eWorldPropertyEnemy,			false);
-
 	add_operator			(eWorldOperatorSuddenAttack,			action);
 
 	action					= xr_new<CStalkerActionKillEnemyIfPlayerOnThePath>	(m_object,"kill enemy, if player is on my path");

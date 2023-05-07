@@ -635,7 +635,7 @@ void CAI_Stalker::UpdateCL()
 	VERIFY2						(PPhysicsShell()||getEnabled(), *cName());
 
 	if (g_Alive()) {
-		if (g_mt_config.test(mtObjectHandler) && CObjectHandler::planner().initialized()) {
+		if (g_mt_config.test(mtObjectHandler) /*&& CObjectHandler::planner().initialized()*/) {
 #ifdef DEBUG
 			
 			fastdelegate::FastDelegate0<> f = fastdelegate::FastDelegate0<>(this, &CAI_Stalker::update_object_handler);
@@ -759,7 +759,7 @@ void CAI_Stalker::shedule_Update		( u32 DT )
 		memory().visual().check_visibles();
 #endif
 		if (g_mt_config.test(mtAiVision))
-			Device.AddToAuxThread_Pool(1, fastdelegate::FastDelegate0<>(this, &CCustomMonster::Exec_Visibility));
+			Device.seqParallel.emplace_back(fastdelegate::FastDelegate0<>(this,&CCustomMonster::Exec_Visibility));
 		else {
 			START_PROFILE("stalker/schedule_update/vision")
 			Exec_Visibility				();

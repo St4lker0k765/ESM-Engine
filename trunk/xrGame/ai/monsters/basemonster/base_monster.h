@@ -253,8 +253,6 @@ public:
 	CMonsterEnemyManager	EnemyMan;
 	CMonsterCorpseManager	CorpseMan;
 
-	virtual bool			is_base_monster_with_enemy() { return EnemyMan.get_enemy() != NULL; }
-
 	bool					hear_dangerous_sound;
 	bool					hear_interesting_sound;
 

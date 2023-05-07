@@ -1,9 +1,8 @@
 #pragma once
 
 #include "iinputreceiver.h"
-//#include "CameraManager.h"
 #include "xr_object_list.h"
-#include "xr_area.h"
+#include "../xrcdb/xr_area.h"
 #include "xrGame/alife_space.h"
 
 // refs

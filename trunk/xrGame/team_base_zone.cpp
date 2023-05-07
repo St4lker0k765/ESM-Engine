@@ -19,6 +19,7 @@
 #include "map_manager.h"
 #include "map_location.h"
 #include "../xr_3da/IGame_Persistent.h"
+#include "../xr_3da/xr_collide_form.h"
 
 #ifdef DEBUG
 #	include "debug_renderer.h"

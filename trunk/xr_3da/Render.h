@@ -16,6 +16,7 @@ struct ENGINE_API	FSlideWindowItem;
 //	Igor
 class IRenderVisual;
 class IKinematics;
+class CGameFont;
 
 const	float		fLightSmoothFactor = 4.f;
 

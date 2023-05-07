@@ -17,8 +17,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Include Guard
-#ifndef __OPC_TREEBUILDERS_H__
-#define __OPC_TREEBUILDERS_H__
+#pragma once
 
 #include "opc_aabbtree.h"
 #include "../xrCore/xrPool.h"
@@ -143,5 +142,3 @@
 		const						udword		mNbTriangles;		//!< Total number of triangles.
 	};
 #pragma warning(default:4512)
-
-#endif // __OPC_TREEBUILDERS_H__

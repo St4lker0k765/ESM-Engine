@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "xr_collide_defs.h"
+#include "../xrcdb/xr_collide_defs.h"
 
 //refs
 class ENGINE_API IRender_DetailModel;

@@ -453,7 +453,6 @@
     <ClInclude Include="xrSheduler.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="Render.h" />
-    <ClInclude Include="ISpatial.h" />
     <ClInclude Include="ICollidable.h" />
     <ClInclude Include="IGame_Level.h" />
     <ClInclude Include="IGame_Persistent.h" />
@@ -474,8 +473,6 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Effector.h" />
     <ClInclude Include="EffectorPP.h" />
-    <ClInclude Include="xr_area.h" />
-    <ClInclude Include="xr_collide_defs.h" />
     <ClInclude Include="xr_collide_form.h" />
     <ClInclude Include="bone.h" />
     <ClInclude Include="envelope.h" />
@@ -511,7 +508,6 @@
     <ClInclude Include="pure.h" />
     <ClInclude Include="std_classes.h" />
     <ClInclude Include="cl_intersect.h" />
-    <ClInclude Include="xrXRC.h" />
     <ClInclude Include="xr_ioc_cmd.h" />
     <ClInclude Include="XR_IOConsole.h" />
     <ClInclude Include="Engine.h" />
@@ -556,21 +552,6 @@
     <ClCompile Include="xrSheduler.cpp" />
     <ClCompile Include="IRenderable.cpp" />
     <ClCompile Include="Render.cpp" />
-    <ClCompile Include="ISpatial.cpp">
-      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed_Dedicated|Win32'">AssemblyAndSourceCode</AssemblerOutput>
-      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed_Dedicated|x64'">AssemblyAndSourceCode</AssemblerOutput>
-      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">AssemblyAndSourceCode</AssemblerOutput>
-      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">AssemblyAndSourceCode</AssemblerOutput>
-    </ClCompile>
-    <ClCompile Include="ISpatial_q_box.cpp" />
-    <ClCompile Include="ISpatial_q_frustum.cpp" />
-    <ClCompile Include="ISpatial_q_ray.cpp">
-      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed_Dedicated|Win32'">AssemblyAndSourceCode</AssemblerOutput>
-      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed_Dedicated|x64'">AssemblyAndSourceCode</AssemblerOutput>
-      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">AssemblyAndSourceCode</AssemblerOutput>
-      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">AssemblyAndSourceCode</AssemblerOutput>
-    </ClCompile>
-    <ClCompile Include="ISpatial_verify.cpp" />
     <ClCompile Include="ICollidable.cpp" />
     <ClCompile Include="IGame_Level.cpp" />
     <ClCompile Include="IGame_Level_check_textures.cpp" />
@@ -591,8 +572,6 @@
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Effector.cpp" />
     <ClCompile Include="EffectorPP.cpp" />
-    <ClCompile Include="xr_area.cpp" />
-    <ClCompile Include="xr_area_raypick.cpp" />
     <ClCompile Include="xr_collide_form.cpp" />
     <ClCompile Include="Envelope.cpp" />
     <ClCompile Include="interp.cpp" />
@@ -663,7 +642,6 @@
     <ClCompile Include="Text_Console.cpp" />
     <ClCompile Include="Text_Console_WndProc.cpp" />
     <ClCompile Include="pure.cpp" />
-    <ClCompile Include="xrXRC.cpp" />
     <ClCompile Include="xr_ioc_cmd.cpp" />
     <ClCompile Include="XR_IOConsole.cpp" />
     <ClCompile Include="Engine.cpp" />

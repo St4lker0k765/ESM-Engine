@@ -1,11 +1,14 @@
 #include "stdafx.h"
 #include "ispatial.h"
-#include "render.h"
-#include "xr_object.h"
-#include "PS_Instance.h"
+#include "../xr_3da/render.h"
 
-ENGINE_API ISpatial_DB*		g_SpatialSpace			= NULL;
-ENGINE_API ISpatial_DB*		g_SpatialSpacePhysic	= NULL;
+#ifdef DEBUG
+#include "../xr_3da/xr_object.h"
+#include "../xr_3da/PS_Instance.h"
+#endif
+
+ISpatial_DB*		g_SpatialSpace			= nullptr;
+ISpatial_DB*		g_SpatialSpacePhysic	= nullptr;
 
 Fvector	c_spatial_offset	[8]	= 
 {
@@ -26,8 +29,8 @@ ISpatial::ISpatial			(ISpatial_DB* space)
 	spatial.sphere.R		= 0;
 	spatial.node_center.set	(0,0,0);
 	spatial.node_radius		= 0;
-	spatial.node_ptr		= NULL;
-	spatial.sector			= NULL;
+	spatial.node_ptr        = nullptr  ;
+	spatial.sector			= nullptr;
 	spatial.space			= space;
 }
 ISpatial::~ISpatial			(void)
@@ -78,8 +81,8 @@ void	ISpatial::spatial_unregister()
 	{
 		// remove
 		spatial.space->remove	(this);
-		spatial.node_ptr		= NULL;
-		spatial.sector			= NULL;
+		spatial.node_ptr		= nullptr;
+		spatial.sector			= nullptr;
 	} else {
 		// already unregistered
 	}
@@ -114,7 +117,7 @@ void			ISpatial_NODE::_init			(ISpatial_NODE* _parent)
 {
 	parent		=	_parent;
 	children[0]	=	children[1]	=	children[2]	=	children[3]	=
-	children[4]	=	children[5]	=	children[6]	=	children[7]	=	NULL;
+	children[4]	=	children[5]	=	children[6]	=	children[7]	=	nullptr;
 	items.clear();
 }
 
@@ -127,7 +130,7 @@ void			ISpatial_NODE::_insert			(ISpatial* S)
 
 void			ISpatial_NODE::_remove			(ISpatial* S)			
 {	
-	S->spatial.node_ptr			=	NULL;
+	S->spatial.node_ptr			=	nullptr;
 	xr_vector<ISpatial*>::iterator	it = std::find(items.begin(),items.end(),S);
 	VERIFY				(it!=items.end());
 	items.erase			(it);
@@ -141,7 +144,7 @@ ISpatial_DB::ISpatial_DB()
 	:cs(MUTEX_PROFILE_ID(ISpatial_DB))
 #endif // PROFILE_CRITICAL_SECTIONS
 {
-	m_root					= NULL;
+	m_root					= nullptr;
 	stat_nodes				= 0;
 	stat_objects			= 0;
 }
@@ -169,9 +172,9 @@ void			ISpatial_DB::initialize(Fbox& BB)
 		allocator_pool.reserve	(128);
 		m_center.set			(bbc);
 		m_bounds				= _max(_max(bbd.x,bbd.y),bbd.z);
-		rt_insert_object		= NULL;
+		rt_insert_object		= nullptr;
 		if (0==m_root)	m_root	= _node_create();
-		m_root->_init			(NULL);
+		m_root->_init			(nullptr);
 	}
 }
 ISpatial_NODE*	ISpatial_DB::_node_create		()
@@ -190,7 +193,7 @@ void			ISpatial_DB::_node_destroy(ISpatial_NODE* &P)
 	VERIFY						(P->_empty());
 	stat_nodes					--;
 	allocator_pool.push_back	(P);
-	P							= NULL;
+	P							= nullptr;
 }
 
 void			ISpatial_DB::_insert	(ISpatial_NODE* N, Fvector& n_C, float n_R)
@@ -251,7 +254,7 @@ void			ISpatial_DB::insert		(ISpatial* S)
 	if (!bValid)	
 	{
 		CObject*	O	= dynamic_cast<CObject*>(S);
-		if	(O)			Debug.fatal(DEBUG_INFO,"Invalid OBJECT position or radius (%s)",O->cName());
+		if	(O)			Debug.fatal(DEBUG_INFO,"Invalid OBJECT position or radius (%s)",O->cName().c_str());
 		else			{
 			CPS_Instance* P = dynamic_cast<CPS_Instance*>(S);
 			if (P)		Debug.fatal(DEBUG_INFO,"Invalid PS spatial position{%3.2f,%3.2f,%3.2f} or radius{%3.2f}",VPUSH(S->spatial.sphere.P),S->spatial.sphere.R);

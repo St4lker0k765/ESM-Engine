@@ -680,9 +680,6 @@ void CStalkerActionHoldPosition::execute		()
 	if (!mem_object.m_object)
 		return;
 
-	if (current_cover(m_object) < 3.f)
-		m_storage->set_property			(eWorldPropertyLookedOut,false);
-
 	object().sight().setup		(CSightAction(SightManager::eSightTypePosition,mem_object.m_object_params.m_position,true));
 	
 	if (completed()) {

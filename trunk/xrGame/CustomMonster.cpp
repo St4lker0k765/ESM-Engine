@@ -296,7 +296,7 @@ void CCustomMonster::shedule_Update	( u32 DT )
 #else // DEBUG
 		{
 			if (!psAI_Flags.test(aiStalker) || !!smart_cast<CActor*>(Level().CurrentEntity()))
-				Device.seqParallel.push_back(fastdelegate::FastDelegate0<>(this,&CCustomMonster::Exec_Visibility));
+				Device.AddToAuxThread_Pool(1, fastdelegate::FastDelegate0<>(this, &CCustomMonster::Exec_Visibility));
 			else
 				Exec_Visibility				();
 		}
@@ -739,12 +739,7 @@ void CCustomMonster::net_Destroy()
 	
 	Device.RemoveFromAuxthread1Pool(fastdelegate::FastDelegate0<>(this, &CCustomMonster::update_sound_player));
 
-	Device.remove_from_seq_parallel	(
-		fastdelegate::FastDelegate0<>(
-			this,
-			&CCustomMonster::Exec_Visibility
-		)
-	);
+	Device.RemoveFromAuxthread1Pool(fastdelegate::FastDelegate0<>(this, &CCustomMonster::Exec_Visibility));
 	
 #ifdef DEBUG
 	DBG().on_destroy_object(this);

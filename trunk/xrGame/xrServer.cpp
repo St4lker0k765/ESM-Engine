@@ -230,6 +230,8 @@ void xrServer::Update	()
 	NET_Packet		Packet;
 	csPlayers.Enter	();
 
+	VERIFY						(verify_entities());
+
 	ProceedDelayedPackets();
 	// game update
 	game->ProcessDelayedEvent();
@@ -260,6 +262,7 @@ void xrServer::Update	()
 
 	if (game->sv_force_sync)	Perform_game_export();
 
+	VERIFY						(verify_entities());
 	//-----------------------------------------------------
 	//Remove any of long time disconnected players
 	for (u32 DI = 0; DI<net_Players_disconnected.size(); )
@@ -409,6 +412,7 @@ void xrServer::SendUpdatesToAll()
 
 	if (game->sv_force_sync)	Perform_game_export();
 
+	VERIFY						(verify_entities());
 
 #ifdef BATTLEYE
 	if ( g_pGameLevel )
@@ -433,6 +437,7 @@ u32 xrServer::OnDelayedMessage	(NET_Packet& P, ClientID sender)			// Non-Zero me
 
 	csPlayers.Enter			();
 
+	VERIFY							(verify_entities());
 	xrClientData* CL				= ID_to_client(sender);
 	R_ASSERT2						(CL, make_string("packet type [%d]",type).c_str());
 
@@ -469,6 +474,7 @@ u32 xrServer::OnDelayedMessage	(NET_Packet& P, ClientID sender)			// Non-Zero me
 			}
 		}break;
 	}
+	VERIFY							(verify_entities());
 
 	csPlayers.Leave					();
 	return 0;
@@ -483,6 +489,7 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 
 	csPlayers.Enter			();
 
+	VERIFY							(verify_entities());
 	xrClientData* CL				= ID_to_client(sender);
 
 	switch (type)
@@ -490,16 +497,19 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 	case M_UPDATE:	
 		{
 			Process_update			(P,sender);						// No broadcast
+			VERIFY					(verify_entities());
 		}break;
 	case M_SPAWN:	
 		{
 			if (CL->flags.bLocal)
 				Process_spawn		(P,sender);	
 
+			VERIFY					(verify_entities());
 		}break;
 	case M_EVENT:	
 		{
 			Process_event			(P,sender);
+			VERIFY					(verify_entities());
 		}break;
 	case M_EVENT_PACK:
 		{
@@ -526,6 +536,7 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 			//-------------------------------------------------------------------
 			if (SV_Client) 
 				SendTo	(SV_Client->ID, P, net_flags(TRUE, TRUE));
+			VERIFY					(verify_entities());
 		}break;
 	case M_MOVE_PLAYERS_RESPOND:
 		{
@@ -540,10 +551,12 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 			xrClientData* CL		= ID_to_client	(sender);
 			if (CL)	CL->net_Ready	= TRUE;
 			if (SV_Client) SendTo	(SV_Client->ID, P, net_flags(TRUE, TRUE));
+			VERIFY					(verify_entities());
 		}break;
 	case M_GAMEMESSAGE:
 		{
 			SendBroadcast			(BroadcastCID,P,net_flags(TRUE,TRUE));
+			VERIFY					(verify_entities());
 		}break;
 	case M_CLIENTREADY:
 		{
@@ -563,10 +576,12 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 #endif // BATTLEYE
 			};
 			game->signal_Syncronize	();
+			VERIFY					(verify_entities());
 		}break;
 	case M_SWITCH_DISTANCE:
 		{
 			game->switch_distance	(P,sender);
+			VERIFY					(verify_entities());
 		}break;
 	case M_CHANGE_LEVEL:
 		{
@@ -574,23 +589,28 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 			{
 				SendBroadcast		(BroadcastCID,P,net_flags(TRUE,TRUE));
 			}
+			VERIFY					(verify_entities());
 		}break;
 	case M_SAVE_GAME:
 		{
 			game->save_game			(P,sender);
+			VERIFY					(verify_entities());
 		}break;
 	case M_LOAD_GAME:
 		{
 			game->load_game			(P,sender);
 			SendBroadcast			(BroadcastCID,P,net_flags(TRUE,TRUE));
+			VERIFY					(verify_entities());
 		}break;
 	case M_RELOAD_GAME:
 		{
 			SendBroadcast			(BroadcastCID,P,net_flags(TRUE,TRUE));
+			VERIFY					(verify_entities());
 		}break;
 	case M_SAVE_PACKET:
 		{
 			Process_save			(P,sender);
+			VERIFY					(verify_entities());
 		}break;
 	case M_CLIENT_REQUEST_CONNECTION_DATA:
 		{
@@ -669,6 +689,8 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 #endif // BATTLEYE
 		}
 	}
+
+	VERIFY							(verify_entities());
 
 	csPlayers.Leave					();
 
@@ -820,6 +842,55 @@ void		xrServer::OnChatMessage(NET_Packet* P, xrClientData* CL)
 		SendTo(Client->ID, *P);
 	};
 };
+
+#ifdef DEBUG
+
+static	BOOL	_ve_initialized			= FALSE;
+static	BOOL	_ve_use					= TRUE;
+
+bool xrServer::verify_entities				() const
+{
+	if (!_ve_initialized)	{
+		_ve_initialized					= TRUE;
+		if (strstr(Core.Params,"-~ve"))	_ve_use=FALSE;
+	}
+	if (!_ve_use)						return true;
+
+	xrS_entities::const_iterator		I = entities.begin();
+	xrS_entities::const_iterator		E = entities.end();
+	for ( ; I != E; ++I) {
+		VERIFY2							((*I).first != 0xffff,"SERVER : Invalid entity id as a map key - 0xffff");
+		VERIFY2							((*I).second,"SERVER : Null entity object in the map");
+		VERIFY3							((*I).first == (*I).second->ID,"SERVER : ID mismatch - map key doesn't correspond to the real entity ID",(*I).second->name_replace());
+		verify_entity					((*I).second);
+	}
+	return								(true);
+}
+
+void xrServer::verify_entity				(const CSE_Abstract *entity) const
+{
+	VERIFY(entity->m_wVersion!=0);
+	if (entity->ID_Parent != 0xffff) {
+		xrS_entities::const_iterator	J = entities.find(entity->ID_Parent);
+		VERIFY3							(J != entities.end(),"SERVER : Cannot find parent in the map",entity->name_replace());
+		VERIFY3							((*J).second,"SERVER : Null entity object in the map",entity->name_replace());
+		VERIFY3							((*J).first == (*J).second->ID,"SERVER : ID mismatch - map key doesn't correspond to the real entity ID",(*J).second->name_replace());
+		VERIFY3							(std::find((*J).second->children.begin(),(*J).second->children.end(),entity->ID) != (*J).second->children.end(),"SERVER : Parent/Children relationship mismatch - Object has parent, but corresponding parent doesn't have children",(*J).second->name_replace());
+	}
+
+	xr_vector<u16>::const_iterator		I = entity->children.begin();
+	xr_vector<u16>::const_iterator		E = entity->children.end();
+	for ( ; I != E; ++I) {
+		VERIFY3							(*I != 0xffff,"SERVER : Invalid entity children id - 0xffff",entity->name_replace());
+		xrS_entities::const_iterator	J = entities.find(*I);
+		VERIFY3							(J != entities.end(),"SERVER : Cannot find children in the map",entity->name_replace());
+		VERIFY3							((*J).second,"SERVER : Null entity object in the map",entity->name_replace());
+		VERIFY3							((*J).first == (*J).second->ID,"SERVER : ID mismatch - map key doesn't correspond to the real entity ID",(*J).second->name_replace());
+		VERIFY3							((*J).second->ID_Parent == entity->ID,"SERVER : Parent/Children relationship mismatch - Object has children, but children doesn't have parent",(*J).second->name_replace());
+	}
+}
+
+#endif // DEBUG
 
 shared_str xrServer::level_name				(const shared_str &server_options) const
 {

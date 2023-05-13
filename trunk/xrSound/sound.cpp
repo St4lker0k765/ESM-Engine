@@ -3,13 +3,16 @@
 
 #include "SoundRender_CoreA.h"
 
-void CSound_manager_interface::_create		(u64 window)
+XRSOUND_API xr_token* snd_devices_token = NULL;
+XRSOUND_API u32		  snd_device_id = u32(-1);
+
+void CSound_manager_interface::_create(u64 window)
 {
 	SoundRenderA = xr_new<CSoundRender_CoreA>();
 	SoundRender = SoundRenderA;
 	Sound = SoundRender;
 
-	if (strstr			( Core.Params,"-nosound"))
+	if (strstr(Core.Params, "-nosound"))
 	{
 		psSoundVEffects = 0.0f;
 		psSoundVFactor = 0.0f;
@@ -17,13 +20,12 @@ void CSound_manager_interface::_create		(u64 window)
 		//SoundRender->bPresent = FALSE;
 		//return;
 	}
-	Sound->_initialize	(window);
+	Sound->_initialize(window);
 }
 
-void CSound_manager_interface::_destroy	()
+void CSound_manager_interface::_destroy()
 {
-	Sound->_clear		();
-    xr_delete			(SoundRender);
-    Sound				= 0;
+	Sound->_clear();
+	xr_delete(SoundRender);
+	Sound = 0;
 }
-

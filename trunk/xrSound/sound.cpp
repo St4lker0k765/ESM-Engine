@@ -9,9 +9,13 @@ void CSound_manager_interface::_create		(u64 window)
 	SoundRender = SoundRenderA;
 	Sound = SoundRender;
 
-	if (strstr			( Core.Params,"-nosound")){
-		SoundRender->bPresent = FALSE;
-		return;
+	if (strstr			( Core.Params,"-nosound"))
+	{
+		psSoundVEffects = 0.0f;
+		psSoundVFactor = 0.0f;
+		psSoundVMusic = 0.0f;
+		//SoundRender->bPresent = FALSE;
+		//return;
 	}
 	Sound->_initialize	(window);
 }

@@ -192,6 +192,9 @@
     <ClInclude Include="Render.h">
       <Filter>Interfaces\Render</Filter>
     </ClInclude>
+    <ClInclude Include="ISpatial.h">
+      <Filter>Interfaces\SPATIAL</Filter>
+    </ClInclude>
     <ClInclude Include="ICollidable.h">
       <Filter>Interfaces\Collidable</Filter>
     </ClInclude>
@@ -251,6 +254,12 @@
     </ClInclude>
     <ClInclude Include="EffectorPP.h">
       <Filter>Game API\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="xr_area.h">
+      <Filter>Game API\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="xr_collide_defs.h">
+      <Filter>Game API\Collision</Filter>
     </ClInclude>
     <ClInclude Include="xr_collide_form.h">
       <Filter>Game API\Collision</Filter>
@@ -342,6 +351,9 @@
     <ClInclude Include="cl_intersect.h">
       <Filter>Engine\Collision Core</Filter>
     </ClInclude>
+    <ClInclude Include="xrXRC.h">
+      <Filter>Engine\Collision Core</Filter>
+    </ClInclude>
     <ClInclude Include="xr_ioc_cmd.h">
       <Filter>Engine\Console</Filter>
     </ClInclude>
@@ -431,6 +443,21 @@
     <ClCompile Include="Render.cpp">
       <Filter>Interfaces\Render</Filter>
     </ClCompile>
+    <ClCompile Include="ISpatial.cpp">
+      <Filter>Interfaces\SPATIAL</Filter>
+    </ClCompile>
+    <ClCompile Include="ISpatial_q_box.cpp">
+      <Filter>Interfaces\SPATIAL</Filter>
+    </ClCompile>
+    <ClCompile Include="ISpatial_q_frustum.cpp">
+      <Filter>Interfaces\SPATIAL</Filter>
+    </ClCompile>
+    <ClCompile Include="ISpatial_q_ray.cpp">
+      <Filter>Interfaces\SPATIAL</Filter>
+    </ClCompile>
+    <ClCompile Include="ISpatial_verify.cpp">
+      <Filter>Interfaces\SPATIAL</Filter>
+    </ClCompile>
     <ClCompile Include="ICollidable.cpp">
       <Filter>Interfaces\Collidable</Filter>
     </ClCompile>
@@ -490,6 +517,12 @@
     </ClCompile>
     <ClCompile Include="EffectorPP.cpp">
       <Filter>Game API\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="xr_area.cpp">
+      <Filter>Game API\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="xr_area_raypick.cpp">
+      <Filter>Game API\Collision</Filter>
     </ClCompile>
     <ClCompile Include="xr_collide_form.cpp">
       <Filter>Game API\Collision</Filter>
@@ -559,6 +592,9 @@
     </ClCompile>
     <ClCompile Include="pure.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="xrXRC.cpp">
+      <Filter>Engine\Collision Core</Filter>
     </ClCompile>
     <ClCompile Include="xr_ioc_cmd.cpp">
       <Filter>Engine\Console</Filter>

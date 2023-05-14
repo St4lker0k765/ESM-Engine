@@ -1,23 +1,21 @@
 #pragma once
 
+#include "xr_collide_form.h"
 #include "xr_collide_defs.h"
+
 
 #include "../Include/xrRender/FactoryPtr.h"
 #include "../Include/xrRender/ObjectSpaceRender.h"
-#include "xrXRC.h"
-
-#include "xrcdb.h"
 
 // refs
-class ISpatial;
-class ICollisionForm;
-class CObject;
+class ENGINE_API	ISpatial;
+class ENGINE_API	ICollisionForm;
+class ENGINE_API	CObject;
 
 //-----------------------------------------------------------------------------------------------------------
 //Space Area
 //-----------------------------------------------------------------------------------------------------------
-struct hdrCFORM;
-class XRCDB_API CObjectSpace
+class	ENGINE_API						CObjectSpace
 {
 private:
 	// Debug
@@ -43,10 +41,7 @@ public:
 										CObjectSpace		( );
 										~CObjectSpace		( );
 
-	void								Load(CDB::build_callback build_callback);
-	void								Load(LPCSTR path, LPCSTR fname, CDB::build_callback build_callback);
-	void								Load(IReader* R, CDB::build_callback build_callback);
-	void								Create(Fvector* verts, CDB::TRI* tris, const hdrCFORM& H, CDB::build_callback build_callback);
+	void								Load				( );
 
 	// Occluded/No
 	BOOL								RayTest				( const Fvector &start, const Fvector &dir, float range, collide::rq_target tgt, collide::ray_cache* cache, CObject* ignore_object);

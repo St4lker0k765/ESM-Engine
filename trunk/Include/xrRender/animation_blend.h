@@ -163,8 +163,8 @@ IC	bool CBlend::update_time			( float dt )
 	timeCurrent += quant; // stop@end - time is not going
 
 	bool	running_fwrd	=  ( quant > 0 );
-	float	const END_EPS_CONST	=	SAMPLE_SPF+EPS;
-	bool	at_end			=	running_fwrd && ( timeCurrent > ( timeTotal-END_EPS_CONST ) );
+	float	const END_EPS	=	SAMPLE_SPF+EPS;
+	bool	at_end			=	running_fwrd && ( timeCurrent > ( timeTotal-END_EPS ) );
 	bool	at_begin		=	!running_fwrd && ( timeCurrent < 0.f );
 	
 	if( !stop_at_end )
@@ -172,7 +172,7 @@ IC	bool CBlend::update_time			( float dt )
 		if( at_begin )
 			timeCurrent+= timeTotal;
 		if( at_end )
-			timeCurrent -= ( timeTotal-END_EPS_CONST );
+			timeCurrent -= ( timeTotal-END_EPS );
 		VERIFY( timeCurrent>=0.f );
 		return false;
 	}
@@ -181,7 +181,7 @@ IC	bool CBlend::update_time			( float dt )
 
 	if( at_end )
 	{
-		timeCurrent	= timeTotal-END_EPS_CONST;		// stop@end - time frozen at the end
+		timeCurrent	= timeTotal-END_EPS;		// stop@end - time frozen at the end
 		if( timeCurrent<0.f ) timeCurrent =0.f; 
 	}
 	else

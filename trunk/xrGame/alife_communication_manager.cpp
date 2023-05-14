@@ -78,7 +78,8 @@ public:
 };
 /**/
 
-CALifeCommunicationManager::CALifeCommunicationManager	(xrServer *server, LPCSTR section)
+CALifeCommunicationManager::CALifeCommunicationManager	(xrServer *server, LPCSTR section) :
+	CALifeSimulatorBase	(server,section)
 {
 //	m_tpItems1.reserve			(MAX_STACK_DEPTH);
 //	m_tpItems2.reserve			(MAX_STACK_DEPTH);

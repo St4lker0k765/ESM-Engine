@@ -47,7 +47,7 @@
 #include "device.h"
 #include "fs.h"
 
-#include "../xrcdb/xrXRC.h"
+#include "xrXRC.h"
 
 #include "../xrSound/sound.h"
 

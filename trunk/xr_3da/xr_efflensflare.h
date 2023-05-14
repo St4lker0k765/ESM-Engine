@@ -1,6 +1,7 @@
-#pragma once
+#ifndef xr_efflensflareH
+#define xr_efflensflareH
 
-#include "../xrcdb/xr_collide_defs.h"
+#include "xr_collide_defs.h"
 
 #include "../Include/xrRender/FactoryPtr.h"
 #include "../Include/xrRender/LensFlareRender.h"
@@ -127,3 +128,5 @@ public:
 
     void Invalidate() { m_State = lfsNone; }
 };
+
+#endif // xr_efflensflareH

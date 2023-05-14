@@ -1,8 +1,8 @@
+#ifndef xr_collide_defsH
+#define xr_collide_defsH
 #pragma once
 
-#include "xrcdb.h"
-
-class CObject;
+class ENGINE_API CObject;
 namespace collide 
 {
 	struct			tri {
@@ -135,3 +135,4 @@ namespace collide
 	typedef  BOOL		rq_callback 	(rq_result& result, LPVOID user_data);
 	typedef  BOOL		test_callback 	(const ray_defs& rd, CObject* object, LPVOID user_data);
 };
+#endif

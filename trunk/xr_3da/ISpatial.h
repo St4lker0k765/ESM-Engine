@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../xrCore/xrPool.h"
-
+#include "xrPool.h"
 #include "xr_collide_defs.h"
 
 #pragma pack(push,4)
@@ -49,13 +48,20 @@ enum
 //		glow					- renderable
 //		sound					- ???
 //////////////////////////////////////////////////////////////////////////
-class 				ISpatial_NODE;
-class 				IRender_Sector;
-class 				ISpatial_DB;
-namespace Feel { class Sound; }
-class 				IRenderable;
-class 				IRender_Light;
-class XRCDB_API				ISpatial
+class ENGINE_API				IRender_Sector;
+class ENGINE_API				ISpatial;
+class ENGINE_API				ISpatial_NODE;
+class ENGINE_API				ISpatial_DB;
+
+//////////////////////////////////////////////////////////////////////////
+// Fast type conversion
+class ENGINE_API				CObject;
+class ENGINE_API				IRenderable;
+class ENGINE_API				IRender_Light;
+namespace Feel { class ENGINE_API Sound; }
+
+//////////////////////////////////////////////////////////////////////////
+class ENGINE_API				ISpatial
 {
 public:
 	struct	_spatial
@@ -93,7 +99,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-class ISpatial_NODE
+class ENGINE_API				ISpatial_NODE
 {
 public:
 	typedef	_W64 unsigned		ptrt;
@@ -112,12 +118,8 @@ public:
 	}
 };
 
-#ifndef	DLL_API
-#	define DLL_API					__declspec(dllimport)
-#endif // #ifndef	DLL_API
-
 //////////////////////////////////////////////////////////////////////////
-class XRCDB_API		ISpatial_DB
+class ENGINE_API					ISpatial_DB
 {
 private:
 	xrCriticalSection				cs;
@@ -177,7 +179,7 @@ public:
 	void							q_frustum		(xr_vector<ISpatial*>& R, u32 _o, u32 _mask_or,  const CFrustum&	_frustum);
 };
 
-XRCDB_API extern ISpatial_DB*		g_SpatialSpace			;
-XRCDB_API extern ISpatial_DB*		g_SpatialSpacePhysic	;
+ENGINE_API extern ISpatial_DB*		g_SpatialSpace			;
+ENGINE_API extern ISpatial_DB*		g_SpatialSpacePhysic	;
 
 #pragma pack(pop)

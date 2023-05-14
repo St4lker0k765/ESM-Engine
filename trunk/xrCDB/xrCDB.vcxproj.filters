@@ -7,9 +7,6 @@
     <Filter Include="Opcode">
       <UniqueIdentifier>{acd9fe4b-f7bf-4d39-be10-bc77d2fe304e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{dbb81ac0-220e-4703-8bb3-404a0341c407}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cl_raypick.cpp">
@@ -104,30 +101,6 @@
     </ClCompile>
     <ClCompile Include="Opcode.cpp">
       <Filter>Opcode</Filter>
-    </ClCompile>
-    <ClCompile Include="ISpatial.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="ISpatial_q_box.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="ISpatial_q_frustum.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="ISpatial_q_ray.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="ISpatial_verify.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="xr_area.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="xr_area_raypick.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="xrXRC.cpp">
-      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,18 +229,6 @@
     </ClInclude>
     <ClInclude Include="Opcode.h">
       <Filter>Opcode</Filter>
-    </ClInclude>
-    <ClInclude Include="ISpatial.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="xr_collide_defs.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="xr_area.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="xrXRC.h">
-      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

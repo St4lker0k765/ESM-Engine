@@ -16,7 +16,7 @@
 #include "GameFont.h"
 #include "resource.h"
 #include "LightAnimLibrary.h"
-#include "../xrcdb/ispatial.h"
+#include "ispatial.h"
 #include "CopyProtection.h"
 #include <process.h>
 #include "DiscordRPC.hpp"

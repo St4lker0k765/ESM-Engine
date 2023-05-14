@@ -4,8 +4,6 @@
 #include "ParticlesObject.h"
 #include "level.h"
 #include "physicsshellholder.h"
-#include "../xr_3da/xr_collide_form.h"
-
 CMosquitoBald::CMosquitoBald(void) 
 {
 	m_dwDeltaTime			= 0;

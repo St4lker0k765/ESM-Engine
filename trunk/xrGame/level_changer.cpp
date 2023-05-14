@@ -19,7 +19,6 @@
 
 #include "HudManager.h"
 #include "UIGameSP.h"
-#include "../xr_3da/xr_collide_form.h"
 
 xr_vector<CLevelChanger*>	g_lchangers;
 

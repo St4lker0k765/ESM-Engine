@@ -72,7 +72,7 @@ public:
 	CRegistrator	<pureFrame			>			seqFrame;
 	CRegistrator	<pureFrame			>			seqFrameMT;
 	CRegistrator	<pureDeviceReset	>			seqDeviceReset;
-	xr_vector		<fastdelegate::FastDelegate0<> >	seqParallel;
+	xr_vector		<fastdelegate::FastDelegate<void()> >	seqParallel;
 
 	// Dependent classes
  
@@ -169,14 +169,14 @@ public:
 	volatile BOOL		mt_bMustExit;
 
 	// Dependable from MainThread Aux thread 5 workload pool
-	xr_vector		<fastdelegate::FastDelegate0<>>	auxThreadPool_5_;
+	xr_vector		<fastdelegate::FastDelegate<void()>>	auxThreadPool_5_;
 
 	// Locks
 	AccessLock		AuxPool_5_Protection_;
 
-	ICF		void			remove_from_seq_parallel	(const fastdelegate::FastDelegate0<> &delegate)
+	ICF		void			remove_from_seq_parallel	(const fastdelegate::FastDelegate<void()>& delegate)
 	{
-		xr_vector<fastdelegate::FastDelegate0<> >::iterator I = std::find(
+		xr_vector<fastdelegate::FastDelegate<void()>>::iterator I = std::find(
 			seqParallel.begin(),
 			seqParallel.end(),
 			delegate
@@ -185,7 +185,7 @@ public:
 			seqParallel.erase	(I);
 	}
 
-	ICF	void			AddToAuxThread_Pool(u8 aux_thread_no, const fastdelegate::FastDelegate0<>& delegate)
+	ICF	void			AddToAuxThread_Pool(u8 aux_thread_no, const fastdelegate::FastDelegate<void()>& delegate)
 	{
 		R_ASSERT(aux_thread_no > 0 && aux_thread_no <= SEQUANTIAL_AUX_THREADS_COUNT);
 
@@ -199,11 +199,11 @@ public:
 			R_ASSERT(false);
 	}
 
-	ICF	void			RemoveFromAuxthread5Pool(const fastdelegate::FastDelegate0<>& delegate)
+	ICF	void			RemoveFromAuxthread5Pool(const fastdelegate::FastDelegate<void()>& delegate)
 	{
 		AuxPool_5_Protection_.Enter();
 
-		xr_vector<fastdelegate::FastDelegate0<> >::iterator I = std::find(
+		xr_vector<fastdelegate::FastDelegate<void()> >::iterator I = std::find(
 			auxThreadPool_5_.begin(),
 			auxThreadPool_5_.end(),
 			delegate
@@ -215,9 +215,9 @@ public:
 		AuxPool_5_Protection_.Leave();
 	}
 public:
-	void xr_stdcall		on_idle();
+	void on_idle();
 private:
-	void					message_loop();
+	void message_loop();
 };
 
 extern		ENGINE_API		CRenderDevice		Device;
@@ -226,5 +226,4 @@ extern		ENGINE_API		CRenderDevice		Device;
 
 extern		ENGINE_API		bool				g_bBenchmark;
 
-typedef fastdelegate::FastDelegate0<bool>		LOADING_EVENT;
-extern	ENGINE_API xr_list<LOADING_EVENT>		g_loading_events;
+extern	ENGINE_API xr_list<fastdelegate::FastDelegate<bool()>> g_loading_events;

@@ -40,7 +40,7 @@ void CUIMapInfo::Init(float x, float y, float width, float height){
 
 void CUIMapInfo::InitMap(const char* map_name){
 	m_view->Clear();
-	if (NULL == map_name)
+	if (nullptr == map_name)
 		return;
 
 	CStringTable str_tbl;

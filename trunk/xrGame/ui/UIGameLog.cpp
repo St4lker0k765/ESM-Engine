@@ -28,7 +28,7 @@ CUIGameLog::~CUIGameLog()
 
 CUIStatic* CUIGameLog::AddLogMessage(LPCSTR msg)
 {
-	CUIStatic* pItem				= NULL;
+	CUIStatic* pItem				= nullptr;
 	ADD_TEXT_TO_VIEW3				(msg, pItem, this);
 	pItem->SetTextComplexMode		(true);
 	pItem->SetFont					(GetFont());
@@ -73,7 +73,7 @@ void CUIGameLog::AddChatMessage(LPCSTR msg, LPCSTR author){
 	sprintf_s(fullLine, "%s %s", author, msg);
 	_TrimRight	(fullLine);
     
-	CUIStatic* pItem = NULL;
+	CUIStatic* pItem = nullptr;
 
 	pItem = xr_new<CUIStatic>();
 	pItem->SetTextComplexMode		(true);

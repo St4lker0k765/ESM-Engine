@@ -246,7 +246,6 @@ DEFINE_VECTOR	(xr_rtoken,RTokenVec,RTokenVecIt);
 #endif
 #include "FileSystem.h"
 #include "FTimer.h"
-#include "fastdelegate.h"
 #include "intrusive_ptr.h"
 
 // destructor

@@ -46,7 +46,7 @@ public:
 			void		SetItem					(int i);
 
 	virtual void		Init					(float x, float y, float width, float height);	
-	virtual void		SendMessage				(CUIWindow *pWnd, s16 msg, void* pData = 0);
+	virtual void		SendMessage				(CUIWindow *pWnd, s16 msg, void* pData = nullptr);
 	virtual void		OnFocusLost				();
 	virtual void		OnFocusReceive			();
 			int			CurrentID				()	{return m_itoken_id;}

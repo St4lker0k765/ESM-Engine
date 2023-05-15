@@ -21,9 +21,9 @@
 #include "../game_cl_artefacthunt.h"
 
 CUIMessagesWindow::CUIMessagesWindow(){
-	m_pChatLog = NULL;
-	m_pChatWnd = NULL;
-	m_pGameLog = NULL;
+	m_pChatLog = nullptr;
+	m_pChatWnd = nullptr;
+	m_pGameLog = nullptr;
 	Init(0, 0, UI_BASE_WIDTH, UI_BASE_HEIGHT);
 }
 

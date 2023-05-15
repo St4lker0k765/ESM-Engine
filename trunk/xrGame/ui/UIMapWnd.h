@@ -56,15 +56,15 @@ private:
 //.	CMapLocation*				m_selected_location;
 	CUIStatic*					m_text_hint;
 
-	void __stdcall				OnScrollV				(CUIWindow*, void*);
-	void __stdcall				OnScrollH				(CUIWindow*, void*);
-	void __stdcall				OnToolGlobalMapClicked	(CUIWindow*, void*);
+	void        				OnScrollV				(CUIWindow*, void*);
+	void          				OnScrollH				(CUIWindow*, void*);
+	void         				OnToolGlobalMapClicked	(CUIWindow*, void*);
 //.	void						OnToolHighlightSpotClicked(CUIWindow*, void*);
-	void __stdcall				OnToolActorClicked		(CUIWindow*, void*);
+	void         				OnToolActorClicked		(CUIWindow*, void*);
 	void						OnToolNextMapClicked	(CUIWindow*, void*);
 	void						OnToolPrevMapClicked	(CUIWindow*, void*);
-	void __stdcall				OnToolZoomInClicked		(CUIWindow*, void*);
-	void __stdcall				OnToolZoomOutClicked	(CUIWindow*, void*);
+	void         				OnToolZoomInClicked		(CUIWindow*, void*);
+	void         				OnToolZoomOutClicked	(CUIWindow*, void*);
 //.	void						OnToolAddSpotClicked	(CUIWindow*, void*);
 //.	void						OnToolRemoveSpotClicked	(CUIWindow*, void*);
 	void						ValidateToolBar			();
@@ -96,7 +96,7 @@ public:
 	virtual bool				OnKeyboard				(int dik, EUIMessages keyboard_action);
 	virtual bool				OnKeyboardHold			(int dik);
 
-	virtual void				SendMessage				(CUIWindow* pWnd, s16 msg, void* pData = NULL);
+	virtual void				SendMessage				(CUIWindow* pWnd, s16 msg, void* pData = nullptr);
 
 	void						SetTargetMap			(CUICustomMap* m, bool bZoomIn = false);
 	void						SetTargetMap			(CUICustomMap* m, const Fvector2& pos, bool bZoomIn = false);

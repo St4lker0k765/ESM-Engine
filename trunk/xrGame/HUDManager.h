@@ -62,7 +62,7 @@ public:
 	virtual		IC CUI*		GetUI				(){return pUI;}
 
 				void		Hit					(int idx, float power, const Fvector& dir);
-	CFontManager&			Font				()							{return *(UI()->Font());}
+	CFontManager&			Font				()							{return (UI().Font());}
 	//текущий предмет на который смотрит HUD
 	collide::rq_result&		GetCurrentRayQuery	();
 

@@ -16,12 +16,12 @@ enum EListType{
 };
 
 struct CUICell{
-							CUICell					()						{m_item=NULL; Clear();}
+							CUICell					()						{m_item= nullptr; Clear();}
 
 		CUICellItem*		m_item;
 		bool				m_bMainItem;
 		void				SetItem					(CUICellItem* itm, bool bMain)		{m_item = itm; VERIFY(m_item);m_bMainItem = bMain;}
-		bool				Empty					()						{return m_item == NULL;}
+		bool				Empty					()						{return m_item == nullptr;}
 		bool				MainItem				()						{return m_bMainItem;}
 		void				Clear					();
 		bool				operator ==				(const CUICell& C) const{return (m_item == C.m_item);}
@@ -49,12 +49,12 @@ protected:
 	CUICellContainer*		m_container;
 	CUIScrollBar*			m_vScrollBar;
 
-	void	__stdcall		OnScrollV				(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemStartDragging		(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemDrop				(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemSelected			(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemRButtonClick		(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemDBClick			(CUIWindow* w, void* pData);
+	void		OnScrollV				(CUIWindow* w, void* pData);
+	void		OnItemStartDragging		(CUIWindow* w, void* pData);
+	void		OnItemDrop				(CUIWindow* w, void* pData);
+	void		OnItemSelected			(CUIWindow* w, void* pData);
+	void		OnItemRButtonClick		(CUIWindow* w, void* pData);
+	void		OnItemDBClick			(CUIWindow* w, void* pData);
 	
 public:
 	static CUIDragItem*		m_drag_item;
@@ -62,7 +62,7 @@ public:
 	virtual					~CUIDragDropListEx	();
 				void		Init				(float x, float y, float w, float h);
 
-	typedef					fastdelegate::FastDelegate1<CUICellItem*, bool>		DRAG_DROP_EVENT;
+				using DRAG_DROP_EVENT = fastdelegate::FastDelegate<bool(CUICellItem*) >;
 
 	DRAG_DROP_EVENT			m_f_item_drop;
 	DRAG_DROP_EVENT			m_f_item_start_drag;
@@ -108,7 +108,7 @@ public:
 	virtual		void		Draw				();
 	virtual		void		Update				();
 	virtual		bool		OnMouse				(float x, float y, EUIMessages mouse_action);
-	virtual		void		SendMessage			(CUIWindow* pWnd, s16 msg, void* pData = NULL);
+	virtual		void		SendMessage			(CUIWindow* pWnd, s16 msg, void* pData = nullptr);
 
 };
 

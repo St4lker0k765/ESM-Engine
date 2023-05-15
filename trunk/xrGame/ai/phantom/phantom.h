@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../entity.h"
-#include "../../fastdelegate.h"
 #include "..\include\xrRender\animation_motion.h"
 
 class CParticlesObject;
@@ -24,13 +23,13 @@ private:
 
 	void				SwitchToState_internal		(EState new_state);
 	void				SwitchToState				(EState new_state){m_TgtState=new_state;}
-	void __stdcall		OnIdleState					();
-	void __stdcall		OnFlyState					();
-	void __stdcall		OnDeadState					();
+	void 		OnIdleState					();
+	void 		OnFlyState					();
+	void 		OnDeadState					();
 
 	void				UpdateFlyMedia				();
 
-	fastdelegate::FastDelegate0<>					UpdateEvent;
+	fastdelegate::FastDelegate<void()> UpdateEvent;
 private:
 	struct SStateData{
 		shared_str		particles;

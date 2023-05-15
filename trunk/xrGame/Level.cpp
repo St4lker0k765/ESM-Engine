@@ -52,7 +52,7 @@ ENGINE_API bool g_dedicated_server;
 
 extern BOOL	g_bDebugDumpPhysicsStep;
 
-CPHWorld	*ph_world			= 0;
+CPHWorld	*ph_world			= nullptr;
 float		g_cl_lvInterp		= 0;
 u32			lvInterpSteps		= 0;
 //////////////////////////////////////////////////////////////////////
@@ -66,9 +66,9 @@ CLevel::CLevel():IPureClient	(Device.GetTimerGlobal())
 {
 	g_bDebugEvents				= strstr(Core.Params,"-debug_ge")?TRUE:FALSE;
 
-	Server						= NULL;
+	Server						= nullptr;
 
-	game						= NULL;
+	game						= nullptr;
 //	game						= xr_new<game_cl_GameState>();
 	game_events					= xr_new<NET_Queue_Event>();
 
@@ -87,7 +87,7 @@ CLevel::CLevel():IPureClient	(Device.GetTimerGlobal())
 	if(!g_dedicated_server)
 		m_map_manager				= xr_new<CMapManager>();
 	else
-		m_map_manager				= NULL;
+		m_map_manager				= nullptr;
 
 //	m_pFogOfWarMngr				= xr_new<CFogOfWarMngr>();
 //----------------------------------------------------
@@ -114,13 +114,13 @@ CLevel::CLevel():IPureClient	(Device.GetTimerGlobal())
 
 	}else
 	{
-		m_level_sound_manager		= NULL;
-		m_client_spawn_manager		= NULL;
-		m_autosave_manager			= NULL;
-		m_space_restriction_manager = NULL;
+		m_level_sound_manager		= nullptr;
+		m_client_spawn_manager		= nullptr;
+		m_autosave_manager			= nullptr;
+		m_space_restriction_manager = nullptr;
 	#ifdef DEBUG
-		m_debug_renderer			= NULL;
-		m_level_debug				= NULL;
+		m_debug_renderer			= nullptr;
+		m_level_debug				= nullptr;
 	#endif
 	}
 
@@ -133,13 +133,13 @@ CLevel::CLevel():IPureClient	(Device.GetTimerGlobal())
 	m_bSynchronization			= false;
 #endif	
 	//---------------------------------------------------------
-	pStatGraphR = NULL;
-	pStatGraphS = NULL;
+	pStatGraphR = nullptr;
+	pStatGraphS = nullptr;
 	//---------------------------------------------------------
 	pObjects4CrPr.clear();
 	pActors4CrPr.clear();
 	//---------------------------------------------------------
-	pCurrentControlEntity = NULL;
+	pCurrentControlEntity = nullptr;
 
 	//---------------------------------------------------------
 	m_dwCL_PingLastSendTime = 0;
@@ -150,8 +150,8 @@ CLevel::CLevel():IPureClient	(Device.GetTimerGlobal())
 	m_sDemoName[0] = 0;
 	m_bDemoSaveMode = FALSE;
 	m_dwStoredDemoDataSize = 0;
-	m_pStoredDemoData = NULL;
-	m_pOldCrashHandler = NULL;
+	m_pStoredDemoData = nullptr;
+	m_pOldCrashHandler = nullptr;
 	m_we_used_old_crach_handler	= false;
 
 //	if ( !strstr( Core.Params, "-tdemo " ) && !strstr(Core.Params,"-tdemof "))
@@ -336,7 +336,7 @@ void CLevel::cl_Process_Event				(u16 dest, u16 type, NET_Packet& P)
 {
 	//			Msg				("--- event[%d] for [%d]",type,dest);
 	CObject*	 O	= Objects.net_Find	(dest);
-	if (0==O)		{
+	if (nullptr==O)		{
 #ifdef DEBUG
 		Msg("* WARNING: c_EVENT[%d] to [%d]: unknown dest",type,dest);
 #endif // DEBUG
@@ -361,7 +361,7 @@ void CLevel::cl_Process_Event				(u16 dest, u16 type, NET_Packet& P)
 		bool			ok = true;
 
 		CObject			*D	= Objects.net_Find	(id);
-		if (0==D)		{
+		if (nullptr==D)		{
 			Msg			("! ERROR: c_EVENT[%d] : unknown dest",id);
 			ok			= false;
 		}
@@ -564,7 +564,7 @@ void CLevel::OnFrame	()
 	if(!g_dedicated_server)
 	{
 		if (g_mt_config.test(mtLevelSounds)) 
-			Device.seqParallel.emplace_back(fastdelegate::FastDelegate0<>(m_level_sound_manager,&CLevelSoundManager::Update));
+			Device.seqParallel.emplace_back(fastdelegate::MakeDelegate(m_level_sound_manager,&CLevelSoundManager::Update));
 		else								
 			m_level_sound_manager->Update	();
 	}
@@ -572,7 +572,7 @@ void CLevel::OnFrame	()
 	if (!g_dedicated_server)
 	{
 		if (g_mt_config.test(mtLUA_GC))
-			Device.seqParallel.emplace_back(fastdelegate::FastDelegate0<>(this,&CLevel::script_gc));
+			Device.seqParallel.emplace_back(fastdelegate::MakeDelegate(this,&CLevel::script_gc));
 		else							script_gc	()	;
 	}
 	//-----------------------------------------------------

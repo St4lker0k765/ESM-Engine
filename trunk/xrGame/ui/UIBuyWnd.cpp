@@ -63,7 +63,7 @@ CUIBuyWnd::CUIBuyWnd()
 	m_propertiesBox.Init	(0,0,300,300);
 	m_propertiesBox.Hide	();
 
-	m_pCurrentCellItem		= NULL;
+	m_pCurrentCellItem		= nullptr;
 }
 
 CUIBuyWnd::~CUIBuyWnd()
@@ -83,7 +83,7 @@ void CUIBuyWnd::ResetItems()
 
 void CUIBuyWnd::Show()
 {
-	m_pMouseCapturer		= NULL;
+	m_pMouseCapturer		= nullptr;
 	inherited::Show			();
 
 	
@@ -94,7 +94,7 @@ void CUIBuyWnd::Show()
 	m_tab.SetActiveState	();
 
 	CUIOutfitDragDropList* lst = (CUIOutfitDragDropList*)m_list[MP_SLOT_OUTFIT];
-	lst->SetItem			(NULL);
+	lst->SetItem			(nullptr);
 }
 
 void CUIBuyWnd::Hide()
@@ -174,7 +174,7 @@ void CUIBuyWnd::Init(const shared_str& sectionName, const shared_str& sectionPri
 	BindDragDropListEvents				(m_list[MP_SLOT_BELT],		false);
 	BindDragDropListEvents				(m_list[MP_SLOT_OUTFIT],	false);
 
-	m_list[MP_SLOT_OUTFIT]->SetItem		(NULL);
+	m_list[MP_SLOT_OUTFIT]->SetItem		(nullptr);
 
 	CUIXmlInit::InitWindow				(xml_doc, "desc_static",				0, &m_itemInfo);
 	CUIXmlInit::InitStatic				(xml_doc, "desc_static:rank_icon",		0, &m_rankInfo);
@@ -360,8 +360,8 @@ void CUIBuyWnd::Highlight(int slot)
 	R_ASSERT(MP_SLOT_PISTOL == slot || MP_SLOT_RIFLE == slot);
 
 	
-	CUICellItem*	item		= NULL;
-	CInventoryItem*	iitem		= NULL;
+	CUICellItem*	item		= nullptr;
+	CInventoryItem*	iitem		= nullptr;
 
 	if (m_list[slot]->ItemsCount())
 	{
@@ -411,7 +411,7 @@ void CUIBuyWnd::ProcessPropertiesBoxClicked()
 {
 	if(m_propertiesBox.GetClickedItem())
 	{
-		CUICellItem* itm			= NULL;
+		CUICellItem* itm			= nullptr;
 
 		switch(m_propertiesBox.GetClickedItem()->GetTAG())
 		{
@@ -496,7 +496,7 @@ bool CUIBuyWnd::ClearTooExpensiveItems()
 
 		if (itm->GetColor() == PRICE_RESTR_COLOR)
 		{
-			itm->GetMessageTarget()->SendMessage(itm, DRAG_DROP_ITEM_DB_CLICK, NULL);
+			itm->GetMessageTarget()->SendMessage(itm, DRAG_DROP_ITEM_DB_CLICK, nullptr);
 			f					= true;
 			i					= 0;
 			c					= m_list[MP_SLOT_BELT]->ItemsCount();
@@ -562,7 +562,7 @@ bool CUIBuyWnd::SlotToSection(int slot)
 	while (m_list[slot]->ItemsCount())
 	{
 		CUICellItem *itm						= m_list[slot]->GetItemIdx(0);
-		itm->GetMessageTarget()->SendMessage	(itm, DRAG_DROP_ITEM_DB_CLICK, NULL);
+		itm->GetMessageTarget()->SendMessage	(itm, DRAG_DROP_ITEM_DB_CLICK, nullptr);
 	}
 	return			true;
 }
@@ -600,7 +600,7 @@ CUICellItem* CUIBuyWnd::CurrentItem()
 
 CInventoryItem* CUIBuyWnd::CurrentIItem()
 {
-	return	(m_pCurrentCellItem)?(CInventoryItem*)m_pCurrentCellItem->m_pData : NULL;
+	return	(m_pCurrentCellItem)?(CInventoryItem*)m_pCurrentCellItem->m_pData : nullptr;
 }
 
 void CUIBuyWnd::SetCurrentItem(CUICellItem* itm)
@@ -712,7 +712,7 @@ CUIDragDropListEx* CUIBuyWnd::GetSlotList(u32 slot_idx)
 			NODEFAULT;
 	};
 #ifdef DEBUG
-	return NULL;
+	return nullptr;
 #endif // DEBUG
 }
 
@@ -807,23 +807,23 @@ void CUIBuyWnd::ActivatePropertiesBox()
 
 	if((pWeapon || pOutfit ) && m_bag.IsInBag(CurrentItem()) && m_bag.CanBuy(CurrentItem()) /*&& m_list[GetLocalSlot(CurrentIItem()->GetSlot())]->ItemsCount()*/)
 	{
-		m_propertiesBox.AddItem("st_move_to_slot",  NULL, INVENTORY_TO_SLOT_ACTION);
+		m_propertiesBox.AddItem("st_move_to_slot", nullptr, INVENTORY_TO_SLOT_ACTION);
 	}
 	if(CurrentIItem()->Belt() && CanPutInBelt(CurrentIItem()))
 	{
-		m_propertiesBox.AddItem("st_move_on_belt",  NULL, INVENTORY_TO_BELT_ACTION);
+		m_propertiesBox.AddItem("st_move_on_belt", nullptr, INVENTORY_TO_BELT_ACTION);
 	}
 	if(!m_bag.IsInBag(CurrentItem()))
 	{
 		if(!pOutfit)
-			m_propertiesBox.AddItem("st_move_to_bag",  NULL, INVENTORY_TO_BAG_ACTION);
+			m_propertiesBox.AddItem("st_move_to_bag", nullptr, INVENTORY_TO_BAG_ACTION);
 		else
-			m_propertiesBox.AddItem("st_undress_outfit",  NULL, INVENTORY_TO_BAG_ACTION);
+			m_propertiesBox.AddItem("st_undress_outfit", nullptr, INVENTORY_TO_BAG_ACTION);
 		bAlreadyDressed = true;
 	}
 	if(pOutfit  && !bAlreadyDressed )
 	{
-		m_propertiesBox.AddItem("Dress in outfit",  NULL, INVENTORY_TO_SLOT_ACTION);
+		m_propertiesBox.AddItem("Dress in outfit", nullptr, INVENTORY_TO_SLOT_ACTION);
 	}
 	//
 	//отсоединение аддонов от вещи
@@ -843,7 +843,7 @@ void CUIBuyWnd::ActivatePropertiesBox()
 		if(pWeapon->ScopeAttachable())
 		{
 			if (pWeapon->IsScopeAttached())
-                m_propertiesBox.AddItem("st_detach_scope",  NULL, INVENTORY_DETACH_SCOPE_ADDON);
+                m_propertiesBox.AddItem("st_detach_scope", nullptr, INVENTORY_DETACH_SCOPE_ADDON);
 			else{
 
 				if (m_bag.CanBuy(*pWeapon->GetScopeName()))
@@ -858,7 +858,7 @@ void CUIBuyWnd::ActivatePropertiesBox()
 		if(pWeapon->SilencerAttachable())
 		{
 			if (pWeapon->IsSilencerAttached())
-                m_propertiesBox.AddItem("st_detach_silencer",  NULL, INVENTORY_DETACH_SILENCER_ADDON);
+                m_propertiesBox.AddItem("st_detach_silencer", nullptr, INVENTORY_DETACH_SILENCER_ADDON);
 			else {
 
 				if (m_bag.CanBuy(*pWeapon->GetSilencerName()))
@@ -873,7 +873,7 @@ void CUIBuyWnd::ActivatePropertiesBox()
 	}
 	if(pScope)
 	{
-		CInventoryItem* pIItem = NULL;
+		CInventoryItem* pIItem = nullptr;
 		if (m_list[MP_SLOT_PISTOL]->ItemsCount())
 		{
 			pIItem = (CInventoryItem*)((m_list[MP_SLOT_PISTOL]->GetItemIdx(0))->m_pData);
@@ -893,7 +893,7 @@ void CUIBuyWnd::ActivatePropertiesBox()
 	}
 	else if(pSilencer)
 	{
-		CInventoryItem* pIItem = NULL;
+		CInventoryItem* pIItem = nullptr;
 		if (m_list[MP_SLOT_PISTOL]->ItemsCount())
 		{
 			pIItem = (CInventoryItem*)((m_list[MP_SLOT_PISTOL]->GetItemIdx(0))->m_pData);
@@ -912,7 +912,7 @@ void CUIBuyWnd::ActivatePropertiesBox()
 	}
 	else if(pGrenadeLauncher)
 	{
-		CInventoryItem* pIItem = NULL;
+		CInventoryItem* pIItem = nullptr;
 		if (m_list[MP_SLOT_RIFLE]->ItemsCount())
 		{
 			pIItem = (CInventoryItem*)((m_list[MP_SLOT_RIFLE]->GetItemIdx(0))->m_pData);
@@ -934,7 +934,7 @@ void CUIBuyWnd::ActivatePropertiesBox()
 	Frect							vis_rect;
 
 	GetAbsoluteRect					(vis_rect);
-	cursor_pos						= GetUICursor()->GetCursorPosition();
+	cursor_pos						= GetUICursor().GetCursorPosition();
 	cursor_pos.sub					(vis_rect.lt);
 	m_propertiesBox.Show			(vis_rect, cursor_pos);
 
@@ -978,7 +978,7 @@ CWeapon* CUIBuyWnd::GetPistol()
 		return					pistol;
 	}
 	else 
-		return					NULL;
+		return nullptr;
 }
 
 CWeapon* CUIBuyWnd::GetRifle()
@@ -990,7 +990,7 @@ CWeapon* CUIBuyWnd::GetRifle()
 		return					rifle;
 	}
 	else 
-		return					NULL;
+		return nullptr;
 }
 
 bool CUIBuyWnd::ToSlot(CUICellItem* itm, bool force_place)
@@ -1144,7 +1144,7 @@ bool CUIBuyWnd::ToBag(CUICellItem* itm, bool b_use_cursor_pos)
 
 		// else if it is Belt
 		CUIDragDropListEx*	old_owner	= itm->OwnerList();
-		CUIDragDropListEx*	new_owner	= NULL;
+		CUIDragDropListEx*	new_owner	= nullptr;
 		if(b_use_cursor_pos)
 		{
 				new_owner				= CUIDragDropListEx::m_drag_item->BackList();
@@ -1172,7 +1172,7 @@ bool CUIBuyWnd::ToBelt(CUICellItem* itm, bool b_use_cursor_pos)
 	if(CanPutInBelt(iitem) && m_list[MP_SLOT_BELT]->CanSetItem(itm))
 	{
 		CUIDragDropListEx*	old_owner	= itm->OwnerList();
-		CUIDragDropListEx*	new_owner	= NULL;
+		CUIDragDropListEx*	new_owner	= nullptr;
 		if(b_use_cursor_pos){
 				new_owner				= CUIDragDropListEx::m_drag_item->BackList();
 				VERIFY					(new_owner==m_list[MP_SLOT_BELT]);
@@ -1212,7 +1212,7 @@ u32 CUIBuyWnd::GetRank()
 
 const u8 CUIBuyWnd::GetItemIndex(u32 slotNum, u32 idx, u8 &sectionNum)
 {
-	CUICellItem *itm			= NULL;
+	CUICellItem *itm			= nullptr;
 
 	if (m_list[GetLocalSlot(slotNum)]->ItemsCount())
         itm						= m_list[GetLocalSlot(slotNum)]->GetItemIdx(idx);
@@ -1222,7 +1222,7 @@ const u8 CUIBuyWnd::GetItemIndex(u32 slotNum, u32 idx, u8 &sectionNum)
 
 const u8 CUIBuyWnd::GetWeaponIndexInBelt(u32 indexInBelt, u8 &sectionId, u8 &itemId, u8 &count)
 {
-	CUICellItem* itm			= NULL;
+	CUICellItem* itm			= nullptr;
 
 	if (m_list[GetLocalSlot(BELT_SLOT)]->ItemsCount())
 		itm						= m_list[GetLocalSlot(BELT_SLOT)]->GetItemIdx(indexInBelt);
@@ -1342,7 +1342,7 @@ void CUIBuyWnd::AttachAddon(CInventoryItem* item_to_upgrade)
 	item_to_upgrade->Attach						(CurrentIItem(), true);
 	m_bag.BuyItem								(CurrentItem());
 
-	SetCurrentItem								(NULL);
+	SetCurrentItem								(nullptr);
 }
 
 void CUIBuyWnd::DetachAddon(const char* addon_name)
@@ -1466,7 +1466,7 @@ void CUIBuyWnd::CheckAddons(CUICellItem* itm)
 void CUIBuyWnd::UpdAddon(CUIWeaponCellItem* itm, CSE_ALifeItemWeapon::EWeaponAddonState add_on)
 {
 	CWeapon* wpn			= (CWeapon*)itm->m_pData;	
-	CUICellItem* add_itm	= NULL;
+	CUICellItem* add_itm	= nullptr;
 
 	switch (add_on)
 	{

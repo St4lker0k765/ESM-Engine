@@ -52,7 +52,7 @@ void AddEffector		(CActor* A, int type, const shared_str& sect_name, CEffectorCo
 	}
 }
 
-void AddEffector		(CActor* A, int type, const shared_str& sect_name, GET_KOEFF_FUNC k_func)
+void AddEffector		(CActor* A, int type, const shared_str& sect_name, fastdelegate::FastDelegate<float()> k_func)
 {
 	if(pSettings->line_exist(sect_name,"pp_eff_name")){
 		bool bCyclic						= !!pSettings->r_bool(sect_name,"pp_eff_cyclic");
@@ -210,7 +210,7 @@ BOOL CAnimatorCamLerpEffector::Process(Fvector &p, Fvector &d, Fvector &n, float
 CAnimatorCamLerpEffectorConst::CAnimatorCamLerpEffectorConst()
 :m_factor(0.0f)
 {
-	SetFactorFunc		(GET_KOEFF_FUNC(this, &CAnimatorCamLerpEffectorConst::GetFactor));
+	SetFactorFunc		(fastdelegate::MakeDelegate(this, &CAnimatorCamLerpEffectorConst::GetFactor));
 }
 
 
@@ -218,7 +218,7 @@ CCameraEffectorControlled::CCameraEffectorControlled(CEffectorController* c)
 :m_controller(c)
 {
 	m_controller->SetCam(this);
-	SetFactorFunc		(GET_KOEFF_FUNC(m_controller, &CEffectorController::GetFactor));
+	SetFactorFunc		(fastdelegate::MakeDelegate(m_controller, &CEffectorController::GetFactor));
 }
 
 CCameraEffectorControlled::~CCameraEffectorControlled()

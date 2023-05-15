@@ -17,7 +17,7 @@ void CUIStatix::start_anim()
 
 void CUIStatix::stop_anim()
 {
-	SetClrLightAnim	(NULL, true, true, true, true);
+	SetClrLightAnim	(nullptr, true, true, true, true);
 }
 
 void CUIStatix::Update(){

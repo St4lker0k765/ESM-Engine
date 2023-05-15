@@ -91,7 +91,7 @@ void CUIMpTradeWnd::OnBtnLastSetClicked(CUIWindow* w, void* d)
 		ApplyPreset					(_preset_idx_last);
 }
 
-void	xr_stdcall	CUIMpTradeWnd::OnBtnPresetDefaultClicked	(CUIWindow* w, void* d)
+void	CUIMpTradeWnd::OnBtnPresetDefaultClicked	(CUIWindow* w, void* d)
 {
 	CheckDragItemToDestroy				();
 	{
@@ -161,7 +161,7 @@ void CUIMpTradeWnd::UpdateShop()
 		m_root_tab_control->ResetTab	();
 
 	Msg									("current level=[%s]",m_store_hierarchy->CurrentLevel().m_name.c_str());
-	SetCurrentItem						(NULL);
+	SetCurrentItem						(nullptr);
 	if(m_store_hierarchy->CurrentIsRoot())	return;
 
 	if(m_store_hierarchy->CurrentLevel().HasSubLevels())
@@ -212,7 +212,7 @@ void CUIMpTradeWnd::FillUpSubLevelItems()
 #include "../actor.h"
 void CUIMpTradeWnd::Show()
 {
-	m_pMouseCapturer		= NULL;
+	m_pMouseCapturer		= nullptr;
 	inherited::Show			();
 
 

@@ -199,7 +199,7 @@ void CUITrackBar::UpdatePosRelativeToMouse()
 	}
 
 	if(b_ch)
-		GetMessageTarget()->SendMessage(this, BUTTON_CLICKED, NULL);
+		GetMessageTarget()->SendMessage(this, BUTTON_CLICKED, nullptr);
 
 	UpdatePos	();
 }

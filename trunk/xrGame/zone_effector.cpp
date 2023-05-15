@@ -11,8 +11,8 @@
 CZoneEffector::CZoneEffector() 
 {
 	radius			= 1;
-	m_pp_effector	= NULL;
-	m_pActor		= NULL;
+	m_pp_effector	= nullptr;
+	m_pActor		= nullptr;
 	m_factor		= 0.1f;
 }
 
@@ -37,7 +37,7 @@ void CZoneEffector::Activate()
 	m_pp_effector						= xr_new<CPostprocessAnimatorLerp>();
 	m_pp_effector->SetType				(EEffectorPPType( u32(u64(this) & u32(-1)) ));
 	m_pp_effector->SetCyclic			(true);
-	m_pp_effector->SetFactorFunc		(GET_KOEFF_FUNC(this, &CZoneEffector::GetFactor));
+	m_pp_effector->SetFactorFunc		(fastdelegate::MakeDelegate(this, &CZoneEffector::GetFactor));
 	m_pp_effector->Load					(*m_pp_fname);
 	m_pActor->Cameras().AddPPEffector	(m_pp_effector);
 
@@ -48,8 +48,8 @@ void CZoneEffector::Stop()
 	if (!m_pp_effector) return;
 	 
 	m_pActor->Cameras().RemovePPEffector(EEffectorPPType( u32(u64(this) & u32(-1)) ));
-	m_pp_effector			= NULL;
-	m_pActor				= NULL;
+	m_pp_effector			= nullptr;
+	m_pActor				= nullptr;
 };
 
 void CZoneEffector::Update(float dist)

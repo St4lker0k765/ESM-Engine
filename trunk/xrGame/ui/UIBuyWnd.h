@@ -76,17 +76,17 @@ public:
 
 	// CUIWindow
 	virtual bool 	OnKeyboard					(int dik, EUIMessages keyboard_action);
-	virtual void 	SendMessage					(CUIWindow* pWnd, s16 msg, void* pData = 0);
+	virtual void 	SendMessage					(CUIWindow* pWnd, s16 msg, void* pData = nullptr);
 	virtual void 	Update						();
 	virtual void 	Show						();
 	virtual void 	Hide						();
 
 	// drag drop handlers
-	bool	xr_stdcall	OnItemDrop				(CUICellItem* itm);
-	bool	xr_stdcall	OnItemStartDrag			(CUICellItem* itm);
-	bool	xr_stdcall	OnItemDbClick			(CUICellItem* itm);
-	bool	xr_stdcall	OnItemSelected			(CUICellItem* itm);
-	bool	xr_stdcall	OnItemRButtonClick		(CUICellItem* itm);
+	bool	OnItemDrop				(CUICellItem* itm);
+	bool	OnItemStartDrag			(CUICellItem* itm);
+	bool	OnItemDbClick			(CUICellItem* itm);
+	bool	OnItemSelected			(CUICellItem* itm);
+	bool	OnItemRButtonClick		(CUICellItem* itm);
 
 	
 

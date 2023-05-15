@@ -57,7 +57,7 @@ void CUIAmmoCellItem::Update()
 
 void CUIAmmoCellItem::UpdateItemText()
 {
-	if(NULL==m_custom_draw)
+	if(nullptr ==m_custom_draw)
 	{
 		xr_vector<CUICellItem*>::iterator it = m_childs.begin();
 		xr_vector<CUICellItem*>::iterator it_e = m_childs.end();
@@ -80,9 +80,9 @@ void CUIAmmoCellItem::UpdateItemText()
 CUIWeaponCellItem::CUIWeaponCellItem(CWeapon* itm)
 :inherited(itm)
 {
-	m_addons[eSilencer]		= NULL;
-	m_addons[eScope]		= NULL;
-	m_addons[eLauncher]		= NULL;
+	m_addons[eSilencer]		= nullptr;
+	m_addons[eScope]		= nullptr;
+	m_addons[eLauncher]		= nullptr;
 
 	if(itm->SilencerAttachable())
 		m_addon_offset[eSilencer].set(object()->GetSilencerX(), object()->GetSilencerY());
@@ -125,7 +125,7 @@ void CUIWeaponCellItem::CreateIcon(eAddonType t)
 void CUIWeaponCellItem::DestroyIcon(eAddonType t)
 {
 	DetachChild		(m_addons[t]);
-	m_addons[t]		= NULL;
+	m_addons[t]		= nullptr;
 }
 
 CUIStatic* CUIWeaponCellItem::GetIcon(eAddonType t)
@@ -227,7 +227,7 @@ void CUIWeaponCellItem::InitAddon(CUIStatic* s, LPCSTR section, Fvector2 addon_o
 CUIDragItem* CUIWeaponCellItem::CreateDragItem()
 {
 	CUIDragItem* i		= inherited::CreateDragItem();
-	CUIStatic* s		= NULL;
+	CUIStatic* s		= nullptr;
 
 	if(GetIcon(eSilencer))
 	{
@@ -282,7 +282,7 @@ void CBuyItemCustomDrawCell::OnDraw(CUICellItem* cell)
 {
 	Fvector2							pos;
 	cell->GetAbsolutePos				(pos);
-	UI()->ClientToScreenScaled			(pos, pos.x, pos.y);
+	UI().ClientToScreenScaled			(pos, pos.x, pos.y);
 	m_pFont->Out						(pos.x, pos.y, m_string);
 	m_pFont->OnRender					();
 }

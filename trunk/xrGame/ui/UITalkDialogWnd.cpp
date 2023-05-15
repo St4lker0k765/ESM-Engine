@@ -14,7 +14,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 CUITalkDialogWnd::CUITalkDialogWnd()
-	:	m_pNameTextFont		(NULL)
+	:	m_pNameTextFont		(nullptr)
 {
 	m_ClickedQuestionID = "";
 }
@@ -83,15 +83,15 @@ void CUITalkDialogWnd::Init(float x, float y, float width, float height)
 	// шрифт для индикации имени персонажа в окне разговора
 	CUIXmlInit::InitFont		(*m_uiXml, "font", 0, m_iNameTextColor, m_pNameTextFont);
 
-	CGameFont * pFont			= NULL;
+	CGameFont * pFont			= nullptr;
 	CUIXmlInit::InitFont		(*m_uiXml, "font", 1, m_uOurReplicsColor, pFont);
 
 
 	SetWindowName				("----CUITalkDialogWnd");
 
 	Register					(&UIToTradeButton);
-	AddCallback					("question_item",LIST_ITEM_CLICKED,CUIWndCallback::void_function(this, &CUITalkDialogWnd::OnQuestionClicked));
-	AddCallback					("trade_btn",BUTTON_CLICKED,CUIWndCallback::void_function(this, &CUITalkDialogWnd::OnTradeClicked));
+	AddCallback					("question_item",LIST_ITEM_CLICKED, fastdelegate::MakeDelegate(this, &CUITalkDialogWnd::OnQuestionClicked));
+	AddCallback					("trade_btn",BUTTON_CLICKED, fastdelegate::MakeDelegate(this, &CUITalkDialogWnd::OnTradeClicked));
 }
 
 #include "UIInventoryUtilities.h"
@@ -224,7 +224,7 @@ CUIQuestionItem::CUIQuestionItem			(CUIXml* xml_doc, LPCSTR path)
 
 	Register						(m_text);
 	m_text->SetWindowName			("text_button");
-	AddCallback						("text_button",BUTTON_CLICKED,CUIWndCallback::void_function(this, &CUIQuestionItem::OnTextClicked));
+	AddCallback						("text_button",BUTTON_CLICKED, fastdelegate::MakeDelegate(this, &CUIQuestionItem::OnTextClicked));
 
 }
 

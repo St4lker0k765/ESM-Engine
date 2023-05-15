@@ -914,7 +914,7 @@ void CAI_Stalker::remove_critical_hit			()
 	);
 
 	animation().global().remove_callback(
-		CStalkerAnimationPair::CALLBACK_ID(
+		fastdelegate::MakeDelegate(
 			this,
 			&CAI_Stalker::remove_critical_hit
 		)
@@ -929,7 +929,7 @@ void CAI_Stalker::critical_wounded_state_start	()
 	);
 
 	animation().global().add_callback	(
-		CStalkerAnimationPair::CALLBACK_ID(
+		fastdelegate::MakeDelegate(
 			this,
 			&CAI_Stalker::remove_critical_hit
 		)

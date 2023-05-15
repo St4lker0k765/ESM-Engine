@@ -16,7 +16,7 @@ public:
 
 			void	Init			(CUIXml& xml_doc);
 
-	virtual void	SendMessage		(CUIWindow* pWnd, s16 msg, void* pData = 0);
+	virtual void	SendMessage		(CUIWindow* pWnd, s16 msg, void* pData = nullptr);
 
 	void 			OnBtnOk			();
 	void 			OnBtnCancel		();

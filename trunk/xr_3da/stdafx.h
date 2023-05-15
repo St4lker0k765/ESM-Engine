@@ -1,18 +1,8 @@
-#ifndef	STDAFX_3DA
-#define STDAFX_3DA
-
 #pragma once
-
-#ifdef _EDITOR
-	#include "..\editors\ECore\stdafx.h"
-#else
 
 #include "../xrCore/xrCore.h"
 #include "../Include/xrAPI/xrAPI.h"
-
-#ifdef _DEBUG
-	#define D3D_DEBUG_INFO
-#endif
+#include "../xrCore/FastDelegate.hpp"
 
 #pragma warning(disable:4995)
 #include <d3d9.h>
@@ -41,9 +31,7 @@
 // Our headers
 #include "engine.h"
 #include "defines.h"
-#ifndef NO_XRLOG
 #include "log.h"
-#endif
 #include "device.h"
 #include "fs.h"
 
@@ -77,6 +65,3 @@ extern ENGINE_API CInifile *pGameIni;
 	namespace boost {	ENGINE_API	void throw_exception(const std::exception &A);	};
 #endif
 #define LUABIND_DONT_COPY_STRINGS
-
-#endif // !M_BORLAND
-#endif // !defined STDAFX_3DA

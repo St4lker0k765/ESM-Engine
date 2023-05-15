@@ -328,6 +328,16 @@ void	CRenderTarget::phase_combine	()
 		}
 	}
 
+	RCache.set_Stencil(FALSE);
+
+	if (ps_r2_ls_flags_ext.test(R2FLAGEXT_AA_FXAA))
+	{
+		PIX_EVENT(FXAA);
+
+		phase_fxaa();
+		RCache.set_Stencil(FALSE);
+	}
+
 /*
    if( RImplementation.o.dx10_msaa )
    {

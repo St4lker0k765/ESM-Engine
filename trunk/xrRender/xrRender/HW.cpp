@@ -26,15 +26,15 @@
  CHW			HW;
 
 #ifdef DEBUG
-IDirect3DStateBlock9*	dwDebugSB = 0;
+IDirect3DStateBlock9*	dwDebugSB = nullptr;
 #endif
 
 CHW::CHW() : 
-	hD3D(NULL),
-	pD3D(NULL),
-	pDevice(NULL),
-	pBaseRT(NULL),
-	pBaseZB(NULL),
+	hD3D(nullptr),
+	pD3D(nullptr),
+	pDevice(nullptr),
+	pBaseRT(nullptr),
+	pBaseZB(nullptr),
 	m_move_window(true)
 {
 	;
@@ -67,7 +67,7 @@ void CHW::Reset		(HWND hwnd)
 	// Windoze
 	DevPP.SwapEffect			= bWindowed?D3DSWAPEFFECT_COPY:D3DSWAPEFFECT_DISCARD;
 	DevPP.Windowed				= bWindowed;
-	DevPP.PresentationInterval	= D3DPRESENT_INTERVAL_IMMEDIATE;
+	DevPP.PresentationInterval	= selectPresentInterval();
 	if( !bWindowed )		DevPP.FullScreen_RefreshRateInHz	= selectRefresh	(DevPP.BackBufferWidth,DevPP.BackBufferHeight,Caps.fTarget);
 	else					DevPP.FullScreen_RefreshRateInHz	= D3DPRESENT_RATE_DEFAULT;
 #endif
@@ -318,7 +318,7 @@ void		CHW::CreateDevice		(HWND m_hWnd, bool move_window)
 							 "Can not find matching format for back buffer."
 							 );
 		FlushLog			();
-		MessageBox			(NULL,"Failed to initialize graphics hardware.\nPlease try to restart the game.","Error!",MB_OK|MB_ICONERROR);
+		MessageBox			(nullptr,"Failed to initialize graphics hardware.\nPlease try to restart the game.","Error!",MB_OK|MB_ICONERROR);
 		TerminateProcess	(GetCurrentProcess(),0);
 	}
 
@@ -351,7 +351,7 @@ void		CHW::CreateDevice		(HWND m_hWnd, bool move_window)
 	P.Flags					= 0;	//. D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL;
 
 	// Refresh rate
-	P.PresentationInterval	= D3DPRESENT_INTERVAL_IMMEDIATE;
+	P.PresentationInterval	= selectPresentInterval();
     if( !bWindowed )		P.FullScreen_RefreshRateInHz	= selectRefresh	(P.BackBufferWidth, P.BackBufferHeight,fTarget);
     else					P.FullScreen_RefreshRateInHz	= D3DPRESENT_RATE_DEFAULT;
 
@@ -378,7 +378,7 @@ void		CHW::CreateDevice		(HWND m_hWnd, bool move_window)
 							 "Please try to restart the game.\n"
 							 "CreateDevice returned 0x%08x(D3DERR_DEVICELOST)", R);
 		FlushLog			();
-		MessageBox			(NULL,"Failed to initialize graphics hardware.\nPlease try to restart the game.","Error!",MB_OK|MB_ICONERROR);
+		MessageBox			(nullptr,"Failed to initialize graphics hardware.\nPlease try to restart the game.","Error!",MB_OK|MB_ICONERROR);
 		TerminateProcess	(GetCurrentProcess(),0);
 	};
 	R_CHK		(R);
@@ -695,12 +695,12 @@ void free_vid_mode_list()
 		xr_free					(vid_mode_token[i].name);
 	}
 	xr_free						(vid_mode_token);
-	vid_mode_token				= NULL;
+	vid_mode_token				= nullptr;
 }
 
 void fill_vid_mode_list(CHW* _hw)
 {
-	if(vid_mode_token != NULL)		return;
+	if(vid_mode_token != nullptr)		return;
 	xr_vector<LPCSTR>	_tmp;
 	u32 cnt = _hw->pD3D->GetAdapterModeCount	(_hw->DevAdapter, _hw->Caps.fTarget);
 
@@ -718,7 +718,7 @@ void fill_vid_mode_list(CHW* _hw)
 		if(_tmp.end() != std::find_if(_tmp.begin(), _tmp.end(), _uniq_mode(str)))
 			continue;
 
-		_tmp.push_back				(NULL);
+		_tmp.push_back				(nullptr);
 		_tmp.back()					= xr_strdup(str);
 	}
 
@@ -727,7 +727,7 @@ void fill_vid_mode_list(CHW* _hw)
 	vid_mode_token					= xr_alloc<xr_token>(_cnt);
 
 	vid_mode_token[_cnt-1].id			= -1;
-	vid_mode_token[_cnt-1].name		= NULL;
+	vid_mode_token[_cnt-1].name		= nullptr;
 
 #ifdef DEBUG
 	Msg("Available video modes[%d]:",_tmp.size());

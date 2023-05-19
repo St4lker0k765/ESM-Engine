@@ -214,7 +214,7 @@ void	CBlender_BmmD::Compile	(CBlender_Compile& C)
 		C.r_dx10Texture		("s_dn_b",	strconcat(sizeof(mask),mask,oB_Name,"_bump") );
 		C.r_dx10Texture		("s_dn_a",	strconcat(sizeof(mask),mask,oA_Name,"_bump") );
 
-#if RENDER == R_R4
+#if RENDER == R_R4 || RENDER == R_R3
 		C.r_dx10Texture("s_puddles_normal", "fx\\water_normal");
 		C.r_dx10Texture("s_puddles_perlin", "fx\\puddles_perlin");
 		C.r_dx10Texture("s_puddles_mask", strconcat(sizeof(mask), mask, C.L_textures[0].c_str(), "_puddles_mask"));

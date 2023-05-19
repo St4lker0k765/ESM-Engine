@@ -46,13 +46,13 @@ CEnvironment::CEnvironment()
     m_last_weather_shift = 0;
     bNeed_re_create_env = FALSE;
     bWFX = false;
-    Current[0] = 0;
-    Current[1] = 0;
-    CurrentWeather = 0;
-    CurrentWeatherName = 0;
-    eff_Rain = 0;
-    eff_LensFlare = 0;
-    eff_Thunderbolt = 0;
+    Current[0] = nullptr;
+    Current[1] = nullptr;
+    CurrentWeather = nullptr;
+    CurrentWeatherName = nullptr;
+    eff_Rain = nullptr;
+    eff_LensFlare = nullptr;
+    eff_Thunderbolt = nullptr;
     OnDeviceCreate();
 
     m_paused = false;
@@ -154,8 +154,8 @@ CEnvironment::~CEnvironment()
 void CEnvironment::Invalidate()
 {
     bWFX = false;
-    Current[0] = 0;
-    Current[1] = 0;
+    Current[0] = nullptr;
+    Current[1] = nullptr;
     if (eff_LensFlare)
         eff_LensFlare->Invalidate();
     if (eff_Rain)
@@ -380,7 +380,7 @@ void CEnvironment::SelectEnvs(EnvVec* envs, CEnvDescriptor*& e0, CEnvDescriptor*
 void CEnvironment::SelectEnvs(float gt)
 {
     VERIFY(CurrentWeather);
-    if ((Current[0] == Current[1]) && (Current[0] == 0))
+    if ((Current[0] == Current[1]) && (Current[0] == nullptr))
     {
         VERIFY(!bWFX);
         // first or forced start
@@ -611,7 +611,7 @@ SThunderboltCollection* CEnvironment::thunderbolt_collection(xr_vector<SThunderb
 
     NODEFAULT;
 #ifdef DEBUG
-    return (0);
+    return (nullptr);
 #endif // #ifdef DEBUG
 }
 

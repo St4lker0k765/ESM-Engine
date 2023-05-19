@@ -57,7 +57,8 @@ void CRenderDevice::Reset		(bool precache)
 
 	m_pRender->Reset(m_hWnd, dwWidth, dwHeight, fWidth_2, fHeight_2);
 
-	g_pGamePersistent->Environment().bNeed_re_create_env = true;
+	if (g_pGamePersistent)
+		g_pGamePersistent->Environment().bNeed_re_create_env = true;
 	
 	_SetupStates			();
 	if (precache)

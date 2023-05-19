@@ -42,7 +42,7 @@ game_cl_GameState::~game_cl_GameState()
 	xr_delete					(m_WeaponUsageStatistic);
 }
 
-void	game_cl_GameState::net_import_GameTime		(NET_Packet& P)
+void game_cl_GameState::net_import_GameTime(NET_Packet& P)
 {
 	// time
 	u64 GameTime;
@@ -59,6 +59,7 @@ void	game_cl_GameState::net_import_GameTime		(NET_Packet& P)
 
 	// u64 OldTime = Level().GetEnvironmentGameTime();
 	Level().SetEnvironmentGameTimeFactor(GameEnvironmentTime, EnvironmentTimeFactor);
+	// KRodin: закомментировано из-за бага с резкой сменой погоды при кручении таймфактора.
 	// if (OldTime > GameEnvironmentTime)
 	//	GamePersistent().Environment().Invalidate(/*false*/);
 }

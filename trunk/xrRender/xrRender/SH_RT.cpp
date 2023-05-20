@@ -7,8 +7,8 @@
 
 CRT::CRT			()
 {
-	pSurface		= NULL;
-	pRT				= NULL;
+	pSurface		= nullptr;
+	pRT				= nullptr;
 	dwWidth			= 0;
 	dwHeight		= 0;
 	fmt				= D3DFMT_UNKNOWN;
@@ -71,10 +71,10 @@ void CRT::create	(LPCSTR Name, u32 w, u32 h,	D3DFORMAT f, u32 SampleCount )
 
 	// Try to create texture/surface
 	DEV->Evict				();
-	_hr = HW.pDevice->CreateTexture		(w, h, 1, usage, f, D3DPOOL_DEFAULT, &pSurface,NULL);
+	_hr = HW.pDevice->CreateTexture		(w, h, 1, usage, f, D3DPOOL_DEFAULT, &pSurface, nullptr);
 	HW.stats_manager.increment_stats_rtarget	( pSurface );
 
-	if (FAILED(_hr) || (0==pSurface))	return;
+	if (FAILED(_hr) || (nullptr==pSurface))	return;
 
 	// OK
 #ifdef DEBUG
@@ -88,8 +88,9 @@ void CRT::create	(LPCSTR Name, u32 w, u32 h,	D3DFORMAT f, u32 SampleCount )
 void CRT::destroy		()
 {
 	if (pTexture._get())	{
-		pTexture->surface_set	(0);
-		pTexture				= NULL;
+		pTexture->surface_set(nullptr);
+		pTexture.destroy();
+		pTexture = nullptr;
 	}
 	
 	_RELEASE	(pRT		);

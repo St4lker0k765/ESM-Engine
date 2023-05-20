@@ -10,20 +10,20 @@ void SetupGPU(IRenderDeviceRender* pRender)
 	BOOL bForceGPU_NonPure;
 	BOOL bForceGPU_REF;
 
-	if (strstr(lpCmdLine, "-gpu_sw") != NULL)
-		bForceGPU_SW = TRUE;
+	if (strstr(lpCmdLine, "-gpu_sw") != nullptr)
+		bForceGPU_SW = true;
 	else
-		bForceGPU_SW = FALSE;
+		bForceGPU_SW = false;
 
-	if (strstr(lpCmdLine, "-gpu_nopure") != NULL)
-		bForceGPU_NonPure = TRUE;
+	if (strstr(lpCmdLine, "-gpu_nopure") != nullptr)
+		bForceGPU_NonPure = true;
 	else
-		bForceGPU_NonPure = FALSE;
+		bForceGPU_NonPure = false;
 
-	if (strstr(lpCmdLine, "-gpu_ref") != NULL)
-		bForceGPU_REF = TRUE;
+	if (strstr(lpCmdLine, "-gpu_ref") != nullptr)
+		bForceGPU_REF = true;
 	else
-		bForceGPU_REF = FALSE;
+		bForceGPU_REF = false;
 
 	pRender->SetupGPU(bForceGPU_SW, bForceGPU_NonPure, bForceGPU_REF);
 }
@@ -47,7 +47,7 @@ void CRenderDevice::_Create	(LPCSTR shName)
 	Memory.mem_compact			();
 
 	// after creation
-	b_is_Ready					= TRUE;
+	b_is_Ready					= true;
 	_SetupStates				();
 
 	m_pRender->OnDeviceCreate(shName);

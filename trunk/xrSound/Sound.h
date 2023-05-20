@@ -121,8 +121,8 @@ public:
 	ref_sound() {}
 	~ref_sound() {}
 
-	IC CSound_source *_handle() const { return _p ? _p->handle : 0; }
-	IC CSound_emitter *_feedback() { return _p ? _p->feedback : 0; }
+	IC CSound_source *_handle() const { return _p ? _p->handle : nullptr; }
+	IC CSound_emitter *_feedback() { return _p ? _p->feedback : nullptr; }
 	IC CObject *_g_object()
 	{
 		VERIFY(_p);
@@ -160,7 +160,7 @@ public:
 
 	IC void play(CObject *O, u32 flags = 0, float delay = 0.f);
 	IC void play_at_pos(CObject *O, const Fvector &pos, u32 flags = 0, float delay = 0.f);
-	IC void play_no_feedback(CObject *O, u32 flags = 0, float delay = 0.f, Fvector *pos = 0, float *vol = 0, float *freq = 0, Fvector2 *range = 0);
+	IC void play_no_feedback(CObject *O, u32 flags = 0, float delay = 0.f, Fvector *pos = nullptr, float *vol = nullptr, float *freq = nullptr, Fvector2 *range = nullptr);
 
 	IC void stop();
 	IC void stop_deffered();
@@ -299,7 +299,7 @@ public:
 
 	virtual void play(ref_sound &S, CObject *O, u32 flags = 0, float delay = 0.f) = 0;
 	virtual void play_at_pos(ref_sound &S, CObject *O, const Fvector &pos, u32 flags = 0, float delay = 0.f) = 0;
-	virtual void play_no_feedback(ref_sound &S, CObject *O, u32 flags = 0, float delay = 0.f, Fvector *pos = 0, float *vol = 0, float *freq = 0, Fvector2 *range = 0) = 0;
+	virtual void play_no_feedback(ref_sound &S, CObject *O, u32 flags = 0, float delay = 0.f, Fvector *pos = nullptr, float *vol = nullptr, float *freq = nullptr, Fvector2 *range = nullptr) = 0;
 
 	virtual void set_master_volume(float f = psSoundVFactor) = 0;
 	virtual void set_geometry_env(IReader *I) = 0;
@@ -320,10 +320,10 @@ extern XRSOUND_API CSound_manager_interface *Sound;
 /// utils, accessors, helpers
 IC ref_sound_data::ref_sound_data()
 {
-	handle = 0;
-	feedback = 0;
+	handle = nullptr;
+	feedback = nullptr;
 	g_type = 0;
-	g_object = 0;
+	g_object = nullptr;
 	s_type = st_Effect;
 }
 
@@ -427,7 +427,7 @@ IC const CSound_params *ref_sound::get_params()
 	if (_feedback())
 		return _feedback()->get_params();
 	else
-		return NULL;
+		return nullptr;
 }
 
 IC void ref_sound::set_params(CSound_params *p)

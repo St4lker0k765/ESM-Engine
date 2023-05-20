@@ -114,7 +114,7 @@ public:
     inline INGAME_EDITOR_VIRTUAL SSndChannelVec& get_snd_channels() { return m_sound_channels; }
     void load_shoc(const shared_str& section);
 
-    IC ref_sound* get_rnd_sound() { return sounds.empty() ? 0 : &sounds[Random.randI(sounds.size())]; }
+    IC ref_sound* get_rnd_sound() { return sounds.empty() ? nullptr : &sounds[Random.randI(sounds.size())]; }
     IC u32 get_rnd_sound_time() { return Random.randI(sound_period.x, sound_period.y); }
     IC float get_rnd_sound_dist() { return Random.randF(sound_dist.x, sound_dist.y); }
     IC u32 get_rnd_effect_time_shoc() { return Random.randI(effect_period.x, effect_period.y); }
@@ -172,7 +172,7 @@ public:
     CEnvAmbient* env_ambient;
     void setEnvAmbient(LPCSTR sect, CEnvironment* parent);
 
-    CEnvDescriptor(shared_str const& identifier = 0);
+    CEnvDescriptor(shared_str const& identifier = nullptr);
 
     void load(CEnvironment& environment, CInifile& config);
     void load_shoc(CEnvironment& environment, LPCSTR exec_tm, LPCSTR S);

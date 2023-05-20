@@ -112,7 +112,7 @@ CStreamReader *CStreamReader::open_chunk	(const u32 &chunk_id)
 	BOOL						compressed;
 	u32							size = find_chunk(chunk_id,&compressed);
 	if (!size)
-		return					(0);
+		return					(nullptr);
 
 	R_ASSERT2					(!compressed,"cannot use CStreamReader on compressed chunks");
 	CStreamReader				*result = xr_new<CStreamReader>();

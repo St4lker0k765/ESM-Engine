@@ -1,10 +1,6 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "du_cylinder.h"
-//---------------------------------------------------------------------------
-//#pragma package(smart_init)
+
 Fvector du_cylinder_vertices[DU_CYLINDER_NUMVERTEX]={
     {0.5000f,	0.0000f,	0.5000f },	 // 0
     {0.5000f,	-0.0000f,	-0.5000f},	 // 1

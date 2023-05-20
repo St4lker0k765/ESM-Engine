@@ -16,8 +16,8 @@ void	IGame_Level::SoundEvent_Register	( ref_sound_data_ptr S, float range )
 {
 	if (!g_bLoaded)									return;
 	if (!S)											return;
-	if (S->g_object && S->g_object->getDestroy())	{S->g_object=0; return;}
-	if (0==S->feedback)								return;
+	if (S->g_object && S->g_object->getDestroy())	{S->g_object=nullptr; return;}
+	if (nullptr==S->feedback)								return;
 
 	clamp					(range,0.1f,500.f);
 
@@ -42,7 +42,7 @@ void	IGame_Level::SoundEvent_Register	( ref_sound_data_ptr S, float range )
 	xr_vector<ISpatial*>::iterator	end	= snd_ER.end	();
 	for (; it!=end; it++)	{
 		Feel::Sound* L		= (*it)->dcast_FeelSound	();
-		if (0==L)			continue;
+		if (nullptr==L)			continue;
 		CObject* CO = (*it)->dcast_CObject();	VERIFY(CO);
 		if (CO->getDestroy()) continue;
 
@@ -121,7 +121,7 @@ IC int	CObjectSpace::GetNearest	( xr_vector<CObject*>&	q_nearest, const Fvector 
 	xr_vector<ISpatial*>::iterator	end	= r_spatial.end		();
 	for (; it!=end; it++)		{
 		CObject* O				= (*it)->dcast_CObject		();
-		if (0==O)				continue;
+		if (nullptr==O)				continue;
 		if (O==ignore_object)	continue;
 		Fsphere mS				= { O->spatial.sphere.P, O->spatial.sphere.R	};
 		if (Q.intersect(mS))	q_nearest.push_back(O);

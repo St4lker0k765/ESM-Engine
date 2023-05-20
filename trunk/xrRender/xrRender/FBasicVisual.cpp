@@ -1,14 +1,4 @@
-// dxRender_Visual.cpp: implementation of the dxRender_Visual class.
-//
-//////////////////////////////////////////////////////////////////////
-
 #include "stdafx.h"
-#pragma hdrstop
-
-#ifndef _EDITOR
-#	include "../../xr_3da/render.h"
-#endif // #ifndef _EDITOR
-
 #include "fbasicvisual.h"
 #include "../../xr_3da/fmesh.h"
 

@@ -39,7 +39,7 @@ namespace Script {
 	LPCSTR				cafEventToString			(int				iEventCode);
 	void				vfPrintError				(CLuaVirtualMachine *tpLuaVM, int		iErrorCode);
 	bool				bfListLevelVars				(CLuaVirtualMachine *tpLuaVM, int		iStackLevel);
-	bool				bfLoadBuffer				(CLuaVirtualMachine *tpLuaVM, LPCSTR	caBuffer,		size_t	tSize,				LPCSTR	caScriptName, LPCSTR caNameSpaceName = 0);
+	bool				bfLoadBuffer				(CLuaVirtualMachine *tpLuaVM, LPCSTR	caBuffer,		size_t	tSize,				LPCSTR	caScriptName, LPCSTR caNameSpaceName = nullptr);
 	bool				bfLoadFileIntoNamespace		(CLuaVirtualMachine *tpLuaVM, LPCSTR	caScriptName,	LPCSTR	caNamespaceName,	bool	bCall);
 	bool				bfGetNamespaceTable			(CLuaVirtualMachine *tpLuaVM, LPCSTR	caName);
 	CLuaVirtualMachine	*get_namespace_table		(CLuaVirtualMachine *tpLuaVM, LPCSTR	caName);

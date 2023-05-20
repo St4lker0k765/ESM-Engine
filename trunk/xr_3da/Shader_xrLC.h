@@ -54,7 +54,7 @@ public:
 	void					Load	(LPCSTR name)
 	{
 		IReader* fs			= FS.r_open(name);
-		if(NULL==fs){
+		if(nullptr ==fs){
 			string256		inf;
 			extern HWND		logWindow;
 			sprintf_s			(inf,sizeof(inf),"Build failed!\nCan't load shaders library: '%s'",name);
@@ -95,13 +95,13 @@ public:
 	{
 		for (Shader_xrLCIt it=library.begin(); it!=library.end(); it++)
 			if (0==stricmp(name,it->Name)) return &(*it);
-		return NULL;
+		return nullptr;
 	}
 	Shader_xrLC*			Get		(int id)
 	{
 		return &library[id];
 	}
-	Shader_xrLC*			Append	(Shader_xrLC* parent=0)
+	Shader_xrLC*			Append	(Shader_xrLC* parent=nullptr)
 	{
 		library.push_back(parent?Shader_xrLC(*parent):Shader_xrLC());
 		return &library.back();

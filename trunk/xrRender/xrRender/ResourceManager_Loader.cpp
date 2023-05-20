@@ -1,9 +1,6 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "ResourceManager.h"
 #include "blenders\blender.h"
-
 
 void	CResourceManager::OnDeviceDestroy(BOOL )
 {

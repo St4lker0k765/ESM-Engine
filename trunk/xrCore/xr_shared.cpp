@@ -1,7 +1,6 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "xr_shared.h"
+
 /*
 class aaa:public shared_value{
 };

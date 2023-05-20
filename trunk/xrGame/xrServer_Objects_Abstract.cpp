@@ -1,13 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
-//	Module 		: xrServer_Objects_Abstract.cpp
-//	Created 	: 19.09.2002
-//  Modified 	: 14.07.2004
-//	Author		: Oles Shyshkovtsov, Alexander Maksimchuk, Victor Reutskiy and Dmitriy Iassenev
-//	Description : Server objects
-////////////////////////////////////////////////////////////////////////////
-
 #include "stdafx.h"
-#pragma hdrstop
 #pragma pack(push,4)
 
 #include "../../xrNetServer/net_utils.h"

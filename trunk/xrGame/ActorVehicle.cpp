@@ -1,6 +1,4 @@
  #include "stdafx.h"
-#pragma hdrstop
-
 #include "actor.h"
 #include "../xr_3da/CameraBase.h"
 

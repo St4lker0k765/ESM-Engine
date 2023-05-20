@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "Blender_Screen_SET.h"
 
 #define		VER_2_oBlendCount	7

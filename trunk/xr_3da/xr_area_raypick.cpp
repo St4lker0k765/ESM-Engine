@@ -101,7 +101,7 @@ BOOL CObjectSpace::RayPick	( const Fvector &start, const Fvector &dir, float ran
 BOOL CObjectSpace::_RayPick	( const Fvector &start, const Fvector &dir, float range, rq_target tgt, rq_result& R, CObject* ignore_object)
 {
 	r_temp.r_clear			();
-	R.O		= 0; R.range = range; R.element = -1;
+	R.O		= nullptr; R.range = range; R.element = -1;
 	// static test
 	if (tgt&rqtStatic){ 
 		xrc.ray_options		(CDB::OPT_ONLYNEAREST | CDB::OPT_CULL);
@@ -118,7 +118,7 @@ BOOL CObjectSpace::_RayPick	( const Fvector &start, const Fvector &dir, float ra
 		for (u32 o_it=0; o_it<r_spatial.size(); o_it++){
 			ISpatial*	spatial			= r_spatial[o_it];
 			CObject*	collidable		= spatial->dcast_CObject();
-			if			(0==collidable)				continue;
+			if			(nullptr==collidable)				continue;
 			if			(collidable==ignore_object)	continue;
 			ECollisionFormType tp		= collidable->collidable.model->Type();
 			if (((tgt&(rqtObject|rqtObstacle))&&(tp==cftObject))||((tgt&rqtShape)&&(tp==cftShape))){
@@ -171,7 +171,7 @@ BOOL CObjectSpace::_RayQuery2	(collide::rq_results& r_dest, const collide::ray_d
 			CDB::RESULT* _I	= xrc.r_begin();
 			CDB::RESULT* _E = xrc.r_end	();
 			for (; _I!=_E; _I++)
-				r_temp.append_result(rq_result().set(0,_I->range,_I->id));
+				r_temp.append_result(rq_result().set(nullptr,_I->range,_I->id));
 		}
 	}
 	// Test dynamic
@@ -180,7 +180,7 @@ BOOL CObjectSpace::_RayQuery2	(collide::rq_results& r_dest, const collide::ray_d
 		g_SpatialSpace->q_ray	(r_spatial,0,d_flags,R.start,R.dir,R.range);
 		for (u32 o_it=0; o_it<r_spatial.size(); o_it++){
 			CObject*	collidable		= r_spatial[o_it]->dcast_CObject();
-			if			(0==collidable)				continue;
+			if			(nullptr==collidable)				continue;
 			if			(collidable==ignore_object)	continue;
 			ICollisionForm*	cform		= collidable->collidable.model;
 			ECollisionFormType tp		= collidable->collidable.model->Type();
@@ -229,7 +229,7 @@ BOOL CObjectSpace::_RayQuery3	(collide::rq_results& r_dest, const collide::ray_d
 			if (xrc.r_count())	{	
 				VERIFY			(xrc.r_count()==1);
 				rq_result		s_res;
-				s_res.set		(0,xrc.r_begin()->range,xrc.r_begin()->id);
+				s_res.set		(nullptr,xrc.r_begin()->range,xrc.r_begin()->id);
 				// update dynamic test range
 				d_rd.range		= s_res.range;
 				// set next static start & range
@@ -247,7 +247,7 @@ BOOL CObjectSpace::_RayQuery3	(collide::rq_results& r_dest, const collide::ray_d
 			g_SpatialSpace->q_ray	(r_spatial,0,d_flags,d_rd.start,d_rd.dir,d_rd.range);
 			for (u32 o_it=0; o_it<r_spatial.size(); o_it++){
 				CObject*	collidable		= r_spatial[o_it]->dcast_CObject();
-				if			(0==collidable)				continue;
+				if			(nullptr==collidable)				continue;
 				if			(collidable==ignore_object)	continue;
 				ICollisionForm*	cform		= collidable->collidable.model;
 				ECollisionFormType tp		= collidable->collidable.model->Type();
@@ -302,10 +302,10 @@ BOOL CObjectSpace::_RayQuery	(collide::rq_results& r_dest, const collide::ray_de
 										((R.tgt&rqtShape)	?rqtShape:rqtNone)		);
 	u32			d_flags =	STYPE_COLLIDEABLE|((R.tgt&rqtObstacle)?STYPE_OBSTACLE:0)|((R.tgt&rqtShape)?STYPE_SHAPE:0);
 
-	s_res.set				(0,s_rd.range,-1);
+	s_res.set				(nullptr,s_rd.range,-1);
 	do{
 		if ((R.tgt&s_mask)&&sd_test.is(s_mask)&&(next_test&s_mask)){ 
-			s_res.set		(0,s_rd.range,-1);
+			s_res.set		(nullptr,s_rd.range,-1);
 			// Test static model
 			if (s_rd.range>EPS){
 				xrc.ray_options	(s_rd.flags);
@@ -334,7 +334,7 @@ BOOL CObjectSpace::_RayQuery	(collide::rq_results& r_dest, const collide::ray_de
 				// Determine visibility for dynamic part of scene
 				for (u32 o_it=0; o_it<r_spatial.size(); o_it++){
 					CObject*	collidable		= r_spatial[o_it]->dcast_CObject();
-					if			(0==collidable)				continue;
+					if			(nullptr==collidable)				continue;
 					if			(collidable==ignore_object)	continue;
 					ICollisionForm*	cform		= collidable->collidable.model;
 					ECollisionFormType tp		= collidable->collidable.model->Type();

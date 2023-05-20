@@ -19,7 +19,7 @@ STATIC CRITICAL_SECTION			critical_section;
 namespace memory_monitor {
 STATIC inline FILE *file()
 {
-	static FILE					*m_file = 0;
+	static FILE					*m_file = nullptr;
 	static char					buffer[buffer_size];
 	if (!m_file) {
 		_mkdir					(output_folder);

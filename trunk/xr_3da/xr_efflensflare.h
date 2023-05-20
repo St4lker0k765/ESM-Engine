@@ -58,7 +58,7 @@ public:
     CLensFlareDescriptor()
     {
         m_Flags.zero();
-        section = 0;
+        section = nullptr;
         m_StateBlendUpSpeed = m_StateBlendDnSpeed = 0.1f;
     }
     void load(CInifile* pIni, LPCSTR section);

@@ -1,7 +1,5 @@
 //---------------------------------------------------------------------------
 #include 	"stdafx.h"
-#pragma hdrstop
-
 #include 	"SkeletonCustom.h"
 #include	"SkeletonX.h"
 #include	"../../xr_3da/fmesh.h"

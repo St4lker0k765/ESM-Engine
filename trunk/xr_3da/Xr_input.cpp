@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include <stddef.h>
 #include "xr_input.h"
 #include "IInputReceiver.h"
@@ -31,9 +29,9 @@ CInput::CInput						( BOOL bExclusive, int deviceForInit)
 
 	Log("Starting INPUT device...");
 
-	pDI 								=	NULL;
-	pMouse								=	NULL;
-	pKeyboard							=	NULL;
+	pDI 								= nullptr;
+	pMouse								= nullptr;
+	pKeyboard							= nullptr;
 
 	//=====================Mouse
 	mouse_property.mouse_dt				=	25;
@@ -411,7 +409,7 @@ IInputReceiver*	 CInput::CurrentIR()
 	if(cbStack.size())
 		return cbStack.back();
 	else
-		return NULL;
+		return nullptr;
 }
 
 void CInput::exclusive_mode			(const bool &exclusive)

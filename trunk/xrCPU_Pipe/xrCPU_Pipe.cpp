@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-#pragma hdrstop
 
 #pragma comment(lib,"xr_3DA")
 

@@ -40,7 +40,7 @@ CObject*	CObjectList::FindObjectByName	( shared_str name )
 		if ((*I)->cName().equal(name))	return (*I);
 	for (xr_vector<CObject*>::iterator I=objects_sleeping.begin(); I!=objects_sleeping.end(); I++)
 		if ((*I)->cName().equal(name))	return (*I);
-	return	NULL;
+	return nullptr;
 }
 CObject*	CObjectList::FindObjectByName	( LPCSTR name )
 {
@@ -58,7 +58,7 @@ CObject*	CObjectList::FindObjectByCLS_ID	( CLASS_ID cls )
 		if (O!=objects_sleeping.end())	return *O;
 	}
 
-	return	NULL;
+	return nullptr;
 }
 
 
@@ -136,7 +136,7 @@ void CObjectList::Update		(bool bForce)
 			// Select Crow-Mode
 			Device.Statistic->UpdateClient_updated	= 0;
 			Device.Statistic->UpdateClient_crows	= crows->size	();
-			xr_vector<CObject*>*		workload	= 0;
+			xr_vector<CObject*>*		workload	= nullptr;
 			if (!psDeviceFlags.test(rsDisableObjectsAsCrows))	
 			{
 				workload = crows			;
@@ -295,7 +295,7 @@ void CObjectList::net_Import		(NET_Packet* Packet)
 CObject* CObjectList::net_Find			(u32 ID)
 {
 	xr_map<u32,CObject*>::iterator	it = map_NETID.find(ID);
-	return (it==map_NETID.end())?0:it->second;
+	return (it==map_NETID.end())?nullptr:it->second;
 }
 
 void CObjectList::Load		()
@@ -345,7 +345,7 @@ CObject*	CObjectList::Create				( LPCSTR	name	)
 
 void		CObjectList::Destroy			( CObject*	O		)
 {
-	if (0==O)								return;
+	if (nullptr==O)								return;
 	net_Unregister							(O);
 
 	// crows

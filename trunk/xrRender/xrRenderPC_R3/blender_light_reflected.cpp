@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "Blender_light_reflected.h"
 
 CBlender_accum_reflected::CBlender_accum_reflected	()	{	description.CLS		= 0;	}

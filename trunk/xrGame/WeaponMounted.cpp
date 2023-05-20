@@ -1,12 +1,9 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "WeaponMounted.h"
 #include "xrServer_Objects_ALife.h"
 #include "camerafirsteye.h"
 #include "actor.h"
 #include "weaponammo.h"
-
 #include "effectorshot.h"
 #include "ai_sounds.h"
 #include "level.h"

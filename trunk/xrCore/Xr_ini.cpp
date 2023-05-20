@@ -1,9 +1,7 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "fs_internal.h"
 
-XRCORE_API CInifile *pSettings	= NULL;
+XRCORE_API CInifile *pSettings	= nullptr;
 
 CInifile* CInifile::Create(const char* szFileName, BOOL ReadOnly)
 {	return xr_new<CInifile>(szFileName,ReadOnly); }
@@ -75,7 +73,7 @@ BOOL	CInifile::Sect::line_exist( LPCSTR L, LPCSTR* val )
 
 CInifile::CInifile(IReader* F ,LPCSTR path)
 {
-	fName		= 0;
+	fName		= nullptr;
 	bReadOnly	= TRUE;
 	bSaveAtEnd	= FALSE;
 	Load		(F,path);
@@ -83,13 +81,13 @@ CInifile::CInifile(IReader* F ,LPCSTR path)
 
 CInifile::CInifile(LPCSTR szFileName, BOOL ReadOnly, BOOL bLoad, BOOL SaveAtEnd)
 {
-	fName		= szFileName?xr_strdup(szFileName):0;
+	fName		= szFileName?xr_strdup(szFileName):nullptr;
     bReadOnly	= ReadOnly;
     bSaveAtEnd	= SaveAtEnd;
 	if (bLoad)
 	{	
     	string_path	path,folder; 
-		_splitpath	(fName, path, folder, 0, 0 );
+		_splitpath	(fName, path, folder, nullptr, nullptr );
         strcat		(path,folder);
 		IReader* R 	= FS.r_open(szFileName);
         if (R){
@@ -130,7 +128,7 @@ static void	insert_item(CInifile::Sect *tgt, const CInifile::Item& I)
 void	CInifile::Load(IReader* F, LPCSTR path)
 {
 	R_ASSERT(F);
-	Sect		*Current = 0;
+	Sect		*Current = nullptr;
 	string4096	str;
 	string4096	str2;
 
@@ -146,7 +144,7 @@ void	CInifile::Load(IReader* F, LPCSTR path)
 		}
 
 #ifdef DEBUG
-		LPSTR comment	= 0;
+		LPSTR comment	= nullptr;
 #endif
 		if (semi) {
 			*semi		= 0;
@@ -161,7 +159,7 @@ void	CInifile::Load(IReader* F, LPCSTR path)
         	if (_GetItem	(str,1,inc_name,'"')){
             	string_path	fn,inc_path,folder;
                 strconcat	(sizeof(fn),fn,path,inc_name);
-				_splitpath	(fn,inc_path,folder, 0, 0 );
+				_splitpath	(fn,inc_path,folder, nullptr, nullptr );
 				strcat		(inc_path,folder);
             	IReader* I 	= FS.r_open(fn); R_ASSERT3(I,"Can't find include file:", inc_name);
             	Load		(I,inc_path);
@@ -176,11 +174,11 @@ void	CInifile::Load(IReader* F, LPCSTR path)
 				DATA.insert		(I,Current);
 			}
 			Current				= xr_new<Sect>();
-			Current->Name		= 0;
+			Current->Name		= nullptr;
 			// start new section
 			R_ASSERT3(strchr(str,']'),"Bad ini section found: ",str);
 			LPCSTR inherited_names = strstr(str,"]:");
-			if (0!=inherited_names){
+			if (nullptr!=inherited_names){
 				VERIFY2			(bReadOnly,"Allow for readonly mode only.");
 				inherited_names	+= 2;
 				int cnt			= _GetItemCount(inherited_names);
@@ -208,10 +206,10 @@ void	CInifile::Load(IReader* F, LPCSTR path)
 				}
 
 				Item		I;
-				I.first		= (name[0]?name:NULL);
-				I.second	= (str2[0]?str2:NULL);
+				I.first		= (name[0]?name: nullptr);
+				I.second	= (str2[0]?str2: nullptr);
 #ifdef DEBUG
-				I.comment	= bReadOnly?0:comment;
+				I.comment	= bReadOnly?nullptr:comment;
 #endif
 
 				if (bReadOnly) {
@@ -350,13 +348,13 @@ LPCSTR	CInifile::r_string(LPCSTR S, LPCSTR L)
 	if (A!=I.Data.end() && xr_strcmp(*A->first,L)==0)	return *A->second;
 	else
 		Debug.fatal(DEBUG_INFO,"Can't find variable %s in [%s]",L,S);
-	return 0;
+	return nullptr;
 }
 
 shared_str		CInifile::r_string_wb(LPCSTR S, LPCSTR L)	{
 	LPCSTR		_base		= r_string(S,L);
 	
-	if	(0==_base)					return	shared_str(0);
+	if	(nullptr==_base)					return	shared_str(nullptr);
 
 	string512						_original;
 	strcpy_s						(_original,_base);
@@ -523,10 +521,10 @@ void	CInifile::w_string	( LPCSTR S, LPCSTR L, LPCSTR			V, LPCSTR comment)
 	// duplicate & insert
 	Item	I;
 	Sect&	data	= r_section	(sect);
-	I.first			= (line[0]?line:0);
-	I.second		= (value[0]?value:0);
+	I.first			= (line[0]?line:nullptr);
+	I.second		= (value[0]?value:nullptr);
 #ifdef DEBUG
-	I.comment		= (comment?comment:0);
+	I.comment		= (comment?comment:nullptr);
 #endif
 	SectIt_	it		= std::lower_bound(data.Data.begin(),data.Data.end(),*I.first,item_pred);
 

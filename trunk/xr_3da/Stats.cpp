@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "GameFont.h"
-#pragma hdrstop
-
 #include "ISpatial.h"
 #include "IGame_Persistent.h"
 #include "render.h"
@@ -51,7 +49,7 @@ CStats::CStats	()
 	fFPS				= 30.f;
 	fRFPS				= 30.f;
 	fTPS				= 0;
-	pFont				= 0;
+	pFont				= nullptr;
 	fMem_calls			= 0;
 	RenderDUMP_DT_Count = 0;
 	Device.seqRender.Add		(this,REG_PRIORITY_LOW-1000);
@@ -211,7 +209,7 @@ void CStats::Show()
 		b_ps						= .99f*b_ps + .01f*(clBOX.count/clBOX.result);
 
 		CSound_stats				snd_stat;
-		::Sound->statistic			(&snd_stat,0);
+		::Sound->statistic			(&snd_stat,nullptr);
 		F.SetColor	(0xFFFFFFFF	);
 
 		F.OutSet	(0,0);
@@ -477,7 +475,7 @@ void CStats::OnRender				()
 #ifdef DEBUG
 	if (g_stats_flags.is(st_sound)){
 		CSound_stats_ext				snd_stat_ext;
-		::Sound->statistic				(0,&snd_stat_ext);
+		::Sound->statistic				(nullptr,&snd_stat_ext);
 		CSound_stats_ext::item_vec_it	_I = snd_stat_ext.items.begin();
 		CSound_stats_ext::item_vec_it	_E = snd_stat_ext.items.end();
 		for (;_I!=_E;_I++){

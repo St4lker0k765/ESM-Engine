@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "blender_fxaa.h"
 
 CBlender_FXAA::CBlender_FXAA()	{ description.CLS = 0; }

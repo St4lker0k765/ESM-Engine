@@ -1,18 +1,16 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "soundrender_coreA.h"
 #include "soundrender_targetA.h"
 
-CSoundRender_CoreA *SoundRenderA = 0;
+CSoundRender_CoreA *SoundRenderA = nullptr;
 
 CSoundRender_CoreA::CSoundRender_CoreA() : CSoundRender_Core()
 {
-	pDevice = 0;
-	pDeviceList = 0;
-	pContext = 0;
-	eaxSet = 0;
-	eaxGet = 0;
+	pDevice = nullptr;
+	pDeviceList = nullptr;
+	pContext = nullptr;
+	eaxSet = nullptr;
+	eaxGet = nullptr;
 }
 
 CSoundRender_CoreA::~CSoundRender_CoreA()
@@ -103,14 +101,14 @@ void CSoundRender_CoreA::_initialize(u64 window)
 	Msg("SOUND: OpenAL: Required device: %s. Created device: %s.", deviceDesc.name.c_str(), deviceSpecifier);
 
 	// Create context
-	pContext = alcCreateContext(pDevice, NULL);
+	pContext = alcCreateContext(pDevice, nullptr);
 
 	if (!pContext)
 	{
 		Log("SOUND: OpenAL: Failed to create context.");
 		bPresent = FALSE;
 		alcCloseDevice(pDevice);
-		pDevice = 0;
+		pDevice = nullptr;
 		return;
 	}
 
@@ -131,10 +129,10 @@ void CSoundRender_CoreA::_initialize(u64 window)
 	// Check for EAX extension
 	bEAX = true;//deviceDesc.eax && !deviceDesc.eax_unwanted;
 	eaxSet = (EAXSet)alGetProcAddress((const ALchar *)"EAXSet");
-	if (eaxSet == NULL)
+	if (eaxSet == nullptr)
 		bEAX = false;
 	eaxGet = (EAXGet)alGetProcAddress((const ALchar *)"EAXGet");
-	if (eaxGet == NULL)
+	if (eaxGet == nullptr)
 		bEAX = false;
 
 	if (bEAX)
@@ -154,7 +152,7 @@ void CSoundRender_CoreA::_initialize(u64 window)
 	inherited::_initialize(window);
 
 	// Pre-create targets
-	CSoundRender_Target *T = 0;
+	CSoundRender_Target *T = nullptr;
 	for (u32 tit = 0; tit < u32(psSoundTargets); tit++)
 	{
 		T = xr_new<CSoundRender_TargetA>();
@@ -184,7 +182,7 @@ void CSoundRender_CoreA::_clear()
 {
 	inherited::_clear();
 	// remove targets
-	CSoundRender_Target *T = 0;
+	CSoundRender_Target *T = nullptr;
 	for (u32 tit = 0; tit < s_targets.size(); tit++)
 	{
 		T = s_targets[tit];
@@ -192,12 +190,12 @@ void CSoundRender_CoreA::_clear()
 		xr_delete(T);
 	}
 	// Reset the current context to NULL.
-	alcMakeContextCurrent(NULL);
+	alcMakeContextCurrent(nullptr);
 	// Release the context and the device.
 	alcDestroyContext(pContext);
-	pContext = 0;
+	pContext = nullptr;
 	alcCloseDevice(pDevice);
-	pDevice = 0;
+	pDevice = nullptr;
 	xr_delete(pDeviceList);
 }
 

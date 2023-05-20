@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "Environment.h"
 #include "render.h"
 #include "xr_efflensflare.h"
@@ -86,7 +84,7 @@ const	u32 v_clouds_fvf	= D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_SPECULAR;
 // BOOL bNeed_re_create_env = FALSE;
 void CEnvironment::RenderSky()
 {
-    if (0 == g_pGameLevel)
+    if (nullptr == g_pGameLevel)
         return;
 
     m_pRender->RenderSky(*this);
@@ -142,7 +140,7 @@ void CEnvironment::RenderSky()
 
 void CEnvironment::RenderClouds()
 {
-    if (0 == g_pGameLevel)
+    if (nullptr == g_pGameLevel)
         return;
 
     // draw clouds
@@ -194,7 +192,7 @@ void CEnvironment::RenderClouds()
 
 void CEnvironment::RenderFlares()
 {
-    if (0 == g_pGameLevel)
+    if (nullptr == g_pGameLevel)
         return;
     // 1
     eff_LensFlare->Render(FALSE, TRUE, TRUE);
@@ -202,7 +200,7 @@ void CEnvironment::RenderFlares()
 
 void CEnvironment::RenderLast()
 {
-    if (0 == g_pGameLevel)
+    if (nullptr == g_pGameLevel)
         return;
     // 2
     eff_Rain->Render();

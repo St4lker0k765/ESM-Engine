@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "soundrender_emitter.h"
 #include "soundrender_core.h"
 #include "soundrender_source.h"
@@ -26,8 +24,8 @@ CSoundRender_Emitter::CSoundRender_Emitter(void)
 	static u32 incrementalID = 0;
 	dbg_ID = ++incrementalID;
 #endif
-	target = NULL;
-	owner_data = NULL;
+	target = nullptr;
+	owner_data = nullptr;
 	smooth_volume = 1.f;
 	occluder_volume = 1.f;
 	fade_volume = 1.f;
@@ -79,9 +77,9 @@ void CSoundRender_Emitter::Event_Propagade()
 		return;
 	if (0 == owner_data->g_type)
 		return;
-	if (0 == owner_data->g_object)
+	if (nullptr == owner_data->g_object)
 		return;
-	if (0 == SoundRender->Handler)
+	if (nullptr == SoundRender->Handler)
 		return;
 
 	VERIFY(_valid(p_source.volume));

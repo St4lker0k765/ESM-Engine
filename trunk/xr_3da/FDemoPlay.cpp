@@ -23,8 +23,8 @@ CDemoPlay::CDemoPlay(const char *name, float ms, u32 cycles, float life_time) : 
 	fSpeed				= ms;
 	dwCyclesLeft		= cycles?cycles:1;
 
-	m_pMotion			= 0;
-	m_MParam			= 0;
+	m_pMotion			= nullptr;
+	m_MParam			= nullptr;
 	string_path			nm, fn;
 	strcpy_s			(nm,sizeof(nm),name);	
 	

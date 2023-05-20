@@ -26,7 +26,7 @@ CMusicStream::~CMusicStream()
 int CMusicStream::FindEmptySlot()
 {
 	for (u32 i=0; i<streams.size(); i++) {
-		if (streams[i]==0) return i;
+		if (streams[i]==nullptr) return i;
 	}
 	return -1;
 }
@@ -55,7 +55,7 @@ void	CMusicStream::DeleteSound	(CSoundStream* pSnd)
 
 	if (slot>=0){
 		xr_delete(streams[slot]);
-		pSnd = NULL;
+		pSnd = nullptr;
 	}
 }
 

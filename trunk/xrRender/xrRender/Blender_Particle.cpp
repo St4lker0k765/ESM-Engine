@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "Blender_Particle.h"
 
 #define					oBlendCount	6

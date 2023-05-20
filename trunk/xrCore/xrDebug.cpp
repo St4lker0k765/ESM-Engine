@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
 
 #include "os_clipboard.h"
 #include "xrdebug.h"
@@ -311,7 +310,7 @@ void gather_info		(const char *expression, const char *description, const char *
 void xrDebug::do_exit	(const std::string &message)
 {
 	FlushLog			();
-	MessageBox			(NULL,message.c_str(),"Error",MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
+	MessageBox			(nullptr,message.c_str(),"Error",MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
 	TerminateProcess	(GetCurrentProcess(),1);
 }
 
@@ -388,16 +387,16 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 
 LPCSTR xrDebug::error2string	(long code)
 {
-	LPCSTR				result	= 0;
+	LPCSTR				result	= nullptr;
 	static	string1024	desc_storage;
 
 #ifdef _M_AMD64
 #else
 	result				= DXGetErrorDescription9	(code);
 #endif
-	if (0==result) 
+	if (nullptr==result) 
 	{
-		FormatMessage	(FORMAT_MESSAGE_FROM_SYSTEM,0,code,0,desc_storage,sizeof(desc_storage)-1,0);
+		FormatMessage	(FORMAT_MESSAGE_FROM_SYSTEM,nullptr,code,0,desc_storage,sizeof(desc_storage)-1,nullptr);
 		result			= desc_storage;
 	}
 	return		result	;
@@ -405,32 +404,32 @@ LPCSTR xrDebug::error2string	(long code)
 
 void xrDebug::error		(long hr, const char* expr, const char *file, int line, const char *function, bool &ignore_always)
 {
-	backend		(error2string(hr),expr,0,0,file,line,function,ignore_always);
+	backend		(error2string(hr),expr,nullptr,nullptr,file,line,function,ignore_always);
 }
 
 void xrDebug::error		(long hr, const char* expr, const char* e2, const char *file, int line, const char *function, bool &ignore_always)
 {
-	backend		(error2string(hr),expr,e2,0,file,line,function,ignore_always);
+	backend		(error2string(hr),expr,e2,nullptr,file,line,function,ignore_always);
 }
 
 void xrDebug::fail		(const char *e1, const char *file, int line, const char *function, bool &ignore_always)
 {
-	backend		("assertion failed",e1,0,0,file,line,function,ignore_always);
+	backend		("assertion failed",e1,nullptr,nullptr,file,line,function,ignore_always);
 }
 
 void xrDebug::fail		(const char *e1, const std::string &e2, const char *file, int line, const char *function, bool &ignore_always)
 {
-	backend		(e1,e2.c_str(),0,0,file,line,function,ignore_always);
+	backend		(e1,e2.c_str(),nullptr,nullptr,file,line,function,ignore_always);
 }
 
 void xrDebug::fail		(const char *e1, const char *e2, const char *file, int line, const char *function, bool &ignore_always)
 {
-	backend		(e1,e2,0,0,file,line,function,ignore_always);
+	backend		(e1,e2,nullptr,nullptr,file,line,function,ignore_always);
 }
 
 void xrDebug::fail		(const char *e1, const char *e2, const char *e3, const char *file, int line, const char *function, bool &ignore_always)
 {
-	backend		(e1,e2,e3,0,file,line,function,ignore_always);
+	backend		(e1,e2,e3,nullptr,file,line,function,ignore_always);
 }
 
 void xrDebug::fail		(const char *e1, const char *e2, const char *e3, const char *e4, const char *file, int line, const char *function, bool &ignore_always)
@@ -449,18 +448,18 @@ void __cdecl xrDebug::fatal(const char *file, int line, const char *function, co
 
 	bool		ignore_always = true;
 
-	backend		("fatal error","<no expression>",buffer,0,file,line,function,ignore_always);
+	backend		("fatal error","<no expression>",buffer,nullptr,file,line,function,ignore_always);
 }
 
 int out_of_memory_handler	(size_t size)
 {
 	Memory.mem_compact		();
 #ifndef _EDITOR
-	u32						crt_heap		= mem_usage_impl((HANDLE)_get_heap_handle(),0,0);
+	u32						crt_heap		= mem_usage_impl((HANDLE)_get_heap_handle(),nullptr,nullptr);
 #else // _EDITOR
 	u32						crt_heap		= 0;
 #endif // _EDITOR
-	u32						process_heap	= mem_usage_impl(GetProcessHeap(),0,0);
+	u32						process_heap	= mem_usage_impl(GetProcessHeap(),nullptr,nullptr);
 	int						eco_strings		= (int)g_pStringContainer->stat_economy			();
 	int						eco_smem		= (int)g_pSharedMemoryContainer->stat_economy	();
 	Msg						("* [x-ray]: crt heap[%d K], process heap[%d K]",crt_heap/1024,process_heap/1024);
@@ -549,7 +548,7 @@ typedef LONG WINAPI UnhandledExceptionFilterType(struct _EXCEPTION_POINTERS *pEx
 typedef LONG ( __stdcall *PFNCHFILTFN ) ( EXCEPTION_POINTERS * pExPtrs ) ;
 extern "C" BOOL __stdcall SetCrashHandlerFilter ( PFNCHFILTFN pFn );
 
-static UnhandledExceptionFilterType	*previous_filter = 0;
+static UnhandledExceptionFilterType	*previous_filter = nullptr;
 
 #ifdef USE_OWN_MINI_DUMP
 typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)(HANDLE hProcess, DWORD dwPid, HANDLE hFile, MINIDUMP_TYPE DumpType,
@@ -565,10 +564,10 @@ void save_mini_dump			(_EXCEPTION_POINTERS *pExceptionInfo)
 	// firstly see if dbghelp.dll is around and has the function we need
 	// look next to the EXE first, as the one in System32 might be old 
 	// (e.g. Windows 2000)
-	HMODULE hDll	= NULL;
+	HMODULE hDll	= nullptr;
 	string_path		szDbgHelpPath;
 
-	if (GetModuleFileName( NULL, szDbgHelpPath, _MAX_PATH ))
+	if (GetModuleFileName(nullptr, szDbgHelpPath, _MAX_PATH ))
 	{
 		char *pSlash = strchr( szDbgHelpPath, '\\' );
 		if (pSlash)
@@ -578,13 +577,13 @@ void save_mini_dump			(_EXCEPTION_POINTERS *pExceptionInfo)
 		}
 	}
 
-	if (hDll==NULL)
+	if (hDll== nullptr)
 	{
 		// load any version we can
 		hDll = ::LoadLibrary( "DBGHELP.DLL" );
 	}
 
-	LPCTSTR szResult = NULL;
+	LPCTSTR szResult = nullptr;
 
 	if (hDll)
 	{
@@ -619,12 +618,12 @@ void save_mini_dump			(_EXCEPTION_POINTERS *pExceptionInfo)
 			FlushLog	(log_file_name);
 
 			// create the file
-			HANDLE hFile = ::CreateFile( szDumpPath, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+			HANDLE hFile = ::CreateFile( szDumpPath, GENERIC_WRITE, FILE_SHARE_WRITE, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 			if (INVALID_HANDLE_VALUE==hFile)	
 			{
 				// try to place into current directory
 				MoveMemory	(szDumpPath,szDumpPath+5,strlen(szDumpPath));
-				hFile		= ::CreateFile( szDumpPath, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+				hFile		= ::CreateFile( szDumpPath, GENERIC_WRITE, FILE_SHARE_WRITE, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 			}
 			if (hFile!=INVALID_HANDLE_VALUE)
 			{
@@ -637,7 +636,7 @@ void save_mini_dump			(_EXCEPTION_POINTERS *pExceptionInfo)
 				// write the dump
 				MINIDUMP_TYPE	dump_flags	= MINIDUMP_TYPE(MiniDumpNormal | MiniDumpFilterMemory | MiniDumpScanMemory );
 
-				BOOL bOK = pDump( GetCurrentProcess(), GetCurrentProcessId(), hFile, dump_flags, &ExInfo, NULL, NULL );
+				BOOL bOK = pDump( GetCurrentProcess(), GetCurrentProcessId(), hFile, dump_flags, &ExInfo, nullptr, nullptr);
 				if (bOK)
 				{
 					sprintf( szScratch, "Saved dump file to '%s'", szDumpPath );
@@ -682,12 +681,12 @@ void format_message(LPSTR buffer, const u32& buffer_size)
     FormatMessage(
         FORMAT_MESSAGE_ALLOCATE_BUFFER | 
         FORMAT_MESSAGE_FROM_SYSTEM,
-        NULL,
+        nullptr,
         error_code,
         MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
         (LPSTR)&message,
         0,
-		NULL
+		nullptr
 	);
 
 	sprintf		(buffer,"[error][%8d]    : %s",error_code,message);
@@ -845,8 +844,8 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 		Debug.backend					(
 			"error handler is invoked!",
 			reason_string,
-			0,
-			0,
+			nullptr,
+			nullptr,
 			DEBUG_INFO,
 			ignore_always
 		);
@@ -905,8 +904,8 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 		Debug.backend					(
 			"error handler is invoked!",
 			expression_,
-			0,
-			0,
+			nullptr,
+			nullptr,
 			file_,
 			line,
 			function_,
@@ -965,7 +964,7 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 		signal							(SIGABRT_COMPAT,abort_handler);
 		signal							(SIGFPE,		floating_point_handler);
 		signal							(SIGILL,		illegal_instruction_handler);
-		signal							(SIGINT,		0);
+		signal							(SIGINT,		nullptr);
 //		signal							(SIGSEGV,		storage_access_handler);
 		signal							(SIGTERM,		termination_handler);
 

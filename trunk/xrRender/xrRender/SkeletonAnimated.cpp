@@ -1,7 +1,5 @@
 //---------------------------------------------------------------------------
 #include 	"stdafx.h"
-#pragma hdrstop
-
 #include 	"SkeletonAnimated.h"
 
 #include	"AnimationKeyCalculate.h"

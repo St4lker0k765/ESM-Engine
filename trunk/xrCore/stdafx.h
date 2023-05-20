@@ -9,6 +9,3 @@
 #include "xrCore_platform.h"
 
 #endif
-
-#pragma hdrstop
-

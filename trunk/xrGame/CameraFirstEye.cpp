@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "CameraFirstEye.h"
 #include "xr_level_controller.h"
 #include "../xr_3da/xr_object.h"

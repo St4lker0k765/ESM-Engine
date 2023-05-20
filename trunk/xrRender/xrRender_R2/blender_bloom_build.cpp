@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "Blender_bloom_build.h"
 
 CBlender_bloom_build::CBlender_bloom_build	()	{	description.CLS		= 0;	}

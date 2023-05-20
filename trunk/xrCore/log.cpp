@@ -1,20 +1,19 @@
 #include "stdafx.h"
-#pragma hdrstop
 
 #include <time.h>
 #include "resource.h"
 #include "log.h"
 
-extern BOOL					LogExecCB		= TRUE;
+extern BOOL					LogExecCB		= true;
 static string_path			logFName		= "engine.log";
-static BOOL 				no_log			= TRUE;
+static BOOL 				no_log			= true;
 #ifdef PROFILE_CRITICAL_SECTIONS
 	static xrCriticalSection	logCS(MUTEX_PROFILE_ID(log));
 #else // PROFILE_CRITICAL_SECTIONS
 	static xrCriticalSection	logCS;
 #endif // PROFILE_CRITICAL_SECTIONS
-xr_vector<shared_str>*		LogFile			= NULL;
-static LogCallback			LogCB			= 0;
+xr_vector<shared_str>*		LogFile			= nullptr;
+static LogCallback			LogCB			= nullptr;
 
 void FlushLog			(LPCSTR file_name)
 {
@@ -169,8 +168,8 @@ void CreateLog			(BOOL nl)
 		FS.update_path	(logFName,"$logs$",logFName);
 	if (!no_log){
         IWriter *f		= FS.w_open	(logFName);
-        if (f==NULL){
-        	MessageBox	(NULL,"Can't create log file.","Error",MB_ICONERROR);
+        if (f== nullptr){
+        	MessageBox	(nullptr,"Can't create log file.","Error",MB_ICONERROR);
         	abort();
         }
         FS.w_close		(f);

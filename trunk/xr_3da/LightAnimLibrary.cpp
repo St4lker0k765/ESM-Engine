@@ -1,7 +1,5 @@
 //---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "LightAnimLibrary.h"
 //---------------------------------------------------------------------------
 #define LANIM_VERSION		0x0001
@@ -267,7 +265,7 @@ LAItemIt ELightAnimLibrary::FindItemI(LPCSTR name)
 CLAItem* ELightAnimLibrary::FindItem(LPCSTR name)
 {
 	LAItemIt it=FindItemI(name);
-	return (it!=Items.end())?*it:0;
+	return (it!=Items.end())?*it:nullptr;
 }
 
 CLAItem* ELightAnimLibrary::AppendItem(LPCSTR name, CLAItem* src)

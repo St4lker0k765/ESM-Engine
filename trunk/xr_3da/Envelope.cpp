@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "envelope.h"
 
 CEnvelope::~CEnvelope()

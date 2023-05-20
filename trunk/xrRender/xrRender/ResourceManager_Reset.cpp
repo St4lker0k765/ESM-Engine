@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "ResourceManager.h"
 #ifndef _EDITOR
 #include	"../../xr_3da/Render.h"

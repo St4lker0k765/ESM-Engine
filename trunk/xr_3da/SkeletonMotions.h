@@ -148,7 +148,7 @@ class 	ENGINE_API	CPartDef
 public:
 	shared_str			Name;
 	xr_vector<u32>		bones;
-	CPartDef()			: Name(0) {};
+	CPartDef()			: Name(nullptr) {};
 
 	u32					mem_usage			(){ return sizeof(*this)+bones.size()*sizeof(u32)+sizeof(Name);}
 };
@@ -213,14 +213,14 @@ private:
 	motions_value*		p_;
 protected:
 	// ref-counting
-	void				destroy			()							{	if (0==p_) return;	p_->m_dwReference--; 	if (0==p_->m_dwReference)	p_=0;	}
+	void				destroy			()							{	if (nullptr==p_) return;	p_->m_dwReference--; 	if (0==p_->m_dwReference)	p_=nullptr;	}
 public:
 	bool				create			(shared_str key, IReader *data, vecBones* bones);//{	motions_value* v = g_pMotionsContainer->dock(key,data,bones); if (0!=v) v->m_dwReference++; destroy(); p_ = v;	}
 	bool				create			(shared_motions const &rhs);//	{	motions_value* v = rhs.p_; if (0!=v) v->m_dwReference++; destroy(); p_ = v;	}
 public:
 	// construction
-						shared_motions	()							{	p_ = 0;											}
-						shared_motions	(shared_motions const &rhs)	{	p_ = 0;	create(rhs);							}
+						shared_motions	()							{	p_ = nullptr;											}
+						shared_motions	(shared_motions const &rhs)	{	p_ = nullptr;	create(rhs);							}
 						~shared_motions	()							{	destroy();										}
 
 	// assignment & accessors

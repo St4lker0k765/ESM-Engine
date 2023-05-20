@@ -6,12 +6,12 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#pragma hdrstop
+
 #include "os_clipboard.h"
 
 void os_clipboard::copy_to_clipboard	( LPCSTR buf )
 {
-	if ( !OpenClipboard(0) )
+	if ( !OpenClipboard(nullptr) )
 		return;
 	u32 handle_size = ( xr_strlen(buf) + 1 ) * sizeof(char);
 	HGLOBAL handle = GlobalAlloc( GHND, handle_size );
@@ -34,7 +34,7 @@ void os_clipboard::paste_from_clipboard	( LPSTR buffer, u32 const& buffer_size )
 	VERIFY					(buffer);
 	VERIFY					(buffer_size > 0);
 
-	if (!OpenClipboard(0))
+	if (!OpenClipboard(nullptr))
 		return;
 
 	HGLOBAL	hmem			= GetClipboardData( CF_TEXT );
@@ -59,7 +59,7 @@ void os_clipboard::paste_from_clipboard	( LPSTR buffer, u32 const& buffer_size )
 
 void os_clipboard::update_clipboard		( LPCSTR string )
 {
-	if ( !OpenClipboard(0) )
+	if ( !OpenClipboard(nullptr) )
 		return;
 
 	HGLOBAL	handle			= GetClipboardData(CF_TEXT);

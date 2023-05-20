@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "ObjectAnimator.h"
 #include "motion.h"
  
@@ -13,7 +11,7 @@ bool motion_find_pred	(COMotion* a, 	shared_str b)	{	return a->name<b;}
 CObjectAnimator::CObjectAnimator()
 {
 	bLoop			= false;
-    m_Current		= 0;
+    m_Current		= nullptr;
     m_Speed			= 1.f;
 	m_Name			= "";
 }
@@ -28,7 +26,7 @@ void CObjectAnimator::Clear()
 	for(MotionIt m_it=m_Motions.begin(); m_it!=m_Motions.end(); m_it++)
 		xr_delete		(*m_it);
 	m_Motions.clear		();
-    SetActiveMotion		(0);
+    SetActiveMotion		(nullptr);
 }
 
 void CObjectAnimator::SetActiveMotion(COMotion* mot)
@@ -71,7 +69,7 @@ void CObjectAnimator::Load(const char * name)
 {
 	m_Name				= name;
 	LoadMotions			(name); 
-	SetActiveMotion		(0);
+	SetActiveMotion		(nullptr);
 }
 
 void CObjectAnimator::Update(float dt)
@@ -96,7 +94,7 @@ COMotion* CObjectAnimator::Play(bool loop, LPCSTR name)
             return 		*it;
         }else{
             Debug.fatal	(DEBUG_INFO,"OBJ ANIM::Cycle '%s' not found.",name);
-            return NULL;
+            return nullptr;
         }
     }else{
         if (!m_Motions.empty()){
@@ -106,14 +104,14 @@ COMotion* CObjectAnimator::Play(bool loop, LPCSTR name)
             return 		m_Motions.front();
         }else{
             Debug.fatal	(DEBUG_INFO,"OBJ ANIM::Cycle '%s' not found.",name);
-            return NULL;
+            return nullptr;
         }
     }
 }
 
 void CObjectAnimator::Stop()
 {
-	SetActiveMotion		(0);
+	SetActiveMotion		(nullptr);
 	m_MParam.Stop		();
 }
 

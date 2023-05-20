@@ -1,9 +1,7 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "SoundRender_CoreA.h"
 
-XRSOUND_API xr_token* snd_devices_token = NULL;
+XRSOUND_API xr_token* snd_devices_token = nullptr;
 XRSOUND_API u32		  snd_device_id = u32(-1);
 
 void CSound_manager_interface::_create(u64 window)
@@ -27,5 +25,5 @@ void CSound_manager_interface::_destroy()
 {
 	Sound->_clear();
 	xr_delete(SoundRender);
-	Sound = 0;
+	Sound = nullptr;
 }

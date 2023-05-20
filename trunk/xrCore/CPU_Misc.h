@@ -47,8 +47,8 @@ INFO_RES RoutineCPUInfo(u8& processors_count, u8& ph_cores_count, u8& log_cores_
 
 	LPFN_GLPI glpi;
 	bool done = false;
-	PSYSTEM_LOGICAL_PROCESSOR_INFORMATION buffer = NULL;
-	PSYSTEM_LOGICAL_PROCESSOR_INFORMATION ptr = NULL;
+	PSYSTEM_LOGICAL_PROCESSOR_INFORMATION buffer = nullptr;
+	PSYSTEM_LOGICAL_PROCESSOR_INFORMATION ptr = nullptr;
 	DWORD return_length = 0;
 
 	log_cores_count = 0;

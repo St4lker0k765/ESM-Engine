@@ -1,7 +1,6 @@
 // xrCore.cpp : Defines the entry point for the DLL application.
 //
 #include "stdafx.h"
-#pragma hdrstop
 
 #include <mmsystem.h>
 #include <objbase.h>
@@ -36,7 +35,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 
 		// application path
         GetModuleFileName(GetModuleHandle(MODULE_NAME),fn,sizeof(fn));
-        _splitpath		(fn,dr,di,0,0);
+        _splitpath		(fn,dr,di,nullptr,nullptr);
         strconcat		(sizeof(ApplicationPath),ApplicationPath,dr,di);
 
 		// working path
@@ -98,7 +97,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		if (strstr(Params,"-file_activity"))	 
 			flags |= CLocatorAPI::flDumpFileActivity;
 
-		FS._initialize		(flags,0,fs_fname);
+		FS._initialize		(flags,nullptr,fs_fname);
 		     Msg("'%s' build %d, %s\n","xrCore",build_id, build_date);
 			 Msg("Engine Discord: https://discord.gg/D4CK5Vu6t3");
 		EFS._initialize		();

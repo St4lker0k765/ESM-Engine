@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "detailmanager.h"
 
 #ifdef _EDITOR

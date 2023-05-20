@@ -6,9 +6,9 @@
 #include <sys\stat.h>
 #include <share.h>
 
-void*			FileDownload	(LPCSTR fn, u32* pdwSize=NULL);
+void*			FileDownload	(LPCSTR fn, u32* pdwSize= nullptr);
 void			FileCompress	(const char *fn, const char* sign, void* data, u32 size);
-void * 			FileDecompress	(const char *fn, const char* sign, u32* size=NULL);
+void * 			FileDecompress	(const char *fn, const char* sign, u32* size= nullptr);
 
 class CFileWriter : public IWriter
 {
@@ -29,14 +29,14 @@ public:
     		hf		= _fdopen(handle,"wb");
         }else{
 			hf			= fopen(*fName,"wb");
-			if (hf==0)
+			if (hf==nullptr)
 				Msg		("!Can't write file: '%s'. Error: '%s'.",*fName,_sys_errlist[errno]);
 		}
 	}
 
 	virtual 		~CFileWriter()
 	{
-		if (0!=hf){	
+		if (nullptr!=hf){	
         	fclose				(hf);
         	// release RO attrib
 	        DWORD dwAttr 		= GetFileAttributes(*fName);
@@ -49,7 +49,7 @@ public:
 	// kernel
 	virtual void	w			(const void* _ptr, u32 count) 
     { 
-		if ((0!=hf) && (0!=count)){
+		if ((nullptr!=hf) && (0!=count)){
 			const u32 mb_sz = 0x1000000;
 			u8* ptr 		= (u8*)_ptr;
 			int req_size = count;
@@ -63,9 +63,9 @@ public:
 			}
 		}
     };
-	virtual void	seek		(u32 pos)	{	if (0!=hf) fseek(hf,pos,SEEK_SET);		};
-	virtual u32		tell		()			{	return (0!=hf)?ftell(hf):0;				};
-	virtual bool	valid		()			{	return (0!=hf);}
+	virtual void	seek		(u32 pos)	{	if (nullptr!=hf) fseek(hf,pos,SEEK_SET);		};
+	virtual u32		tell		()			{	return (nullptr!=hf)?ftell(hf):0;				};
+	virtual bool	valid		()			{	return (nullptr!=hf);}
 };
 
 // It automatically frees memory after destruction

@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
 
 typedef struct TTAPI_WORKER_PARAMS {
 	volatile LONG			vlFlag;

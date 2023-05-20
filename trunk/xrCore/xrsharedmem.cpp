@@ -1,16 +1,15 @@
 #include "stdafx.h"
-#pragma hdrstop
 
 using namespace std;
 
-XRCORE_API	smem_container*	g_pSharedMemoryContainer	= NULL;
+XRCORE_API	smem_container*	g_pSharedMemoryContainer	= nullptr;
 
 smem_value*			smem_container::dock			(u32 dwCRC, u32 dwLength, void* ptr)
 {
 	VERIFY						(dwCRC && dwLength && ptr);
 
 	cs.Enter					();
-	smem_value*		result		= 0;
+	smem_value*		result		= nullptr;
 
 	// search a place to insert
 	u8				storage		[4*sizeof(u32)];
@@ -36,7 +35,7 @@ smem_value*			smem_container::dock			(u32 dwCRC, u32 dwLength, void* ptr)
 	}
 
 	// if not found - create new entry
-	if (0==result)
+	if (nullptr==result)
 	{
 		result					= (smem_value*)	Memory.mem_alloc	(4*sizeof(u32) + dwLength
 #ifdef DEBUG_MEMORY_NAME
@@ -61,7 +60,7 @@ void				smem_container::clean			()
 	cdb::iterator	it	= container.begin	();
 	cdb::iterator	end	= container.end		();
 	for (; it!=end; it++)	if (0==(*it)->dwReference)	xr_free	(*it);
-	container.erase	(remove(container.begin(),container.end(),(smem_value*)0),container.end());
+	container.erase	(remove(container.begin(),container.end(),(smem_value*)nullptr),container.end());
 	if (container.empty())	container.clear	();
 	cs.Leave		();
 }

@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "soundrender_core.h"
 #include "soundrender_source.h"
 #include "soundrender_emitter.h"
@@ -22,8 +20,8 @@ float psSoundVFactor = 1.0f;
 float psSoundVMusic = 0.7f;
 int psSoundCacheSizeMB = 16;
 
-CSoundRender_Core *SoundRender = 0;
-CSound_manager_interface *Sound = 0;
+CSoundRender_Core *SoundRender = nullptr;
+CSound_manager_interface *Sound = nullptr;
 
 CSoundRender_Core::CSoundRender_Core()
 {
@@ -31,11 +29,11 @@ CSoundRender_Core::CSoundRender_Core()
 	bEAX = FALSE;
 	bDeferredEAX = FALSE;
 	bUserEnvironment = FALSE;
-	geom_MODEL = NULL;
-	geom_ENV = NULL;
-	geom_SOM = NULL;
-	s_environment = NULL;
-	Handler = NULL;
+	geom_MODEL = nullptr;
+	geom_ENV = nullptr;
+	geom_SOM = nullptr;
+	s_environment = nullptr;
+	Handler = nullptr;
 	s_targets_pu = 0;
 	s_emitters_u = 0;
 	e_current.set_identity();
@@ -157,7 +155,7 @@ void CSoundRender_Core::set_geometry_som(IReader* I)
 #else
 	xr_delete(geom_SOM);
 #endif
-	if (0 == I)		return;
+	if (nullptr == I)		return;
 
 	// check version
 	R_ASSERT(I->find_chunk(0));
@@ -207,8 +205,8 @@ void CSoundRender_Core::set_geometry_env(IReader* I)
 #else
 	xr_delete(geom_ENV);
 #endif
-	if (0 == I)				return;
-	if (0 == s_environment)	return;
+	if (nullptr == I)				return;
+	if (nullptr == s_environment)	return;
 
 	// Assosiate names
 	xr_vector<u16>			ids;
@@ -318,7 +316,7 @@ void CSoundRender_Core::clone(ref_sound &S, const ref_sound &from, esound_type s
 
 void CSoundRender_Core::play(ref_sound &S, CObject *O, u32 flags, float delay)
 {
-	if (!bPresent || 0 == S._handle())
+	if (!bPresent || nullptr == S._handle())
 		return;
 
 	S._p->g_object = O;
@@ -333,7 +331,7 @@ void CSoundRender_Core::play(ref_sound &S, CObject *O, u32 flags, float delay)
 }
 void CSoundRender_Core::play_no_feedback(ref_sound &S, CObject *O, u32 flags, float delay, Fvector *pos, float *vol, float *freq, Fvector2 *range)
 {
-	if (!bPresent || 0 == S._handle())
+	if (!bPresent || nullptr == S._handle())
 		return;
 
 	ref_sound_data_ptr orig = S._p;
@@ -364,7 +362,7 @@ void CSoundRender_Core::play_no_feedback(ref_sound &S, CObject *O, u32 flags, fl
 
 void CSoundRender_Core::play_at_pos(ref_sound &S, CObject *O, const Fvector &pos, u32 flags, float delay)
 {
-	if (!bPresent || 0 == S._handle())
+	if (!bPresent || nullptr == S._handle())
 		return;
 
 	S._p->g_object = O;
@@ -388,7 +386,7 @@ void CSoundRender_Core::destroy(ref_sound &S)
 		E->stop(FALSE);
 	}
 
-	S._p = 0;
+	S._p = nullptr;
 }
 
 void CSoundRender_Core::_create_data(ref_sound_data &S, LPCSTR fName, esound_type sound_type, int game_type)
@@ -419,7 +417,7 @@ void CSoundRender_Core::_destroy_data(ref_sound_data &S)
 
 	R_ASSERT(0 == S.feedback);
 	SoundRender->i_destroy_source((CSoundRender_Source *)S.handle);
-	S.handle = NULL;
+	S.handle = nullptr;
 }
 
 CSoundRender_Environment* CSoundRender_Core::get_environment(const Fvector& P)
@@ -548,7 +546,7 @@ void CSoundRender_Core::i_eax_commit_setting()
 {
 	// commit eax 
 	if (bDeferredEAX)
-		i_eax_set(&DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_COMMITDEFERREDSETTINGS, NULL, 0);
+		i_eax_set(&DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_COMMITDEFERREDSETTINGS, nullptr, 0);
 }
 
 void CSoundRender_Core::object_relcase(CObject* obj)
@@ -561,13 +559,13 @@ void CSoundRender_Core::object_relcase(CObject* obj)
 		if (s_emitters[eit])
 			if (s_emitters[eit]->owner_data)
 				if (obj == s_emitters[eit]->owner_data->g_object)
-					s_emitters[eit]->owner_data->g_object = 0;
+					s_emitters[eit]->owner_data->g_object = nullptr;
 	}
 }
 
 void						CSoundRender_Core::set_user_env(CSound_environment* E)
 {
-	if (0 == E && !bUserEnvironment)	return;
+	if (nullptr == E && !bUserEnvironment)	return;
 
 	if (E)
 	{

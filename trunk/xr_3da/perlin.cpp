@@ -1,9 +1,4 @@
-/* coherent noise function over 1, 2 or 3 dimensions */
-/* (copyright Ken CPerlinNoise) */
-
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "perlin.h"
 
 #define B SAMPLE_SIZE

@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 
 #include "../xr_3da/bone.h"
 #include "../xrRender/xrRender/SkeletonXVertRender.h"

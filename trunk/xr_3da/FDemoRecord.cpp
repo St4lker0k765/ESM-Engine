@@ -14,7 +14,7 @@
 #include "render.h"
 #include "CustomHUD.h"
 
-CDemoRecord * xrDemoRecord = 0;
+CDemoRecord * xrDemoRecord = nullptr;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -233,7 +233,7 @@ void CDemoRecord::MakeCubeMapFace(Fvector &D, Fvector &N)
 
 BOOL CDemoRecord::Process(Fvector &P, Fvector &D, Fvector &N, float& fFov, float& fFar, float& fAspect)
 {
-	if (0==file)	return TRUE;
+	if (nullptr==file)	return TRUE;
 
 	if (m_bMakeScreenshot){
 		MakeScreenshotFace();

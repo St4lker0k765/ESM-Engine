@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "PHNetState.h"
 #include "../../xrNetServer/net_utils.h"
 

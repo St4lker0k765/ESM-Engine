@@ -197,7 +197,7 @@ void CBaseMonster::HitEntity(const CEntity *pEntity, float fDamage, float impuls
 BOOL  CBaseMonster::feel_vision_isRelevant(CObject* O)
 {
 	if (!g_Alive())					return FALSE;
-	if (0==smart_cast<CEntity*>(O))	return FALSE;
+	if (nullptr==smart_cast<CEntity*>(O))	return FALSE;
 	
 	if ((O->spatial.type & STYPE_VISIBLEFORAI) != STYPE_VISIBLEFORAI) return FALSE;
 	
@@ -222,7 +222,7 @@ void CBaseMonster::HitSignal(float amount, Fvector& vLocalDir, CObject* who, s16
 {
 	if (!g_Alive()) return;
 	
-	feel_sound_new(who,SOUND_TYPE_WEAPON_SHOOTING,0,who->Position(),1.f);
+	feel_sound_new(who,SOUND_TYPE_WEAPON_SHOOTING,nullptr,who->Position(),1.f);
 	if (g_Alive()) sound().play(MonsterSound::eMonsterSoundTakeDamage);
 
 	if (element < 0) return;
@@ -314,7 +314,7 @@ void CBaseMonster::critical_wounded_state_start()
 {
 	VERIFY	(m_critical_wound_type != u32(-1));
 
-	LPCSTR anim = 0;
+	LPCSTR anim = nullptr;
 	switch (m_critical_wound_type)	{
 	case critical_wound_type_head:
 		anim = m_critical_wound_anim_head;

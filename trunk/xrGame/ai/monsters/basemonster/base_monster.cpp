@@ -63,12 +63,12 @@ CBaseMonster::CBaseMonster()
 
 	// Инициализация параметров анимации	
 
-	StateMan						= 0;
+	StateMan						= nullptr;
 
 	MeleeChecker.init_external		(this);
 	Morale.init_external			(this);
 
-	m_controlled					= 0;
+	m_controlled					= nullptr;
 
 	
 	control().add					(&m_com_manager,  ControlCom::eControlCustom);
@@ -540,7 +540,7 @@ void CBaseMonster::OnEvent(NET_Packet& P, u16 type)
 			O->SetTmpPreDestroy				(just_before_destroy);
 			if (inventory().DropItem(smart_cast<CGameObject*>(O)) && !O->getDestroy()) 
 			{
-				O->H_SetParent	(0,just_before_destroy);
+				O->H_SetParent	(nullptr,just_before_destroy);
 				feel_touch_deny	(O,2000);
 			}
 		}

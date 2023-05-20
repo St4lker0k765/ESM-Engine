@@ -5,9 +5,9 @@
 #include "dx10StateCache.h"
 
 dx10State::dx10State() : 
-	m_pRasterizerState(0),
-	m_pDepthStencilState(0),
-	m_pBlendState(0),
+	m_pRasterizerState(nullptr),
+	m_pDepthStencilState(nullptr),
+	m_pBlendState(nullptr),
 	m_uiStencilRef(UINT(-1)),
 	m_uiAlphaRef(0)
 {

@@ -1407,7 +1407,7 @@ CInventoryItem *CWeapon::can_kill	(CInventory *inventory) const
 			return			(inventory_item);
 	}
 
-	return					(0);
+	return					(nullptr);
 }
 
 const CInventoryItem *CWeapon::can_kill	(const xr_vector<const CGameObject*> &items) const
@@ -1427,7 +1427,7 @@ const CInventoryItem *CWeapon::can_kill	(const xr_vector<const CGameObject*> &it
 			return			(inventory_item);
 	}
 
-	return					(0);
+	return					(nullptr);
 }
 
 bool CWeapon::ready_to_kill	() const

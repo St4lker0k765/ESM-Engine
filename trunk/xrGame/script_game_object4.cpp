@@ -182,7 +182,7 @@ CSightParams CScriptGameObject::sight_params	()
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CAI_Stalker : cannot access class member sight_params!");
 
 		CSightParams				result;
-		result.m_object				= 0;
+		result.m_object				= nullptr;
 		result.m_vector				= Fvector().set(flt_max,flt_max,flt_max);
 		result.m_sight_type			= SightManager::eSightTypeDummy;
 		return						(result);
@@ -191,7 +191,7 @@ CSightParams CScriptGameObject::sight_params	()
 	const CSightControlAction		&action = stalker->sight().current_action();
 	CSightParams					result;
 	result.m_sight_type				= action.sight_type();
-	result.m_object					= action.object_to_look() ? action.object_to_look()->lua_game_object() : 0;
+	result.m_object					= action.object_to_look() ? action.object_to_look()->lua_game_object() : nullptr;
 	result.m_vector					= action.vector3d();
 	return							(result);
 }

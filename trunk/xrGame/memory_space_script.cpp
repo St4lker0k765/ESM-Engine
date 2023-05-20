@@ -34,17 +34,17 @@ CScriptGameObject *get_memory_object(const MemorySpace::CMemoryObject<T> &memory
 CScriptGameObject *CDangerObject_object(const CDangerObject *self)
 {
 	VERIFY			(self);
-	return			(self->object() ? self->object()->lua_game_object() : 0);
+	return			(self->object() ? self->object()->lua_game_object() : nullptr);
 }
 
 CScriptGameObject *CDangerObject_dependent_object(const CDangerObject *self)
 {
 	VERIFY				(self);
 	if (!self->dependent_object())
-		return			(0);
+		return			(nullptr);
 
 	const CGameObject	*game_object = smart_cast<const CGameObject*>(self->dependent_object());
-	return				(game_object ? game_object->lua_game_object() : 0);
+	return				(game_object ? game_object->lua_game_object() : nullptr);
 }
 
 Fvector CDangerObject__position	(const CDangerObject *self)

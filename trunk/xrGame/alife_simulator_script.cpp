@@ -56,7 +56,7 @@ CSE_ALifeDynamicObject *alife_object		(const CALifeSimulator *self, LPCSTR name)
 			return	(it->second);
 	}
 	
-	return			(0);
+	return			(nullptr);
 }
 
 
@@ -112,12 +112,12 @@ void generate_story_ids		(
 
 void kill_entity0			(CALifeSimulator *alife, CSE_ALifeMonsterAbstract *monster, const GameGraph::_GRAPH_ID &game_vertex_id)
 {
-	alife->kill_entity		(monster,game_vertex_id,0);
+	alife->kill_entity		(monster,game_vertex_id,nullptr);
 }
 
 void kill_entity1			(CALifeSimulator *alife, CSE_ALifeMonsterAbstract *monster)
 {
-	alife->kill_entity		(monster,monster->m_tGraphID,0);
+	alife->kill_entity		(monster,monster->m_tGraphID,nullptr);
 }
 
 void add_in_restriction		(CALifeSimulator *alife, CSE_ALifeMonsterAbstract *monster, ALife::_OBJECT_ID id)
@@ -173,7 +173,7 @@ CSE_Abstract *CALifeSimulator__spawn_item2		(CALifeSimulator *self, LPCSTR secti
 	CSE_ALifeDynamicObject				*object = ai().alife().objects().object(id_parent,true);
 	if (!object) {
 		Msg								("! invalid parent id [%d] specified",id_parent);
-		return							(0);
+		return							(nullptr);
 	}
 
 	if (!object->m_bOnline)
@@ -201,12 +201,12 @@ CSE_Abstract *CALifeSimulator__spawn_ammo		(CALifeSimulator *self, LPCSTR sectio
 {
 //	if (id_parent == ALife::_OBJECT_ID(-1))
 //		return							(self->spawn_item(section,position,level_vertex_id,game_vertex_id,id_parent));
-	CSE_ALifeDynamicObject				*object = 0;
+	CSE_ALifeDynamicObject				*object = nullptr;
 	if (id_parent != ALife::_OBJECT_ID(-1)) {
 		object							= ai().alife().objects().object(id_parent,true);
 		if (!object) {
 			Msg							("! invalid parent id [%d] specified",id_parent);
-			return						(0);
+			return						(nullptr);
 		}
 	}
 

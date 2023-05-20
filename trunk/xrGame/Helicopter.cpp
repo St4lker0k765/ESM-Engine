@@ -18,9 +18,9 @@ float STEP=0.02f;
 
 CHelicopter::CHelicopter()
 {
-	m_pParticle		= NULL;
-	m_light_render	= NULL;
-	m_lanim			= NULL;
+	m_pParticle		= nullptr;
+	m_light_render	= nullptr;
+	m_lanim			= nullptr;
 
 	ISpatial*		self				=	smart_cast<ISpatial*> (this);
 	if (self)		self->spatial.type  |=  STYPE_VISIBLEFORAI;
@@ -217,7 +217,7 @@ BOOL CHelicopter::net_Spawn(CSE_Abstract*	DC)
 	}
 
 	m_engineSound.create			(*heli->engine_sound,st_Effect,sg_SourceType);
-	m_engineSound.play_at_pos		(0,XFORM().c,sm_Looped);
+	m_engineSound.play_at_pos		(nullptr,XFORM().c,sm_Looped);
 	
 	CShootingObject::Light_Create	();
 

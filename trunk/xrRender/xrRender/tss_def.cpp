@@ -6,7 +6,7 @@ IDirect3DStateBlock9* SimulatorStates::record	()
 //	TODO: DX10: Implement equivalent for SimulatorStates::record for DX10
 #if defined(USE_DX10) || defined(USE_DX11)
 	//VERIFY(!"SimulatorStates::record not implemented!");
-	return 0;
+	return nullptr;
 #else	//	USE_DX10
 	CHK_DX(HW.pDevice->BeginStateBlock());
 	for (u32 it=0; it<States.size(); it++)
@@ -24,7 +24,7 @@ IDirect3DStateBlock9* SimulatorStates::record	()
 			}break;
 		}
 	}
-	IDirect3DStateBlock9*	SB = 0;
+	IDirect3DStateBlock9*	SB = nullptr;
 	CHK_DX	(HW.pDevice->EndStateBlock(&SB));
 	return	SB;
 #endif	//	USE_DX10

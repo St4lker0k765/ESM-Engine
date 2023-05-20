@@ -23,7 +23,7 @@ CIKFoot::CIKFoot( ):
 	m_ref_bone			( u16( -1 ) ),
 	m_foot_bone_id		( BI_NONE ),
 	m_toe_bone_id		( BI_NONE ),
-	m_K					( 0 )
+	m_K					( nullptr )
 {
 
 }

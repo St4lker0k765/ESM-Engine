@@ -53,7 +53,7 @@ lua_State* CDbgScriptThreads::FindScript(int nThreadID)
 		if( (*It).scriptID == nThreadID )
 			return (*It).lua;
 	}
-	return 0;
+	return nullptr;
 }
 
 void  CDbgScriptThreads::DrawThreads()

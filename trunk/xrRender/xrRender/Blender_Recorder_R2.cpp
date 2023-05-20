@@ -170,7 +170,7 @@ void	CBlender_Compile::r_End			()
 	dest.constants			= DEV->_CreateConstantTable(ctable);
 	dest.state				= DEV->_CreateState		(RS.GetContainer());
 	dest.T					= DEV->_CreateTextureList	(passTextures);
-	dest.C					= 0;
+	dest.C					= nullptr;
 #ifdef _EDITOR
 	dest.M					= 0;
 #endif

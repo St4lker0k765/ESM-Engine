@@ -22,7 +22,7 @@ CTelekineticObject*	CTelekinesis::activate			(CPhysicsShellHolder *obj, float st
 	CTelekineticObject* tele_object=alloc_tele_object();		
 	if (!tele_object->init(this,obj,strength, height,max_time_keep,rot)) {
 		xr_delete(tele_object);
-		return 0;
+		return nullptr;
 	}
 
 	// добавить объект

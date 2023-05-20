@@ -20,12 +20,12 @@ CScriptProcess *CScriptEngine::script_process	(const EScriptProcessors &process_
 	CScriptProcessStorage::const_iterator	I = m_script_processes.find(process_id);
 	if ((I != m_script_processes.end()))
 		return								((*I).second);
-	return									(0);
+	return									(nullptr);
 }
 
 IC	void CScriptEngine::parse_script_namespace(LPCSTR function_to_call, LPSTR name_space, LPSTR function)
 {
-	LPCSTR					I = function_to_call, J = 0;
+	LPCSTR					I = function_to_call, J = nullptr;
 	for ( ; ; J=I,++I) {
 		I					= strchr(I,'.');
 		if (!I)

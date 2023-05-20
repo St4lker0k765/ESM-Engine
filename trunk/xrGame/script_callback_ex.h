@@ -94,7 +94,7 @@ public:
 	IC			void				set						(const functor_type &functor);
 	IC			void				set						(const functor_type &functor, const object_type &object);
 	IC			void				clear					();
-	IC			operator			unspecified_bool_type	() const {return (!m_functor.is_valid() ? 0 : &CScriptCallbackEx_::empty);}
+	IC			operator			unspecified_bool_type	() const {return (!m_functor.is_valid() ? nullptr : &CScriptCallbackEx_::empty);}
 };
 
 #include "script_callback_ex_inline.h"

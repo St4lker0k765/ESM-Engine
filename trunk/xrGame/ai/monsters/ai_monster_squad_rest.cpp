@@ -86,7 +86,7 @@ void CMonsterSquad::Idle_AssignAction(ENTITY_VEC &members)
 			random_dir.random_dir	();
 			random_r				= Random.randF(CIRCLE_RADIUS_MIN, CIRCLE_RADIUS_MAX);
 
-			CEntity *entity = 0;
+			CEntity *entity = nullptr;
 			switch (cur_type) {
 				case 0: // front
 					entity = front.back	(); front.pop_back();
@@ -135,7 +135,7 @@ void CMonsterSquad::Idle_AssignAction(ENTITY_VEC &members)
 			command.type		= SC_REST;
 			command.position	= leader->Position();
 			command.node		= leader->ai_location().level_vertex_id();
-			command.entity		= 0;
+			command.entity		= nullptr;
 			
 			UpdateCommand		(*it, command);
 		}

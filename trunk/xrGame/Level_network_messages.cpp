@@ -116,7 +116,7 @@ void CLevel::ClientReceive()
 				P->r_u16		(ID);
 				u32 Ping = P->r_u32();
 				CGameObject*	O	= smart_cast<CGameObject*>(Objects.net_Find		(ID));
-				if (0 == O)		break;
+				if (nullptr == O)		break;
 				O->net_Import(*P);
 		//---------------------------------------------------
 				UpdateDeltaUpd(timeServer());
@@ -153,7 +153,7 @@ void CLevel::ClientReceive()
 					P->r_vec3(NewDir);
 
 					CActor*	OActor	= smart_cast<CActor*>(Objects.net_Find		(ID));
-					if (0 == OActor)		break;
+					if (nullptr == OActor)		break;
 					OActor->MoveActor(NewPos, NewDir);
 				};
 
@@ -166,7 +166,7 @@ void CLevel::ClientReceive()
 			{
 				P->r_u16		(ID);
 				CObject*	O	= Objects.net_Find		(ID);
-				if (0 == O)		break;
+				if (nullptr == O)		break;
 				O->net_ImportInput(*P);
 			}break;
 		//---------------------------------------------------
@@ -184,7 +184,7 @@ void CLevel::ClientReceive()
 			{
 				P->r_u16		(ID);
 				CObject*	O	= Objects.net_Find		(ID);
-				if (0 == O)		break;
+				if (nullptr == O)		break;
 				O->net_MigrateInactive	(*P);
 				if (bDebug)		Log("! MIGRATE_DEACTIVATE",*O->cName());
 			}
@@ -193,7 +193,7 @@ void CLevel::ClientReceive()
 			{
 				P->r_u16		(ID);
 				CObject*	O	= Objects.net_Find		(ID);
-				if (0 == O)		break;
+				if (nullptr == O)		break;
 				O->net_MigrateActive	(*P);
 				if (bDebug)		Log("! MIGRATE_ACTIVATE",*O->cName());
 			}
@@ -370,7 +370,7 @@ void				CLevel::OnMessage				(void* data, u32 size)
 
 NET_Packet*				CLevel::net_msg_Retreive		()
 {
-	NET_Packet* P = NULL;
+	NET_Packet* P = nullptr;
 
 	DemoCS.Enter();
 

@@ -536,8 +536,8 @@ void R_dsgraph_structure::r_dsgraph_render_hud_ui()
 #if	RENDER!=R_R1
 	// Targets, use accumulator for temporary storage
 	const ref_rt	rt_null;
-	RCache.set_RT(0,	1);
-	RCache.set_RT(0,	2);
+	RCache.set_RT(nullptr,	1);
+	RCache.set_RT(nullptr,	2);
 #if	(RENDER==R_R3) || (RENDER==R_R4)
 	if( !RImplementation.o.dx10_msaa )
 	{
@@ -681,7 +681,7 @@ void	R_dsgraph_structure::r_dsgraph_render_subspace	(IRender_Sector* _sector, CF
 
 	if (_dynamic)
 	{
-		set_Object						(0);
+		set_Object						(nullptr);
 
 		// Traverse object database
 		g_SpatialSpace->q_frustum
@@ -697,7 +697,7 @@ void	R_dsgraph_structure::r_dsgraph_render_subspace	(IRender_Sector* _sector, CF
 		{
 			ISpatial*	spatial		= lstRenderables[o_it];
 			CSector*	sector		= (CSector*)spatial->spatial.sector;
-			if	(0==sector)										continue;	// disassociated from S/P structure
+			if	(nullptr==sector)										continue;	// disassociated from S/P structure
 			if	(PortalTraverser.i_marker != sector->r_marker)	continue;	// inactive (untouched) sector
 			for (u32 v_it=0; v_it<sector->r_frustums.size(); v_it++)
 			{
@@ -706,7 +706,7 @@ void	R_dsgraph_structure::r_dsgraph_render_subspace	(IRender_Sector* _sector, CF
 
 				// renderable
 				IRenderable*	renderable		= spatial->dcast_Renderable	();
-				if (0==renderable)				continue;					// unknown, but renderable object (r1_glow???)
+				if (nullptr==renderable)				continue;					// unknown, but renderable object (r1_glow???)
 
 				renderable->renderable_Render	();
 			}
@@ -715,7 +715,7 @@ void	R_dsgraph_structure::r_dsgraph_render_subspace	(IRender_Sector* _sector, CF
 
 	// Restore
 	ViewBase						= ViewSave;
-	View							= 0;
+	View							= nullptr;
 }
 
 #include "fhierrarhyvisual.h"

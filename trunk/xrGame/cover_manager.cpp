@@ -17,7 +17,7 @@
 
 CCoverManager::CCoverManager				()
 {
-	m_covers				= 0;
+	m_covers				= nullptr;
 }
 
 CCoverManager::~CCoverManager				()

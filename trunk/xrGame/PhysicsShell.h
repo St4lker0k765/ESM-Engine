@@ -30,8 +30,8 @@ struct physicsBone
 	CPhysicsElement* element;
 	physicsBone()
 	{
-		joint=NULL;
-		element=NULL;
+		joint= nullptr;
+		element= nullptr;
 	}
 };
 DEFINE_MAP	(u16,	physicsBone,	BONE_P_MAP,	BONE_P_PAIR_IT);
@@ -115,7 +115,7 @@ public:
 	virtual		void							add_Shape								(const SBoneShape& shape,const Fmatrix& offset)																		= 0;
 	virtual		CODEGeom						*last_geom								()																													= 0;
 	virtual		bool							has_geoms								()																													= 0;
-	virtual		void							add_Mass								(const SBoneShape& shape,const Fmatrix& offset,const Fvector& mass_center,float mass,CPHFracture* fracture=NULL)	= 0;
+	virtual		void							add_Mass								(const SBoneShape& shape,const Fmatrix& offset,const Fvector& mass_center,float mass,CPHFracture* fracture= nullptr)	= 0;
 	virtual		void							set_ParentElement						(CPhysicsElement* p)																								= 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	virtual		void							set_BoxMass								(const Fobb& box, float mass)																						= 0;	
@@ -310,8 +310,8 @@ IC					IKinematics					*PKinematics								()																{return m_pKinemati
 	virtual			void						SetGlTransformDynamic						(const Fmatrix &form)																		= 0;
 	virtual			void						CollideAll									()																							= 0;
 	virtual			CPhysicsElement				*NearestToPoint								(const Fvector& point)																		= 0;
-	virtual			void						build_FromKinematics						(IKinematics* K,BONE_P_MAP* p_geting_map=NULL)												= 0;
-	virtual			void						preBuild_FromKinematics						(IKinematics* K,BONE_P_MAP* p_geting_map=NULL)												= 0;
+	virtual			void						build_FromKinematics						(IKinematics* K,BONE_P_MAP* p_geting_map= nullptr)												= 0;
+	virtual			void						preBuild_FromKinematics						(IKinematics* K,BONE_P_MAP* p_geting_map= nullptr)												= 0;
 	virtual			void						Build										(bool disable=false)																		= 0;
 	virtual			void						SetMaxAABBRadius							(float size)																				 {};
 	virtual			void						AddTracedGeom								(u16 element=0,u16 geom=0)																	= 0;
@@ -346,7 +346,7 @@ CPhysicsShell*				P_create_splited_Shell		()																					;
 CPhysicsShell*				P_build_Shell				(CGameObject* obj,bool not_active_state,LPCSTR	fixed_bones)						;
 CPhysicsShell*				P_build_Shell				(CGameObject* obj,bool not_active_state,U16Vec& fixed_bones)						;
 CPhysicsShell*				P_build_Shell				(CGameObject* obj,bool not_active_state,BONE_P_MAP* bone_map,LPCSTR	fixed_bones)	;
-CPhysicsShell*				P_build_Shell				(CGameObject* obj,bool not_active_state,BONE_P_MAP* bone_map=NULL)					;
+CPhysicsShell*				P_build_Shell				(CGameObject* obj,bool not_active_state,BONE_P_MAP* bone_map= nullptr)					;
 CPhysicsShell*				P_build_SimpleShell			(CGameObject* obj,float mass,bool not_active_state)									;
 		void				ApplySpawnIniToPhysicShell	(CInifile* ini,CPhysicsShell* physics_shell,bool fixed)								;
 		void				fix_bones					(LPCSTR	fixed_bones,CPhysicsShell* shell )											;

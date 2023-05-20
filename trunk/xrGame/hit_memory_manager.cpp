@@ -64,7 +64,7 @@ const CHitObject *CHitMemoryManager::hit					(const CEntityAlive *object) const
 	if (m_hits->end() != I)
 		return				(&*I);
 
-	return					(0);
+	return					(nullptr);
 }
 
 void CHitMemoryManager::add					(const CEntityAlive *entity_alive)
@@ -78,7 +78,7 @@ void CHitMemoryManager::Load				(LPCSTR section)
 
 void CHitMemoryManager::reinit				()
 {
-	m_hits					= 0;
+	m_hits					= nullptr;
 	m_last_hit_object_id	= ALife::_OBJECT_ID(-1);
 }
 

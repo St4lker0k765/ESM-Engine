@@ -12,7 +12,7 @@ IC	CTeamHierarchyHolder::CTeamHierarchyHolder									(CSeniorityHierarchyHolder
 {
 	VERIFY								(seniority_manager);
 	m_seniority_manager					= seniority_manager;
-	SeniorityHierarchy::assign_svector	(m_squads,max_squad_count,0);
+	SeniorityHierarchy::assign_svector	(m_squads,max_squad_count,nullptr);
 }
 
 IC	CSeniorityHierarchyHolder &CTeamHierarchyHolder::team						() const

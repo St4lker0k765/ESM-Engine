@@ -10,7 +10,7 @@
 
 IC	CScriptEntityAction::CScriptEntityAction						()
 {
-	m_user_data					= 0;
+	m_user_data					= nullptr;
 	m_started					= false;
 }
 

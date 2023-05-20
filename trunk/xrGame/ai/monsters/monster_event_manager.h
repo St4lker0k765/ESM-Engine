@@ -28,7 +28,7 @@ public:
 	void		add_delegate			(EEventType event, typeEvent delegate);
 	void		remove_delegate			(EEventType event, typeEvent delegate);
 	
-	void		raise					(EEventType, IEventData *data = 0);
+	void		raise					(EEventType, IEventData *data = nullptr);
 
 private:
 	void		clear		();

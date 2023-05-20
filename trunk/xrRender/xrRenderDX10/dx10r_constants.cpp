@@ -368,7 +368,7 @@ BOOL	R_constant_table::parse	(void* _desc, u32 destination)
 	{
 		m_CBTable.reserve(ShaderDesc.ConstantBuffers);
 		//	Parse single constant table
-		ID3DShaderReflectionConstantBuffer *pTable=0;
+		ID3DShaderReflectionConstantBuffer *pTable=nullptr;
 
 		for (u16 iBuf = 0; iBuf<ShaderDesc.ConstantBuffers; ++iBuf)
 		{

@@ -108,7 +108,7 @@ void dxEnvDescriptorMixerRender::Destroy()
 
 void dxEnvDescriptorMixerRender::Clear()
 {
-	std::pair<u32,ref_texture>	zero = mk_pair(u32(0),ref_texture(0));
+	std::pair<u32,ref_texture>	zero = mk_pair(u32(0),ref_texture(nullptr));
 	sky_r_textures.clear		();
 	sky_r_textures.push_back	(zero);
 	sky_r_textures.push_back	(zero);
@@ -221,7 +221,7 @@ void dxEnvironmentRender::OnLoad()
 
 void dxEnvironmentRender::OnUnload()
 {
-	tonemap	= 0;
+	tonemap	= nullptr;
 }
 
 void dxEnvironmentRender::RenderSky(CEnvironment &env)
@@ -339,8 +339,8 @@ void dxEnvironmentRender::OnDeviceCreate()
 
 void dxEnvironmentRender::OnDeviceDestroy()
 {
-	tsky0->surface_set						(NULL);
-	tsky1->surface_set						(NULL);
+	tsky0->surface_set						(nullptr);
+	tsky1->surface_set						(nullptr);
 
 	sh_2sky.destroy							();
 	sh_2geom.destroy						();

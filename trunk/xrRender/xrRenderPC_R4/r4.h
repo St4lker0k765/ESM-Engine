@@ -218,8 +218,8 @@ public:
 
 	ICF void						apply_object				(IRenderable*	O)
 	{
-		if (0==O)					return;
-		if (0==O->renderable_ROS())	return;
+		if (nullptr==O)					return;
+		if (nullptr==O->renderable_ROS())	return;
 		CROS_impl& LT				= *((CROS_impl*)O->renderable_ROS());
 		LT.update_smooth			(O)								;
 		o_hemi						= 0.75f*LT.get_hemi			()	;
@@ -230,7 +230,7 @@ public:
 	IC void							apply_lmaterial				()
 	{
 		R_constant*		C	= &*RCache.get_c	(c_sbase);		// get sampler
-		if (0==C)			return;
+		if (nullptr==C)			return;
 		VERIFY				(RC_dest_sampler	== C->destination);
 		VERIFY				(RC_dx10texture		== C->type);
 		CTexture*		T	= RCache.get_ActiveTexture	(u32(C->samp.index));
@@ -314,7 +314,7 @@ public:
 	// Models
 	virtual IRenderVisual*			model_CreateParticles		(LPCSTR name);
 	virtual IRender_DetailModel*	model_CreateDM				(IReader* F);
-	virtual IRenderVisual*			model_Create				(LPCSTR name, IReader* data=0);
+	virtual IRenderVisual*			model_Create				(LPCSTR name, IReader* data=nullptr);
 	virtual IRenderVisual*			model_CreateChild			(LPCSTR name, IReader* data);
 	virtual IRenderVisual*			model_Duplicate				(IRenderVisual*	V);
 	virtual void					model_Delete				(IRenderVisual* &	V, BOOL bDiscard);
@@ -331,7 +331,7 @@ public:
 	// Main
 	virtual void					Calculate					();
 	virtual void					Render						();
-	virtual void					Screenshot					(ScreenshotMode mode=SM_NORMAL, LPCSTR name = 0);
+	virtual void					Screenshot					(ScreenshotMode mode=SM_NORMAL, LPCSTR name = nullptr);
 	virtual void					Screenshot					(ScreenshotMode mode, CMemoryWriter& memory_writer);
 	virtual void					ScreenshotAsyncBegin		();
 	virtual void					ScreenshotAsyncEnd			(CMemoryWriter& memory_writer);

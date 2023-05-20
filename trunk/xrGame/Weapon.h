@@ -39,7 +39,7 @@ public:
 	virtual void			net_Import			(NET_Packet& P);
 	
 	virtual CWeapon			*cast_weapon			()					{return this;}
-	virtual CWeaponMagazined*cast_weapon_magazined	()					{return 0;}
+	virtual CWeaponMagazined*cast_weapon_magazined	()					{return nullptr;}
 
 
 	//serialization
@@ -432,7 +432,7 @@ public:
 
 	virtual void			OnMagazineEmpty		();
 			void			SpawnAmmo			(u32 boxCurr = 0xffffffff, 
-													LPCSTR ammoSect = NULL, 
+													LPCSTR ammoSect = nullptr, 
 													u32 ParentID = 0xffffffff);
 
 	//  [8/3/2005]

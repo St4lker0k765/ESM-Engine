@@ -7,14 +7,14 @@ dxUIRender	UIRenderImpl;
 
 void dxUIRender::CreateUIGeom()
 {
-	hGeom_TL.create(FVF::F_TL, RCache.Vertex.Buffer(), 0);
-	hGeom_LIT.create(FVF::F_LIT, RCache.Vertex.Buffer(), 0);
+	hGeom_TL.create(FVF::F_TL, RCache.Vertex.Buffer(), nullptr);
+	hGeom_LIT.create(FVF::F_LIT, RCache.Vertex.Buffer(), nullptr);
 }
 
 void dxUIRender::DestroyUIGeom()
 {
-	hGeom_TL = NULL;
-	hGeom_LIT = NULL;
+	hGeom_TL = nullptr;
+	hGeom_LIT = nullptr;
 }
 
 void dxUIRender::SetShader(IUIShader &shader)

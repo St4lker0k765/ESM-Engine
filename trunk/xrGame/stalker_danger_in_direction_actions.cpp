@@ -112,7 +112,7 @@ void CStalkerActionDangerInDirectionLookOut::initialize							()
 
 	m_storage->set_property						(eWorldPropertyUseCrouchToLookOut,	!!m_crouch_look_out_random.random(2));
 
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_mental_state		(eMentalStateDanger);
@@ -187,7 +187,7 @@ void CStalkerActionDangerInDirectionHoldPosition::initialize					()
 {
 	inherited::initialize	();
 
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_nearest_accessible_position		();
@@ -250,7 +250,7 @@ void CStalkerActionDangerInDirectionDetour::initialize							()
 	inherited::initialize						();
 
 	object().agent_manager().member().member	(&object()).detour	(true);
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_body_state			(eBodyStateStand);
@@ -260,7 +260,7 @@ void CStalkerActionDangerInDirectionDetour::initialize							()
 	float										distance = object().memory().danger().selected()->position().distance_to(object().Position());
 	select_queue_params							(distance,min_queue_size, max_queue_size, min_queue_interval, max_queue_interval);
 	object().CObjectHandler::set_goal			(eObjectActionAimReady1,object().best_weapon(),min_queue_size, max_queue_size, min_queue_interval, max_queue_interval);
-	object().agent_manager().member().member(m_object).cover(0);
+	object().agent_manager().member().member(m_object).cover(nullptr);
 }
 
 void CStalkerActionDangerInDirectionDetour::execute								()
@@ -317,7 +317,7 @@ void CStalkerActionDangerInDirectionSearch::initialize						()
 {
 	inherited::initialize	();
 
-	object().movement().set_desired_direction		(0);
+	object().movement().set_desired_direction		(nullptr);
 	object().movement().set_path_type				(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type		(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_body_state				(eBodyStateStand);
@@ -329,7 +329,7 @@ void CStalkerActionDangerInDirectionSearch::initialize						()
 	select_queue_params								(distance,min_queue_size, max_queue_size, min_queue_interval, max_queue_interval);
 	object().CObjectHandler::set_goal				(eObjectActionAimReady1,object().best_weapon(),min_queue_size, max_queue_size, min_queue_interval, max_queue_interval);
 
-	object().agent_manager().member().member(m_object).cover(0);
+	object().agent_manager().member().member(m_object).cover(nullptr);
 }
 
 void CStalkerActionDangerInDirectionSearch::execute							()

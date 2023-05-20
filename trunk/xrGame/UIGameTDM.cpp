@@ -21,7 +21,7 @@
 //--------------------------------------------------------------------
 CUIGameTDM::CUIGameTDM()
 {
-	m_game							= NULL;
+	m_game							= nullptr;
 
 	CUIXml							uiXml;
 	CUIXmlInit						xml_init;

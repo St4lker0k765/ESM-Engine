@@ -42,7 +42,7 @@ void CMapSpot::Update()
 	if(m_bCursorOverWindow){
 		VERIFY(m_dwFocusReceiveTime>=0);
 		if( Device.dwTimeGlobal>(m_dwFocusReceiveTime+500) ){
-			GetMessageTarget()->SendMessage(this, MAP_SHOW_HINT, NULL);
+			GetMessageTarget()->SendMessage(this, MAP_SHOW_HINT, nullptr);
 		}
 	}
 }
@@ -63,7 +63,7 @@ bool CMapSpot::OnMouseDown		(int mouse_btn)
 void CMapSpot::OnFocusLost		()
 {
 	inherited::OnFocusLost		();
-	GetMessageTarget()->SendMessage(this, MAP_HIDE_HINT, NULL);
+	GetMessageTarget()->SendMessage(this, MAP_HIDE_HINT, nullptr);
 }
 
 
@@ -79,7 +79,7 @@ CMapSpotPointer::~CMapSpotPointer()
 
 LPCSTR CMapSpotPointer::GetHint()
 {
-	return NULL;
+	return nullptr;
 /*
 	m_pointer_hint = "to: ";
 	m_pointer_hint += inherited::GetHint();
@@ -108,7 +108,7 @@ void CMiniMapSpot::Load(CUIXml* xml, LPCSTR path)
 	inherited::Load(xml,path);
 
 	string256 buf;
-	XML_NODE* n = NULL;
+	XML_NODE* n = nullptr;
 	
 	Frect base_rect;
 	base_rect.x1 = 0;
@@ -121,7 +121,7 @@ void CMiniMapSpot::Load(CUIXml* xml, LPCSTR path)
 	strconcat(sizeof(buf), buf, path, ":texture_above");
 	n = xml->NavigateToNode(buf,0);
 	if(n){
-		LPCSTR texture  = xml->Read(buf, 0, NULL);
+		LPCSTR texture  = xml->Read(buf, 0, nullptr);
 		CUITextureMaster::InitTexture	(texture, "hud\\default", &m_UIStaticItem);
 		if(strchr(texture,'\\'))
 		{
@@ -139,7 +139,7 @@ void CMiniMapSpot::Load(CUIXml* xml, LPCSTR path)
 	strconcat(sizeof(buf),buf, path, ":texture_below");
 	n = xml->NavigateToNode(buf,0);
 	if(n){
-		LPCSTR texture  = xml->Read(buf, 0, NULL);
+		LPCSTR texture  = xml->Read(buf, 0, nullptr);
 		CUITextureMaster::InitTexture	(texture, "hud\\default", &m_UIStaticItem);
 		if(strchr(texture,'\\'))
 		{
@@ -156,7 +156,7 @@ void CMiniMapSpot::Load(CUIXml* xml, LPCSTR path)
 	strconcat(sizeof(buf),buf, path, ":texture");
 	n = xml->NavigateToNode(buf,0);
 	if(n){
-		LPCSTR texture  = xml->Read(buf, 0, NULL);
+		LPCSTR texture  = xml->Read(buf, 0, nullptr);
 		CUITextureMaster::InitTexture	(texture, "hud\\default", &m_UIStaticItem);
 		if(strchr(texture,'\\'))
 		{

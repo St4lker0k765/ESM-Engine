@@ -4,7 +4,7 @@
 #include "ui/xrUIXmlParser.h"
 #include "xr_level_controller.h"
 
-STRING_TABLE_DATA* CStringTable::pData = NULL;
+STRING_TABLE_DATA* CStringTable::pData = nullptr;
 BOOL CStringTable::m_bWriteErrorsToLog = FALSE;
 
 CStringTable::CStringTable	()
@@ -20,7 +20,7 @@ void CStringTable::Destroy	()
 
 void CStringTable::Init		()
 {
-	if(NULL != pData) return;
+	if(nullptr != pData) return;
     
 	pData				= xr_new<STRING_TABLE_DATA>();
 	
@@ -57,11 +57,11 @@ void CStringTable::Load	(LPCSTR xml_file)
 
 	for(int i=0; i<string_num; ++i)
 	{
-		LPCSTR string_name = uiXml.ReadAttrib(uiXml.GetRoot(), "string", i, "id", NULL);
+		LPCSTR string_name = uiXml.ReadAttrib(uiXml.GetRoot(), "string", i, "id", nullptr);
 
 		VERIFY3					(pData->m_StringTable.find(string_name) == pData->m_StringTable.end(), "duplicate string table id", string_name);
 
-		LPCSTR string_text		= uiXml.Read(uiXml.GetRoot(), "string:text", i,  NULL);
+		LPCSTR string_text		= uiXml.Read(uiXml.GetRoot(), "string:text", i, nullptr);
 
 		if(m_bWriteErrorsToLog && string_text)
 			Msg("[string table] '%s' no translation in '%s'", string_name, *(pData->m_sLanguage));
@@ -101,7 +101,7 @@ STRING_VALUE CStringTable::ParseLine(LPCSTR str, LPCSTR skey, bool bFirst)
 	string256				srcbuff;
 	bool	b_hit			= false;
 
-	while( (b = strstr( str+k,ACTION_STR)) !=0 )
+	while( (b = strstr( str+k,ACTION_STR)) !=nullptr )
 	{
 		buff[0]				= 0;
 		srcbuff[0]			= 0;
@@ -139,7 +139,7 @@ STRING_VALUE CStringTable::translate (const STRING_ID& str_id) const
 
 	if(!res)
 	{
-		if(m_bWriteErrorsToLog && *str_id != NULL && xr_strlen(*str_id)>0)
+		if(m_bWriteErrorsToLog && *str_id != nullptr && xr_strlen(*str_id)>0)
 			Msg("[string table] '%s' has no entry", *str_id);
 		return str_id;
 	}

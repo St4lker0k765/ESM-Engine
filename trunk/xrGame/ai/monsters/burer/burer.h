@@ -42,7 +42,7 @@ public:
 		
 		GraviObject() {
 			active = false;
-			enemy = 0;
+			enemy = nullptr;
 		}
 		
 		

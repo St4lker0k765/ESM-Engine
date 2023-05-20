@@ -13,7 +13,7 @@ xr_token	difficulty_type_token						[ ]={
 	{ "gd_stalker",						egdStalker									},
 	{ "gd_veteran",						egdVeteran									},
 	{ "gd_master",						egdMaster									},
-	{ 0,							0											}
+	{ nullptr,							0											}
 };
 
 game_cl_Single::game_cl_Single()
@@ -32,7 +32,7 @@ CUIGameCustom* game_cl_Single::createGameUI()
 
 char* game_cl_Single::getTeamSection(int Team)
 {
-	return NULL;
+	return nullptr;
 };
 
 void game_cl_Single::OnDifficultyChanged()

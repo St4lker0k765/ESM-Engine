@@ -80,7 +80,7 @@ void CStalkerMovementManager::initialize()
 	set_body_state			(eBodyStateStand);
 	set_movement_type		(eMovementTypeStand);
 	set_mental_state		(eMentalStateDanger);
-	set_desired_direction	(0);
+	set_desired_direction	(nullptr);
 
 #ifdef DEBUG
 	restrictions().initialize();
@@ -132,8 +132,8 @@ CStalkerMovementManager::CStalkerMovementManager	(CAI_Stalker *object) :
 {
 	VERIFY						(object);
 	m_object					= object;
-	m_velocities				= 0;
-	m_last_query_object			= 0;
+	m_velocities				= nullptr;
+	m_last_query_object			= nullptr;
 	m_last_query_position		= Fvector().set(flt_max,flt_max,flt_max);
 	m_last_query_object_position= Fvector().set(flt_max,flt_max,flt_max);
 	m_last_query_result			= false;
@@ -227,7 +227,7 @@ void CStalkerMovementManager::setup_movement_params	()
 	switch (path_type()) {
 		case MovementManager::ePathTypeGamePath :
 		case MovementManager::ePathTypePatrolPath : {
-			set_desired_position			(0);
+			set_desired_position			(nullptr);
 			break;
 		}
 	}
@@ -572,7 +572,7 @@ void CStalkerMovementManager::setup_speed_from_animation(const float &speed)
 
 void CStalkerMovementManager::on_build_path				()
 {
-	m_last_query_object					= 0;
+	m_last_query_object					= nullptr;
 	m_last_query_position				= Fvector().set(flt_max,flt_max,flt_max);
 	m_last_query_object_position		= Fvector().set(flt_max,flt_max,flt_max);
 	m_last_query_result					= false;

@@ -42,7 +42,7 @@ void CStalkerActionDangerGrenadeTakeCover::initialize						()
 	set_property			(eWorldPropertyCoverReached,false);
 	set_property			(eWorldPropertyLookedAround,false);
 
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_movement_type		(eMovementTypeRun);
@@ -118,7 +118,7 @@ void CStalkerActionDangerGrenadeWaitForExplosion::initialize							()
 {
 	inherited::initialize						();
 
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_movement_type		(eMovementTypeStand);
@@ -160,7 +160,7 @@ void CStalkerActionDangerGrenadeTakeCoverAfterExplosion::initialize						()
 	set_property			(eWorldPropertyCoverReached,false);
 	set_property			(eWorldPropertyLookedAround,false);
 
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_mental_state		(eMentalStateDanger);
@@ -217,7 +217,7 @@ void CStalkerActionDangerGrenadeLookAround::initialize						()
 
 	inherited::initialize						();
 
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_movement_type		(eMovementTypeStand);
@@ -258,7 +258,7 @@ CStalkerActionDangerGrenadeSearch::CStalkerActionDangerGrenadeSearch	(CAI_Stalke
 void CStalkerActionDangerGrenadeSearch::initialize						()
 {
 	inherited::initialize	();
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_nearest_accessible_position();

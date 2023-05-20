@@ -21,7 +21,7 @@ xrServer::EConnect xrServer::Connect(shared_str &session_name)
 #endif
 
 	// Parse options and create game
-	if (0==strchr(*session_name,'/'))
+	if (nullptr==strchr(*session_name,'/'))
 		return				ErrConnect;
 
 	string1024				options;
@@ -33,13 +33,13 @@ xrServer::EConnect xrServer::Connect(shared_str &session_name)
 	R_ASSERT2(xr_strlen(options) <= sizeof(type), "session_name too BIIIGGG!!!");
 	strcpy					(type,options);
 	if (strchr(type,'/'))	*strchr(type,'/') = 0;
-	game					= NULL;
+	game					= nullptr;
 
 	CLASS_ID clsid			= game_GameState::getCLASS_ID(type,true);
 	game					= smart_cast<game_sv_GameState*> (NEW_INSTANCE(clsid));
 
 	// Options
-	if (0==game)			return ErrConnect;
+	if (nullptr==game)			return ErrConnect;
 	csPlayers.Enter			();
 //	game->type				= type_id;
 #ifdef DEBUG
@@ -126,7 +126,7 @@ void xrServer::AttachNewClient			(IClient* CL)
 	msgConfig.is_battleye = 0;
 
 #ifdef BATTLEYE
-	msgConfig.is_battleye = (g_pGameLevel && Level().battleye_system.server != 0)? 1 : 0;
+	msgConfig.is_battleye = (g_pGameLevel && Level().battleye_system.server != nullptr)? 1 : 0;
 #endif // BATTLEYE
 
 	if(psNET_direct_connect)  //single_game

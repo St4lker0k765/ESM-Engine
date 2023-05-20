@@ -18,9 +18,9 @@ CPhysicsShellAnimator::CPhysicsShellAnimator( CPhysicsShell* _pPhysicsShell ) : 
 		PhysicsShellAnimatorBoneDataC.m_element=*i;
 		CBoneInstance& B=m_pPhysicsShell->PKinematics()->LL_GetBoneInstance(PhysicsShellAnimatorBoneDataC.m_element->m_SelfID);
 		B.reset_callback();
-		PhysicsShellAnimatorBoneDataC.m_anim_fixed_dJointID=dJointCreateFixed(0,0);
+		PhysicsShellAnimatorBoneDataC.m_anim_fixed_dJointID=dJointCreateFixed(nullptr,nullptr);
 		((CPHShell*)(m_pPhysicsShell))->Island().DActiveIsland()->AddJoint(PhysicsShellAnimatorBoneDataC.m_anim_fixed_dJointID);				
-		dJointAttach(PhysicsShellAnimatorBoneDataC.m_anim_fixed_dJointID,PhysicsShellAnimatorBoneDataC.m_element->get_body(),0);
+		dJointAttach(PhysicsShellAnimatorBoneDataC.m_anim_fixed_dJointID,PhysicsShellAnimatorBoneDataC.m_element->get_body(),nullptr);
 		dJointSetFixed(PhysicsShellAnimatorBoneDataC.m_anim_fixed_dJointID);
 		m_bones_data.push_back(PhysicsShellAnimatorBoneDataC);
 	}

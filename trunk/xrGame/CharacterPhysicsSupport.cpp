@@ -43,7 +43,7 @@ void  NodynamicsCollide(bool& do_colide,bool bo1,dContact& c,SGameMtl * /*materi
 void  OnCharacterContactInDeath(bool& do_colide,bool bo1,dContact& c,SGameMtl * /*material_1*/,SGameMtl * /*material_2*/)
 {
 	dSurfaceParameters		&surface=c.surface;
-	CCharacterPhysicsSupport* l_character_physic_support=0;
+	CCharacterPhysicsSupport* l_character_physic_support=nullptr;
 	if (bo1)
 	{
 		l_character_physic_support=(CCharacterPhysicsSupport*)retrieveGeomUserData(c.geom.g1)->callback_data;
@@ -77,7 +77,7 @@ CCharacterPhysicsSupport::CCharacterPhysicsSupport(EType atype,CEntityAlive* aen
 	  m_EntityAlife(*aentity),
 	  mXFORM(aentity->XFORM()),
 	  m_ph_sound_player(aentity),
-	  m_interactive_motion(0)
+	  m_interactive_motion(nullptr)
 {
 	m_PhysicMovementControl=xr_new<CPHMovementControl>(aentity);
 	m_flags.assign(0);
@@ -85,16 +85,16 @@ CCharacterPhysicsSupport::CCharacterPhysicsSupport(EType atype,CEntityAlive* aen
 	m_eState=esAlive;
 	//b_death_anim_on					= false;
 	m_flags.set(fl_death_anim_on,FALSE);
-	m_pPhysicsShell					=	NULL;
+	m_pPhysicsShell					= nullptr;
 	//m_saved_impulse					= 0.f;
-	m_physics_skeleton				=	NULL;
+	m_physics_skeleton				= nullptr;
 	//b_skeleton_in_shell				= false;
 	m_flags.set(fl_skeleton_in_shell,FALSE);
 	m_shot_up_factor				=0.f;
 	m_after_death_velocity_factor	=1.f;
-	m_ik_controller					=	NULL;
+	m_ik_controller					= nullptr;
 	m_BonceDamageFactor				=1.f;
-	m_collision_hit_callback		=	NULL;
+	m_collision_hit_callback		= nullptr;
 	m_Pred_Time						= 0.0;
 	m_was_wounded					= false;
 	switch(atype)
@@ -263,7 +263,7 @@ void CCharacterPhysicsSupport::SpawnInitPhysics(CSE_Abstract* e)
 	}
 	else
 	{
-		ActivateShell( NULL );
+		ActivateShell(nullptr);
 	}
 }
 void CCharacterPhysicsSupport::in_NetDestroy( )
@@ -482,7 +482,7 @@ void CCharacterPhysicsSupport::in_UpdateCL( )
 		UpdateFrictionAndJointResistanse( );
 	} else if ( !m_EntityAlife.g_Alive( ) && !m_EntityAlife.use_simplified_visual( ) )
 	{
-		ActivateShell( NULL );
+		ActivateShell(nullptr);
 		m_PhysicMovementControl->DestroyCharacter( );
 	} else if( ik_controller( ) )
 		ik_controller( )->Update();
@@ -617,7 +617,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 	bool	anim_mov_ctrl =m_EntityAlife.animation_movement_controlled( );
 	CBoneInstance	&BR = K->LL_GetBoneInstance( K->LL_GetBoneRoot( ) );
 	Fmatrix start_xform; start_xform.identity( );
-	CBlend *anim_mov_blend = 0;
+	CBlend *anim_mov_blend = nullptr;
 	//float	blend_time = 0;
 	if( anim_mov_ctrl )
 	{
@@ -676,7 +676,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 	//shell create
 	R_ASSERT2(m_physics_skeleton,"No skeleton created!!");
 	m_pPhysicsShell=m_physics_skeleton;
-	m_physics_skeleton=NULL;
+	m_physics_skeleton= nullptr;
 	m_pPhysicsShell->set_Kinematics(K);
 	m_pPhysicsShell->RunSimulation();
 	m_pPhysicsShell->mXFORM.set(mXFORM);
@@ -757,7 +757,7 @@ void CCharacterPhysicsSupport::in_ChangeVisual()
 		CreateSkeleton(m_physics_skeleton);
 		if(m_pPhysicsShell)m_pPhysicsShell->Deactivate();
 		xr_delete(m_pPhysicsShell);
-		ActivateShell(NULL);
+		ActivateShell(nullptr);
 	}
 	if(m_ik_controller)
 	{
@@ -817,7 +817,7 @@ bool CCharacterPhysicsSupport::set_collision_hit_callback(SCollisionHitCallback*
 {
 	if(!cc)
 	{
-		m_collision_hit_callback=NULL;
+		m_collision_hit_callback= nullptr;
 		return true;
 	}
 	if(m_pPhysicsShell)
@@ -834,17 +834,17 @@ SCollisionHitCallback * CCharacterPhysicsSupport::get_collision_hit_callback()
 
 void	StaticEnvironmentCB (bool& do_colide,bool bo1,dContact& c,SGameMtl* material_1,SGameMtl* material_2)
 {
-	dJointID contact_joint	= dJointCreateContact(0, ContactGroup, &c);
+	dJointID contact_joint	= dJointCreateContact(nullptr, ContactGroup, &c);
 
 	if(bo1)
 	{
 		((CPHIsland*)(retrieveGeomUserData(c.geom.g1)->callback_data))->DActiveIsland()->ConnectJoint(contact_joint);
-		dJointAttach			(contact_joint, dGeomGetBody(c.geom.g1), 0);
+		dJointAttach			(contact_joint, dGeomGetBody(c.geom.g1), nullptr);
 	}
 	else
 	{
 		((CPHIsland*)(retrieveGeomUserData(c.geom.g2)->callback_data))->DActiveIsland()->ConnectJoint(contact_joint);
-		dJointAttach			(contact_joint, 0, dGeomGetBody(c.geom.g2));
+		dJointAttach			(contact_joint, nullptr, dGeomGetBody(c.geom.g2));
 	}
 	do_colide=false;
 }

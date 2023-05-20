@@ -279,7 +279,7 @@ BOOL CTextureDescrMngr::GetDetailTexture(const shared_str& tex_name, LPCSTR& res
             texture_assoc* TA = I->second.m_assoc;
 			res	= TA->detail_name.c_str();
 			map_CS::const_iterator It2 = m_detail_scalers.find(tex_name);
-			CS	= It2==m_detail_scalers.end()?0:It2->second;//TA->cs;
+			CS	= It2==m_detail_scalers.end()?nullptr:It2->second;//TA->cs;
 			return TRUE;
 		}
 	}

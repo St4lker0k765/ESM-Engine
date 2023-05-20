@@ -93,14 +93,14 @@ public:
 public:
 	R_dsgraph_structure	()
 	{
-		val_pObject			= NULL	;
-		val_pTransform		= NULL	;
+		val_pObject			= nullptr;
+		val_pTransform		= nullptr;
 		val_bHUD			= FALSE	;
 		val_bInvisible		= FALSE	;
 		val_bRecordMP		= FALSE	;
-		val_feedback		= 0;
+		val_feedback		= nullptr;
 		val_feedback_breakp	= 0;
-		val_recorder		= 0;
+		val_recorder		= nullptr;
 		marker				= 0;
 		r_pmask				(true,true);
 		b_loaded			= FALSE	;

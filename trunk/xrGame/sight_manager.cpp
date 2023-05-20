@@ -127,7 +127,7 @@ void CSightManager::SetLessCoverLook(const CLevelGraph::CVertex *tpNode, float f
 	m_object->update_range_fov(range,fAngleOfView,m_object->eye_range,m_object->eye_fov);
 	fAngleOfView			= (fAngleOfView/180.f*PI)/2.f;
 
-	CLevelGraph::CVertex	*tpNextNode = 0;
+	CLevelGraph::CVertex	*tpNextNode = nullptr;
 	u32						node_id;
 	bool bOk = false;
 	if (bDifferenceLook && !m_object->movement().detail().path().empty() && (m_object->movement().detail().path().size() - 1 > m_object->movement().detail().curr_travel_point_index())) {

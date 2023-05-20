@@ -10,7 +10,7 @@
 #include "PHWorld.h"
 CTeleWhirlwind ::CTeleWhirlwind () 
 {
-	m_owner_object=NULL;
+	m_owner_object= nullptr;
 	m_center.set(0.f,0.f,0.f);
 	m_keep_radius=1.f;
 	m_throw_power=100.f;
@@ -27,7 +27,7 @@ CTelekineticObject* CTeleWhirlwind::activate(CPhysicsShellHolder *obj, float str
 		return o;
 	}
 	else
-		return 0;
+		return nullptr;
 }
 void CTeleWhirlwind::clear_impacts()
 {
@@ -87,7 +87,7 @@ void CTeleWhirlwind::play_destroy(CTeleWhirlwindObject *obj)
 }
 	CTeleWhirlwindObject::		CTeleWhirlwindObject()
 {
-			m_telekinesis=0;
+			m_telekinesis=nullptr;
 			throw_power=0.f;
 			
 }
@@ -342,6 +342,6 @@ void		CTeleWhirlwindObject::switch_state(ETelekineticState new_state)
 
 bool CTeleWhirlwindObject::can_activate(CPhysicsShellHolder *obj)
 {
-	return (obj!=NULL);
+	return (obj!= nullptr);
 }
 

@@ -55,7 +55,7 @@ void CRender::render_rain()
 		const float fRainFar = ps_r3_dyn_wet_surf_far;
 		ex_project.build_projection	(deg2rad(Device.fFOV/* *Device.fASPECT*/),Device.fASPECT,VIEWPORT_NEAR, fRainFar); 
 		ex_full.mul					(ex_project,Device.mView);
-		D3DXMatrixInverse			((D3DXMATRIX*)&ex_full_inverse,0,(D3DXMATRIX*)&ex_full);
+		D3DXMatrixInverse			((D3DXMATRIX*)&ex_full_inverse,nullptr,(D3DXMATRIX*)&ex_full);
 
 		//	Calculate view frustum were we can see dynamic rain radius
 		{
@@ -109,7 +109,7 @@ void CRender::render_rain()
 
 		// Search for default sector - assume "default" or "outdoor" sector is the largest one
 		//. hack: need to know real outdoor sector
-		CSector*	largest_sector		= 0;
+		CSector*	largest_sector		= nullptr;
 		float		largest_sector_vol	= 0;
 		for		(u32 s=0; s<Sectors.size(); s++)
 		{
@@ -189,7 +189,7 @@ void CRender::render_rain()
 			view_dim/2.f+fTexelOffs,	view_dim/2.f+fTexelOffs,		0.0f,		1.0f
 		};
 		Fmatrix				m_viewport_inv;
-		D3DXMatrixInverse	((D3DXMATRIX*)&m_viewport_inv,0,(D3DXMATRIX*)&m_viewport);
+		D3DXMatrixInverse	((D3DXMATRIX*)&m_viewport_inv,nullptr,(D3DXMATRIX*)&m_viewport);
 
 		// snap view-position to pixel
 		//	snap zero point to pixel

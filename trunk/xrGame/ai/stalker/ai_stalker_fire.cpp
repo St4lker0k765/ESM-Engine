@@ -340,10 +340,10 @@ void CAI_Stalker::update_best_item_info	()
 	m_item_actuality							= true;
 	ai().ef_storage().non_alife().member()		= this;
 	ai().ef_storage().non_alife().enemy()		= memory().enemy().selected() ? memory().enemy().selected() : this;
-	m_best_item_to_kill			= 0;
-	m_best_ammo					= 0;
-	m_best_found_item_to_kill	= 0;
-	m_best_found_ammo			= 0;
+	m_best_item_to_kill			= nullptr;
+	m_best_ammo					= nullptr;
+	m_best_found_item_to_kill	= nullptr;
+	m_best_found_ammo			= nullptr;
 	m_best_item_value			= 0.f;
 
 	// try to find the best item which can kill
@@ -401,7 +401,7 @@ void CAI_Stalker::update_best_item_info	()
 				if (value > m_best_item_value) {
 					m_best_item_value				= value;
 					m_best_found_item_to_kill		= inventory_item;
-					m_best_found_ammo				= 0;
+					m_best_found_ammo				= nullptr;
 					m_best_ammo						= item;
 				}
 			}
@@ -415,7 +415,7 @@ void CAI_Stalker::update_best_item_info	()
 				if (value > m_best_item_value) {
 					m_best_item_value				= value;
 					m_best_item_to_kill				= item;
-					m_best_found_item_to_kill		= 0;
+					m_best_found_item_to_kill		= nullptr;
 					m_best_found_ammo				= inventory_item;
 				}
 			}
@@ -560,7 +560,7 @@ void CAI_Stalker::can_kill_entity		(const Fvector &position, const Fvector &dire
 	
 	ray_query_param					params(this,memory().visual().transparency_threshold(),distance);
 
-	Level().ObjectSpace.RayQuery	(rq_storage,ray_defs,ray_query_callback,&params,NULL,this);
+	Level().ObjectSpace.RayQuery	(rq_storage,ray_defs,ray_query_callback,&params, nullptr,this);
 	m_can_kill_enemy				= m_can_kill_enemy  || params.m_can_kill_enemy;
 	m_can_kill_member				= m_can_kill_member || params.m_can_kill_member;
 	m_pick_distance					= _max(m_pick_distance,params.m_pick_distance);
@@ -630,7 +630,7 @@ void CAI_Stalker::update_can_kill_info	()
 
 	Fvector					position, direction;
 	VERIFY					(inventory().ActiveItem());
-	g_fireParams			(0,position,direction);
+	g_fireParams			(nullptr,position,direction);
 	can_kill_entity_from	(position,direction,start_pick_distance());
 }
 

@@ -63,7 +63,7 @@ void CWeaponRG6::FireStart ()
 		CEntity* E = smart_cast<CEntity*>(H_Parent());
 		if (E){
 			CInventoryOwner* io		= smart_cast<CInventoryOwner*>(H_Parent());
-			if(NULL == io->inventory().ActiveItem())
+			if(nullptr == io->inventory().ActiveItem())
 			{
 			Log("current_state", GetState() );
 			Log("next_state", GetNextState());

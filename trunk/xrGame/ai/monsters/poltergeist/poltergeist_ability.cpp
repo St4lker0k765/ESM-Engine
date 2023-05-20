@@ -10,8 +10,8 @@ CPolterSpecialAbility::CPolterSpecialAbility(CPoltergeist *polter)
 {
 	m_object					= polter;
 
-	m_particles_object			= 0;
-	m_particles_object_electro	= 0;
+	m_particles_object			= nullptr;
+	m_particles_object_electro	= nullptr;
 }
 
 
@@ -107,7 +107,7 @@ void CPolterSpecialAbility::on_hit(SHit* pHDS)
 void CPoltergeist::PhysicalImpulse	(const Fvector &position)
 {
 	m_nearest.clear_not_free		();
-	Level().ObjectSpace.GetNearest	(m_nearest,position, IMPULSE_RADIUS, NULL); 
+	Level().ObjectSpace.GetNearest	(m_nearest,position, IMPULSE_RADIUS, nullptr); 
 	//xr_vector<CObject*> &m_nearest = Level().ObjectSpace.q_nearest;
 	if (m_nearest.empty())			return;
 	
@@ -134,7 +134,7 @@ void CPoltergeist::StrangeSounds(const Fvector &position)
 		dir.random_dir();
 
 		collide::rq_result	l_rq;
-		if (Level().ObjectSpace.RayPick(position, dir, TRACE_DISTANCE, collide::rqtStatic, l_rq, NULL)) {
+		if (Level().ObjectSpace.RayPick(position, dir, TRACE_DISTANCE, collide::rqtStatic, l_rq, nullptr)) {
 			if (l_rq.range < TRACE_DISTANCE) {
 
 				// Получить пару материалов

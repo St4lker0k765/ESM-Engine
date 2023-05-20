@@ -29,7 +29,7 @@ IC	void CEvaluator::init			(_object_type *object, LPCSTR evaluator_name)
 #ifdef LOG_ACTION
 	m_evaluator_name	= evaluator_name;
 #endif
-	m_storage			= 0;
+	m_storage			= nullptr;
 }
 
 TEMPLATE_SPECIALIZATION

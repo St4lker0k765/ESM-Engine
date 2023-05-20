@@ -13,7 +13,7 @@ IC	CMemberOrder::CMemberOrder					(CAI_Stalker *object) :
 	m_initialized	(true)
 {
 	VERIFY					(m_object);
-	m_cover					= 0;
+	m_cover					= nullptr;
 	m_probability			= 1.f;
 	m_processed				= false;
 	m_selected_enemy		= 0;

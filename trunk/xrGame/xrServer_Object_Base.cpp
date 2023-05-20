@@ -29,7 +29,7 @@
 	{
 		NODEFAULT;
 #	ifdef DEBUG
-		return(*(IPropHelper*)0);
+		return(*(IPropHelper*)nullptr);
 #	endif
 	}
 #endif
@@ -80,12 +80,12 @@ CSE_Abstract::CSE_Abstract					(LPCSTR caSection)
 	ID							= 0xffff;
 	ID_Parent					= 0xffff;
 	ID_Phantom					= 0xffff;
-	owner						= 0;
+	owner						= nullptr;
 	s_gameid					= 0;
 	s_RP						= 0xFE;			// Use supplied coords
 	s_flags.assign				(0);
 	s_name						= caSection;
-	s_name_replace				= 0;			//xr_strdup("");
+	s_name_replace				= nullptr;			//xr_strdup("");
 	o_Angle.set					(0.f,0.f,0.f);
 	o_Position.set				(0.f,0.f,0.f);
 	m_bALifeControl				= false;
@@ -107,7 +107,7 @@ CSE_Abstract::CSE_Abstract					(LPCSTR caSection)
 //	m_next_spawn_time			= 0;
 //	m_min_spawn_interval		= 0;
 //	m_max_spawn_interval		= 0;
-	m_ini_file					= 0;
+	m_ini_file					= nullptr;
 
 	if (pSettings->line_exist(caSection,"custom_data")) {
 		string_path				file_name;
@@ -142,17 +142,17 @@ CSE_Abstract::~CSE_Abstract					()
 
 CSE_Visual* CSE_Abstract::visual			()
 {
-	return						(0);
+	return						(nullptr);
 }
 
 ISE_Shape*  CSE_Abstract::shape				()
 {
-	return						(0);
+	return						(nullptr);
 }
 
 CSE_Motion* CSE_Abstract::motion			()
 {
-	return						(0);
+	return						(nullptr);
 }
 
 CInifile &CSE_Abstract::spawn_ini			()
@@ -371,7 +371,7 @@ xr_token game_types[]={
 	{ "counterstrike",	GAME_CS			},
 	{ "teamdeathmatch",	GAME_TEAMDEATHMATCH },
 	{ "artefacthunt",	GAME_ARTEFACTHUNT },
-	{ 0,				0				}
+	{ nullptr,				0				}
 };
 
 void CSE_Abstract::FillProps				(LPCSTR pref, PropItemVec& items)

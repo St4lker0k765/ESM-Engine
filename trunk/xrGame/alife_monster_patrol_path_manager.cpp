@@ -21,7 +21,7 @@ CALifeMonsterPatrolPathManager::CALifeMonsterPatrolPathManager	(object_type *obj
 	VERIFY					(object);
 	m_object				= object;
 	
-	m_path					= 0;
+	m_path					= nullptr;
 	
 	m_actual				= true;
 	m_completed				= true;

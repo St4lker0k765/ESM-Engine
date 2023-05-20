@@ -4,7 +4,7 @@
 
 CMonsterHitMemory::CMonsterHitMemory()
 {
-	monster			= 0;
+	monster			= nullptr;
 	time_memory		= 10000; 
 }
 
@@ -132,7 +132,7 @@ TTime CMonsterHitMemory::get_last_hit_time()
 CObject	*CMonsterHitMemory::get_last_hit_object()
 {
 	SMonsterHit		last_hit;
-	last_hit.object	= 0;
+	last_hit.object	= nullptr;
 	last_hit.time	= 0;
 
 	for (u32 i = 0; i < m_hits.size(); i++) {

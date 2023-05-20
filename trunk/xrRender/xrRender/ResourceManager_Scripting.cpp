@@ -25,8 +25,8 @@ class	adopt_sampler
 	CBlender_Compile*		C;
 	u32						stage;
 public:
-	adopt_sampler			(CBlender_Compile*	_C, u32 _stage)		: C(_C), stage(_stage)		{ if (u32(-1)==stage) C=0;		}
-	adopt_sampler			(const adopt_sampler&	_C)				: C(_C.C), stage(_C.stage)	{ if (u32(-1)==stage) C=0;		}
+	adopt_sampler			(CBlender_Compile*	_C, u32 _stage)		: C(_C), stage(_stage)		{ if (u32(-1)==stage) C=nullptr;		}
+	adopt_sampler			(const adopt_sampler&	_C)				: C(_C.C), stage(_C.stage)	{ if (u32(-1)==stage) C=nullptr;		}
 
 	adopt_sampler&			_texture		(LPCSTR texture)		{ if (C) C->i_Texture	(stage,texture);											return *this;	}
 	adopt_sampler&			_projective		(bool _b)				{ if (C) C->i_Projective(stage,_b);													return *this;	}
@@ -68,7 +68,7 @@ public:
 	adopt_compiler&			_blend			(bool	_blend, u32 abSRC, u32 abDST)	{	C->PassSET_ablend_mode(_blend,abSRC,abDST);	return 	*this;		}
 	adopt_compiler&			_aref			(bool	_aref,  u32 aref)				{	C->PassSET_ablend_aref(_aref,aref);			return 	*this;		}
 	adopt_compiler&			_color_write_enable (bool cR, bool cG, bool cB, bool cA)		{	C->r_ColorWriteEnable(cR, cG, cB, cA);		return	*this;		}
-	adopt_sampler			_sampler		(LPCSTR _name)							{	u32 s = C->r_Sampler(_name,0);				return	adopt_sampler(C,s);	}
+	adopt_sampler			_sampler		(LPCSTR _name)							{	u32 s = C->r_Sampler(_name,nullptr);				return	adopt_sampler(C,s);	}
 };
 
 class	adopt_blend
@@ -220,7 +220,7 @@ void	CResourceManager::LS_Load()
 	for (u32 it=0; it<folder->size(); it++)	{
 		string_path						namesp,fn;
 		xr_strcpy							(namesp,(*folder)[it]);
-		if	(0==strext(namesp) || 0!=xr_strcmp(strext(namesp),".s"))	continue;
+		if	(nullptr==strext(namesp) || 0!=xr_strcmp(strext(namesp),".s"))	continue;
 		*strext	(namesp)=0;
 		if		(0==namesp[0])			xr_strcpy	(namesp,"_G");
 		strconcat						(sizeof(fn),fn,::Render->getShaderPath(),(*folder)[it]);
@@ -238,7 +238,7 @@ void	CResourceManager::LS_Load()
 void	CResourceManager::LS_Unload			()
 {
 	lua_close	(LSVM);
-	LSVM		= NULL;
+	LSVM		= nullptr;
 }
 
 BOOL	CResourceManager::_lua_HasShader	(LPCSTR s_shader)
@@ -268,14 +268,14 @@ Shader*	CResourceManager::_lua_Create		(LPCSTR d_shader, LPCSTR s_textures)
 	LPCSTR		s_shader = undercorated;
 
 	// Access to template
-	C.BT				= NULL;
+	C.BT				= nullptr;
 	C.bEditor			= FALSE;
 	C.bDetail			= FALSE;
 
 	// Prepare
 	_ParseList			(C.L_textures,	s_textures	);
-	C.detail_texture	= NULL;
-	C.detail_scaler		= NULL;
+	C.detail_texture	= nullptr;
+	C.detail_scaler		= nullptr;
 
 	// Compile element	(LOD0 - HQ)
 	if (Script::bfIsObjectPresent(LSVM,s_shader,"normal_hq",LUA_TFUNCTION))

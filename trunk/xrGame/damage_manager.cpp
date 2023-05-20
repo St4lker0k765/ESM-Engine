@@ -59,7 +59,7 @@ void CDamageManager::reload(LPCSTR section,LPCSTR line,CInifile* ini)
 	if (ini && ini->section_exist(section) && ini->line_exist(section,line)) 
 		reload(ini->r_string(section,line),ini);	
 	else 
-		reload(section,0);
+		reload(section,nullptr);
 }
 
 void CDamageManager::init_bones(LPCSTR section,CInifile* ini)

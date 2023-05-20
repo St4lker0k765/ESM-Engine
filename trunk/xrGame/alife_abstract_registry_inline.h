@@ -68,7 +68,7 @@ IC	_data_type *CSALifeAbstractRegistry::object	(const _index_type &index, bool n
 	iterator		I = m_objects.find(index);
 	if (I == objects().end()) {
 		THROW2		(no_assert,"Specified object hasn't been found in the specified registry!");
-		return		(0);
+		return		(nullptr);
 	}
 	return			(&(*I).second);
 }

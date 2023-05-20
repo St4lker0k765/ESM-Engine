@@ -166,7 +166,7 @@ CSpaceRestrictionManager::CRestrictionPtr	CSpaceRestrictionManager::restriction	
 {
 	string4096					m_temp;
 	if (!xr_strlen(out_restrictors) && !xr_strlen(in_restrictors))
-		return					(0);
+		return					(nullptr);
 
 	out_restrictors				= normalize_string(out_restrictors);
 	in_restrictors				= normalize_string(in_restrictors);

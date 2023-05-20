@@ -17,7 +17,7 @@
 		static inline const char* GetCompilationTarget() {return "hs_5_0";}
 		static inline DXIface* CreateHWShader(DWORD const* buffer, size_t size)
 		{
-			DXIface* hs = 0;
+			DXIface* hs = nullptr;
 			R_CHK(HW.pDevice->CreateHullShader(buffer, size, NULL, &hs));
 			return hs;
 		}
@@ -35,7 +35,7 @@
 		static inline const char* GetCompilationTarget() {return "ds_5_0";}
 		static inline DXIface* CreateHWShader(DWORD const* buffer, size_t size)
 		{
-			DXIface* hs = 0;
+			DXIface* hs = nullptr;
 			R_CHK(HW.pDevice->CreateDomainShader(buffer, size, NULL, &hs));
 			return hs;
 		}
@@ -53,7 +53,7 @@
 		static inline const char* GetCompilationTarget() {return "cs_5_0";}
 		static inline DXIface* CreateHWShader(DWORD const* buffer, size_t size)
 		{
-			DXIface* cs = 0;
+			DXIface* cs = nullptr;
 			R_CHK(HW.pDevice->CreateComputeShader(buffer, size, NULL, &cs));
 			return cs;
 		}

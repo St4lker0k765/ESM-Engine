@@ -15,7 +15,7 @@ void	CRenderTarget::phase_smap_spot		(light* L)
 {
 	// Targets + viewport
 	//	TODO: DX10: CHeck if we don't need old-style SMAP
-	if (RImplementation.o.HW_smap)		u_setrt	(rt_smap_surf, NULL, NULL, rt_smap_depth->pZRT);
+	if (RImplementation.o.HW_smap)		u_setrt	(rt_smap_surf, nullptr, nullptr, rt_smap_depth->pZRT);
 	//else								u_setrt	(rt_smap_surf, NULL, NULL, rt_smap_ZB);
 	else								VERIFY(!"Use HW SMap only for DX10!");
 	D3D_VIEWPORT VP					=	{(float)L->X.S.posX, (float)L->X.S.posY, (float)L->X.S.size, (float)L->X.S.size, 0, 1};

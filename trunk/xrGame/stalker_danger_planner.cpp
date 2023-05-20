@@ -69,7 +69,7 @@ void CStalkerDangerPlanner::initialize		()
 {
 	inherited::initialize						();
 	object().sound().remove_active_sounds		(u32(eStalkerSoundMaskNoHumming));
-	object().agent_manager().member().member(m_object).cover(0);
+	object().agent_manager().member().member(m_object).cover(nullptr);
 }
 
 void CStalkerDangerPlanner::add_evaluators		()

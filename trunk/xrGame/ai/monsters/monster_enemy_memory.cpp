@@ -9,7 +9,7 @@
 
 CMonsterEnemyMemory::CMonsterEnemyMemory()
 {
-	monster			= 0;
+	monster			= nullptr;
 	time_memory		= 10000; 
 }
 
@@ -102,7 +102,7 @@ const CEntityAlive *CMonsterEnemyMemory::get_enemy()
 {
 	ENEMIES_MAP_IT	it = find_best_enemy();
 	if (it != m_objects.end()) return it->first;
-	return (0);
+	return (nullptr);
 }
 
 SMonsterEnemy CMonsterEnemyMemory::get_enemy_info()

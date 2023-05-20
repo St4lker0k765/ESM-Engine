@@ -38,7 +38,7 @@
 
 game_cl_ArtefactHunt::game_cl_ArtefactHunt()
 {
-	m_game_ui = NULL;
+	m_game_ui = nullptr;
 		
 	m_bBuyEnabled	= FALSE;
 	//---------------------------------
@@ -67,10 +67,10 @@ void game_cl_ArtefactHunt::Init ()
 	if (FS.exist(fn_game, "$level$", "level.game")) 
 	{
 		IReader *F = FS.r_open	(fn_game);
-		IReader *O = 0;
+		IReader *O = nullptr;
 
 		// Load RPoints
-		if (0!=(O = F->open_chunk	(RPOINT_CHUNK)))
+		if (nullptr!=(O = F->open_chunk	(RPOINT_CHUNK)))
 		{ 
 			for (int id=0; O->find_chunk(id); ++id)
 			{
@@ -595,7 +595,7 @@ char* game_cl_ArtefactHunt::getTeamSection(int Team)
 		NODEFAULT;
 	};
 #ifdef DEBUG
-	return NULL;
+	return nullptr;
 #endif
 };
 

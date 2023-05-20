@@ -21,7 +21,7 @@
 BOOL g_bDebugDumpPhysicsStep				=					0;
 
 void CPHMesh ::Create(dSpaceID space, dWorldID world){
-	Geom = dCreateTriList(space, 0, 0);
+	Geom = dCreateTriList(space, nullptr, nullptr);
 	
 }
 /////////////////////////////////////////////////////////////////////////
@@ -89,7 +89,7 @@ void CPHWorld::SetStep(dReal s)
 }
 void CPHWorld::Create()
 {
-	dWorldID phWorld=0;
+	dWorldID phWorld=nullptr;
 	
 	if (psDeviceFlags.test(mtPhysics))	Device.seqFrameMT.Add	(this,REG_PRIORITY_HIGH);
 	else								Device.seqFrame.Add		(this,REG_PRIORITY_LOW);
@@ -115,7 +115,7 @@ void CPHWorld::Create()
 #endif
 	ContactGroup			= dJointGroupCreate(0);		
 	dWorldSetGravity		(phWorld, 0,-Gravity(), 0);//-2.f*9.81f
-	Mesh.Create				(0,phWorld);
+	Mesh.Create				(nullptr,phWorld);
 #ifdef PH_PLAIN
 	plane=dCreatePlane(Space,0,1,0,0.3f);
 #endif
@@ -127,7 +127,7 @@ void CPHWorld::Create()
 	//dWorldSetERP(phWorld,  0.2f);
 	//dWorldSetCFM(phWorld,  0.000001f);
 	disable_count=0;
-	m_motion_ray=dCreateRayMotions(0);
+	m_motion_ray=dCreateRayMotions(nullptr);
 	phBoundaries.set(Level().ObjectSpace.GetBoundingVolume());
 	phBoundaries.y1-=30.f;
 	CPHCollideValidator::Init();
@@ -162,7 +162,7 @@ void CPHWorld::Destroy()
 void CPHWorld::SetGravity(float g)
 {
 	m_gravity				=g;
-	dWorldID phWorld		=0;
+	dWorldID phWorld		=nullptr;
 	dWorldSetGravity		(phWorld, 0,-m_gravity, 0);//-2.f*9.81f
 
 }

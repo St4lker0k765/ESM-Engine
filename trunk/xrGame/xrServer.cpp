@@ -31,7 +31,7 @@ xrClientData::xrClientData	():IClient(Device.GetTimerGlobal())
 
 void	xrClientData::Clear()
 {
-	owner									= NULL;
+	owner									= nullptr;
 	net_Ready								= FALSE;
 	net_Accepted							= FALSE;
 	net_PassUpdates							= TRUE;
@@ -82,10 +82,10 @@ bool  xrServer::HasBattlEye()
 CSE_Abstract*	xrServer::ID_to_entity		(u16 ID)
 {
 	// #pragma todo("??? to all : ID_to_entity - must be replaced to 'game->entity_from_eid()'")	
-	if (0xffff==ID)				return 0;
+	if (0xffff==ID)				return nullptr;
 	xrS_entities::iterator	I	= entities.find	(ID);
 	if (entities.end()!=I)		return I->second;
-	else						return 0;
+	else						return nullptr;
 }
 
 //--------------------------------------------------------------------
@@ -347,7 +347,7 @@ void xrServer::SendUpdatesToAll()
 			{//all entities
 				CSE_Abstract&	Test = *(I->second);
 
-				if (0==Test.owner)								continue;
+				if (nullptr==Test.owner)								continue;
 				if (!Test.net_Ready)							continue;
 				if (Test.s_flags.is(M_SPAWN_OBJECT_PHANTOM))	continue;	// Surely: phantom
 				if (!Test.Net_Relevant() )						continue;
@@ -390,7 +390,7 @@ void xrServer::SendUpdatesToAll()
 			if (ToSend.B.count>2)
 			{
 				//.#ifdef DEBUG
-				if (g_Dump_Update_Write && Client->ps != NULL) 
+				if (g_Dump_Update_Write && Client->ps != nullptr) 
 				{
 					Msg ("- Server Update[%d] to Client[%s]  : %d", 
 						*((u16*)ToSend.B.data), 
@@ -456,7 +456,7 @@ u32 xrServer::OnDelayedMessage	(NET_Packet& P, ClientID sender)			// Non-Zero me
 				SetLogCB			(console_log_cb);
 				_tmp_log.clear		();
 				Console->Execute	(buff);
-				SetLogCB			(NULL);
+				SetLogCB			(nullptr);
 
 				NET_Packet			P_answ;			
 				for(u32 i=0; i<_tmp_log.size(); ++i)
@@ -755,9 +755,9 @@ void			xrServer::entity_Destroy	(CSE_Abstract *&P)
 	m_tID_Generator.vfFreeID	(P->ID,Device.TimerAsync());
 
 	if(P->owner && P->owner->owner==P)
-		P->owner->owner		= NULL;
+		P->owner->owner		= nullptr;
 
-	P->owner = NULL;
+	P->owner = nullptr;
 	if (!ai().get_alife() || !P->m_bALifeControl)
 	{
 		F_entity_Destroy		(P);
@@ -773,7 +773,7 @@ void			xrServer::Server_Client_Check	( IClient* CL )
 	{
 		if (!CL->flags.bConnected)
 		{
-			SV_Client = NULL;
+			SV_Client = nullptr;
 		};
 		clients_Unlock	();
 		return;
@@ -818,7 +818,7 @@ CSE_Abstract*	xrServer::GetEntity			(u32 Num)
 	{
 		if (C == Num) return I->second;
 	};
-	return NULL;
+	return nullptr;
 };
 
 

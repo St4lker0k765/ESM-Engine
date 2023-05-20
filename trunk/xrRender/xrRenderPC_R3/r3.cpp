@@ -205,7 +205,7 @@ void					CRender::create					()
 	o.fp16_blend		= true;
 
 	// search for ATI formats
-	if (!o.HW_smap && (0==strstr(Core.Params,"-nodf24")) )		{
+	if (!o.HW_smap && (nullptr==strstr(Core.Params,"-nodf24")) )		{
 		o.HW_smap		= HW.support	((D3DFORMAT)(MAKEFOURCC('D','F','2','4')),	D3DRTYPE_TEXTURE,D3DUSAGE_DEPTHSTENCIL);
 		if (o.HW_smap)	{
 			o.HW_smap_FORMAT= MAKEFOURCC	('D','F','2','4');
@@ -289,7 +289,7 @@ void					CRender::create					()
 	}
 
 	o.dx10_sm4_1		= ps_r2_ls_flags.test((u32)R3FLAG_USE_DX10_1);
-	o.dx10_sm4_1		= o.dx10_sm4_1 && ( HW.pDevice1 != 0 );
+	o.dx10_sm4_1		= o.dx10_sm4_1 && ( HW.pDevice1 != nullptr );
 
 	//	MSAA option dependencies
 
@@ -297,11 +297,11 @@ void					CRender::create					()
 	o.dx10_msaa_samples = (1 << ps_r3_msaa);
 
 	o.dx10_msaa_opt		= ps_r2_ls_flags.test(R3FLAG_MSAA_OPT);
-	o.dx10_msaa_opt		= o.dx10_msaa_opt && o.dx10_msaa && ( HW.pDevice1 != 0 );
+	o.dx10_msaa_opt		= o.dx10_msaa_opt && o.dx10_msaa && ( HW.pDevice1 != nullptr );
 
 	//o.dx10_msaa_hybrid	= ps_r2_ls_flags.test(R3FLAG_MSAA_HYBRID);
 	o.dx10_msaa_hybrid	= ps_r2_ls_flags.test((u32)R3FLAG_USE_DX10_1);
-	o.dx10_msaa_hybrid	&= !o.dx10_msaa_opt && o.dx10_msaa && ( HW.pDevice1 != 0) ;
+	o.dx10_msaa_hybrid	&= !o.dx10_msaa_opt && o.dx10_msaa && ( HW.pDevice1 != nullptr) ;
 
 	//	Allow alpha test MSAA for DX10.0
 
@@ -433,7 +433,7 @@ void CRender::reset_begin()
 	{
 		u32 it=0;
 		for (it=0; it<Lights_LastFrame.size(); it++)	{
-			if (0==Lights_LastFrame[it])	continue	;
+			if (nullptr==Lights_LastFrame[it])	continue	;
 			try {
 				Lights_LastFrame[it]->svis.resetoccq ()	;
 			} catch (...)
@@ -513,7 +513,7 @@ void					CRender::model_Delete			(IRenderVisual* &V, BOOL bDiscard)
 { 
 	dxRender_Visual* pVisual = (dxRender_Visual*)V;
 	Models->Delete(pVisual, bDiscard);
-	V = 0;
+	V = nullptr;
 }
 IRender_DetailModel*	CRender::model_CreateDM			(IReader*	F)
 {
@@ -528,7 +528,7 @@ void					CRender::model_Delete			(IRender_DetailModel* & F)
 		CDetail*	D	= (CDetail*)F;
 		D->Unload		();
 		xr_delete		(D);
-		F				= NULL;
+		F				= nullptr;
 	}
 }
 IRenderVisual*			CRender::model_CreatePE			(LPCSTR name)	
@@ -720,7 +720,7 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		ID3DShaderReflection *pReflection = 0;
+		ID3DShaderReflection *pReflection = nullptr;
 
 #ifdef USE_DX11
 		_result			= D3DReflect( buffer, buffer_size, IID_ID3DShaderReflection, (void**)&pReflection);
@@ -757,7 +757,7 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		ID3DShaderReflection *pReflection = 0;
+		ID3DShaderReflection *pReflection = nullptr;
 #ifdef USE_DX11
 		_result			= D3DReflect( buffer, buffer_size, IID_ID3DShaderReflection, (void**)&pReflection);
 #else
@@ -804,7 +804,7 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		ID3DShaderReflection *pReflection = 0;
+		ID3DShaderReflection *pReflection = nullptr;
 
 #ifdef USE_DX11
 		_result			= D3DReflect( buffer, buffer_size, IID_ID3DShaderReflection, (void**)&pReflection);
@@ -830,8 +830,8 @@ static HRESULT create_shader				(
 
 	if ( disasm )
 	{
-		ID3DBlob*		disasm	= 0;
-		D3DDisassemble	(buffer, buffer_size, FALSE, 0, &disasm );
+		ID3DBlob*		disasm	= nullptr;
+		D3DDisassemble	(buffer, buffer_size, FALSE, nullptr, &disasm );
 		//D3DXDisassembleShader		(LPDWORD(code->GetBufferPointer()), FALSE, 0, &disasm );
 		string_path		dname;
 		strconcat		(sizeof(dname),dname,"disasm\\",file_name,('v'==pTarget[0])?".vs":('p'==pTarget[0])?".ps":".gs" );
@@ -853,10 +853,10 @@ public:
 		string_path				pname;
 		strconcat				(sizeof(pname),pname,::Render->getShaderPath(),pFileName);
 		IReader*		R		= FS.r_open	("$game_shaders$",pname);
-		if (0==R)				{
+		if (nullptr==R)				{
 			// possibly in shared directory or somewhere else - open directly
 			R					= FS.r_open	("$game_shaders$",pFileName);
-			if (0==R)			return			E_FAIL;
+			if (nullptr==R)			return			E_FAIL;
 		}
 
 		// duplicate and zero-terminate
@@ -1290,8 +1290,8 @@ HRESULT	CRender::shader_compile			(
 	}
 
 	// finish
-	defines[def_it].Name			=	0;
-	defines[def_it].Definition		=	0;
+	defines[def_it].Name			=	nullptr;
+	defines[def_it].Definition		=	nullptr;
 	def_it							++;
 
 	// 
@@ -1299,21 +1299,21 @@ HRESULT	CRender::shader_compile			(
 	{
 		if ('v'==pTarget[0])
       {
-         if( HW.pDevice1 == 0 )
+         if( HW.pDevice1 == nullptr )
             pTarget = D3D10GetVertexShaderProfile(HW.pDevice);	// vertex	"vs_4_0"; //
          else
             pTarget = "vs_4_1";	// pixel	"ps_4_0"; //
       }
 		else if ('p'==pTarget[0])
       {
-         if( HW.pDevice1 == 0 )
+         if( HW.pDevice1 == nullptr )
             pTarget = D3D10GetPixelShaderProfile(HW.pDevice);	// pixel	"ps_4_0"; //
          else
             pTarget = "ps_4_1";	// pixel	"ps_4_0"; //
       }
 		else if ('g'==pTarget[0])		
       {
-         if( HW.pDevice1 == 0 )
+         if( HW.pDevice1 == nullptr )
             pTarget = D3D10GetGeometryShaderProfile(HW.pDevice);	// geometry	"gs_4_0"; //
          else
             pTarget = "gs_4_1";	// pixel	"ps_4_0"; //
@@ -1375,8 +1375,8 @@ HRESULT	CRender::shader_compile			(
 	if (FAILED(_result))
 	{
 		includer					Includer;
-		LPD3DBLOB					pShaderBuf	= NULL;
-		LPD3DBLOB					pErrorBuf	= NULL;
+		LPD3DBLOB					pShaderBuf	= nullptr;
+		LPD3DBLOB					pErrorBuf	= nullptr;
 		_result						=
 			D3DCompile(
 				pSrcData, 

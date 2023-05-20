@@ -52,7 +52,7 @@ class CControlledEntity : public CControlledEntityBase {
 
 public:
 
-	virtual bool			is_under_control		() {return (m_controller != 0);}
+	virtual bool			is_under_control		() {return (m_controller != nullptr);}
 
 	virtual void			set_data				(const SControlledInfo &info) {m_data = info;}
 	virtual SControlledInfo &get_data				(){return m_data;}

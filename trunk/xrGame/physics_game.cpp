@@ -122,7 +122,7 @@ void  TContactShotMark(CDB::TRI* T,dContactGeom* c)
 						if(!mtl_pair->CollideSounds.empty())
 						{
 							float volume=collide_volume_min+vel_cret*(collide_volume_max-collide_volume_min)/(_sqrt(mass_limit)*default_l_limit-Pars::vel_cret_sound);
-							GET_RANDOM(mtl_pair->CollideSounds).play_no_feedback(0,0,0,((Fvector*)c->pos),&volume);
+							GET_RANDOM(mtl_pair->CollideSounds).play_no_feedback(nullptr,0,0,((Fvector*)c->pos),&volume);
 						}
 					}
 				}

@@ -81,7 +81,7 @@ public:
 
 	void					add					(light*			L);
 	void					update				(IRenderable*	O);
-	void					update_smooth		(IRenderable*	O=0);
+	void					update_smooth		(IRenderable*	O=nullptr);
 	
 	ICF	float				get_hemi			()	{
 		if (dwFrameSmooth!=Device.dwFrame)		update_smooth();

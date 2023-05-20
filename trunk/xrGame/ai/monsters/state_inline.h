@@ -143,7 +143,7 @@ void CStateAbstract::fill_data_with	(void *ptr_src, u32 size)
 TEMPLATE_SPECIALIZATION
 CStateAbstract *CStateAbstract::get_state_current()
 {
-	if (substates.empty() || (current_substate == u32(-1))) return 0;
+	if (substates.empty() || (current_substate == u32(-1))) return nullptr;
 	
 	STATE_MAP_IT it = substates.find(current_substate);
 	VERIFY(it != substates.end());

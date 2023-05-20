@@ -129,7 +129,7 @@ void CControlAnimation::play_part(SAnimationPart &part, PlayCallback callback)
 	part.time_started	= Device.dwTimeGlobal;
 	part.actual			= true;
 
-	m_man->notify		(ControlCom::eventAnimationStart, 0);
+	m_man->notify		(ControlCom::eventAnimationStart, nullptr);
 
 	if ((part.motion != m_data.torso.motion) && part.blend)
 		m_object->CStepManager::on_animation_start(part.motion, part.blend);
@@ -188,17 +188,17 @@ void CControlAnimation::check_events(SAnimationPart &part)
 void CControlAnimation::check_callbacks()
 {
 	if (m_global_animation_end) {
-		m_man->notify			(ControlCom::eventAnimationEnd, 0);
+		m_man->notify			(ControlCom::eventAnimationEnd, nullptr);
 		m_global_animation_end	= false;
 	}
 	
 	if (m_legs_animation_end) {
-		m_man->notify			(ControlCom::eventLegsAnimationEnd, 0);
+		m_man->notify			(ControlCom::eventLegsAnimationEnd, nullptr);
 		m_legs_animation_end	= false;
 	}
 	
 	if (m_torso_animation_end) {
-		m_man->notify			(ControlCom::eventTorsoAnimationEnd, 0);
+		m_man->notify			(ControlCom::eventTorsoAnimationEnd, nullptr);
 		m_torso_animation_end	= false;
 	}
 

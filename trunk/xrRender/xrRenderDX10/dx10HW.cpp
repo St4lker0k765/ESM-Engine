@@ -34,8 +34,8 @@ IDirect3DStateBlock9*	dwDebugSB = 0;
 CHW::CHW() : 
 //	hD3D(NULL),
 	//pD3D(NULL),
-	m_pAdapter(0),
-	pDevice(NULL),
+	m_pAdapter(nullptr),
+	pDevice(nullptr),
 	m_move_window(true)
 	//pBaseRT(NULL),
 	//pBaseZB(NULL)
@@ -77,7 +77,7 @@ void CHW::CreateD3D()
 	IDXGIFactory * pFactory;
 	R_CHK( CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&pFactory)) );
 
-	m_pAdapter = 0;
+	m_pAdapter = nullptr;
 	m_bUsePerfhud = false;
 
 #ifndef	MASTER_GOLD
@@ -96,7 +96,7 @@ void CHW::CreateD3D()
 		else
 		{
 			m_pAdapter->Release();
-			m_pAdapter = 0;
+			m_pAdapter = nullptr;
 		}
 		++i;
 	}
@@ -331,9 +331,9 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 //        D3D_FEATURE_LEVEL_10_0,
     };
 
-   R =  D3D11CreateDeviceAndSwapChain(   0,//m_pAdapter,//What wrong with adapter??? We should use another version of DXGI?????
+   R =  D3D11CreateDeviceAndSwapChain(   nullptr,//m_pAdapter,//What wrong with adapter??? We should use another version of DXGI?????
                                           m_DriverType,
-                                          NULL,
+                                          nullptr,
                                           createDeviceFlags,
 										  pFeatureLevels,
 										  sizeof(pFeatureLevels)/sizeof(pFeatureLevels[0]),
@@ -346,7 +346,7 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 #else
    R =  D3DX10CreateDeviceAndSwapChain(   m_pAdapter,
                                           m_DriverType,
-                                          NULL,
+                                          nullptr,
                                           createDeviceFlags,
                                           &sd,
                                           &m_pSwapChain,
@@ -383,7 +383,7 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 							 "CreateDevice returned 0x%08x", R
 							 );
 		FlushLog			();
-		MessageBox			(NULL,"Failed to initialize graphics hardware.\nPlease try to restart the game.","Error!",MB_OK|MB_ICONERROR);
+		MessageBox			(nullptr,"Failed to initialize graphics hardware.\nPlease try to restart the game.","Error!",MB_OK|MB_ICONERROR);
 		TerminateProcess	(GetCurrentProcess(),0);
 	};
 	R_CHK(R);
@@ -473,7 +473,7 @@ void CHW::DestroyDevice()
 //#endif
 
 	//	Must switch to windowed mode to release swap chain
-	if (!m_ChainDesc.Windowed) m_pSwapChain->SetFullscreenState( FALSE, NULL);
+	if (!m_ChainDesc.Windowed) m_pSwapChain->SetFullscreenState( FALSE, nullptr);
 	_SHOW_REF				("refCount:m_pSwapChain",m_pSwapChain);
 	_RELEASE				(m_pSwapChain);
 
@@ -506,7 +506,7 @@ void CHW::Reset (HWND hwnd)
 
 	cd.Windowed = bWindowed;
 
-	m_pSwapChain->SetFullscreenState(!bWindowed, NULL);
+	m_pSwapChain->SetFullscreenState(!bWindowed, nullptr);
 
 	DXGI_MODE_DESC	&desc = m_ChainDesc.BufferDesc;
 
@@ -699,7 +699,7 @@ DXGI_RATIONAL CHW::selectRefresh(u32 dwWidth, u32 dwHeight, DXGI_FORMAT fmt)
 		UINT flags         = 0;
 
 		// Get the number of display modes available
-		pOutput->GetDisplayModeList( format, flags, &num, 0);
+		pOutput->GetDisplayModeList( format, flags, &num, nullptr);
 
 		// Get the list of display modes
 		modes.resize(num);
@@ -734,7 +734,7 @@ void CHW::OnAppActivate()
 	if ( m_pSwapChain && !m_ChainDesc.Windowed )
 	{
 		ShowWindow( m_ChainDesc.OutputWindow, SW_RESTORE );
-		m_pSwapChain->SetFullscreenState( TRUE, NULL );
+		m_pSwapChain->SetFullscreenState( TRUE, nullptr);
 	}
 }
 
@@ -742,7 +742,7 @@ void CHW::OnAppDeactivate()
 {
 	if ( m_pSwapChain && !m_ChainDesc.Windowed )
 	{
-		m_pSwapChain->SetFullscreenState( FALSE, NULL );
+		m_pSwapChain->SetFullscreenState( FALSE, nullptr);
 		ShowWindow( m_ChainDesc.OutputWindow, SW_MINIMIZE );
 	}
 }
@@ -914,12 +914,12 @@ void free_vid_mode_list()
 		xr_free					(vid_mode_token[i].name);
 	}
 	xr_free						(vid_mode_token);
-	vid_mode_token				= NULL;
+	vid_mode_token				= nullptr;
 }
 
 void fill_vid_mode_list(CHW* _hw)
 {
-	if(vid_mode_token != NULL)		return;
+	if(vid_mode_token != nullptr)		return;
 	xr_vector<LPCSTR>	_tmp;
 	xr_vector<DXGI_MODE_DESC>	modes;
 
@@ -933,7 +933,7 @@ void fill_vid_mode_list(CHW* _hw)
 	UINT flags         = 0;
 
 	// Get the number of display modes available
-	pOutput->GetDisplayModeList( format, flags, &num, 0);
+	pOutput->GetDisplayModeList( format, flags, &num, nullptr);
 
 	// Get the list of display modes
 	modes.resize(num);
@@ -954,7 +954,7 @@ void fill_vid_mode_list(CHW* _hw)
 		if(_tmp.end() != std::find_if(_tmp.begin(), _tmp.end(), _uniq_mode(str)))
 			continue;
 
-		_tmp.push_back				(NULL);
+		_tmp.push_back				(nullptr);
 		_tmp.back()					= xr_strdup(str);
 	}
 	
@@ -968,7 +968,7 @@ void fill_vid_mode_list(CHW* _hw)
 	vid_mode_token					= xr_alloc<xr_token>(_cnt);
 
 	vid_mode_token[_cnt-1].id			= -1;
-	vid_mode_token[_cnt-1].name		= NULL;
+	vid_mode_token[_cnt-1].name		= nullptr;
 
 #ifdef DEBUG
 	Msg("Available video modes[%d]:",_tmp.size());
@@ -1037,14 +1037,14 @@ void CHW::UpdateViews()
 	R = m_pSwapChain->GetBuffer( 0, __uuidof( ID3DTexture2D ), (LPVOID*)&pBuffer );
 	R_CHK(R);
 
-	R = pDevice->CreateRenderTargetView( pBuffer, NULL, &pBaseRT);
+	R = pDevice->CreateRenderTargetView( pBuffer, nullptr, &pBaseRT);
 	pBuffer->Release();
 	R_CHK(R);
 
 	//	Create Depth/stencil buffer
 	//	HACK: DX10: hard depth buffer format
 	//R_CHK	(pDevice->GetDepthStencilSurface	(&pBaseZB));
-	ID3DTexture2D* pDepthStencil = NULL;
+	ID3DTexture2D* pDepthStencil = nullptr;
 	D3D_TEXTURE2D_DESC descDepth;
 	descDepth.Width = sd.BufferDesc.Width;
 	descDepth.Height = sd.BufferDesc.Height;
@@ -1058,12 +1058,12 @@ void CHW::UpdateViews()
 	descDepth.CPUAccessFlags = 0;
 	descDepth.MiscFlags = 0;
 	R = pDevice->CreateTexture2D( &descDepth,       // Texture desc
-		NULL,                  // Initial data
+	                              nullptr,                  // Initial data
 		&pDepthStencil ); // [out] Texture
 	R_CHK(R);
 
 	//	Create Depth/stencil view
-	R = pDevice->CreateDepthStencilView( pDepthStencil, NULL, &pBaseZB );
+	R = pDevice->CreateDepthStencilView( pDepthStencil, nullptr, &pBaseZB );
 	R_CHK(R);
 
 	pDepthStencil->Release();

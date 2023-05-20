@@ -22,7 +22,7 @@ struct SMemberGoal {
 
 	SMemberGoal			() {
 		type			= MG_None;
-		entity			= 0;
+		entity			= nullptr;
 	}
 };
 

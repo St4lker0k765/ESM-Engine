@@ -67,7 +67,7 @@ void* _VertexStream::Lock	( u32 vl_Count, u32 Stride, u32& vOffset )
 	u32 vl_mPosition	= mPosition/Stride + 1;
 
 	// Check if there is need to flush and perform lock
-	BYTE* pData			= 0;
+	BYTE* pData			= nullptr;
 	if ((vl_Count+vl_mPosition) >= vl_mSize)
 	{
 		// FLUSH-LOCK
@@ -152,7 +152,7 @@ _VertexStream::_VertexStream()
 
 void _VertexStream::_clear()
 {
-    pVB			= NULL;
+    pVB			= nullptr;
     mSize		= 0;
     mPosition	= 0;
     mDiscardID	= 0;
@@ -205,7 +205,7 @@ u16*	_IndexStream::Lock	( u32 Count, u32& vOffset )
 #endif
 	PGO						(Msg("PGO:IB_LOCK:%d",Count));
 	vOffset					= 0;
-	BYTE* pLockedData		= 0;
+	BYTE* pLockedData		= nullptr;
 
 	// Ensure there is enough space in the VB for this data
 	R_ASSERT				((2*Count<=mSize) && Count);

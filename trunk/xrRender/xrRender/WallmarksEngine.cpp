@@ -34,7 +34,7 @@ IC bool operator == (const CWallmarksEngine::wm_slot* slot, const ref_shader& sh
 CWallmarksEngine::wm_slot* CWallmarksEngine::FindSlot	(ref_shader shader)
 {
 	WMSlotVecIt it				= std::find(marks.begin(),marks.end(),shader);
-	return						(it!=marks.end())?*it:0;
+	return						(it!=marks.end())?*it:nullptr;
 }
 CWallmarksEngine::wm_slot* CWallmarksEngine::AppendSlot	(ref_shader shader)
 {
@@ -53,7 +53,7 @@ CWallmarksEngine::CWallmarksEngine	()
 {
 	static_pool.reserve		(256);
 	marks.reserve			(256);
-	hGeom.create			(FVF::F_LIT, RCache.Vertex.Buffer(), NULL);
+	hGeom.create			(FVF::F_LIT, RCache.Vertex.Buffer(), nullptr);
 }
 
 CWallmarksEngine::~CWallmarksEngine	()
@@ -82,7 +82,7 @@ void CWallmarksEngine::clear()
 // allocate
 CWallmarksEngine::static_wallmark*	CWallmarksEngine::static_wm_allocate		()
 {
-	static_wallmark*	W = 0;
+	static_wallmark*	W = nullptr;
 	if (static_pool.empty())  W = xr_new<static_wallmark> ();
 	else					{ W = static_pool.back(); static_pool.pop_back(); }
 
@@ -303,7 +303,7 @@ void CWallmarksEngine::AddSkeletonWallmark(intrusive_ptr<CSkeletonWallmark> wm)
 		lock.Enter			();
 		// search if similar wallmark exists
 		wm_slot* slot		= FindSlot	(wm->Shader());
-		if (0==slot) slot	= AppendSlot(wm->Shader());
+		if (nullptr==slot) slot	= AppendSlot(wm->Shader());
 		// no similar - register _new_
 		slot->skeleton_items.push_back(wm);
 #ifdef	DEBUG

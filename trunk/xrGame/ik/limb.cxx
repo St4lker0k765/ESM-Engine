@@ -511,8 +511,8 @@ inline int find_min(int n, float d[])
 int choose_largest_range(float &swivel_angle,
 			 const AngleIntList *f11,
 			 const AngleIntList *f12,
-			 const AngleIntList *f21 = 0,
-			 const AngleIntList *f22 = 0)
+			 const AngleIntList *f21 = nullptr,
+			 const AngleIntList *f22 = nullptr)
 {
     const float unioneps = .05f;
     AngleIntList temp, all; 
@@ -646,8 +646,8 @@ int inspect_range(const AngleIntList &f,
 int choose_closest_range(float &swivel_angle,
 			 const AngleIntList *f11,
 			 const AngleIntList *f12,
-			 const AngleIntList *f21 = 0,
-			 const AngleIntList *f22 = 0)
+			 const AngleIntList *f21 = nullptr,
+			 const AngleIntList *f22 = nullptr)
 {
     int i = 0;
     float d = 2*M_PI; 

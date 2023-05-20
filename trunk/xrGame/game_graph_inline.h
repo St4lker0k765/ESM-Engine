@@ -197,7 +197,7 @@ IC	const GameGraph::SLevel *GameGraph::CHeader::level				(LPCSTR level_name, boo
 		if (!xr_strcmp((*I).second.name(),level_name))
 			return				(&(*I).second);
 	
-	return						(0);
+	return						(nullptr);
 }
 
 IC	const xrGUID &CGameGraph::CHeader::guid							() const

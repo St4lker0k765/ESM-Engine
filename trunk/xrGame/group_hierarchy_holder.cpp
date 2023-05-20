@@ -135,9 +135,9 @@ void CGroupHierarchyHolder::unregister_in_group_senses	(CEntity *member)
 {
 	CCustomMonster			*monster = smart_cast<CCustomMonster*>(member);
 	if (monster) {
-		monster->memory().visual().set_squad_objects(0);
-		monster->memory().sound().set_squad_objects	(0);
-		monster->memory().hit().set_squad_objects	(0);
+		monster->memory().visual().set_squad_objects(nullptr);
+		monster->memory().sound().set_squad_objects	(nullptr);
+		monster->memory().hit().set_squad_objects	(nullptr);
 	}
 }
 

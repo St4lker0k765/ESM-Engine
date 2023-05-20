@@ -214,7 +214,7 @@ void					CRender::create					()
 	o.fp16_blend		= true;
 
 	// search for ATI formats
-	if (!o.HW_smap && (0==strstr(Core.Params,"-nodf24")) )		{
+	if (!o.HW_smap && (nullptr==strstr(Core.Params,"-nodf24")) )		{
 		o.HW_smap		= HW.support	((D3DFORMAT)(MAKEFOURCC('D','F','2','4')),	D3DRTYPE_TEXTURE,D3DUSAGE_DEPTHSTENCIL);
 		if (o.HW_smap)	{
 			o.HW_smap_FORMAT= MAKEFOURCC	('D','F','2','4');
@@ -447,7 +447,7 @@ void CRender::reset_begin()
 	{
 		u32 it=0;
 		for (it=0; it<Lights_LastFrame.size(); it++)	{
-			if (0==Lights_LastFrame[it])	continue	;
+			if (nullptr==Lights_LastFrame[it])	continue	;
 			try {
 				Lights_LastFrame[it]->svis.resetoccq ()	;
 			} catch (...)
@@ -527,7 +527,7 @@ void					CRender::model_Delete			(IRenderVisual* &V, BOOL bDiscard)
 { 
 	dxRender_Visual* pVisual = (dxRender_Visual*)V;
 	Models->Delete(pVisual, bDiscard);
-	V = 0;
+	V = nullptr;
 }
 IRender_DetailModel*	CRender::model_CreateDM			(IReader*	F)
 {
@@ -542,7 +542,7 @@ void					CRender::model_Delete			(IRender_DetailModel* & F)
 		CDetail*	D	= (CDetail*)F;
 		D->Unload		();
 		xr_delete		(D);
-		F				= NULL;
+		F				= nullptr;
 	}
 }
 IRenderVisual*			CRender::model_CreatePE			(LPCSTR name)	
@@ -728,7 +728,7 @@ static HRESULT create_shader				(
 {
 	result->sh			= ShaderTypeTraits<T>::CreateHWShader(buffer, buffer_size);
 
-	ID3DShaderReflection *pReflection = 0;
+	ID3DShaderReflection *pReflection = nullptr;
 
 	HRESULT const _hr	= D3DReflect( buffer, buffer_size, IID_ID3DShaderReflection, (void**)&pReflection);
 	if (SUCCEEDED(_hr) && pReflection)
@@ -759,7 +759,7 @@ static HRESULT create_shader				(
 	if (pTarget[0] == 'p') {
 		SPS* sps_result = (SPS*)result;
 #ifdef USE_DX11
-		_result			= HW.pDevice->CreatePixelShader(buffer, buffer_size, 0, &sps_result->ps);
+		_result			= HW.pDevice->CreatePixelShader(buffer, buffer_size, nullptr, &sps_result->ps);
 #else // #ifdef USE_DX11
 		_result			= HW.pDevice->CreatePixelShader(buffer, buffer_size, &sps_result->ps);
 #endif // #ifdef USE_DX11
@@ -769,7 +769,7 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		ID3DShaderReflection *pReflection = 0;
+		ID3DShaderReflection *pReflection = nullptr;
 
 #ifdef USE_DX11
 		_result			= D3DReflect( buffer, buffer_size, IID_ID3DShaderReflection, (void**)&pReflection);
@@ -795,7 +795,7 @@ static HRESULT create_shader				(
 	else if (pTarget[0] == 'v') {
 		SVS* svs_result = (SVS*)result;
 #ifdef USE_DX11
-		_result			= HW.pDevice->CreateVertexShader(buffer, buffer_size, 0, &svs_result->vs);
+		_result			= HW.pDevice->CreateVertexShader(buffer, buffer_size, nullptr, &svs_result->vs);
 #else // #ifdef USE_DX11
 		_result			= HW.pDevice->CreateVertexShader(buffer, buffer_size, &svs_result->vs);
 #endif // #ifdef USE_DX11
@@ -806,7 +806,7 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		ID3DShaderReflection *pReflection = 0;
+		ID3DShaderReflection *pReflection = nullptr;
 #ifdef USE_DX11
 		_result			= D3DReflect( buffer, buffer_size, IID_ID3DShaderReflection, (void**)&pReflection);
 #else
@@ -843,7 +843,7 @@ static HRESULT create_shader				(
 	else if (pTarget[0] == 'g') {
 		SGS* sgs_result = (SGS*)result;
 #ifdef USE_DX11
-		_result			= HW.pDevice->CreateGeometryShader(buffer, buffer_size, 0, &sgs_result->gs);
+		_result			= HW.pDevice->CreateGeometryShader(buffer, buffer_size, nullptr, &sgs_result->gs);
 #else // #ifdef USE_DX11
 		_result			= HW.pDevice->CreateGeometryShader(buffer, buffer_size, &sgs_result->gs);
 #endif // #ifdef USE_DX11
@@ -853,7 +853,7 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		ID3DShaderReflection *pReflection = 0;
+		ID3DShaderReflection *pReflection = nullptr;
 
 #ifdef USE_DX11
 		_result			= D3DReflect( buffer, buffer_size, IID_ID3DShaderReflection, (void**)&pReflection);
@@ -927,8 +927,8 @@ static HRESULT create_shader				(
 
 	if ( disasm )
 	{
-		ID3DBlob*		disasm	= 0;
-		D3DDisassemble	(buffer, buffer_size, FALSE, 0, &disasm );
+		ID3DBlob*		disasm	= nullptr;
+		D3DDisassemble	(buffer, buffer_size, FALSE, nullptr, &disasm );
 		//D3DXDisassembleShader		(LPDWORD(code->GetBufferPointer()), FALSE, 0, &disasm );
 		string_path		dname;
 		strconcat		(sizeof(dname),dname,"disasm\\",file_name,('v'==pTarget[0])?".vs":('p'==pTarget[0])?".ps":".gs" );
@@ -950,10 +950,10 @@ public:
 		string_path				pname;
 		strconcat				(sizeof(pname),pname,::Render->getShaderPath(),pFileName);
 		IReader*		R		= FS.r_open	("$game_shaders$",pname);
-		if (0==R)				{
+		if (nullptr==R)				{
 			// possibly in shared directory or somewhere else - open directly
 			R					= FS.r_open	("$game_shaders$",pFileName);
-			if (0==R)			return			E_FAIL;
+			if (nullptr==R)			return			E_FAIL;
 		}
 
 		// duplicate and zero-terminate
@@ -1412,8 +1412,8 @@ HRESULT	CRender::shader_compile			(
    sh_name[len] = 0;
 
 	// finish
-	defines[def_it].Name			=	0;
-	defines[def_it].Definition		=	0;
+	defines[def_it].Name			=	nullptr;
+	defines[def_it].Definition		=	nullptr;
 	def_it							++; 
 
 	// 
@@ -1508,8 +1508,8 @@ HRESULT	CRender::shader_compile			(
 	if (FAILED(_result))
 	{
 		includer					Includer;
-		LPD3DBLOB					pShaderBuf	= NULL;
-		LPD3DBLOB					pErrorBuf	= NULL;
+		LPD3DBLOB					pShaderBuf	= nullptr;
+		LPD3DBLOB					pErrorBuf	= nullptr;
 		_result						= 
 			D3DCompile( 
 				pSrcData, 

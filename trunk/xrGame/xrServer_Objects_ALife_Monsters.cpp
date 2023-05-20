@@ -122,7 +122,7 @@ CSE_ALifeTraderAbstract::CSE_ALifeTraderAbstract(LPCSTR caSection)
 	m_fMaxItemMass				= pSettings->r_float(caSection, "max_item_mass");
 
 	m_sCharacterProfile			= READ_IF_EXISTS(pSettings,r_string,caSection,"character_profile","default");
-	m_SpecificCharacter			= NULL;
+	m_SpecificCharacter			= nullptr;
 
 #ifdef XRGAME_EXPORTS
 	m_community_index			= NO_COMMUNITY_INDEX;
@@ -197,7 +197,7 @@ void CSE_ALifeTraderAbstract::STATE_Read	(NET_Packet &tNetPacket, u16 size)
 			if(tmp!=-1)
 				m_SpecificCharacter = CSpecificCharacter::IndexToId(tmp);
 			else
-				m_SpecificCharacter = NULL;
+				m_SpecificCharacter = nullptr;
 
 #else
 			m_SpecificCharacter = NULL;
@@ -243,7 +243,7 @@ void CSE_ALifeTraderAbstract::STATE_Read	(NET_Packet &tNetPacket, u16 size)
 
 void CSE_ALifeTraderAbstract::OnChangeProfile(PropValue* sender)
 {
-	m_SpecificCharacter = NULL;
+	m_SpecificCharacter = nullptr;
 #ifndef AI_COMPILER
 	specific_character();
 #endif
@@ -318,11 +318,11 @@ shared_str CSE_ALifeTraderAbstract::specific_character()
 					if(char_info.data()->m_Reputation == NO_REPUTATION || _abs(spec_char.Reputation() - char_info.data()->m_Reputation)<REPUTATION_DELTA)
 					{
 #ifdef XRGAME_EXPORTS
-						int* count = NULL;
+						int* count = nullptr;
 						if(ai().get_alife())
 							count = ai().alife().registry(specific_characters).object(id, true);
 						//если индекс еще не был использован
-						if(NULL == count)
+						if(nullptr == count)
 #endif
 							m_CheckedCharacters.push_back(id);
 					}
@@ -1141,7 +1141,7 @@ CSE_ALifeMonsterAbstract::CSE_ALifeMonsterAbstract(LPCSTR caSection)	: CSE_ALife
 
 	m_tpBestDetector			= this;
 
-	m_brain						= 0;
+	m_brain						= nullptr;
 	m_smart_terrain_id			= 0xffff;
 	m_task_reached				= false;
 
@@ -1926,7 +1926,7 @@ void CSE_ALifeOnlineOfflineGroup::STATE_Read				(NET_Packet &tNetPacket, u16 siz
 	for (u32 i=0; i<container_size; ++i) {
 		MEMBERS::value_type		pair;
 		load_data				(pair.first,tNetPacket);
-		pair.second				= 0;
+		pair.second				= nullptr;
 		m_members.insert		(pair);
 	}
 #endif

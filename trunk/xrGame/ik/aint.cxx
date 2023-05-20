@@ -249,7 +249,7 @@ float AngleInt::Range() const
 
 void AngleIntList::add(float l, float h)
 {
-    AngleIntListNode *t = xr_new<AngleIntListNode>(l, h, (AngleIntListNode*)0);
+    AngleIntListNode *t = xr_new<AngleIntListNode>(l, h, (AngleIntListNode*)nullptr);
 
     if (!head)
 	head = tail = t;
@@ -269,7 +269,7 @@ void AngleIntList::remove(AngleIntListNode *t)
 
     if (head == t)
     {
-	prev = 0;
+	prev = nullptr;
 	head = t->next;
     }
     else
@@ -430,7 +430,7 @@ int AngleIntList::NumIntervals() const
 AngleInt *AngleIntList::Largest() const
 {
     if (!head)
-	return 0;
+	return nullptr;
 
     AngleInt *l = &head->D;
     float d = head->D.Range(); 
@@ -674,8 +674,8 @@ void AngleIntList::wrap(float eps)
 {
     AngleIntListNode *s, *t;
 
-    s = 0;
-    t = 0;
+    s = nullptr;
+    t = nullptr;
 
     for (AngleIntListNode *temp = head; temp; temp = temp->next)
     {

@@ -48,7 +48,7 @@ public:
 	virtual bool		shedule_Needed			()				{return true;};
 			void		update_switch			();
 			void		update_scheduled		(bool init_ef = true);
-			void		load					(LPCSTR game_name = 0, bool no_assert = false, bool new_only = false);
+			void		load					(LPCSTR game_name = nullptr, bool no_assert = false, bool new_only = false);
 			bool		load_game				(LPCSTR game_name, bool no_assert = false);
 	IC		float		update_monster_factor	() const;
 			bool		change_level			(NET_Packet	&net_packet);

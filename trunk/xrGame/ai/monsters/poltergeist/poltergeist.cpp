@@ -28,8 +28,8 @@ CPoltergeist::CPoltergeist()
 	
 	invisible_vel.set			(0.1f, 0.1f);
 	
-	m_flame						= 0;
-	m_tele						= 0;
+	m_flame						= nullptr;
+	m_tele						= nullptr;
 }
 
 CPoltergeist::~CPoltergeist()

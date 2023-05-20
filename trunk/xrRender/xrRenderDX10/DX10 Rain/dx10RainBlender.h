@@ -16,8 +16,8 @@ class CBlender_rain_msaa : public IBlender
 public:
    CBlender_rain_msaa()
    {
-      Name = 0;
-      Definition = 0;
+      Name = nullptr;
+      Definition = nullptr;
    }
 	virtual		LPCSTR		getComment()	{ return "INTERNAL: DX10 MSAA rain blender";	}
 	virtual		BOOL		canBeDetailed()	{ return FALSE;	}

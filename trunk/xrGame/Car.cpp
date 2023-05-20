@@ -36,10 +36,10 @@ extern CPHWorld*	ph_world;
 
 CCar::CCar()
 {
-	m_memory		= NULL;
+	m_memory		= nullptr;
 	m_driver_anim_type = 0;
 	m_bone_steer	= BI_NONE;
-	active_camera	= 0;
+	active_camera	= nullptr;
 	camera[ectFirst]= xr_new<CCameraFirstEye>	(this, CCameraBase::flRelativeLink|CCameraBase::flPositionRigid); 
 	camera[ectFirst]->tag	= ectFirst;
 	camera[ectFirst]->Load("car_firsteye_cam");
@@ -84,7 +84,7 @@ CCar::CCar()
 	m_breaks_to_back_rate=1.f;
 
 	b_exploded=false;
-	m_car_weapon=NULL;
+	m_car_weapon= nullptr;
 	m_power_neutral_factor=0.25f;
 	m_steer_angle=0.f;
 #ifdef DEBUG
@@ -1705,7 +1705,7 @@ void CCar::OnEvent(NET_Packet& P, u16 type)
 			O->SetTmpPreDestroy				(just_before_destroy);
 			if(GetInventory()->DropItem(smart_cast<CGameObject*>(O))) 
 			{
-				O->H_SetParent(0, just_before_destroy);
+				O->H_SetParent(nullptr, just_before_destroy);
 			}
 		}break;
 	}

@@ -183,7 +183,7 @@ virtual void ApplyDamage			(u16 level);
 		{
 			bone_id=BI_NONE;
 			car=acar;
-			joint=NULL;
+			joint= nullptr;
 			inited=false;
 		}
 	};
@@ -248,8 +248,8 @@ virtual void ApplyDamage			(u16 level);
 		{
 			bone_id=BI_NONE;
 			pcar=acar;
-			p_pgobject=NULL;
-			pelement=NULL;
+			p_pgobject= nullptr;
+			pelement= nullptr;
 		}
 		~SExhaust();
 	};
@@ -323,7 +323,7 @@ virtual void ApplyDamage(u16 level);
 		{
 			bone_id=BI_NONE;
 			pcar=acar;
-			joint=NULL;
+			joint= nullptr;
 			state=closed;
 			torque=500.f;
 			a_vel=M_PI;
@@ -566,7 +566,7 @@ public:
 	virtual void			OnBeforeExplosion			();
 	virtual void			GetRayExplosionSourcePos	(Fvector &pos);
 	virtual void			ActivateExplosionBox		(const Fvector &size,Fvector &in_out_pos){};
-	virtual void			ResetScriptData				(void *P=0);
+	virtual void			ResetScriptData				(void *P=nullptr);
 
 	virtual void			Action						(int id, u32 flags);
 	virtual void			SetParam					(int id, Fvector2 val);

@@ -17,7 +17,7 @@ struct dxGeomTransform : public dxGeom {
 	dxGeomTransform(dSpaceID space) : dxGeom(space, 1)
 	{
 		type = dGeomTransformClass;
-		obj = 0;
+		obj = nullptr;
 		cleanup = 0;
 		infomode = 0;
 		dSetZero (final_pos,4);

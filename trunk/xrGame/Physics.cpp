@@ -20,7 +20,7 @@ extern CPHWorld *ph_world;
 
 #include "ExtendedGeom.h"
 //union dInfBytes dInfinityValue = {{0,0,0x80,0x7f}};
-PhysicsStepTimeCallback		*physics_step_time_callback				= 0;
+PhysicsStepTimeCallback		*physics_step_time_callback				= nullptr;
 
 const dReal 		default_w_limit									= 9.8174770f;//(M_PI/16.f/(fixed_step=0.02f));
 const dReal 		default_l_limit									= 150.f;//(3.f/fixed_step=0.02f);
@@ -127,8 +127,8 @@ IC static int CollideIntoGroup(dGeomID o1, dGeomID o2,dJointGroupID jointGroup,C
 		dGeomID					g2		=cgeom.g2;
 		bool pushing_neg=	false;
 		bool do_collide	=	true;
-		dxGeomUserData* usr_data_1		=NULL;
-		dxGeomUserData* usr_data_2		=NULL;
+		dxGeomUserData* usr_data_1		= nullptr;
+		dxGeomUserData* usr_data_2		= nullptr;
 		u16				material_idx_1	=0;
 		u16				material_idx_2	=0;
 
@@ -266,7 +266,7 @@ IC static int CollideIntoGroup(dGeomID o1, dGeomID o2,dJointGroupID jointGroup,C
 			#ifdef DEBUG
 				DBG_DrawContact(c);
 			#endif
-			dJointID contact_joint	= dJointCreateContact(0, jointGroup, &c);
+			dJointID contact_joint	= dJointCreateContact(nullptr, jointGroup, &c);
 			world->ConnectJoint(contact_joint);
 			dJointAttach			(contact_joint, dGeomGetBody(g1), dGeomGetBody(g2));
 		}

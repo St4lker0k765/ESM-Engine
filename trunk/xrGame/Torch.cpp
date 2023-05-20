@@ -39,7 +39,7 @@ CTorch::CTorch(void)
 
 	m_switched_on				= false;
 	glow_render					= ::Render->glow_create();
-	lanim						= 0;
+	lanim						= nullptr;
 	time2hide					= 0;
 	fBrightness					= 1.f;
 

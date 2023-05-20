@@ -42,7 +42,7 @@
 //--------------------------------------------------------------------
 CUIGameDM::CUIGameDM()
 {
-	m_game			= NULL; 
+	m_game			= nullptr; 
 	m_pFragLists					= xr_new<CUIWindow>();
 	m_pPlayerLists					= xr_new<CUIWindow>();
 	m_pStatisticWnds					= xr_new<CUIWindow>();
@@ -79,11 +79,11 @@ CUIGameDM::CUIGameDM()
 //.	m_voteStatusWnd					= xr_new<UIVoteStatusWnd>();
 //.	m_voteStatusWnd->InitFromXML	(uiXml);
 //.	m_voteStatusWnd->Show			(false);
-	m_voteStatusWnd					= NULL;
+	m_voteStatusWnd					= nullptr;
 
 	m_pInventoryMenu	= xr_new<CUIInventoryWnd>	();
 	m_pPdaMenu			= xr_new<CUIPdaWnd>			();
-	m_pMapDesc			= NULL;//xr_new<CUIMapDesc>		();
+	m_pMapDesc			= nullptr;//xr_new<CUIMapDesc>		();
 
 }
 //--------------------------------------------------------------------

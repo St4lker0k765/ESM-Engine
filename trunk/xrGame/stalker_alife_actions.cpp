@@ -48,8 +48,8 @@ void CStalkerActionNoALife::initialize	()
 {
 	inherited::initialize						();
 #ifndef STALKER_DEBUG_MODE
-	object().movement().set_desired_position	(0);
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_position	(nullptr);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeGamePath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_body_state			(eBodyStateStand);
@@ -79,7 +79,7 @@ void CStalkerActionNoALife::finalize	()
 {
 	inherited::finalize				();
 
-	object().movement().set_desired_position	(0);
+	object().movement().set_desired_position	(nullptr);
 
 	if (!object().g_Alive())
 		return;
@@ -116,7 +116,7 @@ CStalkerActionGatherItems::CStalkerActionGatherItems	(CAI_Stalker *object, LPCST
 void CStalkerActionGatherItems::initialize	()
 {
 	inherited::initialize			();
-	object().movement().set_desired_direction	(0);
+	object().movement().set_desired_direction	(nullptr);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_body_state		(eBodyStateStand);
@@ -133,7 +133,7 @@ void CStalkerActionGatherItems::finalize	()
 {
 	inherited::finalize		();
 
-	object().movement().set_desired_position	(0);
+	object().movement().set_desired_position	(nullptr);
 
 	if (!object().g_Alive())
 		return;

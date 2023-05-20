@@ -17,7 +17,7 @@ IC	CDangerManager::CDangerManager							(CCustomMonster *object)
 IC	void CDangerManager::reset								()
 {
 	m_objects.clear	();
-	m_selected		= 0;
+	m_selected		= nullptr;
 }
 
 IC	const CDangerObject *CDangerManager::selected			() const

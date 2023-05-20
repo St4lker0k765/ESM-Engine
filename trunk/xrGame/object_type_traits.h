@@ -156,7 +156,7 @@
 					std::is_class<T1>::value && 
 					std::is_class<T2>::value && 
 					!is_same<T1,T2>::value &&
-					sizeof(detail::yes) == sizeof(select((T2*)(0)))
+					sizeof(detail::yes) == sizeof(select((T2*)(nullptr)))
 			};
 		};
 
@@ -171,7 +171,7 @@
 			>::result			select(T1<P>*);
 			static detail::no	select(...);
 
-			enum { value = sizeof(detail::yes) == sizeof(select((T2*)0))};
+			enum { value = sizeof(detail::yes) == sizeof(select((T2*)nullptr))};
 		};
 
 		template <template <typename _1> class T1, typename T2>
@@ -180,7 +180,7 @@
 			static detail::yes	select(T1<P>*);
 			static detail::no	select(...);
 
-			enum { value = sizeof(detail::yes) == sizeof(select((T2*)0))};
+			enum { value = sizeof(detail::yes) == sizeof(select((T2*)nullptr))};
 		};
 
 		declare_has(iterator);

@@ -13,7 +13,7 @@ public:
 
 	CScriptMonsterHitInfo		()
 	{
-		who				= 0;
+		who				= nullptr;
 		time			= 0;
 		direction		= Fvector().set(0.f,0.f,1.f);
 	}

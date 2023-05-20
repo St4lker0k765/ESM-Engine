@@ -48,21 +48,21 @@ IBlender* CResourceManager::_GetBlender		(LPCSTR Name)
 	if (I==m_blenders.end())	
 	{
 		Msg("DX10: Shader '%s' not found in library.",Name); 
-		return 0;
+		return nullptr;
 	}
 #endif
-	if (I==m_blenders.end())	{ Debug.fatal(DEBUG_INFO,"Shader '%s' not found in library.",Name); return 0; }
+	if (I==m_blenders.end())	{ Debug.fatal(DEBUG_INFO,"Shader '%s' not found in library.",Name); return nullptr; }
 #endif
 	else					return I->second;
 }
 
 IBlender* CResourceManager::_FindBlender		(LPCSTR Name)
 {
-	if (!(Name && Name[0])) return 0;
+	if (!(Name && Name[0])) return nullptr;
 
 	LPSTR N = LPSTR(Name);
 	map_Blender::iterator I = m_blenders.find	(N);
-	if (I==m_blenders.end())	return 0;
+	if (I==m_blenders.end())	return nullptr;
 	else						return I->second;
 }
 
@@ -84,7 +84,7 @@ void	CResourceManager::ED_UpdateBlender	(LPCSTR Name, IBlender* data)
 //////////////////////////////////////////////////////////////////////
 void	CResourceManager::_ParseList(sh_list& dest, LPCSTR names)
 {
-	if (0==names || 0==names[0])
+	if (nullptr==names || 0==names[0])
  		names 	= "$null";
 
 	dest.clear();
@@ -121,7 +121,7 @@ void	CResourceManager::_ParseList(sh_list& dest, LPCSTR names)
 
 ShaderElement* CResourceManager::_CreateElement			(ShaderElement& S)
 {
-	if (S.passes.empty())		return	0;
+	if (S.passes.empty())		return	nullptr;
 
 	// Search equal in shaders array
 	for (u32 it=0; it<v_elements.size(); it++)
@@ -240,7 +240,7 @@ Shader*	CResourceManager::_cpp_Create	(LPCSTR s_shader, LPCSTR s_textures, LPCST
 		//	TODO: DX10: When all shaders are ready switch to common path
 #if defined(USE_DX10) || defined(USE_DX11)
 		IBlender	*pBlender = _GetBlender(s_shader?s_shader:"null");
-		if (!pBlender) return NULL;
+		if (!pBlender) return nullptr;
 		return	_cpp_Create(pBlender ,s_shader,s_textures,s_constants,s_matrices);
 #else	//	USE_DX10
 		return	_cpp_Create(_GetBlender(s_shader?s_shader:"null"),s_shader,s_textures,s_constants,s_matrices);
@@ -251,7 +251,7 @@ Shader*	CResourceManager::_cpp_Create	(LPCSTR s_shader, LPCSTR s_textures, LPCST
 	else
 #endif    
 	{
-		return NULL;
+		return nullptr;
 	}
 //#endif
 }
@@ -270,7 +270,7 @@ Shader*		CResourceManager::Create	(IBlender*	B,		LPCSTR s_shader,	LPCSTR s_textu
 	else
 #endif
 	{
-		return NULL;
+		return nullptr;
 //#endif
 	}
 }
@@ -298,7 +298,7 @@ Shader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_
 				else
 				{
 					FATAL("Can't find stub_default.s");
-					return 0;
+					return nullptr;
 				}
 			}
 		}
@@ -316,7 +316,7 @@ Shader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_
 	else
 #endif
 	{
-		return NULL;
+		return nullptr;
 	}
 //#endif
 }

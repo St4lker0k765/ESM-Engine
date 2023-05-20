@@ -17,7 +17,7 @@ CPhysicObject::CPhysicObject(void)
 {
 	m_type					=	epotBox;
 	m_mass					=	10.f;
-	m_collision_hit_callback=	NULL;
+	m_collision_hit_callback= nullptr;
 }
 
 CPhysicObject::~CPhysicObject(void)
@@ -31,7 +31,7 @@ BOOL CPhysicObject::net_Spawn(CSE_Abstract* DC)
 	R_ASSERT				(po);
 	m_type					= EPOType(po->type);
 	m_mass					= po->mass;
-	m_collision_hit_callback= NULL;
+	m_collision_hit_callback= nullptr;
 	inherited::net_Spawn	(DC);
 	xr_delete(collidable.model);
 	switch(m_type) {
@@ -71,7 +71,7 @@ void CPhysicObject::RunStartupAnim(CSE_Abstract *D)
 	if(Visual()&&smart_cast<IKinematics*>(Visual()))
 	{
 		//		CSE_PHSkeleton	*po	= smart_cast<CSE_PHSkeleton*>(D);
-		IKinematicsAnimated*	PKinematicsAnimated=NULL;
+		IKinematicsAnimated*	PKinematicsAnimated= nullptr;
 		R_ASSERT			(Visual()&&smart_cast<IKinematics*>(Visual()));
 		PKinematicsAnimated	=smart_cast<IKinematicsAnimated*>(Visual());
 		if(PKinematicsAnimated)
@@ -187,7 +187,7 @@ void CPhysicObject::AddElement(CPhysicsElement* root_e, int id)
 	E->set_ParentElement(root_e);
 	B.set_callback		(bctPhysics,m_pPhysicsShell->GetBonesCallback(),E);
 	m_pPhysicsShell->add_Element	(E);
-	if( !(m_type==epotFreeChain && root_e==0) )
+	if( !(m_type==epotFreeChain && root_e==nullptr) )
 	{		
 		CPhysicsJoint* J= P_create_Joint(CPhysicsJoint::full_control,root_e,E);
 		J->SetAnchorVsSecondElement	(0,0,0);
@@ -219,7 +219,7 @@ void CPhysicObject::CreateBody(CSE_ALifeObjectPhysic* po) {
 			{	
 				m_pPhysicsShell		= P_create_Shell();
 				m_pPhysicsShell->set_Kinematics(pKinematics);
-				AddElement(0,pKinematics->LL_GetBoneRoot());
+				AddElement(nullptr,pKinematics->LL_GetBoneRoot());
 				m_pPhysicsShell->setMass1(m_mass);
 			} break;
 
@@ -281,7 +281,7 @@ bool					CPhysicObject::	set_collision_hit_callback	(SCollisionHitCallback *cc)
 {
 	if(!cc)
 	{
-		m_collision_hit_callback=NULL;
+		m_collision_hit_callback= nullptr;
 		return true;
 	}
 	if(PPhysicsShell())

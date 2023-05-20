@@ -32,7 +32,7 @@ public:
 
 		IC	void	clear				()
 		{
-			m_member			= 0;
+			m_member			= nullptr;
 			m_time				= 0;
 			m_processing		= false;
 		}
@@ -51,8 +51,8 @@ public:
 
 		IC	void	clear				()
 		{
-			m_grenade			= 0;
-			m_game_object		= 0;
+			m_grenade			= nullptr;
+			m_game_object		= nullptr;
 			m_time				= 0;
 			m_processing		= false;
 		}

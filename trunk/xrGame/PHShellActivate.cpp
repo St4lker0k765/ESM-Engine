@@ -30,7 +30,7 @@ void CPHShell::activate(bool disable)
 {
 	PresetActive();
 	if(!CPHObject::is_active()) vis_update_deactivate();
-	if(!disable)EnableObject(0);
+	if(!disable)EnableObject(nullptr);
 
 }
 void CPHShell::Activate(const Fmatrix &m0,float dt01,const Fmatrix &m2,bool disable){
@@ -167,7 +167,7 @@ void CPHShell::Build(bool disable/*false*/)
 void CPHShell::RunSimulation(bool place_current_forms/*true*/)
 {
 	if(!CPHObject::is_active()) vis_update_deactivate();
-	EnableObject(0);
+	EnableObject(nullptr);
 
 
 	dSpaceSetCleanup(m_space,0);
@@ -201,7 +201,7 @@ void CPHShell::PureActivate()
 	//bActive=true;
 	m_flags.set(flActive,TRUE);
 	if(!CPHObject::is_active()) vis_update_deactivate();
-	EnableObject(0);
+	EnableObject(nullptr);
 	m_object_in_root.identity();
 	spatial_register();
 }
@@ -211,7 +211,7 @@ void CPHShell::PresetActive()
 	VERIFY(!isActive());
 	if(!m_space) 
 	{
-		m_space=dSimpleSpaceCreate(0);
+		m_space=dSimpleSpaceCreate(nullptr);
 		dSpaceSetCleanup(m_space,0);
 
 	}
@@ -268,7 +268,7 @@ void CPHShell::Deactivate(){
 
 	if(m_space) {
 		dSpaceDestroy(m_space);
-		m_space=NULL;
+		m_space= nullptr;
 	}
 	//bActive=false;
 	//bActivating=false;

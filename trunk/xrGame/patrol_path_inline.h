@@ -15,13 +15,13 @@ IC	const CPatrolPath::CVertex *CPatrolPath::point	(shared_str name) const
 	for ( ; I != E; ++I)
 		if ((*I).second->data().name() == name)
 			return				((*I).second);
-	return						(0);
+	return						(nullptr);
 }
 
 template <typename T>
 IC	const CPatrolPath::CVertex *CPatrolPath::point	(const Fvector &position, const T &evaluator) const
 {
-	const CPatrolPath::CVertex	*nearest = 0;
+	const CPatrolPath::CVertex	*nearest = nullptr;
 	float						best_distance = flt_max;
 	const_vertex_iterator		I = vertices().begin();
 	const_vertex_iterator		E = vertices().end();

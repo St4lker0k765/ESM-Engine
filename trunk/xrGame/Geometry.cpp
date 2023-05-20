@@ -80,7 +80,7 @@ void TransformedGeometryExtensionLocalParams(dGeomID geom_transform,const dReal*
 
 CODEGeom::CODEGeom()
 {
-	m_geom_transform=NULL;
+	m_geom_transform= nullptr;
 	m_bone_id=u16(-1);
 }
 
@@ -281,7 +281,7 @@ void CODEGeom::set_callback_data(void *cd)
 }
 void* CODEGeom::get_callback_data()
 {
-	if(!m_geom_transform) return	NULL;
+	if(!m_geom_transform) return nullptr;
 	if(geom())
 	{
 		VERIFY(dGeomGetUserData(geom()));
@@ -337,9 +337,9 @@ void CODEGeom::build(const Fvector& ref_point)
 void CODEGeom::init()
 {
 	dGeomID	geom=create();
-	m_geom_transform=dCreateGeomTransform(0);
+	m_geom_transform=dCreateGeomTransform(nullptr);
 	dGeomTransformSetCleanup(m_geom_transform,0);
-	dGeomSetData(m_geom_transform,0);
+	dGeomSetData(m_geom_transform,nullptr);
 	dGeomTransformSetGeom(m_geom_transform,geom);
 	dGeomTransformSetInfo(m_geom_transform,1);
 	dGeomCreateUserData(geom);
@@ -352,11 +352,11 @@ void CODEGeom::destroy()
 	{
 		dGeomDestroyUserData(geom());
 		dGeomDestroy(geom());
-		dGeomTransformSetGeom(m_geom_transform,0);
+		dGeomTransformSetGeom(m_geom_transform,nullptr);
 	}
 	dGeomDestroyUserData(m_geom_transform);
 	dGeomDestroy(m_geom_transform);
-	m_geom_transform=NULL;
+	m_geom_transform= nullptr;
 }
 
 CBoxGeom::CBoxGeom(const Fobb& box)
@@ -405,8 +405,8 @@ void CBoxGeom::get_extensions_bt(const Fvector& axis,float center_prg,float& lo_
 {
 
 	VERIFY			(m_geom_transform)	;
-	const dReal	*rot	=NULL			;
-	const dReal	*pos	=NULL			;
+	const dReal	*rot	= nullptr;
+	const dReal	*pos	= nullptr;
 	dVector3	p						;
 	dMatrix3	r						;
 	dGeomID		g		=geometry_bt()	;
@@ -484,7 +484,7 @@ void CBoxGeom::set_local_form(const Fmatrix& form)
 dGeomID CBoxGeom::create()
 {
 
-return dCreateBox(0,
+return dCreateBox(nullptr,
 		m_box.m_halfsize.x*2.f,
 		m_box.m_halfsize.y*2.f,
 		m_box.m_halfsize.z*2.f
@@ -532,8 +532,8 @@ float CSphereGeom::radius()
 void CSphereGeom::get_extensions_bt(const Fvector& axis,float center_prg,float& lo_ext, float& hi_ext)
 {
 	VERIFY			(m_geom_transform)	;
-	const dReal	*rot	=NULL			;
-	const dReal	*pos	=NULL			;
+	const dReal	*rot	= nullptr;
+	const dReal	*pos	= nullptr;
 	dVector3	p						;
 	dMatrix3	r						;
 	dGeomID		g		=geometry_bt()	;
@@ -556,7 +556,7 @@ void CSphereGeom::set_local_form(const Fmatrix& form)
 }
 dGeomID CSphereGeom::create()
 {
-	return dCreateSphere(0,m_sphere.R);
+	return dCreateSphere(nullptr,m_sphere.R);
 }
 
 void CSphereGeom::set_position(const Fvector& ref_point)
@@ -600,8 +600,8 @@ float CCylinderGeom::radius()
 void CCylinderGeom::get_extensions_bt(const Fvector& axis,float center_prg,float& lo_ext, float& hi_ext)
 {
 	VERIFY			(m_geom_transform)	;
-	const dReal	*rot	=NULL			;
-	const dReal	*pos	=NULL			;
+	const dReal	*rot	= nullptr;
+	const dReal	*pos	= nullptr;
 	dVector3	p						;
 	dMatrix3	r						;
 	dGeomID		g		=geometry_bt()	;
@@ -631,7 +631,7 @@ void CCylinderGeom::set_local_form(const Fmatrix& form)
 dGeomID CCylinderGeom::create()
 {
 return dCreateCylinder(
-		0,
+		nullptr,
 		m_cylinder.m_radius,
 		m_cylinder.m_height
 		);

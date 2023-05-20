@@ -54,7 +54,7 @@ void CActor::OnEvent		(NET_Packet& P, u16 type)
 
 				inventory().Take(_GO, false, true);
 
-				CUIGameSP* pGameSP = NULL;
+				CUIGameSP* pGameSP = nullptr;
 				CUI* ui = HUD().GetUI();
 				if( ui&&ui->UIGame() )
 				{
@@ -97,7 +97,7 @@ void CActor::OnEvent		(NET_Packet& P, u16 type)
 			O->SetTmpPreDestroy				(just_before_destroy);
 			if (inventory().DropItem(smart_cast<CGameObject*>(O)) && !O->getDestroy()) 
 			{
-				O->H_SetParent(0,just_before_destroy);
+				O->H_SetParent(nullptr,just_before_destroy);
 //.				feel_touch_deny(O,2000);
 				Level().m_feel_deny.feel_touch_deny(O, 1000);
 
@@ -215,7 +215,7 @@ void CActor::OnEvent		(NET_Packet& P, u16 type)
 			u32 id			= P.r_u32();
 			CGameObject*	GO	= smart_cast<CGameObject*>(m_holder);
 			VERIFY			(id==GO->ID());
-			use_Holder		(NULL);
+			use_Holder		(nullptr);
 		}break;
 	case GEG_PLAYER_PLAY_HEADSHOT_PARTICLE:
 		{

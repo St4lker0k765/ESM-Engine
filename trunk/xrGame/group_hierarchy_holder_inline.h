@@ -15,10 +15,10 @@ IC	CGroupHierarchyHolder::CGroupHierarchyHolder			(CSquadHierarchyHolder *squad)
 #ifdef SQUAD_HIERARCHY_HOLDER_USE_LEADER
 	m_leader			= 0;
 #endif // SQUAD_HIERARCHY_HOLDER_USE_LEADER
-	m_visible_objects	= 0;
-	m_sound_objects		= 0;
-	m_hit_objects		= 0;
-	m_agent_manager		= 0;
+	m_visible_objects	= nullptr;
+	m_sound_objects		= nullptr;
+	m_hit_objects		= nullptr;
+	m_agent_manager		= nullptr;
 	m_dwLastActionTime	= 0;
 	m_dwLastAction		= 0;
 	m_dwActiveCount		= 0;

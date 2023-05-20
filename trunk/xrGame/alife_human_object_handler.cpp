@@ -87,12 +87,12 @@ void CALifeHumanObjectHandler::process_items					()
 
 CSE_ALifeDynamicObject *CALifeHumanObjectHandler::best_detector	()
 {
-	return	(0);
+	return	(nullptr);
 }
 
 CSE_ALifeItemWeapon *CALifeHumanObjectHandler::best_weapon		()
 {
-	return	(0);
+	return	(nullptr);
 }
 
 void CALifeHumanObjectHandler::attach_items						()

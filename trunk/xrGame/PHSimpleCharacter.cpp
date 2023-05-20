@@ -185,7 +185,7 @@ CPHSimpleCharacter::CPHSimpleCharacter()
 void CPHSimpleCharacter::TestPathCallback(bool& do_colide,bool bo1,dContact& c,SGameMtl * /*material_1*/,SGameMtl * /*material_2*/)
 {
 	do_colide=false;
-	CPHSimpleCharacter* ch=NULL;
+	CPHSimpleCharacter* ch= nullptr;
 	if(bo1)
 	{
 		ch=static_cast<CPHSimpleCharacter*>(retrieveGeomUserData(c.geom.g1)->ph_object);
@@ -238,17 +238,17 @@ void CPHSimpleCharacter::Create(dVector3 sizes){
 	const dReal k=1.20f;
 	dReal doun=m_radius*_sqrt(1.f-1.f/k/k)/2.f;
 
-	m_geom_shell=dCreateCylinder(0,m_radius/k,m_cyl_hight+doun);
+	m_geom_shell=dCreateCylinder(nullptr,m_radius/k,m_cyl_hight+doun);
 
-	m_wheel=dCreateSphere(0,m_radius);
-	m_hat=dCreateSphere(0,m_radius/k);
-
-
+	m_wheel=dCreateSphere(nullptr,m_radius);
+	m_hat=dCreateSphere(nullptr,m_radius/k);
 
 
-	m_shell_transform=dCreateGeomTransform(0);
+
+
+	m_shell_transform=dCreateGeomTransform(nullptr);
 	dGeomTransformSetCleanup(m_shell_transform,0);
-	m_hat_transform=dCreateGeomTransform(0);
+	m_hat_transform=dCreateGeomTransform(nullptr);
 	dGeomTransformSetCleanup(m_hat_transform,0);
 	//m_wheel_transform=dCreateGeomTransform(0);
 
@@ -269,7 +269,7 @@ void CPHSimpleCharacter::Create(dVector3 sizes){
 	dGeomTransformSetGeom(m_hat_transform,m_hat);
 
 	dGeomTransformSetGeom(m_shell_transform,m_geom_shell);
-	m_body=dBodyCreate(0);
+	m_body=dBodyCreate(nullptr);
 	Island().AddBody(m_body);
 
 	dGeomSetBody(m_shell_transform,m_body);
@@ -292,7 +292,7 @@ void CPHSimpleCharacter::Create(dVector3 sizes){
 	dMassAdjust(&m,m_mass);
 	dBodySetMass(m_body,&m);
 
-	m_space=dSimpleSpaceCreate(0);
+	m_space=dSimpleSpaceCreate(nullptr);
 	//dGeomGroupAdd(m_geom_group,m_wheel_transform);
 	dSpaceAdd(m_space,m_wheel);
 
@@ -305,9 +305,9 @@ void CPHSimpleCharacter::Create(dVector3 sizes){
 
 	float test_radius=m_radius*2.f;
 	float test_height=test_radius+m_radius/2.f;
-	m_cap=dCreateSphere(0,test_radius);
+	m_cap=dCreateSphere(nullptr,test_radius);
 	dGeomSetPosition(m_cap,0.f,test_height,0.f);
-	m_cap_transform=dCreateGeomTransform(0);
+	m_cap_transform=dCreateGeomTransform(nullptr);
 	dGeomTransformSetCleanup(m_cap_transform,0);
 	dGeomTransformSetInfo(m_cap_transform,1);
 	dGeomTransformSetGeom(m_cap_transform,m_cap);
@@ -341,9 +341,9 @@ void CPHSimpleCharacter::Create(dVector3 sizes){
 void CPHSimpleCharacter::SwitchOFFInitContact()
 {
 	VERIFY(b_exist);
-	dGeomUserDataSetPhObject(m_wheel,0);
-	dGeomUserDataSetPhObject(m_geom_shell,0);
-	dGeomUserDataSetPhObject(m_hat,0);
+	dGeomUserDataSetPhObject(m_wheel,nullptr);
+	dGeomUserDataSetPhObject(m_geom_shell,nullptr);
+	dGeomUserDataSetPhObject(m_hat,nullptr);
 	b_lose_control=true;
 	b_any_contacts=false;
 	is_contact=false;
@@ -373,31 +373,31 @@ void CPHSimpleCharacter::Destroy(){
 	if(m_cap) {
 		dGeomDestroyUserData(m_cap);
 		dGeomDestroy(m_cap);
-		m_cap=NULL;
+		m_cap= nullptr;
 	}
 
 	if(m_cap_transform){
 		dGeomDestroyUserData(m_cap_transform);
 		dGeomDestroy(m_cap_transform);
-		m_cap_transform=NULL;
+		m_cap_transform= nullptr;
 	}
 
 	if(m_geom_shell){
 		dGeomDestroyUserData(m_geom_shell);
 		dGeomDestroy(m_geom_shell);
-		m_geom_shell=NULL;
+		m_geom_shell= nullptr;
 	}
 
 	if(m_wheel) {
 		dGeomDestroyUserData(m_wheel);
 		dGeomDestroy(m_wheel);
-		m_wheel=NULL;
+		m_wheel= nullptr;
 	}
 
 	if(m_shell_transform){
 		dGeomDestroyUserData(m_shell_transform);
 		dGeomDestroy(m_shell_transform);
-		m_shell_transform=NULL;
+		m_shell_transform= nullptr;
 	}
 
 
@@ -406,30 +406,30 @@ void CPHSimpleCharacter::Destroy(){
 	if(m_wheel_transform){
 		dGeomDestroyUserData(m_wheel_transform);
 		dGeomDestroy(m_wheel_transform);
-		m_wheel_transform=NULL;
+		m_wheel_transform= nullptr;
 	}
 
 
 	if(m_hat){
 		dGeomDestroyUserData(m_hat);
 		dGeomDestroy(m_hat);
-		m_hat=NULL;
+		m_hat= nullptr;
 	}
 	if(m_hat_transform){
 		dGeomDestroyUserData(m_hat_transform);
 		dGeomDestroy(m_hat_transform);
-		m_hat_transform=NULL;
+		m_hat_transform= nullptr;
 	}
 
 	if(m_space){
 		dSpaceDestroy(m_space);
-		m_space=NULL;
+		m_space= nullptr;
 	}
 
 	if(m_body) {
 		Island().RemoveBody(m_body);
 		dBodyDestroy(m_body);
-		m_body=NULL;
+		m_body= nullptr;
 	}
 
 
@@ -1163,7 +1163,7 @@ void CPHSimpleCharacter::SetPhysicsRefObject					(CPhysicsShellHolder* ref_objec
 
 void CPHSimpleCharacter::CaptureObject(dBodyID body,const dReal* anchor)
 {
-	m_capture_joint=dJointCreateBall(0,0);
+	m_capture_joint=dJointCreateBall(nullptr,nullptr);
 	Island().AddJoint(m_capture_joint);
 	dJointAttach(m_capture_joint,m_body,body);
 	dJointSetBallAnchor(m_capture_joint,anchor[0],anchor[1],anchor[2]);
@@ -1801,7 +1801,7 @@ void CPHSimpleCharacter::SCollisionDamageInfo::Reinit()
 	//m_damege_contact;
 
 	m_obj_id =u16(-1);
-	m_hit_callback=NULL;
+	m_hit_callback= nullptr;
 	m_contact_velocity=0;
 	//float					m_dmc_signum;
 	//enum{ctStatic,ctObject}	m_dmc_type;
@@ -1843,8 +1843,8 @@ static	float	restrictor_depth=0.f;
 void	CPHSimpleCharacter::	TestRestrictorContactCallbackFun	(bool& do_colide,bool bo1,dContact& c,SGameMtl* material_1,SGameMtl* material_2)
 {
 	
-	dGeomID g_this=NULL;
-	dGeomID g_obj=NULL;
+	dGeomID g_this= nullptr;
+	dGeomID g_obj= nullptr;
 	if(bo1)
 	{
 		g_this=c.geom.g1;

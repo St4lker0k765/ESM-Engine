@@ -9,8 +9,8 @@
 TEMPLATE_SPECIALIZATION
 void CControlledEntityAbstract::on_reinit()
 {
-	m_data.m_object = 0;
-	m_controller	= 0; 
+	m_data.m_object = nullptr;
+	m_controller	= nullptr; 
 }
 
 TEMPLATE_SPECIALIZATION
@@ -42,7 +42,7 @@ TEMPLATE_SPECIALIZATION
 void CControlledEntityAbstract::free_from_control()
 {
 	m_object->ChangeTeam			(saved_id.team_id, saved_id.squad_id, saved_id.group_id);
-	m_controller					= 0;
+	m_controller					= nullptr;
 }	
 
 TEMPLATE_SPECIALIZATION
@@ -51,7 +51,7 @@ void CControlledEntityAbstract::on_die()
 	if (!is_under_control())			return;
 
 	m_controller->OnFreedFromControl	(m_object);
-	m_controller						= 0;
+	m_controller						= nullptr;
 }
 TEMPLATE_SPECIALIZATION
 void CControlledEntityAbstract::on_destroy()
@@ -61,7 +61,7 @@ void CControlledEntityAbstract::on_destroy()
 	m_object->ChangeTeam				(saved_id.team_id, saved_id.squad_id, saved_id.group_id);
 
 	m_controller->OnFreedFromControl	(m_object);
-	m_controller						= 0;
+	m_controller						= nullptr;
 }
 
 

@@ -55,7 +55,7 @@ public:
 	IC		lua_State			*lua						();
 	IC		void				current_thread				(CScriptThread *thread);
 	IC		CScriptThread		*current_thread				() const;
-			bool				load_buffer					(lua_State *L, LPCSTR caBuffer, size_t tSize, LPCSTR caScriptName, LPCSTR caNameSpaceName = 0);
+			bool				load_buffer					(lua_State *L, LPCSTR caBuffer, size_t tSize, LPCSTR caScriptName, LPCSTR caNameSpaceName = nullptr);
 			bool				load_file_into_namespace	(LPCSTR	caScriptName, LPCSTR caNamespaceName);
 			bool				namespace_loaded			(LPCSTR	caName, bool remove_from_stack = true);
 			bool				object						(LPCSTR	caIdentifier, int type);

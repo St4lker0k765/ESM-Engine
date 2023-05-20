@@ -4,7 +4,7 @@
 
 CPsyAura::CPsyAura()
 {
-	m_object					= 0;
+	m_object					= nullptr;
 	m_radius					= 1.f;
 }
 

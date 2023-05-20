@@ -39,19 +39,19 @@
 
 game_cl_Deathmatch::game_cl_Deathmatch()
 {
-	pCurBuyMenu		= NULL;
+	pCurBuyMenu		= nullptr;
 	
 	PresetItemsTeam0.clear();
 	PlayerDefItems.clear();
-	pCurPresetItems	= NULL;;
+	pCurPresetItems	= nullptr;;
 
-	pCurSkinMenu	= NULL;
+	pCurSkinMenu	= nullptr;
 
 	m_bBuyEnabled	= TRUE;
 
 	m_bSkinSelected	= FALSE;	
 
-	m_game_ui		= NULL;
+	m_game_ui		= nullptr;
 
 	m_iCurrentPlayersMoney = 0;
 	Actor_Spawn_Effect = "";
@@ -842,8 +842,8 @@ void game_cl_Deathmatch::OnVoteStop				(NET_Packet& P)
 	inherited::OnVoteStop(P);
 	if(m_game_ui)
 	{
-		m_game_ui->SetVoteMessage(NULL);
-		m_game_ui->SetVoteTimeResultMsg(NULL);
+		m_game_ui->SetVoteMessage(nullptr);
+		m_game_ui->SetVoteTimeResultMsg(nullptr);
 	}
 };
 
@@ -852,8 +852,8 @@ void game_cl_Deathmatch::OnVoteEnd				(NET_Packet& P)
 	inherited::OnVoteEnd(P);
 	if(m_game_ui)
 	{
-		m_game_ui->SetVoteMessage(NULL);
-		m_game_ui->SetVoteTimeResultMsg(NULL);
+		m_game_ui->SetVoteMessage(nullptr);
+		m_game_ui->SetVoteTimeResultMsg(nullptr);
 	}
 };
 
@@ -938,7 +938,7 @@ void game_cl_Deathmatch::PlayParticleEffect(LPCSTR EffName, Fvector& pos)
 //	CParticlesPlayer::MakeXFORM(pObj,0,Fvector().set(0.f,1.f,0.f),Fvector().set(0.f,0.f,0.f),pos);
 
 	// установить particles
-	CParticlesObject* ps = NULL;
+	CParticlesObject* ps = nullptr;
 
 	ps = CParticlesObject::Create(EffName,TRUE);
 

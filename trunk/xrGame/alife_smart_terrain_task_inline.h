@@ -34,7 +34,7 @@ IC	void CALifeSmartTerrainTask::init							(const shared_str &patrol_path_name, 
 	m_patrol_path_name		= patrol_path_name;
 	m_patrol_point_index	= patrol_point_index;
 #endif
-	m_patrol_point			= 0;
+	m_patrol_point			= nullptr;
 	setup_patrol_point		(patrol_path_name,patrol_point_index);
 }
 

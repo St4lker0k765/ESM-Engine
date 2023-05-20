@@ -91,14 +91,14 @@ void CControllerAura::update_schedule()
 			
 			if (active()) {
 				m_effector->switch_off	();
-				m_effector				= 0;
+				m_effector				= nullptr;
 			}
 		} else {
 			if (active()) {
 				// check to stop
 				if (m_time_fake_aura < time())  {
 					m_effector->switch_off	();
-					m_effector				= 0;
+					m_effector				= nullptr;
 					m_time_fake_aura		= time() + 5000 + Random.randI(FAKE_AURA_DELAY);
 				}
 			} else {
@@ -119,7 +119,7 @@ void CControllerAura::update_schedule()
 		if (active()) {
 			if (!need_be_active) {
 				m_effector->switch_off	();
-				m_effector				= 0;
+				m_effector				= nullptr;
 				
 				m_hit_state				= eNone;
 
@@ -175,7 +175,7 @@ void CControllerAura::on_death()
 {
 	if (active()) {
 		m_effector->switch_off	();
-		m_effector				= 0;
+		m_effector				= nullptr;
 		m_hit_state				= eNone;
 	}
 }
@@ -184,7 +184,7 @@ void CControllerAura::on_destroy()
 {
 	if (active()) {
 		m_effector->terminate	();
-		m_effector				= 0;
+		m_effector				= nullptr;
 		m_hit_state				= eNone;
 	}
 }

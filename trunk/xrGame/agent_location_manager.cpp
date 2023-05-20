@@ -63,7 +63,7 @@ IC	CAgentLocationManager::CDangerLocationPtr CAgentLocationManager::location	(co
 	LOCATIONS::iterator	I = std::find_if(m_danger_locations.begin(),m_danger_locations.end(),CDangerLocationPredicate(position));
 	if (I != m_danger_locations.end())
 		return			(*I);
-	return				(0);
+	return				(nullptr);
 }
 
 bool CAgentLocationManager::suitable	(CAI_Stalker *object, const CCoverPoint *location, bool use_enemy_info) const
@@ -120,7 +120,7 @@ void CAgentLocationManager::make_suitable	(CAI_Stalker *object, const CCoverPoin
 		if ((*I)->cover()->m_position.distance_to_sqr(location->position()) <= _sqr(5.f)) {
 //			Msg						("%6d : object [%s] disabled cover for object [%s]",Device.dwFrame,*object->cName(),*(*I)->object().cName());
 			(*I)->object().on_cover_blocked	((*I)->cover());
-			(*I)->cover						(0);
+			(*I)->cover						(nullptr);
 		}
 	}
 }

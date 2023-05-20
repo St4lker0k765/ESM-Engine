@@ -26,7 +26,7 @@ private:
 		shared_str			name;
 		dxRender_Visual*		model;
         u32					refs;
-        ModelDef()			{ refs=0;model=0; }
+        ModelDef()			{ refs=0;model=nullptr; }
 	};
 
 	typedef xr_multimap<shared_str,dxRender_Visual*,str_pred>	POOL;
@@ -55,7 +55,7 @@ public:
 
 	dxRender_Visual*			CreatePE			(PS::CPEDef* source);
 	dxRender_Visual*			CreatePG			(PS::CPGDef* source);
-	dxRender_Visual*			Create				(LPCSTR name, IReader* data=0);
+	dxRender_Visual*			Create				(LPCSTR name, IReader* data=nullptr);
 	dxRender_Visual*			CreateChild			(LPCSTR name, IReader* data);
 	void					Delete				(dxRender_Visual* &V, BOOL bDiscard=FALSE);
 	void					Discard				(dxRender_Visual* &V, BOOL b_complete);

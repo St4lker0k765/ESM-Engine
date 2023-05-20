@@ -32,7 +32,7 @@ public:
     virtual CaptionValue*  		__stdcall	CreateCaption	    (PropItemVec& items, shared_str key, shared_str val);
     virtual CanvasValue*		__stdcall	CreateCanvas	    (PropItemVec& items, shared_str key, shared_str val, int height);
     virtual ButtonValue*		__stdcall	CreateButton	    (PropItemVec& items, shared_str key, shared_str val, u32 flags);
-    virtual ChooseValue*		__stdcall	CreateChoose	    (PropItemVec& items, shared_str key, shared_str* val, u32 mode, LPCSTR path=0, void* fill_param=0, u32 sub_item_count=1, u32 choose_flags=cfAllowNone);
+    virtual ChooseValue*		__stdcall	CreateChoose	    (PropItemVec& items, shared_str key, shared_str* val, u32 mode, LPCSTR path=nullptr, void* fill_param=nullptr, u32 sub_item_count=1, u32 choose_flags=cfAllowNone);
     virtual S8Value* 			__stdcall	CreateS8		    (PropItemVec& items, shared_str key, s8* val, s8 mn=0, s8 mx=100, s8 inc=1);
     virtual S16Value* 			__stdcall	CreateS16		    (PropItemVec& items, shared_str key, s16* val, s16 mn=0, s16 mx=100, s16 inc=1);
     virtual S32Value* 	 		__stdcall	CreateS32		    (PropItemVec& items, shared_str key, s32* val, s32 mn=0, s32 mx=100, s32 inc=1);
@@ -42,9 +42,9 @@ public:
     virtual FloatValue* 		__stdcall	CreateFloat		    (PropItemVec& items, shared_str key, float* val, float mn=0.f, float mx=1.f, float inc=0.01f, int decim=2);
     virtual BOOLValue* 	  		__stdcall	CreateBOOL		    (PropItemVec& items, shared_str key, BOOL* val);
     virtual VectorValue*  	 	__stdcall	CreateVector	    (PropItemVec& items, shared_str key, Fvector* val, float mn=0.f, float mx=1.f, float inc=0.01f, int decim=2);
-    virtual Flag8Value*			__stdcall	CreateFlag8		    (PropItemVec& items, shared_str key, Flags8* val, u8 mask, LPCSTR c0=0, LPCSTR c1=0, u32 flags=0);
-    virtual Flag16Value*		__stdcall	CreateFlag16	    (PropItemVec& items, shared_str key, Flags16* val, u16 mask, LPCSTR c0=0, LPCSTR c1=0, u32 flags=0);
-    virtual Flag32Value*		__stdcall	CreateFlag32	    (PropItemVec& items, shared_str key, Flags32* val, u32 mask, LPCSTR c0=0, LPCSTR c1=0, u32 flags=0);
+    virtual Flag8Value*			__stdcall	CreateFlag8		    (PropItemVec& items, shared_str key, Flags8* val, u8 mask, LPCSTR c0=nullptr, LPCSTR c1=nullptr, u32 flags=0);
+    virtual Flag16Value*		__stdcall	CreateFlag16	    (PropItemVec& items, shared_str key, Flags16* val, u16 mask, LPCSTR c0=nullptr, LPCSTR c1=nullptr, u32 flags=0);
+    virtual Flag32Value*		__stdcall	CreateFlag32	    (PropItemVec& items, shared_str key, Flags32* val, u32 mask, LPCSTR c0=nullptr, LPCSTR c1=nullptr, u32 flags=0);
 	virtual Token8Value*		__stdcall	CreateToken8	    (PropItemVec& items, shared_str key, u8* val,  xr_token* token);
 	virtual Token16Value*		__stdcall	CreateToken16	    (PropItemVec& items, shared_str key, u16* val, xr_token* token);
 	virtual Token32Value*		__stdcall	CreateToken32	    (PropItemVec& items, shared_str key, u32* val, xr_token* token);

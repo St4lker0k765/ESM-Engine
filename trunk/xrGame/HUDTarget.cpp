@@ -65,7 +65,7 @@ CHUDTarget::CHUDTarget	()
 	RQ.range			= 0.f;
 	hShader->create("hud\\cursor", "ui\\cursor");
 
-	RQ.set				(NULL, 0.f, -1);
+	RQ.set				(nullptr, 0.f, -1);
 
 	Load				();
 	m_bShowCrosshair	= false;
@@ -74,7 +74,7 @@ CHUDTarget::CHUDTarget	()
 void CHUDTarget::net_Relcase(CObject* O)
 {
 	if(RQ.O == O)
-		RQ.O = NULL;
+		RQ.O = nullptr;
 
 	RQR.r_clear	();
 }
@@ -109,14 +109,14 @@ void CHUDTarget::CursorOnFrame ()
 	
 	// Render cursor
 	if(Level().CurrentEntity()){
-		RQ.O			= 0; 
+		RQ.O			= nullptr; 
 		RQ.range		= g_pGamePersistent->Environment().CurrentEnv->far_plane*0.99f;
 		RQ.element		= -1;
 		
 		collide::ray_defs	RD(p1, dir, RQ.range, CDB::OPT_CULL, collide::rqtBoth);
 		RQR.r_clear			();
 		VERIFY				(!fis_zero(RD.dir.square_magnitude()));
-		if(Level().ObjectSpace.RayQuery(RQR,RD, pick_trace_callback, &RQ, NULL, Level().CurrentEntity()))
+		if(Level().ObjectSpace.RayQuery(RQR,RD, pick_trace_callback, &RQ, nullptr, Level().CurrentEntity()))
 			clamp			(RQ.range,NEAR_LIM,RQ.range);
 	}
 
@@ -128,9 +128,9 @@ void CHUDTarget::Render()
 	VERIFY		(g_bRendering);
 
 	CObject*	O		= Level().CurrentEntity();
-	if (0==O)	return;
+	if (nullptr==O)	return;
 	CEntity*	E		= smart_cast<CEntity*>(O);
-	if (0==E)	return;
+	if (nullptr==E)	return;
 
 	Fvector p1				= Device.vCameraPosition;
 	Fvector dir				= Device.vCameraDirection;

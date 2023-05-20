@@ -32,16 +32,16 @@ CALifeSimulatorBase::CALifeSimulatorBase	(xrServer *server, LPCSTR section)
 {
 	m_server					= server;
 	m_initialized				= false;
-	m_header					= 0;
-	m_time_manager				= 0;
-	m_spawns					= 0;
-	m_objects					= 0;
-	m_graph_objects				= 0;
-	m_scheduled					= 0;
-	m_story_objects				= 0;
-	m_smart_terrains			= 0;
-	m_groups					= 0;
-	m_registry_container		= 0;
+	m_header					= nullptr;
+	m_time_manager				= nullptr;
+	m_spawns					= nullptr;
+	m_objects					= nullptr;
+	m_graph_objects				= nullptr;
+	m_scheduled					= nullptr;
+	m_story_objects				= nullptr;
+	m_smart_terrains			= nullptr;
+	m_groups					= nullptr;
+	m_registry_container		= nullptr;
 	random().seed				(u32(CPU::QPC() & 0xffffffff));
 	m_can_register_objects		= true;
 }

@@ -9,12 +9,12 @@
 CGameSpy_QR2::CGameSpy_QR2()
 {
 	//-------------------------------
-	m_hGameSpyDLL = NULL;
+	m_hGameSpyDLL = nullptr;
 
 	LPCSTR			g_name	= "xrGameSpy.dll";
 	Log				("Loading DLL:",g_name);
 	m_hGameSpyDLL			= LoadLibrary	(g_name);
-	if (0==m_hGameSpyDLL)	R_CHK			(GetLastError());
+	if (nullptr==m_hGameSpyDLL)	R_CHK			(GetLastError());
 	R_ASSERT2		(m_hGameSpyDLL,"GameSpy DLL raised exception during loading or there is no game DLL at all");
 
 	LoadGameSpy(m_hGameSpyDLL);
@@ -23,7 +23,7 @@ CGameSpy_QR2::CGameSpy_QR2()
 CGameSpy_QR2::CGameSpy_QR2(HMODULE hGameSpyDLL)
 {
 	//-------------------------------
-	m_hGameSpyDLL = NULL;
+	m_hGameSpyDLL = nullptr;
 
 	LoadGameSpy(hGameSpyDLL);
 };
@@ -33,7 +33,7 @@ CGameSpy_QR2::~CGameSpy_QR2()
 	if (m_hGameSpyDLL)
 	{
 		FreeLibrary(m_hGameSpyDLL);
-		m_hGameSpyDLL = NULL;
+		m_hGameSpyDLL = nullptr;
 	}
 };
 
@@ -127,9 +127,9 @@ bool	CGameSpy_QR2::Init		(int PortID, int Public, void* instance)
 	//call qr_init with the query port number and gamename, default IP address, and no user data
 	
 //	if (xrGS_qr2_init(NULL,NULL,PortID, GAMESPY_GAMENAME, m_SecretKey, Public, 0,
-	if (xrGS_qr2_init(NULL,NULL,PortID, Public, 0,
-		callback_serverkey, callback_playerkey, callback_teamkey,
-		callback_keylist, callback_count, callback_adderror, instance) != e_qrnoerror)
+	if (xrGS_qr2_init(nullptr, nullptr,PortID, Public, 0,
+	                  callback_serverkey, callback_playerkey, callback_teamkey,
+	                  callback_keylist, callback_count, callback_adderror, instance) != e_qrnoerror)
 	{
 		//		_tprintf(_T("Error starting query sockets\n"));
 		Msg("xrGS::QR2 : Failes to Initialize!");
@@ -139,10 +139,10 @@ bool	CGameSpy_QR2::Init		(int PortID, int Public, void* instance)
 	RegisterAdditionalKeys();
 
 	// Set a function to be called when we receive a game specific message
-	xrGS_qr2_register_clientmessage_callback(NULL, callback_cm);
+	xrGS_qr2_register_clientmessage_callback(nullptr, callback_cm);
 
 	// Set a function to be called when we receive a nat negotiation request
-	xrGS_qr2_register_natneg_callback(NULL, callback_nn);
+	xrGS_qr2_register_natneg_callback(nullptr, callback_nn);
 
 	Msg("xrGS::QR2 : Initialized");
 	return true;

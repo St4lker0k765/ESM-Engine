@@ -31,7 +31,7 @@ void CAnimationSequencer::on_event(ControlCom::EEventType type, ControlCom::IEve
 			m_index++;
 			play_selected			();
 		} else {
-			m_man->notify			(ControlCom::eventSequenceEnd, 0);
+			m_man->notify			(ControlCom::eventSequenceEnd, nullptr);
 		}
 		return;
 	}

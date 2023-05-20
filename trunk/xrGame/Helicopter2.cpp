@@ -24,7 +24,7 @@ bool CHelicopter::isObjectVisible			(CObject* O)
 	dir_to_object.sub		(to_point,from_point).normalize_safe();
 	float ray_length		= from_point.distance_to(to_point);
 
-	BOOL res = Level().ObjectSpace.RayTest(from_point, dir_to_object, ray_length, collide::rqtStatic, NULL, NULL);
+	BOOL res = Level().ObjectSpace.RayTest(from_point, dir_to_object, ray_length, collide::rqtStatic, nullptr, nullptr);
 		
 	return !res;
 }
@@ -199,7 +199,7 @@ float CHelicopter::GetRealAltitude()
 	down_dir.set(0.0f, -1.0f, 0.0f);
 
 
-	Level().ObjectSpace.RayPick(XFORM().c, down_dir, 1000.0f, collide::rqtStatic, cR, NULL);
+	Level().ObjectSpace.RayPick(XFORM().c, down_dir, 1000.0f, collide::rqtStatic, cR, nullptr);
 	
 	return cR.range;
 }
@@ -269,12 +269,12 @@ void CHelicopter::DieHelicopter()
 {
 	if ( state() == CHelicopter::eDead )
 		return;
-	CEntity::Die(NULL);
+	CEntity::Die(nullptr);
 
 	m_engineSound.stop				();
 
 	m_brokenSound.create			(pSettings->r_string(*cNameSect(), "broken_snd"),st_Effect,sg_SourceType);
-	m_brokenSound.play_at_pos		(0,XFORM().c,sm_Looped);
+	m_brokenSound.play_at_pos		(nullptr,XFORM().c,sm_Looped);
 
 
 	IKinematics* K		= smart_cast<IKinematics*>(Visual());

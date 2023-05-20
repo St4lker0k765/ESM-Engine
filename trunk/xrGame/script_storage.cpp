@@ -32,7 +32,7 @@ this._G = _G \
 setfenv(1, this) \
 		";
 
-LPCSTR	file_header = 0;
+LPCSTR	file_header = nullptr;
 
 #ifndef ENGINE_BUILD
 #	include "script_engine.h"
@@ -68,13 +68,13 @@ u32 game_lua_memory_usage	()
 
 CScriptStorage::CScriptStorage		()
 {
-	m_current_thread		= 0;
+	m_current_thread		= nullptr;
 
 #ifdef DEBUG
 	m_stack_is_ready		= false;
 #endif // DEBUG
 	
-	m_virtual_machine		= 0;
+	m_virtual_machine		= nullptr;
 }
 
 CScriptStorage::~CScriptStorage		()

@@ -32,13 +32,13 @@ float evaluate(CEF_Storage *ef_storage, LPCSTR function, CScriptGameObject *_0, 
 		return		(0.f);
 	}
 
-	ef_storage->non_alife().member()	= smart_cast<CEntityAlive*>(_0 ? &_0->object() : 0);
+	ef_storage->non_alife().member()	= smart_cast<CEntityAlive*>(_0 ? &_0->object() : nullptr);
 	if (_0 && !ef_storage->non_alife().member()) {
 		ai().script_engine().script_log(eLuaMessageTypeError,"object %s is not herited from CSE_ALifeSchedulable!",*_0->cName());
 		return		(0.f);
 	}
 	
-	ef_storage->non_alife().enemy()	= smart_cast<CEntityAlive*>(__1 ? &__1->object() : 0);
+	ef_storage->non_alife().enemy()	= smart_cast<CEntityAlive*>(__1 ? &__1->object() : nullptr);
 	if (__1 && !ef_storage->non_alife().enemy()) {
 		ai().script_engine().script_log(eLuaMessageTypeError,"object %s is not herited from CSE_ALifeSchedulable!",*__1->cName());
 		return		(0.f);

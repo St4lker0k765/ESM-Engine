@@ -44,7 +44,7 @@ void CStalkerActionGetOutOfAnomaly::initialize	()
 
 	object().sound().remove_active_sounds		(u32(eStalkerSoundMaskNoHumming));
 
-	object().movement().set_desired_direction		(0);
+	object().movement().set_desired_direction		(nullptr);
 	object().movement().set_path_type				(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type		(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_body_state			(eBodyStateStand);

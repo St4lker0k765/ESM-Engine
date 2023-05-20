@@ -81,7 +81,7 @@ void CSightAction::remove_links					(CObject *object)
 	
 //	execute				();
 	
-	m_object_to_look	= 0;
+	m_object_to_look	= nullptr;
 
 	m_sight_type		= SightManager::eSightTypeDirection;
 	m_vector3d.setHP	(-this->object().movement().m_head.target.yaw,this->object().movement().m_head.target.pitch);

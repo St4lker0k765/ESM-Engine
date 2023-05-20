@@ -61,9 +61,9 @@ public:
 	typedef fastdelegate::FastDelegate<void(PropValue*)> TOnChange;
     TOnChange			OnChangeEvent;
 public:
-						PropValue		():tag(0),m_Owner(0)
+						PropValue		():tag(0),m_Owner(nullptr)
 						{
-							this->OnChangeEvent(0);
+							this->OnChangeEvent(nullptr);
 						}
 	virtual				~PropValue		(){}
     virtual xr_string	GetDrawText		(TOnDrawTextEvent OnDrawText)=0;
@@ -153,11 +153,11 @@ public:
     };
     Flags32				m_Flags;
 public:
-    PropItem(EPropType _type) :type(_type), prop_color(0), val_color(0), item(0), key(0)
+    PropItem(EPropType _type) :type(_type), prop_color(0), val_color(0), item(nullptr), key(nullptr)
     {
         this->OnDrawTextEvent = 0;
-        this->OnClickEvent(0);
-    	this->OnItemFocused(0);
+        this->OnClickEvent(nullptr);
+    	this->OnItemFocused(nullptr);
     	m_Flags.zero();
     }
 	virtual 			~PropItem		()
@@ -281,7 +281,7 @@ public:
     TOnTestEqual		OnTestEqual;
     TOnDrawCanvasEvent	OnDrawCanvasEvent;
 public:
-						CanvasValue		(const shared_str& val, int h):OnDrawCanvasEvent(0), OnTestEqual(0), height(h)
+						CanvasValue		(const shared_str& val, int h):OnDrawCanvasEvent(nullptr), OnTestEqual(nullptr), height(h)
                         {
                             value=val;
                         }
@@ -424,7 +424,7 @@ public:
 // utils
     void				AppendChooseItem	(LPCSTR name, LPCSTR hint){VERIFY(m_Items); m_Items->push_back(SChooseItem(name,hint));}
 public:
-						ChooseValue			(shared_str* val, u32 cid, LPCSTR path, void* param, u32 sub_item_count, u32 choose_flags):RTextValue(val),m_ChooseID(cid),m_StartPath(path),subitem(sub_item_count),m_Items(0),m_FillParam(param),m_ChooseFlags(choose_flags)
+						ChooseValue			(shared_str* val, u32 cid, LPCSTR path, void* param, u32 sub_item_count, u32 choose_flags):RTextValue(val),m_ChooseID(cid),m_StartPath(path),subitem(sub_item_count),m_Items(nullptr),m_FillParam(param),m_ChooseFlags(choose_flags)
                         {
                             this->OnChooseFillEvent = 0;
                             this->OnDrawThumbnailEvent = 0;
@@ -652,7 +652,7 @@ public:
     {
         u32 draw_val 	= GetValue();
         for(u32 i=0; i<cnt; i++) if (items[i].ID==draw_val) return items[i].str;
-        return 0;
+        return nullptr;
     }
 };
 //------------------------------------------------------------------------------

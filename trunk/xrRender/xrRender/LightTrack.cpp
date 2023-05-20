@@ -178,8 +178,8 @@ void	CROS_impl::update	(IRenderable* O)
 	// clip & verify
 	if					(dwFrame==Device.dwFrame)			return;
 	dwFrame				= Device.dwFrame;
-	if					(0==O)								return;
-	if					(0==O->renderable.visual)			return;
+	if					(nullptr==O)								return;
+	if					(nullptr==O->renderable.visual)			return;
 	VERIFY				(dynamic_cast<CROS_impl*>			(O->renderable_ROS()));
 	//float	dt			=	Device.fTimeDelta;
 
@@ -292,7 +292,7 @@ static const s32 s_iUTIdleMax = 2000;
 void 	CROS_impl::smart_update(IRenderable* O)
 {
 	if (!O) return;
-	if (0==O->renderable.visual) return;
+	if (nullptr==O->renderable.visual) return;
 
 	--ticks_to_update;
 

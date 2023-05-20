@@ -73,10 +73,10 @@ void CCustomMonster::SAnimState::Create(IKinematicsAnimated* K, LPCSTR base)
 
 CCustomMonster::CCustomMonster()
 {
-	m_sound_user_data_visitor	= 0;
-	m_memory_manager			= 0;
-	m_movement_manager			= 0;
-	m_sound_player				= 0;
+	m_sound_user_data_visitor	= nullptr;
+	m_memory_manager			= nullptr;
+	m_movement_manager			= nullptr;
+	m_sound_player				= nullptr;
 	m_already_dead				= false;
 	m_invulnerable				= false;
 }
@@ -508,7 +508,7 @@ void CCustomMonster::UpdatePositionAnimation()
 BOOL CCustomMonster::feel_visible_isRelevant (CObject* O)
 {
 	CEntityAlive* E = smart_cast<CEntityAlive*>		(O);
-	if (0==E)								return FALSE;
+	if (nullptr==E)								return FALSE;
 	if (E->g_Team() == g_Team())			return FALSE;
 	return TRUE;
 }

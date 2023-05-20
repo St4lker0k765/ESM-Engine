@@ -39,7 +39,7 @@ struct CRemoveOfflineCorpsesPredicate {
 bool CAgentCorpseManager::process_corpse	(CMemberOrder &member)
 {
 	float			min_dist_sqr = flt_max;
-	CMemberCorpse	*best_corpse = 0;
+	CMemberCorpse	*best_corpse = nullptr;
 	xr_vector<CMemberCorpse>::iterator	I = m_corpses.begin();
 	xr_vector<CMemberCorpse>::iterator	E = m_corpses.end();
 	for ( ; I != E; ++I) {

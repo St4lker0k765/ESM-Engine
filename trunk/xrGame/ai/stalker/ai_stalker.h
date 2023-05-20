@@ -227,7 +227,7 @@ public:
 	virtual CInventoryItem				*GetFood				() const;
 	virtual	bool						bfAssignMovement		(CScriptEntityAction			*tpEntityAction);
 	virtual	bool						bfAssignWatch			(CScriptEntityAction			*tpEntityAction);
-	virtual	void						ResetScriptData			(void					*P = 0);
+	virtual	void						ResetScriptData			(void					*P = nullptr);
 	virtual	bool						bfAssignObject			(CScriptEntityAction			*tpEntityAction);
 	virtual	bool						bfAssignAnimation		(CScriptEntityAction			*tpEntityAction);
 	

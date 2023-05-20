@@ -38,11 +38,11 @@ CGameObject::CGameObject		()
 	m_bCrPr_Activated			= false;
 	m_dwCrPr_ActivationStep		= 0;
 	m_spawn_time				= 0;
-	m_ai_location				= !g_dedicated_server ? xr_new<CAI_ObjectLocation>() : 0;
+	m_ai_location				= !g_dedicated_server ? xr_new<CAI_ObjectLocation>() : nullptr;
 	m_server_flags.one			();
 
 	m_callbacks					= xr_new<CALLBACK_MAP>();
-	m_anim_mov_ctrl				= 0;
+	m_anim_mov_ctrl				= nullptr;
 }
 
 CGameObject::~CGameObject		()
@@ -57,9 +57,9 @@ CGameObject::~CGameObject		()
 
 void CGameObject::init			()
 {
-	m_lua_game_object			= 0;
+	m_lua_game_object			= nullptr;
 	m_script_clsid				= -1;
-	m_ini_file					= 0;
+	m_ini_file					= nullptr;
 	m_spawned					= false;
 }
 
@@ -104,7 +104,7 @@ void CGameObject::net_Destroy	()
 
 	m_script_clsid			= -1;
 	if (Visual() && smart_cast<IKinematics*>(Visual()))
-		smart_cast<IKinematics*>(Visual())->Callback	(0,0);
+		smart_cast<IKinematics*>(Visual())->Callback	(nullptr,nullptr);
 
 	inherited::net_Destroy						();
 	setReady									(FALSE);
@@ -112,8 +112,8 @@ void CGameObject::net_Destroy	()
 	
 	if (this == Level().CurrentEntity())
 	{
-		Level().SetEntity						(0);
-		Level().SetControlEntity				(0);
+		Level().SetEntity						(nullptr);
+		Level().SetControlEntity				(nullptr);
 	}
 
 	Level().RemoveObject_From_4CrPr(this);
@@ -307,7 +307,7 @@ BOOL CGameObject::net_Spawn		(CSE_Abstract*	DC)
 			// test the whole spawn sequence
 			Parent				= this;
 			inherited::net_Spawn(DC);
-			Parent				= 0;
+			Parent				= nullptr;
 		}
 		else
 			inherited::net_Spawn(DC);
@@ -460,15 +460,15 @@ void CGameObject::spawn_supplies()
 			if (n > 0)
 				j			= atoi(_GetItem(V,0,temp)); //count
 			
-			if(NULL!=strstr(V,"prob="))
+			if(nullptr !=strstr(V,"prob="))
 				p			=(float)atof(strstr(V,"prob=")+5);
 			if (fis_zero(p))p = 1.f;
 			if (!j)	j		= 1;
-			if(NULL!=strstr(V,"cond="))
+			if(nullptr !=strstr(V,"cond="))
 				f_cond		= (float)atof(strstr(V,"cond=")+5);
-			bScope			=	(NULL!=strstr(V,"scope"));
-			bSilencer		=	(NULL!=strstr(V,"silencer"));
-			bLauncher		=	(NULL!=strstr(V,"launcher"));
+			bScope			=	(nullptr !=strstr(V,"scope"));
+			bSilencer		=	(nullptr !=strstr(V,"silencer"));
+			bLauncher		=	(nullptr !=strstr(V,"launcher"));
 
 		}
 		for (u32 i=0; i<j; ++i)
@@ -728,7 +728,7 @@ void CGameObject::SetKinematicsCallback		(bool set)
 	if (set)
 		smart_cast<IKinematics*>(Visual())->Callback(VisualCallback,this);
 	else
-		smart_cast<IKinematics*>(Visual())->Callback(0,0);
+		smart_cast<IKinematics*>(Visual())->Callback(nullptr,nullptr);
 };
 
 void VisualCallback	(IKinematics *tpKinematics)

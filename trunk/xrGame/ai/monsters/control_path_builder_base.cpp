@@ -16,7 +16,7 @@ const u32 pmt_global_failed_duration = 3000;
 
 CControlPathBuilderBase::CControlPathBuilderBase()
 {
-	m_cover_approach = 0;
+	m_cover_approach = nullptr;
 }
 
 CControlPathBuilderBase::~CControlPathBuilderBase()

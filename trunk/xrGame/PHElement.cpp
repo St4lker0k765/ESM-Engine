@@ -48,18 +48,18 @@ CPHElement::CPHElement()																															//aux
 
 	//temp_for_push_out=NULL;
 
-	m_body=NULL;
+	m_body= nullptr;
 	//bActive=false;
 	//bActivating=false;
 	m_flags.set(flActive,FALSE);
 	m_flags.set(flActivating,FALSE);
-	m_parent_element=NULL;
-	m_shell=NULL;
+	m_parent_element= nullptr;
+	m_shell= nullptr;
 
 
 	k_w=default_k_w;
 	k_l=default_k_l;//1.8f;
-	m_fratures_holder=NULL;
+	m_fratures_holder= nullptr;
 	//b_enabled_onstep=false;
 	//m_flags.set(flEnabledOnStep,FALSE);
 	m_flags.assign(0);
@@ -87,7 +87,7 @@ void CPHElement::add_Cylinder	(const Fcylinder& V)
 
 void CPHElement::			build	(){
 
-	m_body=dBodyCreate(0);//phWorld
+	m_body=dBodyCreate(nullptr);//phWorld
 	//m_saved_contacts=dJointGroupCreate (0);
 	//b_contacts_saved=false;
 	dBodyDisable(m_body);
@@ -139,12 +139,12 @@ void CPHElement::destroy	()
 	{
 		if(m_body->world)m_shell->Island().RemoveBody(m_body);
 		dBodyDestroy(m_body);
-		m_body=NULL;
+		m_body= nullptr;
 	}
 
 	if(m_group){
 		dGeomDestroy(m_group);
-		m_group=NULL;
+		m_group= nullptr;
 	}
 }
 
@@ -535,7 +535,7 @@ void CPHElement::PhDataUpdate(dReal step){
 
 void CPHElement::Enable()	{
 	if(!isActive()) return;
-	m_shell->EnableObject(0);
+	m_shell->EnableObject(nullptr);
 	if(dBodyIsEnabled(m_body)) return;
 	dBodyEnable(m_body);
 }
@@ -1082,7 +1082,7 @@ void	CPHElement::setForce(const Fvector& force)
 {
 	if(!isActive()||m_flags.test(flFixed)) return;
 	if( !dBodyIsEnabled(m_body)) dBodyEnable(m_body);
-	m_shell->EnableObject(0);
+	m_shell->EnableObject(nullptr);
 	dBodySetForce(m_body,force.x,force.y,force.z);
 	BodyCutForce(m_body,m_l_limit,m_w_limit);
 	VERIFY(dBodyStateValide(m_body));
@@ -1091,7 +1091,7 @@ void	CPHElement::setTorque(const Fvector& torque)
 {
 	if(!isActive()||m_flags.test(flFixed)) return;
 	if( !dBodyIsEnabled(m_body)) dBodyEnable(m_body);
-	m_shell->EnableObject(0);
+	m_shell->EnableObject(nullptr);
 	dBodySetTorque(m_body,torque.x,torque.y,torque.z);
 	BodyCutForce(m_body,m_l_limit,m_w_limit);
 	VERIFY(dBodyStateValide(m_body));
@@ -1107,7 +1107,7 @@ void	CPHElement::applyForce(float x,float y,float z)																//called any
 	if(!isActive())return;//hack??
 	if(m_flags.test(flFixed)) return;
 	if( !dBodyIsEnabled(m_body)) dBodyEnable(m_body);
-	m_shell->EnableObject(0);
+	m_shell->EnableObject(nullptr);
 	dBodyAddForce(m_body,x,y,z);
 	BodyCutForce(m_body,m_l_limit,m_w_limit);
 	VERIFY(dBodyStateValide(m_body));
@@ -1307,7 +1307,7 @@ void CPHElement::PassEndGeoms(u16 from,u16 to,CPHElement* dest)
 		(*i)->remove_from_space(m_group);
 		//(*i)->add_to_space(dest->m_group);
 		//(*i)->set_body(dest->m_body);
-		(*i)->set_body(0);
+		(*i)->set_body(nullptr);
 		u16& element_pos=(*i)->element_position();
 		element_pos=element_pos-shift;
 	}
@@ -1334,7 +1334,7 @@ void CPHElement::DeleteFracturesHolder()
 
 void CPHElement::CreateSimulBase()
 {
-	m_body=dBodyCreate(0);
+	m_body=dBodyCreate(nullptr);
 	m_shell->Island().AddBody(m_body);
 	//m_saved_contacts=dJointGroupCreate (0);
 	//b_contacts_saved=false;
@@ -1504,7 +1504,7 @@ void CPHElement::applyGravityAccel				(const Fvector& accel)
 	VERIFY(_valid(accel));
 	if(m_flags.test(flFixed)) return;
 	if( !dBodyIsEnabled(m_body)) dBodyEnable(m_body);
-	m_shell->EnableObject(0);
+	m_shell->EnableObject(nullptr);
 	Fvector val;
 	val.set(accel);
 	val.mul(m_mass.mass);

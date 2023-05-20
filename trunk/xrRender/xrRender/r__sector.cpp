@@ -166,7 +166,7 @@ void CSector::traverse			(CFrustum &F, _scissor& R_scissor)
 		svector<Fvector,8>&	POLY = PORTAL->getPoly();
 		S.assign			(&*POLY.begin(),POLY.size()); D.clear();
 		sPoly* P			= F.ClipPoly(S,D);
-		if (0==P)			continue;
+		if (nullptr==P)			continue;
 
 		// Scissor and optimized HOM-testing
 		_scissor			scissor	;
@@ -252,7 +252,7 @@ void CSector::load		(IReader& fs)
 		count--;
 	}
 
-	if	(g_dedicated_server)	m_root	= 0;
+	if	(g_dedicated_server)	m_root	= nullptr;
 	else {
 		// Assign visual
 		size	= fs.find_chunk(fsP_Root);	R_ASSERT(size==4);

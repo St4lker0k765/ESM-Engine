@@ -111,7 +111,7 @@ void CItemManager::remove_links		(CObject *object)
 		m_objects.erase		(I);
 
 	if (m_selected && (m_selected->ID() == object->ID()))
-		m_selected			= 0;
+		m_selected			= nullptr;
 }
 
 void CItemManager::on_restrictions_change	()
@@ -120,12 +120,12 @@ void CItemManager::on_restrictions_change	()
 		return;
 
 	if (!m_object->movement().restrictions().accessible(m_selected->ai_location().level_vertex_id())) {
-		m_selected			= 0;
+		m_selected			= nullptr;
 		return;
 	}
 
 	if (m_object->movement().restrictions().accessible(m_selected->Position()))
 		return;
 
-	m_selected				= 0;
+	m_selected				= nullptr;
 }

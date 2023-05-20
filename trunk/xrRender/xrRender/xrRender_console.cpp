@@ -11,7 +11,7 @@ xr_token							qpreset_token							[ ]={
 	{ "Default",					2											},
 	{ "High",						3											},
 	{ "Extreme",					4											},
-	{ 0,							0											}
+	{ nullptr,							0											}
 };
 
 u32			ps_r_ssao_mode			=	2;
@@ -20,7 +20,7 @@ xr_token							qssao_mode_token						[ ]={
 	{ "default",					1											},
 	{ "hdao",						2											},
 	{ "hbao",						3											},
-	{ 0,							0											}
+	{ nullptr,							0											}
 };
 
 u32			ps_r_sun_shafts				=	2;
@@ -29,7 +29,7 @@ xr_token							qsun_shafts_token							[ ]={
 	{ "st_opt_low",					1												},
 	{ "st_opt_medium",				2												},
 	{ "st_opt_high",				3												},
-	{ 0,							0												}
+	{ nullptr,							0												}
 };
 
 u32			ps_r_ssao				=	3;
@@ -41,7 +41,7 @@ xr_token							qssao_token									[ ]={
 #if defined(USE_DX10) || defined(USE_DX11)
 	{ "st_opt_ultra",				4												},
 #endif
-	{ 0,							0												}
+	{ nullptr,							0												}
 };
 
 u32			ps_r_sun_quality		=	1;			//	=	0;
@@ -53,7 +53,7 @@ xr_token							qsun_quality_token							[ ]={
 	{ "st_opt_ultra",				3												},
 	{ "st_opt_extreme",				4												},
 #endif	//	USE_DX10
-	{ 0,							0												}
+	{ nullptr,							0												}
 };
 
 u32			ps_r3_msaa				=	0;			//	=	0;
@@ -62,7 +62,7 @@ xr_token							qmsaa_token							[ ]={
 	{ "2x",							1												},
 	{ "4x",							2												},
 //	{ "8x",							3												},
-	{ 0,							0												}
+	{ nullptr,							0												}
 };
 
 u32			ps_r3_msaa_atest		=	0;			//	=	0;
@@ -70,7 +70,7 @@ xr_token							qmsaa__atest_token					[ ]={
 	{ "st_opt_off",					0												},
 	{ "st_opt_atest_msaa_dx10_0",	1												},
 	{ "st_opt_atest_msaa_dx10_1",	2												},
-	{ 0,							0												}
+	{ nullptr,							0												}
 };
 
 u32			ps_r3_minmax_sm			=	3;			//	=	0;
@@ -79,7 +79,7 @@ xr_token							qminmax_sm_token					[ ]={
 	{ "on",							1												},
 	{ "auto",						2												},
 	{ "autodetect",					3												},
-	{ 0,							0												}
+	{ nullptr,							0												}
 };
 
 u32 ps_r_aa_mode = 1;
@@ -87,7 +87,7 @@ xr_token qaa_mode_token[] =
 {
 	{ "st_opt_off",					0 },
 	{ "ui_mm_fxaa",					1 },
-	{ 0,							0 }
+	{ nullptr,							0 }
 };
 
 //	“Off”
@@ -249,7 +249,7 @@ class CCC_tf_Aniso		: public CCC_Integer
 {
 public:
 	void	apply	()	{
-		if (0==HW.pDevice)	return	;
+		if (nullptr==HW.pDevice)	return	;
 		int	val = *value;	clamp(val,1,16);
 #if defined(USE_DX10) || defined(USE_DX11)
 		SSManager.SetMaxAnisotropy(val);
@@ -274,7 +274,7 @@ class CCC_tf_MipBias: public CCC_Float
 {
 public:
 	void	apply	()	{
-		if (0==HW.pDevice)	return	;
+		if (nullptr==HW.pDevice)	return	;
 
 #if defined(USE_DX10) || defined(USE_DX11)
 		//	TODO: DX10: Implement mip bias control
@@ -330,7 +330,7 @@ public:
 
 		string_path	name;	name[0]=0;
 		sscanf		(args,"%s",	name);
-		LPCSTR		image	= xr_strlen(name)?name:0;
+		LPCSTR		image	= xr_strlen(name)?name:nullptr;
 		::Render->Screenshot(IRender_interface::SM_NORMAL,image);
 	}
 };

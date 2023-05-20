@@ -56,7 +56,7 @@ IC void	play_cycle(IKinematicsAnimated* CA,const MotionID &m,u8 channel,u32 &tim
 	float power = base_power;
 	if(Device.dwTimeGlobal>time_block)
 	{
-		CBlend*	B = (CA->PlayCycle(m,mixin,0,0,channel)) ;
+		CBlend*	B = (CA->PlayCycle(m,mixin,nullptr,nullptr,channel)) ;
 		
 		if(Device.dwTimeGlobal<time_block+dellay1)
 			power *= 0.5f;

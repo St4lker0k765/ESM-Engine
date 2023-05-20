@@ -106,7 +106,7 @@ IC	const typename CAbstractGraph::CVertex *CAbstractGraph::vertex	(const _vertex
 {
 	const_vertex_iterator		I = vertices().find(vertex_id);
 	if (vertices().end() == I)
-		return					(0);
+		return					(nullptr);
 	return						((*I).second);
 }
 
@@ -115,7 +115,7 @@ IC	typename CAbstractGraph::CVertex *CAbstractGraph::vertex		(const _vertex_id_t
 {
 	vertex_iterator				I = m_vertices.find(vertex_id);
 	if (m_vertices.end() ==	I)
-		return					(0);
+		return					(nullptr);
 	return						((*I).second);
 }
 
@@ -124,7 +124,7 @@ IC	const typename CAbstractGraph::CEdge *CAbstractGraph::edge		(const _vertex_id
 {
 	const CVertex				*_vertex = vertex(vertex_id0);
 	if (!_vertex)
-		return					(0);
+		return					(nullptr);
 	return						(_vertex->edge(vertex_id1));
 }
 
@@ -133,7 +133,7 @@ IC	typename CAbstractGraph::CEdge *CAbstractGraph::edge			(const _vertex_id_type
 {
 	CVertex						*_vertex = vertex(vertex_id0);
 	if (!_vertex)
-		return					(0);
+		return					(nullptr);
 	return						(_vertex->edge(vertex_id1));
 }
 

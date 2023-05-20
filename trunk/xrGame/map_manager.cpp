@@ -130,7 +130,7 @@ CMapLocation* CMapManager::AddMapLocation(const shared_str& spot_type, u16 id)
 
 CMapLocation* CMapManager::AddRelationLocation(CInventoryOwner* pInvOwner)
 {
-	if(!Level().CurrentViewEntity())return NULL;
+	if(!Level().CurrentViewEntity())return nullptr;
 
 	ALife::ERelationType relation = ALife::eRelationTypeFriend;
 	CInventoryOwner* pActor = smart_cast<CInventoryOwner*>(Level().CurrentViewEntity());
@@ -224,7 +224,7 @@ CMapLocation* CMapManager::GetMapLocation(const shared_str& spot_type, u16 id)
 	if( it!=Locations().end() )
 		return (*it).location;
 	
-	return 0;
+	return nullptr;
 }
 
 void CMapManager::Update()

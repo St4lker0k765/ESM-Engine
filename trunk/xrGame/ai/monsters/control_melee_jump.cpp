@@ -87,7 +87,7 @@ void CControlMeleeJump::on_event(ControlCom::EEventType type, ControlCom::IEvent
 {
 	switch (type) {
 	case ControlCom::eventAnimationEnd:
-			m_man->notify			(ControlCom::eventMeleeJumpEnd, 0);
+			m_man->notify			(ControlCom::eventMeleeJumpEnd, nullptr);
 		break;
 	}
 }

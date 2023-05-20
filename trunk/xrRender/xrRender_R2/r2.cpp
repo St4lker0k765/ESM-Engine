@@ -175,7 +175,7 @@ void					CRender::create					()
 	o.fp16_blend		= HW.support	(D3DFMT_A16B16G16R16F,	D3DRTYPE_TEXTURE,D3DUSAGE_QUERY_POSTPIXELSHADER_BLENDING);
 
 	// search for ATI formats
-	if (!o.HW_smap && (0==strstr(Core.Params,"-nodf24")) )		{
+	if (!o.HW_smap && (nullptr==strstr(Core.Params,"-nodf24")) )		{
 		o.HW_smap		= HW.support	((D3DFORMAT)(MAKEFOURCC('D','F','2','4')),	D3DRTYPE_TEXTURE,D3DUSAGE_DEPTHSTENCIL);
 		if (o.HW_smap)	{
 			o.HW_smap_FORMAT= MAKEFOURCC	('D','F','2','4');
@@ -310,7 +310,7 @@ void CRender::reset_begin()
 	{
 		u32 it=0;
 		for (it=0; it<Lights_LastFrame.size(); it++)	{
-			if (0==Lights_LastFrame[it])	continue	;
+			if (nullptr==Lights_LastFrame[it])	continue	;
 			try {
 				Lights_LastFrame[it]->svis.resetoccq ()	;
 			} catch (...)
@@ -379,7 +379,7 @@ void					CRender::model_Delete			(IRenderVisual* &V, BOOL bDiscard)
 { 
 	dxRender_Visual* pVisual = (dxRender_Visual*)V;
 	Models->Delete(pVisual, bDiscard);
-	V = 0;
+	V = nullptr;
 }
 IRender_DetailModel*	CRender::model_CreateDM			(IReader*	F)
 {
@@ -394,7 +394,7 @@ void					CRender::model_Delete			(IRender_DetailModel* & F)
 		CDetail*	D	= (CDetail*)F;
 		D->Unload		();
 		xr_delete		(D);
-		F				= NULL;
+		F				= nullptr;
 	}
 }
 IRenderVisual*			CRender::model_CreatePE			(LPCSTR name)	
@@ -574,8 +574,8 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		LPCVOID			data		= NULL;
-		_result			= D3DXFindShaderComment	(buffer,MAKEFOURCC('C','T','A','B'),&data,NULL);
+		LPCVOID			data		= nullptr;
+		_result			= D3DXFindShaderComment	(buffer,MAKEFOURCC('C','T','A','B'),&data, nullptr);
 		if (SUCCEEDED(_result) && data)
 		{
 			LPD3DXSHADER_CONSTANTTABLE	pConstants	= LPD3DXSHADER_CONSTANTTABLE(data);
@@ -596,8 +596,8 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		LPCVOID			data		= NULL;
-		_result			= D3DXFindShaderComment	(buffer,MAKEFOURCC('C','T','A','B'),&data,NULL);
+		LPCVOID			data		= nullptr;
+		_result			= D3DXFindShaderComment	(buffer,MAKEFOURCC('C','T','A','B'),&data, nullptr);
 		if (SUCCEEDED(_result) && data)
 		{
 			LPD3DXSHADER_CONSTANTTABLE	pConstants	= LPD3DXSHADER_CONSTANTTABLE(data);
@@ -612,8 +612,8 @@ static HRESULT create_shader				(
 
 	if (disasm)
 	{
-		ID3DXBuffer*	disasm	= 0;
-		D3DXDisassembleShader(LPDWORD(buffer), FALSE, 0, &disasm );
+		ID3DXBuffer*	disasm	= nullptr;
+		D3DXDisassembleShader(LPDWORD(buffer), FALSE, nullptr, &disasm );
 		string_path		dname;
 		strconcat		(sizeof(dname),dname,"disasm\\",file_name,('v'==pTarget[0])?".vs":".ps" );
 		IWriter*		W = FS.w_open("$logs$",dname);
@@ -637,10 +637,10 @@ public:
 		string_path				pname;
 		strconcat				(sizeof(pname),pname,::Render->getShaderPath(),pFileName);
 		IReader*		R		= FS.r_open	("$game_shaders$",pname);
-		if (0==R)				{
+		if (nullptr==R)				{
 			// possibly in shared directory or somewhere else - open directly
 			R					= FS.r_open	("$game_shaders$",pFileName);
-			if (0==R)			return			E_FAIL;
+			if (nullptr==R)			return			E_FAIL;
 		}
 
 		// duplicate and zero-terminate
@@ -953,8 +953,8 @@ HRESULT	CRender::shader_compile			(
 	}
 
 	// finish
-	defines[def_it].Name			=	0;
-	defines[def_it].Definition		=	0;
+	defines[def_it].Name			=	nullptr;
+	defines[def_it].Definition		=	nullptr;
 	def_it							++;
 
 	HRESULT		_result = E_FAIL;
@@ -1026,9 +1026,9 @@ HRESULT	CRender::shader_compile			(
 		}
 
 		includer					Includer;
-		LPD3DXBUFFER				pShaderBuf	= NULL;
-		LPD3DXBUFFER				pErrorBuf	= NULL;
-		LPD3DXCONSTANTTABLE			pConstants	= NULL;
+		LPD3DXBUFFER				pShaderBuf	= nullptr;
+		LPD3DXBUFFER				pErrorBuf	= nullptr;
+		LPD3DXCONSTANTTABLE			pConstants	= nullptr;
 		LPD3DXINCLUDE               pInclude	= (LPD3DXINCLUDE)&Includer;
 		
 		_result						= D3DXCompileShader((LPCSTR)pSrcData,SrcDataLen,defines,pInclude,pFunctionName,pTarget,Flags|D3DXSHADER_USE_LEGACY_D3DX9_31_DLL,&pShaderBuf,&pErrorBuf,&pConstants);

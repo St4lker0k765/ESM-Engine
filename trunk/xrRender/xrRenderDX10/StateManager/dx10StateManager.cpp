@@ -25,9 +25,9 @@ void dx10StateManager::Reset()
 {
 	UnmapConstants();
 
-	m_pRState = 0;
-	m_pDepthStencilState = 0;
-	m_pBlendState = 0;
+	m_pRState = nullptr;
+	m_pDepthStencilState = nullptr;
+	m_pBlendState = nullptr;
 
 	m_uiStencilRef = 0;
 	m_uiAlphaRef = 0;
@@ -55,7 +55,7 @@ void dx10StateManager::Reset()
 
 void dx10StateManager::UnmapConstants()
 {
-	m_cAlphaRef = 0;
+	m_cAlphaRef = nullptr;
 }
 
 void dx10StateManager::SetRasterizerState(ID3DRasterizerState* pRState)

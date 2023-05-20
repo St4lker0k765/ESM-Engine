@@ -18,7 +18,7 @@
 
 CHudItem::CHudItem(void)
 {
-	m_pHUD				= NULL;
+	m_pHUD				= nullptr;
 	SetHUDmode			(FALSE);
 	m_dwStateTime		= 0;
 	m_bRenderHud		= true;
@@ -55,7 +55,7 @@ void CHudItem::Load(LPCSTR section)
 		if(pSettings->line_exist(*hud_sect, "allow_inertion")) 
 			m_bInertionAllow = !!pSettings->r_bool(*hud_sect, "allow_inertion");
 	}else{
-		m_pHUD = NULL;
+		m_pHUD = nullptr;
 		//если hud не задан, но задан слот, то ошибка
 		R_ASSERT2(item().GetSlot() == NO_ACTIVE_SLOT, "active slot is set, but hud for food item is not available");
 	}

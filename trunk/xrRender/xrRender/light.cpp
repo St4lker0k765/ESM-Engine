@@ -29,8 +29,8 @@ light::light		(void)	: ISpatial(g_SpatialSpace)
 
 #if (RENDER==R_R2) || (RENDER==R_R3) || (RENDER==R_R4)
 	ZeroMemory		(omnipart,sizeof(omnipart));
-	s_spot			= NULL;
-	s_point			= NULL;
+	s_spot			= nullptr;
+	s_point			= nullptr;
 	vis.frame2test	= 0;	// xffffffff;
 	vis.query_id	= 0;
 	vis.query_order	= 0;
@@ -49,14 +49,14 @@ light::~light	()
 	// remove from Lights_LastFrame
 #if (RENDER==R_R2) || (RENDER==R_R3) || (RENDER==R_R4)
 	for (u32 it=0; it<RImplementation.Lights_LastFrame.size(); it++)
-		if (this==RImplementation.Lights_LastFrame[it])	RImplementation.Lights_LastFrame[it]=0;
+		if (this==RImplementation.Lights_LastFrame[it])	RImplementation.Lights_LastFrame[it]=nullptr;
 #endif // (RENDER==R_R2) || (RENDER==R_R3) || (RENDER==R_R4)
 }
 
 #if (RENDER==R_R2) || (RENDER==R_R3) || (RENDER==R_R4)
 void light::set_texture		(LPCSTR name)
 {
-	if ((0==name) || (0==name[0]))
+	if ((nullptr==name) || (0==name[0]))
 	{
 		// default shaders
 		s_spot.destroy		();
@@ -294,7 +294,7 @@ void	light::export_to	(light_Package& package)
 			case IRender_Light::POINT:
 				{
 					// tough: create/update 6 shadowed lights
-					if (0==omnipart[0])	for (int f=0; f<6; f++)	omnipart[f] = xr_new<light> ();
+					if (nullptr==omnipart[0])	for (int f=0; f<6; f++)	omnipart[f] = xr_new<light> ();
 					for (int f=0; f<6; f++)	{
 						light*	L			= omnipart[f];
 						Fvector				R;

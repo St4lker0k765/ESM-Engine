@@ -8,10 +8,10 @@ CPHGeometryOwner::CPHGeometryOwner()
 	b_builded=false;
 	m_mass_center.set(0,0,0);
 	contact_callback=ContactShotMark;
-	object_contact_callback=NULL;
+	object_contact_callback= nullptr;
 	ul_material=GMLib.GetMaterialIdx("objects\\small_box");
-	m_group=NULL;
-	m_phys_ref_object=NULL;
+	m_group= nullptr;
+	m_phys_ref_object= nullptr;
 }
 
 CPHGeometryOwner::~CPHGeometryOwner()
@@ -47,7 +47,7 @@ void CPHGeometryOwner::build()
 	if(b_builded) return;
 	if(m_geoms.size()>1)
 	{
-		m_group=dSimpleSpaceCreate(0);
+		m_group=dSimpleSpaceCreate(nullptr);
 		dSpaceSetCleanup(m_group,0);
 	}
 	u16 geoms_size=u16(m_geoms.size());
@@ -139,7 +139,7 @@ void CPHGeometryOwner::SetPhObjectInGeomData(CPHObject* O)
 
 dGeomID CPHGeometryOwner::dSpacedGeometry()
 {
-	if(!b_builded) return 0;
+	if(!b_builded) return nullptr;
 	if(m_group) return (dGeomID)m_group;
 	else return (*m_geoms.begin())->geometry_transform();
 }
@@ -273,7 +273,7 @@ void CPHGeometryOwner::remove_ObjectContactCallback(ObjectContactCallbackFun* ca
 
 	if(object_contact_callback==callback)
 	{
-		object_contact_callback= NULL;
+		object_contact_callback= nullptr;
 	}
 	if(!b_builded)return;
 	{
@@ -365,7 +365,7 @@ void CPHGeometryOwner::CreateSimulBase()
 {
 	if(m_geoms.size()>1)
 	{
-		m_group=dSimpleSpaceCreate(0);
+		m_group=dSimpleSpaceCreate(nullptr);
 		dSpaceSetCleanup(m_group,0);
 	}
 }
@@ -391,7 +391,7 @@ CODEGeom* CPHGeometryOwner::GeomByBoneID(u16 bone_id)
 	}
 	else
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 

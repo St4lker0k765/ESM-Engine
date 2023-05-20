@@ -21,7 +21,7 @@
 
 CUIGameSP::CUIGameSP()
 {
-	m_game			= NULL;
+	m_game			= nullptr;
 	
 	InventoryMenu	= xr_new<CUIInventoryWnd>	();
 	PdaMenu			= xr_new<CUIPdaWnd>			();

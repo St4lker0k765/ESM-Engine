@@ -32,7 +32,7 @@ void FTreeVisual::Load		(const char* N, IReader *data, u32 dwFlags)
 {
 	dxRender_Visual::Load		(N,data,dwFlags);
 
-	D3DVERTEXELEMENT9*	vFormat	= NULL;
+	D3DVERTEXELEMENT9*	vFormat	= nullptr;
 
 	// read vertices
 	R_ASSERT			(data->find_chunk(OGF_GCONTAINER));
@@ -208,7 +208,7 @@ void FTreeVisual_ST::Copy		(dxRender_Visual *pSrc)
 //-----------------------------------------------------------------------------------
 FTreeVisual_PM::FTreeVisual_PM(void)
 {
-	pSWI						= 0;
+	pSWI						= nullptr;
 	last_lod					= 0;
 }
 FTreeVisual_PM::~FTreeVisual_PM(void)

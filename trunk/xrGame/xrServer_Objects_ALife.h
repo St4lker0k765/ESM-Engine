@@ -38,7 +38,7 @@ SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeSchedulable,IPureSchedulableObject)
 	virtual const CSE_Abstract		*base					() const = 0;
 	virtual CSE_Abstract			*init					();
 	virtual CSE_ALifeSchedulable	*cast_schedulable		() {return this;};
-	virtual CSE_Abstract			*cast_abstract			() {return 0;};
+	virtual CSE_Abstract			*cast_abstract			() {return nullptr;};
 	// end of the virtual inheritance dependant code
 	virtual bool					need_update				(CSE_ALifeDynamicObject *object);
 	virtual u32						ef_creature_type		() const;
@@ -147,7 +147,7 @@ SERVER_ENTITY_DECLARE_BEGIN0(CSE_ALifeGroupAbstract)
 	virtual CSE_Abstract			*base					() = 0;
 	virtual const CSE_Abstract		*base					() const = 0;
 	virtual CSE_ALifeGroupAbstract	*cast_group_abstract	() {return this;};
-	virtual CSE_Abstract			*cast_abstract			() {return 0;};
+	virtual CSE_Abstract			*cast_abstract			() {return nullptr;};
 #ifdef XRGAME_EXPORTS
 	virtual	bool					synchronize_location	();
 	virtual	void					try_switch_online		();
@@ -282,7 +282,7 @@ SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeDynamicObject,CSE_ALifeObject)
 	virtual	void					add_offline				(const xr_vector<ALife::_OBJECT_ID> &saved_children, const bool &update_registries);
 	virtual	bool					redundant				() const;
 			void					attach					(CSE_ALifeInventoryItem *tpALifeInventoryItem,	bool		bALifeRequest,	bool bAddChildren = true);
-			void					detach					(CSE_ALifeInventoryItem *tpALifeInventoryItem,	ALife::OBJECT_IT	*I = 0,	bool bALifeRequest = true,	bool bRemoveChildren = true);
+			void					detach					(CSE_ALifeInventoryItem *tpALifeInventoryItem,	ALife::OBJECT_IT	*I = nullptr,	bool bALifeRequest = true,	bool bRemoveChildren = true);
 #endif
 	virtual CSE_ALifeDynamicObject	*cast_alife_dynamic_object	() {return this;}
 SERVER_ENTITY_DECLARE_END
@@ -359,7 +359,7 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeSmartZone,CSE_ALifeSpaceRestrictor,CSE_ALi
 	virtual float					suitable					(CSE_ALifeMonsterAbstract *object) const {return 0.f;};
 	virtual void					register_npc				(CSE_ALifeMonsterAbstract *object) {};
 	virtual void					unregister_npc				(CSE_ALifeMonsterAbstract *object) {};
-	virtual	CALifeSmartTerrainTask	*task						(CSE_ALifeMonsterAbstract *object) {return 0;};
+	virtual	CALifeSmartTerrainTask	*task						(CSE_ALifeMonsterAbstract *object) {return nullptr;};
 #endif
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeSmartZone)

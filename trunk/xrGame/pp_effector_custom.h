@@ -30,7 +30,7 @@ class CPPEffectorCustomController {
 public:
 					CPPEffectorCustomController	();
 IC	virtual void	load						(LPCSTR section);
-IC	virtual bool	active						() {return (m_effector != 0);}
+IC	virtual bool	active						() {return (m_effector != nullptr);}
 
 protected:
 	_Effector		*m_effector;

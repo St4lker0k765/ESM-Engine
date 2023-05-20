@@ -149,17 +149,17 @@ public:
 	float KneeAngle( const float goal_pos[3], const float knee_pos[3] ); 
 
  
-    int Solve(float x[7], float *new_psi = 0, float *new_pos = 0);
+    int Solve(float x[7], float *new_psi = nullptr, float *new_pos = nullptr);
 
     int SolveByAngle(float psi, 
 		     float x[7], 
-		     float *new_psi = 0, 
-		     float *new_pos= 0);
+		     float *new_psi = nullptr, 
+		     float *new_pos= nullptr);
 
     int SolveByPos(const float pos[3], 
 		   float x[7], 
-		   float *new_psi = 0, 
-		   float *new_pos = 0);
+		   float *new_psi = nullptr, 
+		   float *new_pos = nullptr);
 
 
     int InLimits(const float x[7]) const;

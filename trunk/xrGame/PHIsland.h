@@ -143,14 +143,14 @@ IC	void		Unmerge()
 	if(!m_nj)
 	{
 		m_joints_tail=&firstjoint;
-		*m_joints_tail=0;
+		*m_joints_tail=nullptr;
 	}
 	else
 	{
 		firstjoint->tome=(dObject**)&firstjoint;
 	}
-	*m_joints_tail=0;
-	*m_bodies_tail=0;
+	*m_joints_tail=nullptr;
+	*m_bodies_tail=nullptr;
 	//b_active=true;
 	m_flags.unmerge();
 	m_self_active=this;
@@ -164,8 +164,8 @@ IC	void			Init()
 	m_flags.init();
 	m_nj=nj=0;
 	m_nb=nb=0;
-	m_first_joint=firstjoint=0;
-	m_first_body=firstbody=0;
+	m_first_joint=firstjoint=nullptr;
+	m_first_body=firstbody=nullptr;
 	m_joints_tail=&firstjoint;
 	m_bodies_tail=&firstbody;
 	m_self_active=this;

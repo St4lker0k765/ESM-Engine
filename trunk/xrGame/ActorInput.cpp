@@ -297,11 +297,11 @@ bool CActor::use_Holder				(CHolderCustom* holder)
 		CGameObject* holderGO			= smart_cast<CGameObject*>(m_holder);
 		
 		if(smart_cast<CCar*>(holderGO))
-			b = use_Vehicle(0);
+			b = use_Vehicle(nullptr);
 		else
 			if (holderGO->CLS_ID==CLSID_OBJECT_W_MOUNTED ||
 				holderGO->CLS_ID==CLSID_OBJECT_W_STATMGUN)
-				b = use_MountedWeapon(0);
+				b = use_MountedWeapon(nullptr);
 
 		if(inventory().ActiveItem()){
 			CHudItem* hi = smart_cast<CHudItem*>(inventory().ActiveItem());

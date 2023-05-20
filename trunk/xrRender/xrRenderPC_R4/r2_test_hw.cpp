@@ -43,7 +43,7 @@ bool TestDX11Present()
 	ZeroMemory(&wcex, sizeof(wcex));
 	wcex.cbSize = sizeof( WNDCLASSEX );
 	wcex.lpfnWndProc = WndProc;
-	wcex.hInstance = GetModuleHandle(NULL);
+	wcex.hInstance = GetModuleHandle(nullptr);
 	wcex.lpszClassName = "TestDX11WindowClass";
 	if( !RegisterClassEx( &wcex ) )
 	{
@@ -84,12 +84,12 @@ bool TestDX11Present()
 	D3D_FEATURE_LEVEL pFeatureLevels[] = {D3D_FEATURE_LEVEL_11_0};
 	D3D_FEATURE_LEVEL FeatureLevel;
 
-	ID3D11Device*           pd3dDevice = NULL;
-	ID3D11DeviceContext*    pContext = NULL;
-	IDXGISwapChain*         pSwapChain = NULL;
+	ID3D11Device*           pd3dDevice = nullptr;
+	ID3D11DeviceContext*    pContext = nullptr;
+	IDXGISwapChain*         pSwapChain = nullptr;
 
-	hr = pD3D11CreateDeviceAndSwapChain( NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, pFeatureLevels, 1,
-		D3D11_SDK_VERSION, &sd, &pSwapChain, &pd3dDevice, &FeatureLevel, &pContext );
+	hr = pD3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, pFeatureLevels, 1,
+	                                    D3D11_SDK_VERSION, &sd, &pSwapChain, &pd3dDevice, &FeatureLevel, &pContext );
 
 	if (FAILED(hr))
 		Msg("* D3D11: device creation failed with hr=0x%08x", hr);

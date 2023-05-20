@@ -32,7 +32,7 @@ public:
     };
     Flags32				m_Flags;
 public:
-						ListItem		(int _type):type(_type),prop_color(0),item(0),key(0),tag(0),icon_index(-1),m_Object(0)
+						ListItem		(int _type):type(_type),prop_color(0),item(nullptr),key(nullptr),tag(0),icon_index(-1),m_Object(nullptr)
 						{
                             this->OnItemFocused = 0;
                             this->OnDrawThumbnail = 0;

@@ -15,7 +15,7 @@ public:
 
 	CScriptSoundInfo				()
 	{
-		who				= 0;
+		who				= nullptr;
 		time			= 0;
 		dangerous		= 0;
 		power			= 0.f;

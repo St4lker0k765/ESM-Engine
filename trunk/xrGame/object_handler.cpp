@@ -122,7 +122,7 @@ void CObjectHandler::OnItemDrop		(CInventoryItem *inventory_item)
 CInventoryItem *CObjectHandler::best_weapon() const
 {
 	if (!planner().object().g_Alive())
-		return									(0);
+		return									(nullptr);
 
 	planner().object().update_best_item_info	();
 	return										(planner().object().m_best_item_to_kill);
@@ -142,7 +142,7 @@ void CObjectHandler::set_goal	(MonsterSpace::EObjectAction object_action, CGameO
 
 void CObjectHandler::set_goal	(MonsterSpace::EObjectAction object_action, CInventoryItem *inventory_item, u32 min_queue_size, u32 max_queue_size, u32 min_queue_interval, u32 max_queue_interval)
 {
-	set_goal(object_action,inventory_item ? &inventory_item->object() : 0,min_queue_size,max_queue_size,min_queue_interval,max_queue_interval);
+	set_goal(object_action,inventory_item ? &inventory_item->object() : nullptr,min_queue_size,max_queue_size,min_queue_interval,max_queue_interval);
 }
 
 bool CObjectHandler::goal_reached	()

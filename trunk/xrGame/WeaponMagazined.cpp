@@ -24,8 +24,8 @@ CWeaponMagazined::CWeaponMagazined(LPCSTR name, ESoundTypes eSoundType) : CWeapo
 	m_eSoundEmptyClick	= ESoundTypes(SOUND_TYPE_WEAPON_EMPTY_CLICKING | eSoundType);
 	m_eSoundReload		= ESoundTypes(SOUND_TYPE_WEAPON_RECHARGING | eSoundType);
 	
-	m_pSndShotCurrent = NULL;
-	m_sSilencerFlameParticles = m_sSilencerSmokeParticles = NULL;
+	m_pSndShotCurrent = nullptr;
+	m_sSilencerFlameParticles = m_sSilencerSmokeParticles = nullptr;
 
 	m_bFireSingleShot = false;
 	m_iShotNum = 0;
@@ -297,8 +297,8 @@ void CWeaponMagazined::ReloadMagazine()
 	//только разных типов патронов
 //	static bool l_lockType = false;
 	if (!m_bLockType) {
-		m_ammoName	= NULL;
-		m_pAmmo		= NULL;
+		m_ammoName	= nullptr;
+		m_pAmmo		= nullptr;
 	}
 	
 	if (!m_pCurrentInventory) return;
@@ -355,7 +355,7 @@ void CWeaponMagazined::ReloadMagazine()
 		l_cartridge.m_LocalAmmoType = u8(m_ammoType);
 		m_magazine.push_back(l_cartridge);
 	}
-	m_ammoName = (m_pAmmo) ? m_pAmmo->m_nameShort : NULL;
+	m_ammoName = (m_pAmmo) ? m_pAmmo->m_nameShort : nullptr;
 
 	VERIFY((u32)iAmmoElapsed == m_magazine.size());
 
@@ -486,7 +486,7 @@ void CWeaponMagazined::state_Fire	(float dt)
 	if (!H_Parent()) return;
 
 	CInventoryOwner* io		= smart_cast<CInventoryOwner*>(H_Parent());
-	if(NULL == io->inventory().ActiveItem())
+	if(nullptr == io->inventory().ActiveItem())
 	{
 			Log("current_state", GetState() );
 			Log("next_state", GetNextState());
@@ -1024,7 +1024,7 @@ bool CWeaponMagazined::TryPlayAnimIdle()
 			pActor->g_State(st);
 			if(st.bSprint && mhud.mhud_idle_sprint.size())
 			{
-				m_pHUD->animPlay(random_anim(mhud.mhud_idle_sprint), TRUE, NULL,GetState());
+				m_pHUD->animPlay(random_anim(mhud.mhud_idle_sprint), TRUE, nullptr,GetState());
 				return true;
 			}
 		}
@@ -1034,7 +1034,7 @@ bool CWeaponMagazined::TryPlayAnimIdle()
 
 void CWeaponMagazined::PlayAnimIdle()
 {
-	MotionSVec* m = NULL;
+	MotionSVec* m = nullptr;
 	if(IsZoomed())
 	{
 		m = &mhud.mhud_idle_aim;
@@ -1045,7 +1045,7 @@ void CWeaponMagazined::PlayAnimIdle()
 	}
 
 	VERIFY(GetState()==eIdle);
-	m_pHUD->animPlay(random_anim(*m), TRUE, NULL, GetState());
+	m_pHUD->animPlay(random_anim(*m), TRUE, nullptr, GetState());
 }
 
 void CWeaponMagazined::PlayAnimShoot()

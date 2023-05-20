@@ -23,7 +23,7 @@ void	r_pixel_calculator::end		()
 	RCache.set_ZB	(HW.pBaseZB);
 
 	_RELEASE		(zb);
-	rt			=	0	;
+	rt			=	nullptr	;
 }
 
 //								+X,				-X,				+Y,				-Y,			+Z,				-Z
@@ -77,7 +77,7 @@ void	r_pixel_calculator	::run	()
 	begin	();
 	for (u32 it=0; it<RImplementation.Visuals.size(); it++)
 	{
-		if (0==dynamic_cast<IRender_Mesh*>(RImplementation.Visuals[it]))		continue;
+		if (nullptr==dynamic_cast<IRender_Mesh*>(RImplementation.Visuals[it]))		continue;
 		Msg	("*%d*",it);
 		calculate	((dxRender_Visual*)RImplementation.Visuals[it]);
 	}

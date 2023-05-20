@@ -25,5 +25,5 @@ void CStalkerSoundData::accept			(CSound_UserDataVisitor *visitor)
 
 void CStalkerSoundData::invalidate		()
 {
-	m_object		= 0;
+	m_object		= nullptr;
 }

@@ -1,16 +1,11 @@
-#ifndef _INCDEF_NETUTILS_H_
-#define _INCDEF_NETUTILS_H_
 #pragma once
 
 #include "client_id.h"
 
 #pragma pack(push,1)
 
-
-
 //for presentation
-const	u32			NET_PacketSizeLimit	= 8192; //16384;//8192;
-// const	u32			NET_PacketSizeLimit	= 16384; 
+static constexpr u32 NET_PacketSizeLimit = 8192;
 
 struct	NET_Buffer
 {
@@ -18,9 +13,10 @@ struct	NET_Buffer
 	u32		count;
 };
 
-class	NET_Packet
+class NET_Packet final
 {
 public:
+	NET_Packet() : r_pos(0), timeReceive(0) { ZeroMemory(&B, sizeof(B)); }
 
     void            construct( const void* data, unsigned size )
                     {
@@ -282,6 +278,4 @@ public:
 };
 
 #pragma pack(pop)
-
-#endif /*_INCDEF_NETUTILS_H_*/
 

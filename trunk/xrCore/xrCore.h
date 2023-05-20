@@ -1,5 +1,3 @@
-#ifndef xrCoreH
-#define xrCoreH
 #pragma once
 
 #pragma warning(disable:4996)
@@ -171,6 +169,7 @@
 #include <set>
 #include <map>
 #include <string>
+#include <functional>
 #pragma warning (pop)
 #pragma warning (disable : 4100 )		// unreferenced formal parameter
 
@@ -287,4 +286,3 @@ public:
 
 extern XRCORE_API xrCore Core;
 
-#endif

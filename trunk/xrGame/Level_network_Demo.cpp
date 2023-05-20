@@ -162,7 +162,8 @@ void						CLevel::Demo_Clear				()
 };
 
 void						CLevel::Demo_Load				(LPCSTR DemoName)
-{	
+{
+	/*
 	string_path			DemoFileName;
 	FS.update_path      (DemoFileName,"$logs$",DemoName);
 	//-----------------------------------------------------
@@ -225,11 +226,13 @@ void						CLevel::Demo_Load				(LPCSTR DemoName)
 	xr_free(pDemoData);
 	//-----------------------------------------------
 	g_dwDemoDeltaFrame = 1;
+	*/
 }
 
 static long lFileSize = 0;
 void						CLevel::Demo_Load_toFrame	(LPCSTR FileName, DWORD toFrame, long &ofs)
 {
+	/*
 	if (ofs == 1) g_dwDemoDeltaFrame = 1;
 
 	m_sDemoFileName = FileName;
@@ -295,6 +298,7 @@ void						CLevel::Demo_Load_toFrame	(LPCSTR FileName, DWORD toFrame, long &ofs)
 		m_bDemoPlayMode = TRUE;
 		m_bDemoSaveMode = FALSE;
 	};
+	*/
 };
 
 static DWORD dFrame = 1;
@@ -446,6 +450,7 @@ void						CLevel::Demo_StartFrame			()
 	Demo_StoreData(&CurFrameTime, sizeof(CurFrameTime), DATA_FRAME);
 
 	DemoCS.Leave();
+	
 };
 
 void						CLevel::Demo_EndFrame			()

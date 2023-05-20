@@ -70,6 +70,7 @@ void CLevel::ClientReceive()
 			if (g_bDebugEvents)		ProcessGameEvents();
 			break;
 		case M_EVENT_PACK:
+		{
 			NET_Packet	tmpP;
 			while (!P->r_eof())
 			{
@@ -79,7 +80,8 @@ void CLevel::ClientReceive()
 
 				game_events->insert		(tmpP);
 				if (g_bDebugEvents)		ProcessGameEvents();
-			};			
+			}			
+		}
 			break;
 		case M_UPDATE:
 			{
@@ -87,7 +89,7 @@ void CLevel::ClientReceive()
 				//-------------------------------------------
 				if (OnServer()) break;
 				//-------------------------------------------
-			};	// ни в коем случае нельзя здесь ставить break, т.к. в случае если все объекты не влазят в пакет M_UPDATE,
+			}	// ни в коем случае нельзя здесь ставить break, т.к. в случае если все объекты не влазят в пакет M_UPDATE,
 				// они досылаются через M_UPDATE_OBJECTS
 		case M_UPDATE_OBJECTS:
 			{
@@ -107,10 +109,6 @@ void CLevel::ClientReceive()
 				u32 NumSteps = ph_world->CalcNumSteps(dTime);
 				SetNumCrSteps(NumSteps);
 			}break;
-//		case M_UPDATE_OBJECTS:
-//			{
-//				Objects.net_Import		(P);
-//			}break;
 		//----------- for E3 -----------------------------
 		case M_CL_UPDATE:
 			{

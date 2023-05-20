@@ -10,6 +10,8 @@
 #include "map_manager.h"	
 #include "map_location.h"
 
+//TODO xrMorrazzzz: Using, but trash
+
 void				game_cl_mp::AddMessageMenu			(LPCSTR	menu_section, LPCSTR snd_path, LPCSTR team_prefix)
 {
 	if (!menu_section) return;

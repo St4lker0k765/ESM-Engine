@@ -1,6 +1,8 @@
 #ifndef tntQAVIH
 #define tntQAVIH
 
+//TODO: xrMorrazzzz: check this file! Apparently, this is an old AVI class. Should I delete it?
+
 #include <math.h>
 
 //#include "tntTimer.h"

@@ -2,6 +2,8 @@
 
 #include "game_sv_deathmatch.h"
 
+//TODO xrMorrazzzz: Using, but trash
+
 class	game_sv_TeamDeathmatch	/*		: public game_sv_Deathmatch*/
 {
 private:

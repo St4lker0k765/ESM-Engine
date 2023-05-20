@@ -54,7 +54,7 @@
 #define CLSID_AF_BAST				MK_CLSID('A','F','_','B','A','S','T',' ')
 #define CLSID_AF_BLACK_GRAVI		MK_CLSID('A','F','_','B','G','R','A','V')
 #define CLSID_AF_DUMMY				MK_CLSID('A','F','_','D','U','M','M','Y')
-#define CLSID_AF_ZUDA				MK_CLSID('A','F','_','Z','U','D','A',' ')
+//#define CLSID_AF_ZUDA				MK_CLSID('A','F','_','Z','U','D','A',' ')
 #define CLSID_AF_THORN				MK_CLSID('A','F','_','T','H','O','R','N')
 #define CLSID_AF_FADED_BALL			MK_CLSID('A','F','_','F','B','A','L','L')
 #define CLSID_AF_ELECTRIC_BALL		MK_CLSID('A','F','_','E','B','A','L','L')

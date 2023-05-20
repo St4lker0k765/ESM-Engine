@@ -1,5 +1,5 @@
 // LevelFogOfWar.cpp:  для карты уровня в одиночном режиме игры
-// 
+// TODO xrMorrazzzz: This not using! Delete!!
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"

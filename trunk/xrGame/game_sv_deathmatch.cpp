@@ -17,6 +17,8 @@
 #include "Missile.h"
 #include "game_cl_base_weapon_usage_statistic.h"
 
+//TODO xrMorrazzzz: This not using! Delete!!
+
 /*
 //#define DELAYED_ROUND_TIME	7000
 #include "ui\UIBuyWndShared.h"

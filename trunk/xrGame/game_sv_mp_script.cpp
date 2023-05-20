@@ -7,6 +7,8 @@
 #include "ai_space.h"
 #include "script_engine.h"
 
+//TODO xrMorrazzzz: This not using! Delete!!
+
 using namespace luabind;
 
 /*

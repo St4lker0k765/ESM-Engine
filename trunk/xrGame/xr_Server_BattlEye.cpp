@@ -11,6 +11,8 @@
 #include "xrGameSpyServer.h"
 #include "gamespy/GameSpy_Full.h"
 
+//TODO xrMorrazzzz: Using, but trash
+
 #ifdef BATTLEYE
 
 extern		int		g_be_message_out;

@@ -1,5 +1,7 @@
 #pragma once
 
+//TODO xrMorrazzzz: Using, but trash
+
 #include "game_sv_teamdeathmatch.h"
 
 class	game_sv_ArtefactHunt			: public game_sv_TeamDeathmatch

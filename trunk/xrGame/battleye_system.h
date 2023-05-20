@@ -1,6 +1,8 @@
 // battleye_system.h
 // BattlEyeSystem class
 
+//TODO xrMorrazzzz: Using, but trash
+
 #ifndef	XR_BATTLEYE_SYSTEM_H_INCLUDED
 #define XR_BATTLEYE_SYSTEM_H_INCLUDED
 

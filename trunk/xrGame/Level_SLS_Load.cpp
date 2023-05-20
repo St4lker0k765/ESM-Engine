@@ -1,3 +1,5 @@
+//TODO xrMorrazzzz: This not using! Delete!!
+
 #include "stdafx.h"
 #include "level.h"
 

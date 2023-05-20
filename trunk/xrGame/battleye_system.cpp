@@ -1,6 +1,8 @@
 // battleye_system.cpp
 // BattlEyeSystem class implementation
 
+//TODO xrMorrazzzz: Using, but trash
+
 #include "stdafx.h"
 #include "battleye_system.h"
 #include "object_broker.h"

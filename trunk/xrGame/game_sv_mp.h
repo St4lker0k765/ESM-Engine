@@ -4,6 +4,8 @@
 #include "game_base_kill_type.h"
 #include "game_base_menu_events.h"
 
+//TODO xrMorrazzzz: Using, but trash
+
 class		CItemMgr;
 class		xrClientData;
 #define		VOTE_LENGTH_TIME		1

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "game_sv_mp.h"
+
+//TODO xrMorrazzzz: This not using! Delete!!
+
 /*
 class game_sv_mp_script : public game_sv_mp
 {

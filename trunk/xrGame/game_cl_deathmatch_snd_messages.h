@@ -1,3 +1,5 @@
+//TODO xrMorrazzzz: Using, but trash
+
 #pragma once
 enum {
 	ID_YOU_WON = 100,

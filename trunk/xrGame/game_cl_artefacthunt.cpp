@@ -25,6 +25,8 @@
 #include "string_table.h"
 #include "CustomOutfit.h"
 
+//TODO xrMorrazzzz: Using, but trash
+
 #define TEAM0_MENU		"artefacthunt_team0"
 #define	TEAM1_MENU		"artefacthunt_team1"
 #define	TEAM2_MENU		"artefacthunt_team2"

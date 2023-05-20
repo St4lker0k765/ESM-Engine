@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "xrserver.h"
 
+//TODO xrMorrazzzz: Check using this file
+
 class xrClientData;
 class CSE_Abstract;
 

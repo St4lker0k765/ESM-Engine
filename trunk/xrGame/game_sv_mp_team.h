@@ -1,5 +1,6 @@
 #pragma once
 
+//TODO xrMorrazzzz: Using, but trash
 
 // Вектор имен скинов комманды
 DEF_VECTOR(TEAM_SKINS_NAMES, xr_string);	

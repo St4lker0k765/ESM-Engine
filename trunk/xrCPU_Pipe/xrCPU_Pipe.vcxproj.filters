@@ -4,9 +4,6 @@
     <Filter Include="Kernel">
       <UniqueIdentifier>{ceac7d33-4ffc-4d74-868f-c0143321e508}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3DNow!">
-      <UniqueIdentifier>{f59be08f-88aa-423b-9ad6-cf9eb6734f14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Generic x86">
       <UniqueIdentifier>{145880cb-cfbf-47eb-99b1-3caf6f926839}</UniqueIdentifier>
     </Filter>
@@ -23,18 +20,6 @@
     </ClCompile>
     <ClCompile Include="xrCPU_Pipe.cpp">
       <Filter>Kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="3DNow!Lib.cpp">
-      <Filter>3DNow!</Filter>
-    </ClCompile>
-    <ClCompile Include="xrM44mul_3DNow!.cpp">
-      <Filter>3DNow!</Filter>
-    </ClCompile>
-    <ClCompile Include="xrMemCopy8_3DNow!.cpp">
-      <Filter>3DNow!</Filter>
-    </ClCompile>
-    <ClCompile Include="xrMemFill32_3DNow!.cpp">
-      <Filter>3DNow!</Filter>
     </ClCompile>
     <ClCompile Include="xrM44mul.cpp">
       <Filter>Generic x86</Filter>

@@ -136,16 +136,8 @@ void InitSettings	()
 }
 void InitConsole	()
 {
-#ifdef DEDICATED_SERVER
-	{
-		Console						= xr_new<CTextConsole>	();		
-	}
-#else
-	//	else
-	{
-		Console						= xr_new<CConsole>	();
-	}
-#endif
+	Console						= xr_new<CConsole>	();
+
 	Console->Initialize			( );
 
 	strcpy_s						(Console->ConfigFile,"user.ltx");
@@ -162,8 +154,6 @@ void InitConsole	()
 void InitInput		()
 {
 	BOOL bCaptureInput			= !strstr(Core.Params,"-i");
-	if(g_dedicated_server)
-		bCaptureInput			= FALSE;
 
 	pInput						= xr_new<CInput>		(bCaptureInput);
 }
@@ -276,10 +266,9 @@ void Startup					()
 	}
 
 	// Initialize APP
-//#ifndef DEDICATED_SERVER
 	ShowWindow( Device.m_hWnd , SW_SHOWNORMAL );
 	Device.Create				( );
-//#endif
+
 	LALib.OnCreate				( );
 	pApp						= xr_new<CApplication>	();
 	g_pGamePersistent			= (IGame_Persistent*)	NEW_INSTANCE (CLSID_GAME_PERSISTANT);
@@ -487,18 +476,11 @@ XRCORE_API DUMMY_STUFF	*g_temporary_stuff;
 #define TRIVIAL_ENCRYPTOR_DECODER
 #include "trivial_encryptor.h"
 
-//#define RUSSIAN_BUILD
-
-ENGINE_API	bool g_dedicated_server	= false;
-
 int APIENTRY WinMain_impl(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      char *    lpCmdLine,
                      int       nCmdShow)
 {
-//	foo();
-#ifndef DEDICATED_SERVER
-
 	// Check for virtual memory
 
 	if ( ( strstr( lpCmdLine , "--skipmemcheck" ) == nullptr) && IsOutOfVirtualMemory() )
@@ -522,9 +504,6 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 		return 1;
 	}
 #endif
-#else // DEDICATED_SERVER
-	g_dedicated_server			= true;
-#endif // DEDICATED_SERVER
 
 	// Title window
 	logoWindow					= CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_STARTUP), nullptr, logDlgProc );
@@ -561,11 +540,9 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 	Core._initialize			("xray", nullptr, TRUE, fsgame[0] ? fsgame : nullptr);
 	InitSettings				();
 
-#ifndef DEDICATED_SERVER
 	{
 		damn_keys_filter		filter;
 		(void)filter;
-#endif // DEDICATED_SERVER
 
 		FPU::m24r				();
 		InitEngine				();
@@ -621,14 +598,12 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 			
 			_spawnv							(_P_NOWAIT, _args[0], _args);//, _envvar);
 		}
-#ifndef DEDICATED_SERVER
 #ifdef NO_MULTI_INSTANCES		
 		// Delete application presence mutex
 		CloseHandle( hCheckPresenceMutex );
 #endif
 	}
 	// here damn_keys_filter class instanse will be destroyed
-#endif // DEDICATED_SERVER
 
 	return						0;
 }
@@ -654,11 +629,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 {
 	__try 
 	{
-#ifdef DEDICATED_SERVER
-		Debug._initialize	(true);
-#else // DEDICATED_SERVER
 		Debug._initialize	(false);
-#endif // DEDICATED_SERVER
 
 		WinMain_impl		(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
 	}
@@ -677,20 +648,11 @@ LPCSTR _GetFontTexName (LPCSTR section)
 	int def_idx		= 1;//default 1024x768
 	int idx			= def_idx;
 
-#if 0
-	u32 w = Device.dwWidth;
-
-	if(w<=800)		idx = 0;
-	else if(w<=1280)idx = 1;
-	else 			idx = 2;
-#else
 	u32 h = Device.dwHeight;
 
 	if(h<=600)		idx = 0;
 	else if(h<=900)	idx = 1;
 	else 			idx = 2;
-#endif
-
 
 	while(idx>=0){
 		if( pSettings->line_exist(section,tex_names[idx]) )
@@ -889,13 +851,9 @@ void CApplication::LoadDraw		()
 	if(g_appLoaded)				return;
 	Device.dwFrame				+= 1;
 
-
 	if(!Device.Begin () )		return;
 
-	if	(g_dedicated_server)
-		Console->OnRender			();
-	else
-		load_draw_internal			();
+	load_draw_internal			();
 
 	Device.End					();
 	CheckCopyProtection			();

@@ -13,8 +13,6 @@
 #include "stalker_animation_data_storage.h"
 #include "client_spawn_manager.h"
 
-ENGINE_API bool g_dedicated_server;
-
 const int max_objects_size			= 2*1024;
 const int max_objects_size_in_save	= 6*1024;
 
@@ -52,14 +50,12 @@ void CLevel::remove_objects	()
 	ph_commander().clear		();
 	ph_commander_scripts().clear();
 
-	if(!g_dedicated_server)
-		space_restriction_manager().clear	();
+	space_restriction_manager().clear	();
 
 	psDeviceFlags.set			(rsDisableObjectsAsCrows, b_stored);
 	g_b_ClearGameCaptions		= true;
 
-	if (!g_dedicated_server)
-		ai().script_engine().collect_all_garbage	();
+	ai().script_engine().collect_all_garbage	();
 
 	stalker_animation_data_storage().clear		();
 	
@@ -68,15 +64,11 @@ void CLevel::remove_objects	()
 	Render->clear_static_wallmarks				();
 
 #ifdef DEBUG
-	if(!g_dedicated_server)
-		if (!client_spawn_manager().registry().empty())
-			client_spawn_manager().dump				();
+	if (!client_spawn_manager().registry().empty())
+		client_spawn_manager().dump				();
 #endif // DEBUG
-	if(!g_dedicated_server)
-	{
-		VERIFY										(client_spawn_manager().registry().empty());
-		client_spawn_manager().clear			();
-	}
+	VERIFY										(client_spawn_manager().registry().empty());
+	client_spawn_manager().clear			();
 
 	for (int i=0; i<6; i++)
 	{
@@ -112,8 +104,7 @@ void CLevel::net_Stop		()
 		xr_delete				(Server);
 	}
 
-	if (!g_dedicated_server)
-		ai().script_engine().collect_all_garbage	();
+	ai().script_engine().collect_all_garbage	();
 
 #ifdef DEBUG
 	show_animation_stats		();
@@ -127,10 +118,6 @@ void CLevel::ClientSend()
 	{
 		if ( !net_HasBandwidth() ) return;
 	}
-
-#ifdef BATTLEYE
-	battleye_system.UpdateClient();
-#endif // BATTLEYE
 
 	NET_Packet				P;
 	u32						start	= 0;
@@ -239,7 +226,6 @@ void CLevel::ClientSave	()
 }
 
 extern		float		phTimefactor;
-extern		BOOL		g_SV_Disable_Auth_Check;
 
 void CLevel::Send		(NET_Packet& P, u32 dwFlags, u32 dwTimeout)
 {
@@ -255,12 +241,6 @@ void CLevel::Send		(NET_Packet& P, u32 dwFlags, u32 dwTimeout)
 		Server->OnMessage	(P,Game().local_svdpnid	);
 	}else											
 		IPureClient::Send	(P,dwFlags,dwTimeout	);
-
-	if (g_pGameLevel && Level().game && GameID() != GAME_SINGLE && !g_SV_Disable_Auth_Check)		{
-		// anti-cheat
-		phTimefactor		= 1.f					;
-		psDeviceFlags.set	(rsConstantFPS,FALSE)	;	
-	}
 }
 
 void CLevel::net_Update	()
@@ -349,15 +329,6 @@ BOOL			CLevel::Connect2Server				(LPCSTR options)
 	Send		(P, net_flags(TRUE, TRUE, TRUE, TRUE));
 	//---------------------------------------------------------------------------
 	return TRUE;
-};
-
-void			CLevel::OnBuildVersionChallenge		()
-{
-	NET_Packet P;
-	P.w_begin				(M_CL_AUTH);
-	u64 auth = 0;
-	P.w_u64					(auth);
-	Send					(P, net_flags(TRUE, TRUE, TRUE, TRUE));
 };
 
 void			CLevel::OnConnectResult				(NET_Packet*	P)

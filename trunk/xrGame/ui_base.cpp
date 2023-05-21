@@ -190,15 +190,9 @@ void ui_core::PopScissor()
 
 ui_core::ui_core()
 {
-	if(!g_dedicated_server)
-	{
-		m_pUICursor					= xr_new<CUICursor>();
-		m_pFontManager				= xr_new<CFontManager>();
-	}else
-	{
-		m_pUICursor					= nullptr;
-		m_pFontManager				= nullptr;
-	}
+	m_pUICursor					= xr_new<CUICursor>();
+	m_pFontManager				= xr_new<CFontManager>();
+
 	m_bPostprocess				= false;
 	
 	OnDeviceReset				();

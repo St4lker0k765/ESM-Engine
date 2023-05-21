@@ -3,8 +3,6 @@
 #include "os_clipboard.h"
 #include "xrdebug.h"
 
-#include "dxerr9.h"
-
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include <malloc.h>
@@ -13,25 +11,9 @@
 
 extern bool shared_str_initialized;
 
-#ifdef __BORLANDC__
-    #	include "d3d9.h"
-    #	include "d3dx9.h"
-    #	include "D3DX_Wrapper.h"
-    #	pragma comment(lib,"EToolsB.lib")
-    #	define DEBUG_INVOKE	DebugBreak()
-        static BOOL			bException	= TRUE;
-    #   define USE_BUG_TRAP
-#else
-    #   define USE_BUG_TRAP
-    #	define DEBUG_INVOKE	__debugbreak()
-        static BOOL			bException	= FALSE;
-#endif
-
-#ifndef _M_AMD64
-#	ifndef __BORLANDC__
-#		pragma comment(lib,"dxerr9.lib")
-#	endif
-#endif
+#define USE_BUG_TRAP
+#define DEBUG_INVOKE	__debugbreak()
+static BOOL			bException	= FALSE;
 
 #include <new.h>
 #include <dbghelp.h>
@@ -39,12 +21,8 @@ extern bool shared_str_initialized;
 #include <Shlwapi.h>
 
 #ifdef USE_BUG_TRAP
-#	include "../3rd party/BugTrap/BugTrap/BugTrap.h"						// for BugTrap functionality
-    #ifndef __BORLANDC__
-        #	pragma comment(lib,"BugTrap.lib")		// Link to ANSI DLL
-    #else
-        #	pragma comment(lib,"BugTrapB.lib")		// Link to ANSI DLL
-    #endif
+#include "../3rd party/BugTrap/BugTrap/BugTrap.h"						// for BugTrap functionality
+#pragma comment(lib,"BugTrap.lib")		// Link to ANSI DLL
 #endif // USE_BUG_TRAP
 
 #pragma comment(lib, "shlwapi")
@@ -387,19 +365,11 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 
 LPCSTR xrDebug::error2string	(long code)
 {
-	LPCSTR				result	= nullptr;
-	static	string1024	desc_storage;
+	static string1024 desc_storage = "";
 
-#ifdef _M_AMD64
-#else
-	result				= DXGetErrorDescription9	(code);
-#endif
-	if (nullptr==result) 
-	{
-		FormatMessage	(FORMAT_MESSAGE_FROM_SYSTEM,nullptr,code,0,desc_storage,sizeof(desc_storage)-1,nullptr);
-		result			= desc_storage;
-	}
-	return		result	;
+	FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER, nullptr, code, 0, desc_storage, 0, nullptr);
+
+	return desc_storage;
 }
 
 void xrDebug::error		(long hr, const char* expr, const char *file, int line, const char *function, bool &ignore_always)

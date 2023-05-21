@@ -137,19 +137,16 @@ bool	CLevel::net_start_client4				()
 
 bool	CLevel::net_start_client5				()
 {
-	if(connected_to_server){
+	if(connected_to_server)
+	{
 		// HUD
-
 		// Textures
-		if	(!g_dedicated_server)
-		{
-			pHUD->Load							();
-//			g_pGamePersistent->LoadTitle				("st_loading_textures");
-			g_pGamePersistent->LoadTitle();
-			Device.m_pRender->DeferredLoad(FALSE);
-			Device.m_pRender->ResourcesDeferredUpload();
-			LL_CheckTextures					();
-		}
+		pHUD->Load							();
+//		g_pGamePersistent->LoadTitle				("st_loading_textures");
+		g_pGamePersistent->LoadTitle();
+		Device.m_pRender->DeferredLoad(FALSE);
+		Device.m_pRender->ResourcesDeferredUpload();
+		LL_CheckTextures					();
 	}
 	return true;
 }

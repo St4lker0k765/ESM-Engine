@@ -10,7 +10,6 @@
 #include "../../xrNetServer/net_server.h"
 #include "game_sv_base.h"
 #include "id_generator.h"
-#include "battleye.h"
 
 #ifdef DEBUG
 //. #define SLOW_VERIFY_ENTITIES
@@ -142,7 +141,6 @@ public:
 	void					SendConnectResult		(IClient* CL, u8 res, u8 res1, const char* ResultStr);
 
 	void					AttachNewClient			(IClient* CL);
-	virtual void			OnBuildVersionRespond				(IClient* CL, NET_Packet& P);
 protected:
 	bool					CheckAdminRights		(const shared_str& user, const shared_str& pass, string512 reason);
 	virtual IClient*		new_client				( SClientConnectData* cl_data );
@@ -150,10 +148,6 @@ protected:
 	virtual bool			Check_ServerAccess( IClient* CL, string512& reason )	{ return true; }
 
 	virtual bool			NeedToCheckClient_GameSpy_CDKey		(IClient* CL)	{ return false; }
-	virtual void			Check_GameSpy_CDKey_Success			(IClient* CL);
-	
-	virtual bool			NeedToCheckClient_BuildVersion		(IClient* CL);
-	virtual void			Check_BuildVersion_Success			(IClient* CL);
 
 	void					SendConnectionData		(IClient* CL);
 	void					OnChatMessage			(NET_Packet* P, xrClientData* CL);
@@ -166,7 +160,6 @@ public:
 	// extended functionality
 	virtual u32				OnMessage			(NET_Packet& P, ClientID sender);	// Non-Zero means broadcasting with "flags" as returned
 	virtual void			OnCL_Connected		(IClient* CL);
-	virtual void			OnCL_Disconnected	(IClient* CL);
 	virtual bool			OnCL_QueryHost		();
 	virtual void			SendTo_LL			(ClientID ID, void* data, u32 size, u32 dwFlags=DPNSEND_GUARANTEED, u32 dwTimeout=0);
 
@@ -203,7 +196,6 @@ public:
 	virtual void			Assign_ServerType	( string512& res ) {};
 	virtual bool			HasPassword			()	{ return false; }
 	virtual bool			HasProtected		()	{ return false; }
-			bool			HasBattlEye			();
 
 	virtual void			GetServerInfo		( CServerInfo* si );
 public:

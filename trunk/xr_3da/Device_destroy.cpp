@@ -66,9 +66,7 @@ void CRenderDevice::Reset		(bool precache)
 	u32 tm_end				= TimerAsync();
 	Msg						("*** RESET [%d ms]",tm_end-tm_start);
 
-#ifndef DEDICATED_SERVER
 	ShowCursor	(false);
-#endif
 		
 	seqDeviceReset.Process(rp_DeviceReset);
 

@@ -318,9 +318,6 @@
     <ClInclude Include="WaveForm.h">
       <Filter>Render\Execution &amp; 3D\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="tntQAVI.h">
-      <Filter>Render\Execution &amp; 3D\Shaders\Textures</Filter>
-    </ClInclude>
     <ClInclude Include="xrImage_Resampler.h">
       <Filter>Render\Execution &amp; 3D\Shaders\Textures</Filter>
     </ClInclude>
@@ -566,9 +563,6 @@
     <ClCompile Include="MbHelpers.cpp">
       <Filter>Render\Font output</Filter>
     </ClCompile>
-    <ClCompile Include="tntQAVI.cpp">
-      <Filter>Render\Execution &amp; 3D\Shaders\Textures</Filter>
-    </ClCompile>
     <ClCompile Include="xrImage_Resampler.cpp">
       <Filter>Render\Execution &amp; 3D\Shaders\Textures</Filter>
     </ClCompile>
@@ -642,9 +636,6 @@
       <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
     </ClCompile>
     <ClCompile Include="Device_overdraw.cpp">
-      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="Device_wndproc.cpp">
       <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
     </ClCompile>
     <ClCompile Include="StatGraph.cpp">

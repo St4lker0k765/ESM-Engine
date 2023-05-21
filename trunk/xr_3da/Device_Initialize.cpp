@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "resource.h"
 
-//extern LRESULT CALLBACK WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ); //TODO xrMorrazzz: Delete this extern! Callback WndProc moved to Device_Initialize.cpp
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)

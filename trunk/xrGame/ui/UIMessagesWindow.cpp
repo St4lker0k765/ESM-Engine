@@ -18,7 +18,6 @@
 #include "UIColorAnimatorWrapper.h"
 #include "../InfoPortion.h"
 #include "../string_table.h"
-#include "../game_cl_artefacthunt.h"
 
 CUIMessagesWindow::CUIMessagesWindow(){
 	m_pChatLog = nullptr;

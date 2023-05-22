@@ -46,14 +46,13 @@ private:
 	BOOL						m_bCDKey_Initialized;
 	void						CDKey_Init						();
 	void						CDKey_ShutDown					();
-	void						SendChallengeString_2_Client	(IClient* C);
-	
+
 	CGameSpy_GCD_Server			m_GCDServer;
 	CGameSpy_QR2				m_QR2;
 	int							iGameSpyBasePort;
 
 protected:
-	virtual bool				NeedToCheckClient_GameSpy_CDKey	(IClient* CL);
+//	virtual bool				NeedToCheckClient_GameSpy_CDKey	(IClient* CL);
 	virtual bool				Check_ServerAccess( IClient* CL, string512& reason );
 
 public:
@@ -66,8 +65,6 @@ public:
 	bool						m_bCheckCDKey;
 
 	int							GetPlayersCount					();
-	void						OnCDKey_Validation				(int LocalID, int res, char* errormsg);
-	void						OnCDKey_ReValidation			(int LocalID, int hint, char* challenge);
 	CGameSpy_QR2*				QR2() {return &m_QR2;} ;
 
 	CGameSpy_GCD_Server*		GCD_Server()					{ return &m_GCDServer; }
@@ -89,7 +86,6 @@ public:
 	virtual void			OnCL_Disconnected	(IClient* C);
 	virtual IClient*		client_Create		();
 
-	virtual u32				OnMessage			(NET_Packet& P, ClientID/*DPNID*/ sender);	// Non-Zero means broadcasting with "flags" as returned
 	virtual void			OnError_Add			(qr2_error_t error) {};
 };
 

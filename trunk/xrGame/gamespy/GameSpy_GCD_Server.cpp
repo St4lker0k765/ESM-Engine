@@ -71,23 +71,27 @@ void	CGameSpy_GCD_Server::CreateRandomChallenge(char* challenge, int nchars)
 }
 
 //--------------------------- CD Key callbacks -----------------------------------
+/*
 void __cdecl ClientAuthorizeCallback(int productid, int localid, int authenticated, char *errmsg, void *instance)
 {
 	xrGameSpyServer* pServer = (xrGameSpyServer*) (instance);
 	if (pServer) pServer->OnCDKey_Validation(localid, authenticated, errmsg);
 };
 
-void __cdecl ClientReAuthorizeCallback(int gameid, int localid, int hint, char *challenge, void *instance)
+
+ *void __cdecl ClientReAuthorizeCallback(int gameid, int localid, int hint, char *challenge, void *instance)
 {
 	xrGameSpyServer* pServer = (xrGameSpyServer*) (instance);
 	if (pServer) pServer->OnCDKey_ReValidation(localid, hint, challenge);
 };
+
 
 void	CGameSpy_GCD_Server::AuthUser(int localid, unsigned int userip, char *challenge, char *response, 
 									  void *instance)
 {
 	xrGS_gcd_authenticate_user(localid, userip, challenge, response, ClientAuthorizeCallback, ClientReAuthorizeCallback, instance);
 };
+*/
 
 void	CGameSpy_GCD_Server::ReAuthUser(int localid, int hint,char *response)
 {

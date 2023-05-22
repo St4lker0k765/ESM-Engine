@@ -236,10 +236,6 @@ void CLevel::ClientReceive()
 			{
 				ClientSave			();
 			}break;
-		case M_GAMESPY_CDKEY_VALIDATION_CHALLENGE:
-			{
-				OnGameSpyChallenge(P);
-			}break;
 		case M_CLIENT_CONNECT_RESULT:
 			{
 				OnConnectResult(P);

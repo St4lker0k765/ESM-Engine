@@ -38,7 +38,7 @@ IC	bool compare_safe(const luabind::object &o1 , const luabind::object &o2)
 #	define process_error
 #endif
 
-#define function_body_ex(_1,_2,_3,_4,_c,_5,_6) \
+/*#define function_body_ex(_1,_2,_3,_4,_c,_5,_6) \
 	_1 _3 _2\
 	IC return_type operator() (_4) _c\
 	{\
@@ -67,7 +67,7 @@ IC	bool compare_safe(const luabind::object &o1 , const luabind::object &o2)
 
 #define function_body(_1,_2,_3,_4,_5,_6) \
 	function_body_ex(_1,_2,_3,_4,const,_5,_6)\
-	function_body_ex(_1,_2,_3,_4,,_5,_6)
+	function_body_ex(_1,_2,_3,_4,,_5,_6)*/
 
 template <typename _return_type>
 class CScriptCallbackEx_ {

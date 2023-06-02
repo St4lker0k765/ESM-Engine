@@ -26,7 +26,6 @@
 #include "UIMessagesWindow.h"
 #include "UIMainIngameWnd.h"
 #include "UITabButton.h"
-#include "xrGame/gamepersistent.h"
 
 #define		PDA_XML					"pda.xml"
 u32			g_pda_info_state		= 0;
@@ -166,8 +165,6 @@ void CUIPdaWnd::Show()
 	InventoryUtilities::SendInfoToActor("ui_pda");
 
 	inherited::Show();
-
-	GamePersistent().SetPickableEffectorDOF(true);
 }
 
 void CUIPdaWnd::Hide()
@@ -177,7 +174,6 @@ void CUIPdaWnd::Hide()
 	InventoryUtilities::SendInfoToActor("ui_pda_hide");
 	HUD().GetUI()->UIMainIngameWnd->SetFlashIconState_(CUIMainIngameWnd::efiPdaTask, false);
 
-	GamePersistent().SetPickableEffectorDOF(false);
 }
 
 void CUIPdaWnd::UpdateDateTime()

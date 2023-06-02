@@ -19,7 +19,6 @@
 #include "../inventory.h"
 
 #include "UIInventoryUtilities.h"
-#include "xrGame/gamepersistent.h"
 using namespace InventoryUtilities;
 
 
@@ -320,8 +319,6 @@ void CUIInventoryWnd::Show()
 
 	Update								();
 	PlaySnd								(eInvSndOpen);
-
-	GamePersistent().SetPickableEffectorDOF(true);
 }
 
 void CUIInventoryWnd::Hide()
@@ -348,8 +345,6 @@ void CUIInventoryWnd::Hide()
 
 		pActor->SetWeaponHideState(INV_STATE_INV_WND, false);
 	}
-
-	GamePersistent().SetPickableEffectorDOF(false);
 }
 
 void CUIInventoryWnd::AttachAddon(PIItem item_to_upgrade)

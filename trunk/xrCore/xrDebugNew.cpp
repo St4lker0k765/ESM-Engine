@@ -376,7 +376,7 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		ifdef USE_BUG_TRAP
 			BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
-			DEBUG_INVOKE;
+		DEBUG_INVOKE;
 #	endif // USE_OWN_ERROR_MESSAGE_WINDOW
 #endif
 

@@ -29,8 +29,8 @@ ParticleEffect*	CParticleManager::GetEffectPtr(int effect_id)
 
 ParticleActions* CParticleManager::GetActionListPtr(int a_list_num)
 {
-	R_ASSERT(a_list_num>=0&&a_list_num<(int)m_alist_vec.size());
-	return m_alist_vec[a_list_num];
+	R_ASSERT(a_list_num>=0&&a_list_num<(int)alist_vec.size());
+	return alist_vec[a_list_num];
 }
 
 // create
@@ -58,28 +58,23 @@ void CParticleManager::DestroyEffect(int effect_id)
 int	CParticleManager::CreateActionList()
 {
 	int list_id 		= -1;
-	for(u32 i=0; i<m_alist_vec.size(); ++i)
-        if(!m_alist_vec[i])
-		{
-			list_id=i;
-			break;
-		}
+	for(int i=0; i<(int)alist_vec.size(); i++)
+		if(!alist_vec[i]){ list_id=i; break;}
 	
-    if (list_id<0)
-    {
+    if (list_id<0){
         // Couldn't find a big enough gap. Reallocate.
-        list_id		= m_alist_vec.size();
-        m_alist_vec.push_back	(0);
+        list_id		= alist_vec.size();
+        alist_vec.push_back	(0);
     }
 
-    m_alist_vec[list_id]	= xr_new<ParticleActions>();
+    alist_vec[list_id]	= xr_new<ParticleActions>();
 	
 	return list_id;
 }
 void CParticleManager::DestroyActionList(int alist_id)
 {
-	R_ASSERT(alist_id>=0&&alist_id<(int)m_alist_vec.size());
-    xr_delete(m_alist_vec[alist_id]);
+	R_ASSERT(alist_id>=0&&alist_id<(int)alist_vec.size());
+    xr_delete(alist_vec[alist_id]);
 }
 
 // control
@@ -89,31 +84,24 @@ void CParticleManager::PlayEffect(int effect_id, int alist_id)
 //    ParticleEffect* pe		= GetEffectPtr(effect_id);
 	// Execute the specified action list.
 	ParticleActions* pa	= GetActionListPtr(alist_id);
-    VERIFY(pa);
 	if(pa == NULL)		return; // ERROR
-    pa->lock();
 	// Step through all the actions in the action list.
-	for(PAVecIt it=pa->begin(); it!=pa->end(); ++it)
-    {
-        VERIFY((*it));
+	for(PAVecIt it=pa->begin(); it!=pa->end(); it++){
 		switch((*it)->type){
 		case PASourceID: 	static_cast<PASource*>(*it)->m_Flags.set(PASource::flSilent,FALSE); break;
 		case PAExplosionID: static_cast<PAExplosion*>(*it)->age = 0.f; break;
 		case PATurbulenceID:static_cast<PATurbulence*>(*it)->age = 0.f; break;
 		}
 	}
-    pa->unlock();
 }
 
 void CParticleManager::StopEffect(int effect_id, int alist_id, BOOL deffered)
 {
     // Execute the specified action list.
     ParticleActions* pa	= GetActionListPtr(alist_id);
-    VERIFY(pa);
     if(pa == NULL)		return; // ERROR
-    pa->lock();
     // Step through all the actions in the action list.
-    for(PAVecIt it=pa->begin(); it!=pa->end(); ++it){
+    for(PAVecIt it=pa->begin(); it!=pa->end(); it++){
         switch((*it)->type){
         case PASourceID: static_cast<PASource*>(*it)->m_Flags.set(PASource::flSilent,TRUE);		break;
         }
@@ -123,7 +111,6 @@ void CParticleManager::StopEffect(int effect_id, int alist_id, BOOL deffered)
         ParticleEffect* pe		= GetEffectPtr(effect_id);
         pe->p_count				= 0;
     }
-    pa->unlock();
 }
 
 // update&render
@@ -131,20 +118,9 @@ void CParticleManager::Update(int effect_id, int alist_id, float dt)
 {
     ParticleEffect* pe	= GetEffectPtr(effect_id);
     ParticleActions* pa	= GetActionListPtr(alist_id);
-
-    VERIFY(pe);
-    VERIFY(pa);
-
-    pa->lock();
-
 	// Step through all the actions in the action list.
-    float kill_old_time = 1.0f;
 	for(PAVecIt it=pa->begin(); it!=pa->end(); it++)
-    {
-        VERIFY((*it));
-        (*it)->Execute(pe, dt, kill_old_time);
-    }
-    pa->unlock();
+    	(*it)->Execute	(pe,dt);
 }
 void CParticleManager::Render(int effect_id)
 {
@@ -154,10 +130,8 @@ void CParticleManager::Transform(int alist_id, const Fmatrix& full, const Fvecto
 {
 	// Execute the specified action list.
 	ParticleActions* pa	= GetActionListPtr(alist_id);
-    VERIFY(pa);
 
 	if(pa == NULL)		return; // ERROR
-    pa->lock();
 
 	Fmatrix mT;			mT.translate(full.c);
 
@@ -173,7 +147,6 @@ void CParticleManager::Transform(int alist_id, const Fmatrix& full, const Fvecto
 			break;
 		}
 	}
-    pa->unlock();
 }
 
 // effect
@@ -252,10 +225,8 @@ u32 CParticleManager::LoadActions(int alist_id, IReader& R)
 {
 	// Execute the specified action list.
 	ParticleActions* pa		= GetActionListPtr(alist_id);
-    VERIFY(pa);
     pa->clear				();
-    if (R.length())
-    {
+    if (R.length()){
         u32 cnt					= R.r_u32();
         for (u32 k=0; k<cnt; k++){
             ParticleAction* act	= CreateAction	((PActionEnum)R.r_u32());
@@ -269,12 +240,9 @@ void CParticleManager::SaveActions(int alist_id, IWriter& W)
 {
 	// Execute the specified action list.
 	ParticleActions* pa		= GetActionListPtr(alist_id);
-    VERIFY(pa);
-    pa->lock();
     W.w_u32					(pa->size());
     for (PAVecIt it=pa->begin(); it!=pa->end(); it++)
         (*it)->Save			(W);
-    pa->unlock();
 }
 
 

@@ -116,7 +116,7 @@ DWORD ttapi_Init()
 	char szThreadName[64];
 	DWORD dwThreadId = 0;
 
-	//SetThreadIdealProcessor( GetCurrentThread() , 0 );
+	SetThreadIdealProcessor( GetCurrentThread() , 0 );
 
 	// Creating threads
 	for ( DWORD i = 0 ; i < ttapi_threads_count ; i++ ) {
@@ -128,7 +128,7 @@ DWORD ttapi_Init()
 			return 0;
 
 		// Setting preferred processor
-		//SetThreadIdealProcessor( ttapi_threads_handles[ i ] , i + 1 );
+		SetThreadIdealProcessor( ttapi_threads_handles[ i ] , i + 1 );
 
 		// Setting thread name
 		sprintf_s( szThreadName , "Helper Thread #%u" , i );

@@ -284,12 +284,12 @@ half3   p_hemi          (float2 tc)                         {
 
 half   get_hemi( half4 lmh)
 {
-	return (lmh.x + lmh.y + lmh.z) / 3;
+	return lmh.a;
 }
 
 half   get_sun( half4 lmh)
 {
-	return lmh.a;
+	return lmh.g;
 }
 
 //	contrast function

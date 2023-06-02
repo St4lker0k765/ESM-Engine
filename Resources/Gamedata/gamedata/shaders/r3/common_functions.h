@@ -82,12 +82,12 @@ float3   p_hemi( float2 tc )
 
 float   get_hemi( float4 lmh)
 {
-	return (lmh.x + lmh.y + lmh.z) / 3;
+	return lmh.a;
 }
 
 float   get_sun( float4 lmh)
 {
-	return lmh.a;
+	return lmh.g;
 }
 
 float3	v_hemi(float3 n)

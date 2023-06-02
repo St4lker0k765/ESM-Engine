@@ -9,7 +9,6 @@
 #ifndef SCRIPT_CALLBACK_EX_GENERATORS
 #define SCRIPT_CALLBACK_EX_GENERATORS
 
-/*
 #define param_generator0(a,b,c) 
 function_body(, , param_generator0(left_comment, right_comment, typename _), param_generator0(_, , __), , param_generator0(left_comment, right_comment, __))
 
@@ -46,5 +45,4 @@ function_body(template <,>,param_generator8(left_comment,right_comment,typename 
 #undef param_generator2
 #undef param_generator1
 #undef param_generator0
-*/
 #endif // SCRIPT_CALLBACK_EX_GENERATORS

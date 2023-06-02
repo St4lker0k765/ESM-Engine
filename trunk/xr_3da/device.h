@@ -93,6 +93,14 @@ public:
 	Fmatrix									mView;
 	Fmatrix									mProject;
 	Fmatrix									mFullTransform;
+
+	// Copies of corresponding members. Used for synchronization.
+	Fvector									vCameraPosition_saved;
+
+	Fmatrix									mView_saved;
+	Fmatrix									mProject_saved;
+	Fmatrix									mFullTransform_saved;
+
 	Fmatrix mInvFullTransform;
 	float									fFOV;
 	float									fASPECT;
@@ -168,6 +176,10 @@ public:
 		if (I != seqParallel.end())
 			seqParallel.erase	(I);
 	}
+public:
+	void xr_stdcall		on_idle();
+private:
+	void					message_loop();
 };
 
 extern		ENGINE_API		CRenderDevice		Device;

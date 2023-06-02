@@ -2,6 +2,7 @@
 
 #include "../../xrCore/fixedmap.h"
 
+/*
 //#ifndef USE_MEMORY_MONITOR
 #	define USE_DOUG_LEA_ALLOCATOR_FOR_RENDER
 //#endif // USE_MEMORY_MONITOR
@@ -61,6 +62,10 @@
 #	define render_alloc				xalloc
 	typedef xr_allocator			render_allocator;
 #endif // USE_DOUG_LEA_ALLOCATOR_FOR_RENDER
+*/
+
+#define render_alloc xalloc
+typedef xr_allocator render_allocator;
 
 class dxRender_Visual;
 

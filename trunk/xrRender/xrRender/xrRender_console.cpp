@@ -641,9 +641,7 @@ public:
 	CCC_Fog_Reload(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
 	virtual void Execute(LPCSTR args) 
 	{
-#ifdef DX10_FLUID_ENABLE
 		FluidManager.UpdateProfiles();
-#endif
 	}
 };
 #endif	//	DEBUG

@@ -19,7 +19,7 @@ struct bonesBone {
 	bonesAxis		params;
 	u8				axis;
 
-	bonesBone	() {bone = nullptr;}
+	bonesBone	() {bone = 0;}
 	void	Set			(CBoneInstance *b, u8 a, float ty, float cy, float r_s);
 	bool	NeedTurn	();					// необходим поворот по оси p_axis?
 	void	Turn		(u32 dt);			// выполнить поворот по оси p_axis

@@ -12,14 +12,14 @@
 #ifdef DEBUG
 #include "PHDebug.h"
 #endif
-CIKLimbsController::CIKLimbsController(): m_object(nullptr), m_legs_blend(nullptr)
+CIKLimbsController::CIKLimbsController(): m_object(0), m_legs_blend(0)
 {
 	
 }
 
 void CIKLimbsController::Create( CGameObject* O )
 {
-	m_legs_blend	 = nullptr;
+	m_legs_blend	 = 0;
 	
 	IKinematics* K=smart_cast<IKinematicsAnimated*>(O->Visual())->dcast_PKinematics();;
 	m_object = O;
@@ -117,7 +117,7 @@ void	CIKLimbsController::LimbUpdate( CIKLimb &L, u16 i )
 IC void	update_blend (CBlend* &b)
 {
 	if(b && CBlend::eFREE_SLOT == b->blend_state())
-		b = nullptr;
+		b = 0;
 }
 void CIKLimbsController::Calculate( )
 {

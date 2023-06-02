@@ -73,11 +73,11 @@ CScriptGameObject *CScriptGameObject::best_weapon()
 	CObjectHandler	*object_handler = smart_cast<CAI_Stalker*>(&object());
 	if (!object_handler) {
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CScriptEntity : cannot access class member best_weapon!");
-		return			(nullptr);
+		return			(0);
 	}
 	else {
-		CGameObject		*game_object = object_handler->best_weapon() ? &object_handler->best_weapon()->object() : nullptr;
-		return			(game_object ? game_object->lua_game_object() : nullptr);
+		CGameObject		*game_object = object_handler->best_weapon() ? &object_handler->best_weapon()->object() : 0;
+		return			(game_object ? game_object->lua_game_object() : 0);
 	}
 }
 
@@ -96,7 +96,7 @@ void CScriptGameObject::set_item		(MonsterSpace::EObjectAction object_action, CS
 	if (!object_handler)
 		ai().script_engine().script_log					(ScriptStorage::eLuaMessageTypeError,"CObjectHandler : cannot access class member set_item!");
 	else
-		object_handler->set_goal(object_action,lua_game_object ? &lua_game_object->object() : nullptr);
+		object_handler->set_goal(object_action,lua_game_object ? &lua_game_object->object() : 0);
 }
 
 void CScriptGameObject::set_item(MonsterSpace::EObjectAction object_action, CScriptGameObject *lua_game_object, u32 queue_size)
@@ -105,7 +105,7 @@ void CScriptGameObject::set_item(MonsterSpace::EObjectAction object_action, CScr
 	if (!object_handler)
 		ai().script_engine().script_log					(ScriptStorage::eLuaMessageTypeError,"CObjectHandler : cannot access class member set_item!");
 	else
-		object_handler->set_goal(object_action,lua_game_object ? &lua_game_object->object() : nullptr, queue_size, queue_size);
+		object_handler->set_goal(object_action,lua_game_object ? &lua_game_object->object() : 0, queue_size, queue_size);
 }
 
 void CScriptGameObject::set_item(MonsterSpace::EObjectAction object_action, CScriptGameObject *lua_game_object, u32 queue_size, u32 queue_interval)
@@ -114,7 +114,7 @@ void CScriptGameObject::set_item(MonsterSpace::EObjectAction object_action, CScr
 	if (!object_handler)
 		ai().script_engine().script_log					(ScriptStorage::eLuaMessageTypeError,"CObjectHandler : cannot access class member set_item!");
 	else
-		object_handler->set_goal(object_action,lua_game_object ? &lua_game_object->object() : nullptr, queue_size, queue_size, queue_interval, queue_interval);
+		object_handler->set_goal(object_action,lua_game_object ? &lua_game_object->object() : 0, queue_size, queue_size, queue_interval, queue_interval);
 }
 
 void CScriptGameObject::play_cycle(LPCSTR anim, bool mix_in)
@@ -176,21 +176,21 @@ CScriptGameObject *CScriptGameObject::GetBestEnemy()
 {
 	const CCustomMonster	*monster = smart_cast<const CCustomMonster*>(&object());
 	if (!monster)
-		return				(nullptr);
+		return				(0);
 
 	if (monster->memory().enemy().selected())
 		return				(monster->memory().enemy().selected()->lua_game_object());
-	return					(nullptr);
+	return					(0);
 }
 
 const CDangerObject *CScriptGameObject::GetBestDanger()
 {
 	const CCustomMonster	*monster = smart_cast<const CCustomMonster*>(&object());
 	if (!monster)
-		return				(nullptr);
+		return				(0);
 
 	if (!monster->memory().danger().selected())
-		return				(nullptr);
+		return				(0);
 
 	return					(monster->memory().danger().selected());
 }
@@ -199,11 +199,11 @@ CScriptGameObject *CScriptGameObject::GetBestItem()
 {
 	const CCustomMonster	*monster = smart_cast<const CCustomMonster*>(&object());
 	if (!monster)
-		return				(nullptr);
+		return				(0);
 
 	if (monster->memory().item().selected())
 		return				(monster->memory().item().selected()->lua_game_object());
-	return					(nullptr);
+	return					(0);
 }
 
 u32 CScriptGameObject::memory_time(const CScriptGameObject &lua_game_object)
@@ -347,7 +347,7 @@ CHolderCustom* CScriptGameObject::get_current_holder()
 	if(actor)
 		return actor->Holder();
 	else
-		return nullptr;
+		return NULL;
 }
 
 void CScriptGameObject::set_ignore_monster_threshold	(float ignore_monster_threshold)

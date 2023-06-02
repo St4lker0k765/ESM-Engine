@@ -58,7 +58,7 @@ void xrServer::Process_event_destroy	(NET_Packet& P, ClientID sender, u32 time, 
 			Process_event_destroy		(P,sender,time,*e_dest->children.begin(), pEventPack);
 	};
 
-	if (0xffff == parent_id && nullptr == pEventPack) 
+	if (0xffff == parent_id && NULL == pEventPack) 
 	{
 		SendBroadcast				(BroadcastCID,P,MODE);
 	}
@@ -83,7 +83,7 @@ void xrServer::Process_event_destroy	(NET_Packet& P, ClientID sender, u32 time, 
 		pEventPack->w(&tmpP.B.data, tmpP.B.count);
 	};
 
-	if (nullptr == pEPack && nullptr != pEventPack)
+	if (NULL == pEPack && NULL != pEventPack)
 	{
 		SendBroadcast				(BroadcastCID, *pEventPack, MODE);
 	}

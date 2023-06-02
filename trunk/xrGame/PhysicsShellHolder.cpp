@@ -83,7 +83,7 @@ void CPhysicsShellHolder::create_physic_shell	()
 
 void CPhysicsShellHolder::init			()
 {
-	m_pPhysicsShell				= nullptr;
+	m_pPhysicsShell				=	NULL		;
 	b_sheduled					=	false		;
 }
 void CPhysicsShellHolder::correct_spawn_pos()
@@ -228,7 +228,7 @@ u16	CPhysicsShellHolder::PHGetSyncItemsNumber()
 CPHSynchronize*	CPhysicsShellHolder::PHGetSyncItem	(u16 item)
 {
 	if(m_pPhysicsShell) return m_pPhysicsShell->get_ElementSync(item);
-	else				return nullptr;
+	else				return 0;
 }
 void	CPhysicsShellHolder::PHUnFreeze	()
 {
@@ -244,7 +244,7 @@ void	CPhysicsShellHolder::PHFreeze()
 void CPhysicsShellHolder::OnChangeVisual()
 {
 	inherited::OnChangeVisual();
-	if (nullptr==renderable.visual) 
+	if (0==renderable.visual) 
 	{
 		if(m_pPhysicsShell)m_pPhysicsShell->Deactivate();
 		xr_delete(m_pPhysicsShell);

@@ -322,7 +322,7 @@ void CRender::render_sun				()
 		ex_project.build_projection	(deg2rad(Device.fFOV/* *Device.fASPECT*/),Device.fASPECT,VIEWPORT_NEAR,_far_);
 		//VIEWPORT_NEAR
 		ex_full.mul					(ex_project,Device.mView);
-		D3DXMatrixInverse			((D3DXMATRIX*)&ex_full_inverse,nullptr,(D3DXMATRIX*)&ex_full);
+		D3DXMatrixInverse			((D3DXMATRIX*)&ex_full_inverse,0,(D3DXMATRIX*)&ex_full);
 	}
 
 	// Compute volume(s) - something like a frustum for infinite directional light
@@ -353,7 +353,7 @@ void CRender::render_sun				()
 
 		// Search for default sector - assume "default" or "outdoor" sector is the largest one
 		//. hack: need to know real outdoor sector
-		CSector*	largest_sector		= nullptr;
+		CSector*	largest_sector		= 0;
 		float		largest_sector_vol	= 0;
 		for		(u32 s=0; s<Sectors.size(); s++)
 		{
@@ -428,7 +428,7 @@ void CRender::render_sun				()
 			add_Geometry		(root);
 		}
 	}
-	set_Recorder						(nullptr);
+	set_Recorder						(NULL);
 
 	//	Prepare to interact with D3DX code
 	const D3DXMATRIX&	m_View			= *((D3DXMATRIX*)(&Device.mView));
@@ -675,7 +675,7 @@ void CRender::render_sun				()
 			//x_project.build_projection	(deg2rad(Device.fFOV/* *Device.fASPECT*/),Device.fASPECT,ps_r2_sun_near,ps_r2_sun_near+tweak_guaranteed_range);
 			x_project.build_projection	(deg2rad(Device.fFOV/* *Device.fASPECT*/),Device.fASPECT,VIEWPORT_NEAR,ps_r2_sun_near+tweak_guaranteed_range);
 			x_full.mul					(x_project,Device.mView);
-			D3DXMatrixInverse			((D3DXMATRIX*)&x_full_inverse,nullptr,(D3DXMATRIX*)&x_full);
+			D3DXMatrixInverse			((D3DXMATRIX*)&x_full_inverse,0,(D3DXMATRIX*)&x_full);
 		}
 		for		(int e=0; e<8; e++)
 		{
@@ -779,7 +779,7 @@ void CRender::render_sun_near	()
 	{
 		ex_project.build_projection	(deg2rad(Device.fFOV/* *Device.fASPECT*/),Device.fASPECT,VIEWPORT_NEAR,ps_r2_sun_near); 
 		ex_full.mul					(ex_project,Device.mView);
-		D3DXMatrixInverse			((D3DXMATRIX*)&ex_full_inverse,nullptr,(D3DXMATRIX*)&ex_full);
+		D3DXMatrixInverse			((D3DXMATRIX*)&ex_full_inverse,0,(D3DXMATRIX*)&ex_full);
 	}
 
 	// Compute volume(s) - something like a frustum for infinite directional light
@@ -819,7 +819,7 @@ void CRender::render_sun_near	()
 
 		// Search for default sector - assume "default" or "outdoor" sector is the largest one
 		//. hack: need to know real outdoor sector
-		CSector*	largest_sector		= nullptr;
+		CSector*	largest_sector		= 0;
 		float		largest_sector_vol	= 0;
 		for		(u32 s=0; s<Sectors.size(); s++)
 		{
@@ -904,7 +904,7 @@ void CRender::render_sun_near	()
 			view_dim/2.f,	view_dim/2.f,		0.0f,		1.0f
 		};
 		Fmatrix				m_viewport_inv;
-		D3DXMatrixInverse	((D3DXMATRIX*)&m_viewport_inv,nullptr,(D3DXMATRIX*)&m_viewport);
+		D3DXMatrixInverse	((D3DXMATRIX*)&m_viewport_inv,0,(D3DXMATRIX*)&m_viewport);
 
 		// snap view-position to pixel
 		cull_xform.mul		(mdir_Project,mdir_View	);
@@ -1055,7 +1055,7 @@ void CRender::render_sun_cascade ( u32 cascade_ind )
 	{
 		ex_project = Device.mProject;
 		ex_full.mul					(ex_project,Device.mView);
-		D3DXMatrixInverse			((D3DXMATRIX*)&ex_full_inverse,nullptr,(D3DXMATRIX*)&ex_full);
+		D3DXMatrixInverse			((D3DXMATRIX*)&ex_full_inverse,0,(D3DXMATRIX*)&ex_full);
 	}
 
 	// Compute volume(s) - something like a frustum for infinite directional light
@@ -1078,7 +1078,7 @@ void CRender::render_sun_cascade ( u32 cascade_ind )
 		//******************************* Need to be placed after cuboid built **************************
 		// Search for default sector - assume "default" or "outdoor" sector is the largest one
 		//. hack: need to know real outdoor sector
-		CSector*	largest_sector		= nullptr;
+		CSector*	largest_sector		= 0;
 		float		largest_sector_vol	= 0;
 		for		(u32 s=0; s<Sectors.size(); s++)
 		{
@@ -1167,7 +1167,7 @@ void CRender::render_sun_cascade ( u32 cascade_ind )
 			view_dim/2.f,	view_dim/2.f,		0.0f,		1.0f
 		};
 		Fmatrix				m_viewport_inv;
-		D3DXMatrixInverse	((D3DXMATRIX*)&m_viewport_inv,nullptr,(D3DXMATRIX*)&m_viewport);
+		D3DXMatrixInverse	((D3DXMATRIX*)&m_viewport_inv,0,(D3DXMATRIX*)&m_viewport);
 
 		// snap view-position to pixel
 		cull_xform.mul		(mdir_Project,mdir_View	);

@@ -187,7 +187,7 @@ void	CBlender_Tree::Compile	(CBlender_Compile& C)
 	case SE_R2_NORMAL_HQ:	// deffer
 		if (bUseATOC)
 		{
-			uber_deffer		(C,true,tvs,"base_atoc",oBlend.value,nullptr,true);
+			uber_deffer		(C,true,tvs,"base_atoc",oBlend.value,0,true);
 			C.r_Stencil		( TRUE,D3DCMP_ALWAYS,0xff,0x7f,D3DSTENCILOP_KEEP,D3DSTENCILOP_REPLACE,D3DSTENCILOP_KEEP);
 			C.r_ColorWriteEnable(false, false, false, false);
 			C.r_StencilRef	(0x01);
@@ -196,7 +196,7 @@ void	CBlender_Tree::Compile	(CBlender_Compile& C)
 			C.r_End			();
 		}
 
-		uber_deffer		(C,true,tvs,"base",oBlend.value,nullptr,true);
+		uber_deffer		(C,true,tvs,"base",oBlend.value,0,true);
 		C.r_Stencil		( TRUE,D3DCMP_ALWAYS,0xff,0x7f,D3DSTENCILOP_KEEP,D3DSTENCILOP_REPLACE,D3DSTENCILOP_KEEP);
 		C.r_StencilRef	(0x01);
 		//C.PassSET_ZB		(true,false);
@@ -209,7 +209,7 @@ void	CBlender_Tree::Compile	(CBlender_Compile& C)
 	case SE_R2_NORMAL_LQ:	// deffer
 		if (bUseATOC)
 		{
-			uber_deffer		(C,false,tvs,"base_atoc",oBlend.value,nullptr,true);
+			uber_deffer		(C,false,tvs,"base_atoc",oBlend.value,0,true);
 			C.r_Stencil		( TRUE,D3DCMP_ALWAYS,0xff,0x7f,D3DSTENCILOP_KEEP,D3DSTENCILOP_REPLACE,D3DSTENCILOP_KEEP);
 			C.r_StencilRef	(0x01);
 			C.r_ColorWriteEnable(false, false, false, false);
@@ -218,7 +218,7 @@ void	CBlender_Tree::Compile	(CBlender_Compile& C)
 			C.r_End			();
 		}
 
-		uber_deffer		(C,false,tvs,"base",oBlend.value,nullptr,true);
+		uber_deffer		(C,false,tvs,"base",oBlend.value,0,true);
 		C.r_Stencil		( TRUE,D3DCMP_ALWAYS,0xff,0x7f,D3DSTENCILOP_KEEP,D3DSTENCILOP_REPLACE,D3DSTENCILOP_KEEP);
 		C.r_StencilRef	(0x01);
 		//	Need only for ATOC to emulate stencil test

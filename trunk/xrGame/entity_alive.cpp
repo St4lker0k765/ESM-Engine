@@ -45,7 +45,7 @@ float CEntityAlive::m_fStartBurnWoundSize = 0.3f;
 //размер раны, чтоб остановить партиклы
 float CEntityAlive::m_fStopBurnWoundSize = 0.1f;
 
-STR_VECTOR* CEntityAlive::m_pFireParticlesVector = nullptr;
+STR_VECTOR* CEntityAlive::m_pFireParticlesVector = NULL;
 
 /////////////////////////////////////////////
 // CEntityAlive
@@ -58,7 +58,7 @@ CEntityAlive::CEntityAlive()
 	m_ef_weapon_type		= u32(-1);
 	m_ef_detector_type		= u32(-1);
 
-	m_material_manager		= nullptr;
+	m_material_manager		= 0;
 }
 
 CEntityAlive::~CEntityAlive()
@@ -77,10 +77,10 @@ void CEntityAlive::Load		(LPCSTR section)
 	m_fFood					= 100*pSettings->r_float	(section,"ph_mass");
 
 	//bloody wallmarks
-	if(nullptr==m_pBloodMarksVector)
+	if(0==m_pBloodMarksVector)
 		LoadBloodyWallmarks (BLOOD_MARKS_SECT);
 
-	if(nullptr==m_pFireParticlesVector)
+	if(0==m_pFireParticlesVector)
 		LoadFireParticles	("entity_fire_particles");
 
 	//биолог. вид к торому принадлежит монстр или персонаж
@@ -293,7 +293,7 @@ void CEntityAlive::Die	(CObject* who)
 	inherited::Die(who);
 	
 	const CGameObject *who_object = smart_cast<const CGameObject*>(who);
-	callback(GameObject::eDeath)(lua_game_object(), who_object ? who_object->lua_game_object() : nullptr);
+	callback(GameObject::eDeath)(lua_game_object(), who_object ? who_object->lua_game_object() : 0);
 
 	if (!getDestroy() && (GameID() == GAME_SINGLE)) {
 		NET_Packet		P;
@@ -662,7 +662,7 @@ CIKLimbsController*	CEntityAlive::character_ik_controller()
 	}
 	else
 	{
-		return nullptr;
+		return NULL;
 	}
 }
 CPHSoundPlayer* CEntityAlive::ph_sound_player()
@@ -673,7 +673,7 @@ CPHSoundPlayer* CEntityAlive::ph_sound_player()
 	}
 	else
 	{
-		return nullptr;
+		return NULL;
 	}
 }
 

@@ -7,7 +7,7 @@ template<typename _Object>
 class CState {
 	typedef CState<_Object> CSState;
 public:
-						CState					(_Object *obj, void *data = nullptr);
+						CState					(_Object *obj, void *data = 0);
 	virtual 			~CState					(); 
 
 	virtual	void		reinit					();
@@ -61,7 +61,7 @@ class CStateMove : public CState<_Object> {
 	typedef CState<_Object> inherited;
 	using inherited::object;
 public:
-						CStateMove	(_Object *obj, void *data = nullptr) : inherited(obj,data){}
+						CStateMove	(_Object *obj, void *data = 0) : inherited(obj,data){}
 	virtual 			~CStateMove	(){}
 	virtual void initialize() {
 		inherited::initialize();

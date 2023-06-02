@@ -64,7 +64,7 @@ void CStepManager::reload(LPCSTR section)
 
 	
 	m_time_anim_started	= 0;
-	m_blend				= nullptr;
+	m_blend				= 0;
 }
 
 void CStepManager::on_animation_start(MotionID motion_id, CBlend *blend)

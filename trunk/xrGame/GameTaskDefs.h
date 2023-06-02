@@ -21,8 +21,8 @@ class CGameTask;
 struct SGameTaskKey : public IPureSerializeObject<IReader,IWriter>,public IPureDestroyableObject {
 	TASK_ID			task_id;
 	CGameTask*		game_task;
-	SGameTaskKey	(TASK_ID t_id):task_id(t_id),game_task(nullptr){};
-	SGameTaskKey	():task_id(nullptr),game_task(nullptr){};
+	SGameTaskKey	(TASK_ID t_id):task_id(t_id),game_task(NULL){};
+	SGameTaskKey	():task_id(NULL),game_task(NULL){};
 
 
 	virtual void save								(IWriter &stream);

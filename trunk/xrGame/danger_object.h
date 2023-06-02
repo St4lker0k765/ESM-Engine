@@ -40,7 +40,7 @@ private:
 	EDangerPerceiveType					m_perceive_type;
 
 public:
-	IC									CDangerObject			(const CEntityAlive	*object, const Fvector &position, u32 time, const EDangerType &type, const EDangerPerceiveType &perceive_type, const CObject *dependent_object = nullptr);
+	IC									CDangerObject			(const CEntityAlive	*object, const Fvector &position, u32 time, const EDangerType &type, const EDangerPerceiveType &perceive_type, const CObject *dependent_object = 0);
 	virtual								~CDangerObject			();
 	IC		const CEntityAlive			*object					() const;
 	IC		const Fvector				&position				() const;

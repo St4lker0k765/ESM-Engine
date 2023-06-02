@@ -60,31 +60,31 @@ void CBackend::OnFrameBegin	()
 
 void CBackend::Invalidate	()
 {
-	pRT[0]						= nullptr;
-	pRT[1]						= nullptr;
-	pRT[2]						= nullptr;
-	pRT[3]						= nullptr;
-	pZB							= nullptr;
+	pRT[0]						= NULL;
+	pRT[1]						= NULL;
+	pRT[2]						= NULL;
+	pRT[3]						= NULL;
+	pZB							= NULL;
 
-	decl						= nullptr;
-	vb							= nullptr;
-	ib							= nullptr;
+	decl						= NULL;
+	vb							= NULL;
+	ib							= NULL;
 	vb_stride					= 0;
 
-	state						= nullptr;
-	ps							= nullptr;
-	vs							= nullptr;
+	state						= NULL;
+	ps							= NULL;
+	vs							= NULL;
 DX10_ONLY(gs					= NULL);
 #ifdef USE_DX11
-	hs = nullptr;
-	ds = nullptr;
-	cs = nullptr;
+	hs = 0;
+	ds = 0;
+	cs = 0;
 #endif
-	ctable						= nullptr;
+	ctable						= NULL;
 
-	T							= nullptr;
-	M							= nullptr;
-	C							= nullptr;
+	T							= NULL;
+	M							= NULL;
+	C							= NULL;
 
 	stencil_enable=u32(-1);
 	stencil_func=u32(-1);
@@ -105,19 +105,19 @@ DX10_ONLY(gs					= NULL);
 	xforms.unmap	();
 
 #if defined(USE_DX10) || defined(USE_DX11)
-	m_pInputLayout				= nullptr;
+	m_pInputLayout				= NULL;
 	m_PrimitiveTopology			= D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
 	m_bChangedRTorZB			= false;
-	m_pInputSignature			= nullptr;
+	m_pInputSignature			= NULL;
 	for (int i=0; i<MaxCBuffers; ++i)
 	{
-		m_aPixelConstants[i] = nullptr;
-		m_aVertexConstants[i] = nullptr;
-		m_aGeometryConstants[i] = nullptr;
+		m_aPixelConstants[i] = 0;
+		m_aVertexConstants[i] = 0;
+		m_aGeometryConstants[i] = 0;
 #ifdef USE_DX11
-		m_aHullConstants[i] = nullptr;
-		m_aDomainConstants[i] = nullptr;
-		m_aComputeConstants[i] = nullptr;
+		m_aHullConstants[i] = 0;
+		m_aDomainConstants[i] = 0;
+		m_aComputeConstants[i] = 0;
 #endif
 	}
 	StateManager.Reset();
@@ -127,16 +127,16 @@ DX10_ONLY(gs					= NULL);
 	SSManager.ResetDeviceState();
 	SRVSManager.ResetDeviceState();
 
-	for (u32 gs_it =0; gs_it < mtMaxGeometryShaderTextures;)	textures_gs	[gs_it++]	= nullptr;
+	for (u32 gs_it =0; gs_it < mtMaxGeometryShaderTextures;)	textures_gs	[gs_it++]	= 0;
 #ifdef USE_DX11
-	for (u32 hs_it =0; hs_it < mtMaxHullShaderTextures;)	textures_hs	[hs_it++]	= nullptr;
-	for (u32 ds_it =0; ds_it < mtMaxDomainShaderTextures;)	textures_ds	[ds_it++]	= nullptr;
-	for (u32 cs_it =0; cs_it < mtMaxComputeShaderTextures;)	textures_cs	[cs_it++]	= nullptr;
+	for (u32 hs_it =0; hs_it < mtMaxHullShaderTextures;)	textures_hs	[hs_it++]	= 0;
+	for (u32 ds_it =0; ds_it < mtMaxDomainShaderTextures;)	textures_ds	[ds_it++]	= 0;
+	for (u32 cs_it =0; cs_it < mtMaxComputeShaderTextures;)	textures_cs	[cs_it++]	= 0;
 #endif
 #endif	//	USE_DX10
 
-	for (u32 ps_it =0; ps_it < mtMaxPixelShaderTextures;)	textures_ps	[ps_it++]	= nullptr;
-	for (u32 vs_it =0; vs_it < mtMaxVertexShaderTextures;)	textures_vs	[vs_it++]	= nullptr;
+	for (u32 ps_it =0; ps_it < mtMaxPixelShaderTextures;)	textures_ps	[ps_it++]	= 0;
+	for (u32 vs_it =0; vs_it < mtMaxVertexShaderTextures;)	textures_vs	[vs_it++]	= 0;
 #ifdef _EDITOR
 	for (u32 m_it =0; m_it< 8;)		matrices	[m_it++]	= 0;
 #endif
@@ -161,7 +161,7 @@ void	CBackend::set_ClipPlanes	(u32 _enable, Fplane*	_planes /*=NULL */, u32 coun
 	if		(count>HW.Caps.geometry.dwClipPlanes)	count=HW.Caps.geometry.dwClipPlanes;
 
 	D3DXMATRIX			worldToClipMatrixIT;
-	D3DXMatrixInverse	(&worldToClipMatrixIT, nullptr,(D3DXMATRIX*)&RDEVICE.mFullTransform);
+	D3DXMatrixInverse	(&worldToClipMatrixIT,NULL,(D3DXMATRIX*)&RDEVICE.mFullTransform);
 	D3DXMatrixTranspose	(&worldToClipMatrixIT,&worldToClipMatrixIT);
 	for		(u32 it=0; it<count; it++)		{
 		Fplane&		P			= _planes	[it];
@@ -368,10 +368,10 @@ void CBackend::set_Textures			(STextureList* _T)
 		if (!textures_ps[_last_ps])
 			continue;
 
-		textures_ps[_last_ps]			= nullptr;
+		textures_ps[_last_ps]			= 0;
 #if defined(USE_DX10) || defined(USE_DX11)
 		//	TODO: DX10: Optimise: set all resources at once
-		ID3DShaderResourceView	*pRes = nullptr;
+		ID3DShaderResourceView	*pRes = 0;
 		//HW.pDevice->PSSetShaderResources(_last_ps, 1, &pRes);
 		SRVSManager.SetPSResource(_last_ps, pRes);
 #else	//	USE_DX10
@@ -384,10 +384,10 @@ void CBackend::set_Textures			(STextureList* _T)
 		if (!textures_vs[_last_vs])
 			continue;
 
-		textures_vs[_last_vs]			= nullptr;
+		textures_vs[_last_vs]			= 0;
 #if defined(USE_DX10) || defined(USE_DX11)
 		//	TODO: DX10: Optimise: set all resources at once
-		ID3DShaderResourceView	*pRes = nullptr;
+		ID3DShaderResourceView	*pRes = 0;
 		//HW.pDevice->VSSetShaderResources(_last_vs, 1, &pRes);
 		SRVSManager.SetVSResource(_last_vs, pRes);
 #else	//	USE_DX10
@@ -402,10 +402,10 @@ void CBackend::set_Textures			(STextureList* _T)
 		if (!textures_gs[_last_gs])
 			continue;
 
-		textures_gs[_last_gs]			= nullptr;
+		textures_gs[_last_gs]			= 0;
 
 		//	TODO: DX10: Optimise: set all resources at once
-		ID3DShaderResourceView	*pRes = nullptr;
+		ID3DShaderResourceView	*pRes = 0;
 		//HW.pDevice->GSSetShaderResources(_last_gs, 1, &pRes);
 		SRVSManager.SetGSResource(_last_gs, pRes);
 	}
@@ -415,10 +415,10 @@ void CBackend::set_Textures			(STextureList* _T)
 		if (!textures_hs[_last_hs])
 			continue;
 
-		textures_hs[_last_hs]			= nullptr;
+		textures_hs[_last_hs]			= 0;
 
 		//	TODO: DX10: Optimise: set all resources at once
-		ID3DShaderResourceView	*pRes = nullptr;
+		ID3DShaderResourceView	*pRes = 0;
 		SRVSManager.SetHSResource(_last_hs, pRes);
 	}
 	for (++_last_ds; _last_ds<mtMaxDomainShaderTextures; _last_ds++)
@@ -426,10 +426,10 @@ void CBackend::set_Textures			(STextureList* _T)
 		if (!textures_ds[_last_ds])
 			continue;
 
-		textures_ds[_last_ds]			= nullptr;
+		textures_ds[_last_ds]			= 0;
 
 		//	TODO: DX10: Optimise: set all resources at once
-		ID3DShaderResourceView	*pRes = nullptr;
+		ID3DShaderResourceView	*pRes = 0;
 		SRVSManager.SetDSResource(_last_ds, pRes);
 	}
 	for (++_last_cs; _last_cs<mtMaxComputeShaderTextures; _last_cs++)
@@ -437,10 +437,10 @@ void CBackend::set_Textures			(STextureList* _T)
 		if (!textures_cs[_last_cs])
 			continue;
 
-		textures_cs[_last_cs]			= nullptr;
+		textures_cs[_last_cs]			= 0;
 
 		//	TODO: DX10: Optimise: set all resources at once
-		ID3DShaderResourceView	*pRes = nullptr;
+		ID3DShaderResourceView	*pRes = 0;
 		SRVSManager.SetCSResource(_last_cs, pRes);
 	}
 #endif

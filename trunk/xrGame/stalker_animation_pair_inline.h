@@ -27,9 +27,9 @@ IC	void CStalkerAnimationPair::reset				()
 #endif // DEBUG
 
 	m_animation.invalidate		();
-	m_blend						= nullptr;
+	m_blend						= 0;
 	m_actual					= true;
-	m_array						= nullptr;
+	m_array						= 0;
 	m_array_animation.invalidate();
 }
 
@@ -95,7 +95,7 @@ IC	const CStalkerAnimationPair::CALLBACK_ID *CStalkerAnimationPair::callback	(co
 	if (I != m_callbacks.end())
 		return					(&*I);
 
-	return						(nullptr);
+	return						(0);
 }
 
 IC	void CStalkerAnimationPair::add_callback		(const CALLBACK_ID &callback)

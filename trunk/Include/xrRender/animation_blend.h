@@ -77,8 +77,8 @@ CBlend(  ):
 	stop_at_end_callback(0)	,
 	stop_at_end(0)			,
 	fall_at_end(0)			,
-	Callback(nullptr)				,
-	CallbackParam(nullptr)		,
+	Callback(0)				,
+	CallbackParam(0)		,
 	dwFrame(0)
 {
 

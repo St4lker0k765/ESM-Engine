@@ -66,7 +66,7 @@ void CPortalTraverser::fade_portal	(CPortal* _p, float ssa)
 void CPortalTraverser::initialize	()
 {
 	f_shader.create					("portal");
-	f_geom.create					(FVF::F_L, RCache.Vertex.Buffer(), nullptr);
+	f_geom.create					(FVF::F_L, RCache.Vertex.Buffer(), 0);
 }
 void CPortalTraverser::destroy		()
 {

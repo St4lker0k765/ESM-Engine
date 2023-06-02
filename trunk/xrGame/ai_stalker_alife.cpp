@@ -52,7 +52,7 @@ bool CAI_Stalker::tradable_item					(CInventoryItem *inventory_item, const u16 &
 
 	return				(
 		trade_parameters().enabled(
-			CTradeParameters::action_sell(nullptr),
+			CTradeParameters::action_sell(0),
 			inventory_item->object().cNameSect()
 		)
 	);
@@ -134,7 +134,7 @@ void CAI_Stalker::attach_available_ammo			(CWeapon *weapon)
 
 void CAI_Stalker::choose_weapon					(ALife::EWeaponPriorityType weapon_priority_type)
 {
-	CTradeItem						*best_weapon	= nullptr;
+	CTradeItem						*best_weapon	= 0;
 	float							best_value		= -1.f;
 	ai().ef_storage().non_alife().member()	= this;
 
@@ -194,7 +194,7 @@ void CAI_Stalker::choose_medikit				()
 
 void CAI_Stalker::choose_detector				()
 {
-	CTradeItem					*best_detector	= nullptr;
+	CTradeItem					*best_detector	= 0;
 	float						best_value		= -1.f;
 	ai().ef_storage().non_alife().member()	= this;
 	xr_vector<CTradeItem>::iterator	I = m_temp_items.begin();
@@ -249,7 +249,7 @@ void CAI_Stalker::update_sell_info					()
 	m_sell_info_actuality	= true;
 
 	m_temp_items.clear		();
-	m_current_trader		= nullptr;
+	m_current_trader		= 0;
 	m_total_money			= get_money();
 	u32						money_delta = fill_items(inventory(),this,ALife::_OBJECT_ID(-1));
 	m_total_money			+= money_delta;
@@ -275,7 +275,7 @@ bool CAI_Stalker::can_sell							(CInventoryItem const * item)
 bool CAI_Stalker::AllowItemToTrade 					(CInventoryItem const * item, EItemPlace place) const
 {
 	if (!g_Alive())
-		return				(trade_parameters().enabled(CTradeParameters::action_show(nullptr),item->object().cNameSect()));
+		return				(trade_parameters().enabled(CTradeParameters::action_show(0),item->object().cNameSect()));
 
 	return					(const_cast<CAI_Stalker*>(this)->can_sell(item));
 }

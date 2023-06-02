@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////
 //	SVS
 SVS::SVS() :
-	vs(nullptr)
+	vs(0)
 #if defined(USE_DX10) || defined(USE_DX11)
 //	,signature(0)
 #endif	//	USE_DX10

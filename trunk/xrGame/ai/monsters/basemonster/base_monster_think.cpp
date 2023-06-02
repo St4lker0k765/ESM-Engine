@@ -101,7 +101,7 @@ void CBaseMonster::squad_notify()
 		else if (state == eStateCustomMoveToRestrictor)			goal.type	= MG_WalkGraph;
 		else if (state == eStateRest_WalkToCover)				goal.type	= MG_WalkGraph;
 		else if (state == eStateRest_LookOpenPlace)				goal.type	= MG_Rest;
-		else													goal.entity	= nullptr;
+		else													goal.entity	= 0;
 
 	} else if (is_state(state, eStateSquad)) {
 		goal.type	= MG_Rest;

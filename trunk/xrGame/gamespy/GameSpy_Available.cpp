@@ -4,12 +4,12 @@
 
 CGameSpy_Available::CGameSpy_Available()
 {
-	m_hGameSpyDLL = nullptr;
+	m_hGameSpyDLL = NULL;
 	//-----------------------------------------------
 	LPCSTR			g_name	= "xrGameSpy.dll";
 	Log				("Loading DLL:",g_name);
 	m_hGameSpyDLL			= LoadLibrary	(g_name);
-	if (nullptr==m_hGameSpyDLL)	R_CHK			(GetLastError());
+	if (0==m_hGameSpyDLL)	R_CHK			(GetLastError());
 	R_ASSERT2		(m_hGameSpyDLL,"GameSpy DLL raised exception during loading or there is no game DLL at all");
 	//-----------------------------------------------
 	LoadGameSpy(m_hGameSpyDLL );
@@ -17,7 +17,7 @@ CGameSpy_Available::CGameSpy_Available()
 
 CGameSpy_Available::CGameSpy_Available(HMODULE hGameSpyDLL)
 {
-	m_hGameSpyDLL = nullptr;
+	m_hGameSpyDLL = NULL;
 	LoadGameSpy(hGameSpyDLL);
 }
 
@@ -26,7 +26,7 @@ CGameSpy_Available::~CGameSpy_Available()
 	if (m_hGameSpyDLL)
 	{
 		FreeLibrary(m_hGameSpyDLL);
-		m_hGameSpyDLL = nullptr;
+		m_hGameSpyDLL = NULL;
 	}
 };
 

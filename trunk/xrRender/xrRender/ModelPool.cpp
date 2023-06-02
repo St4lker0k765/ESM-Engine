@@ -27,7 +27,7 @@
 
 dxRender_Visual*	CModelPool::Instance_Create(u32 type)
 {
-	dxRender_Visual *V = nullptr;
+	dxRender_Visual *V = NULL;
 
 	// Check types
 	switch (type) {
@@ -101,7 +101,7 @@ dxRender_Visual*	CModelPool::Instance_Load		(const char* N, BOOL allow_register)
 	string_path		name;
 
 	// Add default ext if no ext at all
-	if (nullptr==strext(N))	strconcat	(sizeof(name),name,N,".ogf");
+	if (0==strext(N))	strconcat	(sizeof(name),name,N,".ogf");
 	else				xr_strcpy	(name,sizeof(name),N);
 
 	// Load data from MESHES or LEVEL
@@ -208,7 +208,7 @@ CModelPool::~CModelPool()
 
 dxRender_Visual* CModelPool::Instance_Find(LPCSTR N)
 {
-	dxRender_Visual*				Model=nullptr;
+	dxRender_Visual*				Model=0;
 	xr_vector<ModelDef>::iterator	I;
 	for (I=Models.begin(); I!=Models.end(); I++)
 	{
@@ -243,7 +243,7 @@ dxRender_Visual* CModelPool::Create(const char* name, IReader* data)
 		// 1. Search for already loaded model (reference, base model)
 		dxRender_Visual* Base		= Instance_Find		(low_name);
 
-		if (nullptr==Base){
+		if (0==Base){
 			// 2. If not found
 			bAllowChildrenDuplicate	= FALSE;
 			if (data)		Base = Instance_Load(low_name,data,TRUE);
@@ -269,7 +269,7 @@ dxRender_Visual* CModelPool::CreateChild(LPCSTR name, IReader* data)
 	// 1. Search for already loaded model
 	dxRender_Visual* Base	= Instance_Find(low_name);
 //.	if (0==Base) Base	 	= Instance_Load(name,data,FALSE);
-	if(nullptr==Base)
+	if(0==Base)
 	{
 		if (data)		Base = Instance_Load	(low_name,data,FALSE);
 		else			Base = Instance_Load	(low_name,FALSE);
@@ -299,19 +299,19 @@ void	CModelPool::DeleteInternal	(dxRender_Visual* &V, BOOL bDiscard)
 			xr_delete			(V);
 		}
 	}
-	V	= nullptr;
+	V	=	NULL;
 }
 
 void	CModelPool::Delete		(dxRender_Visual* &V, BOOL bDiscard)
 {
-	if (nullptr ==V)				return;
+	if (NULL==V)				return;
 	if (g_bRendering){
 		VERIFY					(!bDiscard);
 		ModelsToDelete.push_back(V);
 	} else {
 		DeleteInternal			(V,bDiscard);
 	}	
-	V							= nullptr;
+	V							=	NULL;
 }
 
 void	CModelPool::DeleteQueue		()
@@ -366,7 +366,7 @@ void	CModelPool::Discard	(dxRender_Visual* &V, BOOL b_complete)
 		// Registry entry not-found - just special type of visual / particles / etc.
 		xr_delete		(V);
 	}
-	V	= nullptr;
+	V	=	NULL;
 }
 
 void CModelPool::Prefetch()
@@ -456,7 +456,7 @@ void CModelPool::memory_stats		( u32& vb_mem_video, u32& vb_mem_system, u32& ib_
 		dxRender_Visual* ptr = it->model;
 		Fvisual* vis_ptr = dynamic_cast<Fvisual*> (ptr);
 
-		if( vis_ptr == nullptr)
+		if( vis_ptr == NULL )
 			continue;
 #if !defined(USE_DX10) && !defined(USE_DX11)
 		D3DINDEXBUFFER_DESC IB_desc;

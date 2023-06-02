@@ -52,7 +52,7 @@ void CPHCollisionDamageReceiver::CollisionCallback(bool& do_colide,bool bo1,dCon
 	SGameMtl					*material_damager	=	bo1 ? material_2:material_1;
 	VERIFY						(ud_self);
 	CPhysicsShellHolder			*o_self			=	ud_self->ph_ref_object;
-	CPhysicsShellHolder			*o_damager		= nullptr;if(ud_damager)o_damager=ud_damager->ph_ref_object;
+	CPhysicsShellHolder			*o_damager		=	NULL;if(ud_damager)o_damager=ud_damager->ph_ref_object;
 	u16							source_id		=	o_damager ? o_damager->ID():u16(-1);
 	CPHCollisionDamageReceiver	*dr	=o_self->PHCollisionDamageReceiver();
 	VERIFY2(dr,"wrong callback");

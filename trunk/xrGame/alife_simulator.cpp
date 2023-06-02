@@ -77,7 +77,7 @@ void CALifeSimulator::destroy			()
 //	validate					();
 	CALifeUpdateManager::destroy();
 	VERIFY						(ai().get_alife());
-	ai().set_alife				(nullptr);
+	ai().set_alife				(0);
 }
 
 void CALifeSimulator::setup_simulator	(CSE_ALifeObject *object)

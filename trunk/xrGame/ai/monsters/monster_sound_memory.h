@@ -48,7 +48,7 @@ typedef struct tagSoundElement
 	int					value;			// оценочное значение данного звука		
 
 	tagSoundElement() {  
-		who = nullptr; type = NONE_DANGEROUS_SOUND; position.set(0,0,0); power = 0.f; time = 0; value = 0;
+		who = 0; type = NONE_DANGEROUS_SOUND; position.set(0,0,0); power = 0.f; time = 0; value = 0;
 	}
 	bool operator < (const tagSoundElement &s) const  { 
 		return (value < s.value);

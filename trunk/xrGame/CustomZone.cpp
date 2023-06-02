@@ -33,11 +33,11 @@ CCustomZone::CCustomZone(void)
 	m_fEffectiveRadius			= 0.75f;
 	m_bZoneActive				= false;
 	m_eHitTypeBlowout			= ALife::eHitTypeWound;
-	m_pLocalActor				= nullptr;
-	m_pIdleParticles			= nullptr;
-	m_pLight					= nullptr;
-	m_pIdleLight				= nullptr;
-	m_pIdleLAnim				= nullptr;
+	m_pLocalActor				= NULL;
+	m_pIdleParticles			= NULL;
+	m_pLight					= NULL;
+	m_pIdleLight				= NULL;
+	m_pIdleLAnim				= NULL;
 	
 
 	m_StateTime.resize(eZoneStateMax);
@@ -54,7 +54,7 @@ CCustomZone::CCustomZone(void)
 	m_ef_weapon_type			= u32(-1);
 	m_owner_id					= u32(-1);
 
-	m_effector					= nullptr;
+	m_effector					= NULL;
 	m_bIdleObjectParticlesDontStop = FALSE;
 	m_b_always_fastmode			= FALSE;
 }
@@ -102,7 +102,7 @@ void CCustomZone::Load(LPCSTR section)
 	if (self)		self->spatial.type	|=	(STYPE_COLLIDEABLE|STYPE_SHAPE);
 //////////////////////////////////////////////////////////////////////////
 
-	LPCSTR sound_str = nullptr;
+	LPCSTR sound_str = NULL;
 	
 	if(pSettings->line_exist(section,"idle_sound")) 
 	{
@@ -270,7 +270,7 @@ void CCustomZone::Load(LPCSTR section)
 		if(pSettings->line_exist(section,"artefact_spawn_particles")) 
 			m_sArtefactSpawnParticles = pSettings->r_string(section,"artefact_spawn_particles");
 		else
-			m_sArtefactSpawnParticles = nullptr;
+			m_sArtefactSpawnParticles = NULL;
 
 		if(pSettings->line_exist(section,"artefact_born_sound"))
 		{
@@ -351,14 +351,14 @@ BOOL CCustomZone::net_Spawn(CSE_Abstract* DC)
 		m_pIdleLight->set_shadow(true);
 	}
 	else
-		m_pIdleLight = nullptr;
+		m_pIdleLight = NULL;
 
 	if ( m_zone_flags.test(eBlowoutLight) ) 
 	{
 		m_pLight = ::Render->light_create();
 		m_pLight->set_shadow(true);
 	}else
-		m_pLight = nullptr;
+		m_pLight = NULL;
 
 	setEnabled					(TRUE);
 
@@ -633,7 +633,7 @@ void CCustomZone::feel_touch_delete(CObject* O)
 	if(bDebug) Msg("%s %s",*O->cName(),"leaving a zone.");
 #endif
 
-	if(smart_cast<CActor*>(O)) m_pLocalActor = nullptr;
+	if(smart_cast<CActor*>(O)) m_pLocalActor = NULL;
 	CGameObject* pGameObject =smart_cast<CGameObject*>(O);
 	if(!pGameObject->getDestroy())
 	{
@@ -652,7 +652,7 @@ BOOL CCustomZone::feel_touch_contact(CObject* O)
 {
 	if (smart_cast<CCustomZone*>(O))				return FALSE;
 	if (smart_cast<CBreakableObject*>(O))			return FALSE;
-	if (nullptr==smart_cast<IKinematics*>(O->Visual()))	return FALSE;
+	if (0==smart_cast<IKinematics*>(O->Visual()))	return FALSE;
 
 	if (O->ID() == ID())
 		return		(FALSE);
@@ -692,7 +692,7 @@ float CCustomZone::Power(float dist)
 
 void CCustomZone::PlayIdleParticles()
 {
-	m_idle_sound.play_at_pos(nullptr, Position(), true);
+	m_idle_sound.play_at_pos(0, Position(), true);
 
 	if(*m_sIdleParticles)
 	{
@@ -770,9 +770,9 @@ void CCustomZone::PlayBlowoutParticles()
 
 void CCustomZone::PlayHitParticles(CGameObject* pObject)
 {
-	m_hit_sound.play_at_pos(nullptr, pObject->Position());
+	m_hit_sound.play_at_pos(0, pObject->Position());
 
-	shared_str particle_str = nullptr;
+	shared_str particle_str = NULL;
 
 	if(pObject->Radius()<SMALL_OBJECT_RADIUS)
 	{
@@ -800,9 +800,9 @@ void CCustomZone::PlayEntranceParticles(CGameObject* pObject)
 {
 	if (!IsEnabled())		return;
 
-	m_entrance_sound.play_at_pos(nullptr, pObject->Position());
+	m_entrance_sound.play_at_pos(0, pObject->Position());
 
-	shared_str particle_str = nullptr;
+	shared_str particle_str = NULL;
 
 	if(pObject->Radius()<SMALL_OBJECT_RADIUS)
 	{
@@ -853,7 +853,7 @@ void CCustomZone::PlayEntranceParticles(CGameObject* pObject)
 
 void CCustomZone::PlayBulletParticles(Fvector& pos)
 {
-	m_entrance_sound.play_at_pos(nullptr, pos);
+	m_entrance_sound.play_at_pos(0, pos);
 
 	if(!m_sEntranceParticlesSmall) return;
 	
@@ -873,7 +873,7 @@ void CCustomZone::PlayObjectIdleParticles(CGameObject* pObject)
 	CParticlesPlayer* PP = smart_cast<CParticlesPlayer*>(pObject);
 	if(!PP) return;
 
-	shared_str particle_str = nullptr;
+	shared_str particle_str = NULL;
 
 	//разные партиклы для объектов разного размера
 	if(pObject->Radius()<SMALL_OBJECT_RADIUS)
@@ -911,7 +911,7 @@ void CCustomZone::StopObjectIdleParticles(CGameObject* pObject)
 	if(m_ObjectInfoMap.end() == it) return;
 	
 	
-	shared_str particle_str = nullptr;
+	shared_str particle_str = NULL;
 	//разные партиклы для объектов разного размера
 	if(pObject->Radius()<SMALL_OBJECT_RADIUS)
 	{
@@ -1012,7 +1012,7 @@ void CCustomZone::UpdateBlowout()
 
 	if(m_dwBlowoutSoundTime>=(u32)m_iPreviousStateTime && 
 		m_dwBlowoutSoundTime<(u32)m_iStateTime)
-		m_blowout_sound.play_at_pos	(nullptr, Position());
+		m_blowout_sound.play_at_pos	(0, Position());
 
 	if(m_zone_flags.test(eBlowoutWind) && m_dwBlowoutWindTimeStart>=(u32)m_iPreviousStateTime && 
 		m_dwBlowoutWindTimeStart<(u32)m_iStateTime)
@@ -1088,7 +1088,7 @@ void	CCustomZone::OnEvent (NET_Packet& P, u16 type)
 				 if(artefact)
 				 {
 					 bool			just_before_destroy = !P.r_eof() && P.r_u8();
-					artefact->H_SetParent(nullptr,just_before_destroy);
+					artefact->H_SetParent(NULL,just_before_destroy);
 					if (!just_before_destroy)
 						ThrowOutArtefact(artefact);
 				 }
@@ -1246,7 +1246,7 @@ void CCustomZone::ThrowOutArtefact(CArtefact* pArtefact)
 		pParticles->Play();
 	}
 
-	m_ArtefactBornSound.play_at_pos(nullptr, pArtefact->Position());
+	m_ArtefactBornSound.play_at_pos(0, pArtefact->Position());
 
 	Fvector dir;
 	dir.random_dir();
@@ -1387,7 +1387,7 @@ void CCustomZone::PlayAccumParticles()
 	}
 
 	if(m_accum_sound._handle())
-		m_accum_sound.play_at_pos	(nullptr, Position());
+		m_accum_sound.play_at_pos	(0, Position());
 }
 
 void CCustomZone::PlayAwakingParticles()
@@ -1400,7 +1400,7 @@ void CCustomZone::PlayAwakingParticles()
 	}
 
 	if(m_awaking_sound._handle())
-		m_awaking_sound.play_at_pos	(nullptr, Position());
+		m_awaking_sound.play_at_pos	(0, Position());
 }
 
 void CCustomZone::UpdateOnOffState	()

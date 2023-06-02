@@ -148,13 +148,13 @@ void CDetailManager::hw_Render_dump(const Fvector4 &consts, const Fvector4 &wave
 
 				//u32			c_base				= x_array->vs.index;
 				//Fvector4*	c_storage			= RCache.get_ConstantCache_Vertex().get_array_f().access(c_base);
-				Fvector4*	c_storage=nullptr;
+				Fvector4*	c_storage=0;
 				//	Map constants to memory directly
 				{
 					void*	pVData;
 					RCache.get_ConstantDirect( strArray, 
 						hw_BatchSize*sizeof(Fvector4)*4,
-						&pVData, nullptr, nullptr);
+						&pVData, 0, 0);
 					c_storage = (Fvector4*) pVData;
 				}
 				VERIFY(c_storage);
@@ -206,7 +206,7 @@ void CDetailManager::hw_Render_dump(const Fvector4 &consts, const Fvector4 &wave
 								void*	pVData;
 								RCache.get_ConstantDirect( strArray, 
 									hw_BatchSize*sizeof(Fvector4)*4,
-									&pVData, nullptr, nullptr);
+									&pVData, 0, 0);
 								c_storage = (Fvector4*) pVData;
 							}
 							VERIFY(c_storage);

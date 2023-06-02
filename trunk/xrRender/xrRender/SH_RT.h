@@ -43,7 +43,7 @@ struct 		resptrcode_crt	: public resptr_base<CRT>
 #else
 	void				create			(LPCSTR Name, u32 w, u32 h, D3DFORMAT f, u32 SampleCount = 1);
 #endif
-	void				destroy			()	{ _set(nullptr);		}
+	void				destroy			()	{ _set(NULL);		}
 };
 typedef	resptr_core<CRT,resptrcode_crt>		ref_rt;
 

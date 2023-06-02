@@ -10,7 +10,7 @@
 
 IC	CAttachableItem::CAttachableItem				()
 {
-	m_item				= nullptr;
+	m_item				= 0;
 	m_offset.identity	();
 	m_bone_name			= "";
 	m_enabled			= true;

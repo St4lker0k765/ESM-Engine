@@ -35,8 +35,8 @@ class	adopt_dx10sampler
 	CBlender_Compile*		m_pC;
 	u32						m_SI;	//	Sampler index
 public:
-	adopt_dx10sampler	(CBlender_Compile*	C, u32 SamplerIndex)	: m_pC(C), m_SI(SamplerIndex)		{ if (u32(-1)==m_SI) m_pC=nullptr;}
-	adopt_dx10sampler	(const adopt_dx10sampler&	_C)				: m_pC(_C.m_pC), m_SI(_C.m_SI)	{ if (u32(-1)==m_SI) m_pC=nullptr;}
+	adopt_dx10sampler	(CBlender_Compile*	C, u32 SamplerIndex)	: m_pC(C), m_SI(SamplerIndex)		{ if (u32(-1)==m_SI) m_pC=0;}
+	adopt_dx10sampler	(const adopt_dx10sampler&	_C)				: m_pC(_C.m_pC), m_SI(_C.m_SI)	{ if (u32(-1)==m_SI) m_pC=0;}
 
 //	adopt_sampler&			_texture		(LPCSTR texture)		{ if (C) C->i_Texture	(stage,texture);											return *this;	}
 //	adopt_sampler&			_projective		(bool _b)				{ if (C) C->i_Projective(stage,_b);													return *this;	}
@@ -314,7 +314,7 @@ void	CResourceManager::LS_Load()
 	for (u32 it=0; it<folder->size(); it++)	{
 		string_path						namesp,fn;
 		xr_strcpy							(namesp,(*folder)[it]);
-		if	(nullptr==strext(namesp) || 0!=xr_strcmp(strext(namesp),".s"))	continue;
+		if	(0==strext(namesp) || 0!=xr_strcmp(strext(namesp),".s"))	continue;
 		*strext	(namesp)=0;
 		if		(0==namesp[0])			xr_strcpy	(namesp,"_G");
 		strconcat						(sizeof(fn),fn,::Render->getShaderPath(),(*folder)[it]);
@@ -332,7 +332,7 @@ void	CResourceManager::LS_Load()
 void	CResourceManager::LS_Unload			()
 {
 	lua_close	(LSVM);
-	LSVM		= nullptr;
+	LSVM		= NULL;
 }
 
 BOOL	CResourceManager::_lua_HasShader	(LPCSTR s_shader)
@@ -362,14 +362,14 @@ Shader*	CResourceManager::_lua_Create		(LPCSTR d_shader, LPCSTR s_textures)
 	LPCSTR		s_shader = undercorated;
 
 	// Access to template
-	C.BT				= nullptr;
+	C.BT				= NULL;
 	C.bEditor			= FALSE;
 	C.bDetail			= FALSE;
 
 	// Prepare
 	_ParseList			(C.L_textures,	s_textures	);
-	C.detail_texture	= nullptr;
-	C.detail_scaler		= nullptr;
+	C.detail_texture	= NULL;
+	C.detail_scaler		= NULL;
 
 	// Compile element	(LOD0 - HQ)
 	if (Script::bfIsObjectPresent(LSVM,s_shader,"normal_hq",LUA_TFUNCTION))

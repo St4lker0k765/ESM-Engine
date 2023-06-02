@@ -13,7 +13,7 @@
 
 void CPHCapture::CreateBody()
 {
-	m_body= dBodyCreate(nullptr);
+	m_body= dBodyCreate(0);
 	m_island.AddBody(m_body);
 	dMass m;
 	dMassSetSphere(&m,1.f,1000000.f);
@@ -107,9 +107,9 @@ void CPHCapture::PullingUpdate()
 	{
 		m_back_force=0.f;
 
-		m_joint=dJointCreateBall(nullptr,nullptr);
+		m_joint=dJointCreateBall(0,0);
 		m_island.AddJoint(m_joint);
-		m_ajoint=dJointCreateAMotor(nullptr,nullptr);
+		m_ajoint=dJointCreateAMotor(0,0);
 		m_island.AddJoint(m_ajoint);
 		dJointSetAMotorMode (m_ajoint, dAMotorEuler);
 		dJointSetAMotorNumAxes (m_ajoint, 3);
@@ -272,8 +272,8 @@ void CPHCapture::ReleaseInCallBack()
 void CPHCapture::object_contactCallbackFun(bool& do_colide,bool bo1,dContact& c,SGameMtl * /*material_1*/,SGameMtl * /*material_2*/)
 {
 
-	dxGeomUserData *l_pUD1 = nullptr;
-	dxGeomUserData *l_pUD2 = nullptr;
+	dxGeomUserData *l_pUD1 = NULL;
+	dxGeomUserData *l_pUD2 = NULL;
 	l_pUD1 = retrieveGeomUserData(c.geom.g1);
 	l_pUD2 = retrieveGeomUserData(c.geom.g2);
 

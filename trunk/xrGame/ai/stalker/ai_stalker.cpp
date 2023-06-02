@@ -74,14 +74,14 @@ extern int g_AI_inactive_time;
 
 CAI_Stalker::CAI_Stalker			()
 {
-	m_sound_user_data_visitor		= nullptr;
-	m_movement_manager				= nullptr;
+	m_sound_user_data_visitor		= 0;
+	m_movement_manager				= 0;
 	m_group_behaviour				= true;
-	m_boneHitProtection				= nullptr;
+	m_boneHitProtection				= NULL;
 	m_power_fx_factor				= flt_max;
 	m_wounded						= false;
 #ifdef DEBUG
-	m_debug_planner					= nullptr;
+	m_debug_planner					= 0;
 #endif // DEBUG
 	m_registered_in_combat_on_migration	= false;
 }
@@ -122,11 +122,11 @@ void CAI_Stalker::reinit			()
 
 	m_pPhysics_support->in_Init		();
 	
-	m_best_item_to_kill				= nullptr;
+	m_best_item_to_kill				= 0;
 	m_best_item_value				= 0.f;
-	m_best_ammo						= nullptr;
-	m_best_found_item_to_kill		= nullptr;
-	m_best_found_ammo				= nullptr;
+	m_best_ammo						= 0;
+	m_best_found_item_to_kill		= 0;
+	m_best_found_ammo				= 0;
 	m_item_actuality				= false;
 	m_sell_info_actuality			= false;
 
@@ -155,7 +155,7 @@ void CAI_Stalker::reinit			()
 
 	m_weapon_shot_random_seed		= s32(Level().timeServer_Async());
 
-	m_best_cover					= nullptr;
+	m_best_cover					= 0;
 	m_best_cover_actual				= false;
 	m_best_cover_value				= flt_max;
 
@@ -188,7 +188,7 @@ void CAI_Stalker::LoadSounds		(LPCSTR section)
 {
 	LPCSTR							head_bone_name = pSettings->r_string(section,"bone_head");
 	sound().add						(pSettings->r_string(section,"sound_death"),						100, SOUND_TYPE_MONSTER_DYING,		0, u32(eStalkerSoundMaskDie),						eStalkerSoundDie,						head_bone_name, xr_new<CStalkerSoundData>(this));
-	sound().add						(pSettings->r_string(section,"sound_anomaly_death"),				100, SOUND_TYPE_MONSTER_DYING,		0, u32(eStalkerSoundMaskDieInAnomaly),				eStalkerSoundDieInAnomaly,				head_bone_name, nullptr);
+	sound().add						(pSettings->r_string(section,"sound_anomaly_death"),				100, SOUND_TYPE_MONSTER_DYING,		0, u32(eStalkerSoundMaskDieInAnomaly),				eStalkerSoundDieInAnomaly,				head_bone_name, 0);
 	sound().add						(pSettings->r_string(section,"sound_hit"),							100, SOUND_TYPE_MONSTER_INJURING,	1, u32(eStalkerSoundMaskInjuring),					eStalkerSoundInjuring,					head_bone_name, xr_new<CStalkerSoundData>(this));
 	sound().add						(pSettings->r_string(section,"sound_friendly_fire"),				100, SOUND_TYPE_MONSTER_INJURING,	1, u32(eStalkerSoundMaskInjuringByFriend),			eStalkerSoundInjuringByFriend,			head_bone_name, xr_new<CStalkerSoundData>(this));
 	sound().add						(pSettings->r_string(section,"sound_panic_human"),					100, SOUND_TYPE_MONSTER_TALKING,	2, u32(eStalkerSoundMaskPanicHuman),				eStalkerSoundPanicHuman,				head_bone_name, xr_new<CStalkerSoundData>(this));
@@ -204,7 +204,7 @@ void CAI_Stalker::LoadSounds		(LPCSTR section)
 	sound().add						(pSettings->r_string(section,"sound_detour"),						100, SOUND_TYPE_MONSTER_TALKING,	5, u32(eStalkerSoundMaskDetour),					eStalkerSoundDetour,					head_bone_name, xr_new<CStalkerSoundData>(this));
 	sound().add						(pSettings->r_string(section,"sound_search1_no_allies"),			100, SOUND_TYPE_MONSTER_TALKING,	5, u32(eStalkerSoundMaskSearch1NoAllies),			eStalkerSoundSearch1NoAllies,			head_bone_name, xr_new<CStalkerSoundData>(this));
 	sound().add						(pSettings->r_string(section,"sound_search1_with_allies"),			100, SOUND_TYPE_MONSTER_TALKING,	5, u32(eStalkerSoundMaskSearch1WithAllies),			eStalkerSoundSearch1WithAllies,			head_bone_name, xr_new<CStalkerSoundData>(this));
-	sound().add						(pSettings->r_string(section,"sound_humming"),						100, SOUND_TYPE_MONSTER_TALKING,	6, u32(eStalkerSoundMaskHumming),					eStalkerSoundHumming,					head_bone_name, nullptr);
+	sound().add						(pSettings->r_string(section,"sound_humming"),						100, SOUND_TYPE_MONSTER_TALKING,	6, u32(eStalkerSoundMaskHumming),					eStalkerSoundHumming,					head_bone_name, 0);
 	sound().add						(pSettings->r_string(section,"sound_need_backup"),					100, SOUND_TYPE_MONSTER_TALKING,	4, u32(eStalkerSoundMaskNeedBackup),				eStalkerSoundNeedBackup,				head_bone_name, xr_new<CStalkerSoundData>(this));
 	sound().add						(pSettings->r_string(section,"sound_running_in_danger"),			100, SOUND_TYPE_MONSTER_TALKING,	6, u32(eStalkerSoundMaskMovingInDanger),			eStalkerSoundRunningInDanger,			head_bone_name, xr_new<CStalkerSoundData>(this));
 //	sound().add						(pSettings->r_string(section,"sound_walking_in_danger"),			100, SOUND_TYPE_MONSTER_TALKING,	6, u32(eStalkerSoundMaskMovingInDanger),			eStalkerSoundWalkingInDanger,			head_bone_name, xr_new<CStalkerSoundData>(this));
@@ -490,7 +490,7 @@ void CAI_Stalker::net_Save			(NET_Packet& P)
 
 BOOL CAI_Stalker::net_SaveRelevant	()
 {
-	return (inherited::net_SaveRelevant() || BOOL(PPhysicsShell()!= nullptr));
+	return (inherited::net_SaveRelevant() || BOOL(PPhysicsShell()!=NULL));
 }
 
 void CAI_Stalker::net_Export		(NET_Packet& P)

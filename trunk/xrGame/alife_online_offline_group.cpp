@@ -23,7 +23,7 @@
 
 CSE_ALifeItemWeapon *CSE_ALifeOnlineOfflineGroup::tpfGetBestWeapon		(ALife::EHitType &tHitType, float &fHitPower)
 {
-	return						(nullptr);
+	return						(0);
 }
 
 ALife::EMeetActionType CSE_ALifeOnlineOfflineGroup::tfGetActionType		(CSE_ALifeSchedulable *tpALifeSchedulable, int iGroupIndex, bool bMutualDetection)
@@ -38,7 +38,7 @@ bool CSE_ALifeOnlineOfflineGroup::bfActive								()
 
 CSE_ALifeDynamicObject *CSE_ALifeOnlineOfflineGroup::tpfGetBestDetector	()
 {
-	return						(nullptr);
+	return						(0);
 }
 
 void CSE_ALifeOnlineOfflineGroup::update								()
@@ -114,7 +114,7 @@ CSE_ALifeOnlineOfflineGroup::MEMBER *CSE_ALifeOnlineOfflineGroup::member(ALife::
 		if (!no_assert)
 			Msg					("! There is no member with id %d in the OnlineOfflineGroup id %d",member_id,ID);
 		VERIFY					(no_assert);
-		return					(nullptr);
+		return					(0);
 	}
 	return						((*I).second);
 }

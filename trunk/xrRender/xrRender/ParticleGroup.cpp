@@ -187,12 +187,12 @@ void CParticleGroup::SItem::Clear()
 	    //::Render->model_Delete(*it);
 		IRenderVisual *pVisual = smart_cast<IRenderVisual*>(*it);
 		::Render->model_Delete(pVisual);
-		*it = nullptr;
+		*it = 0;
 	}
 
 	//	Igor: zero all pointers! Previous code didn't zero _source_ pointers,
 	//	just temporary ones.
-	_effect = nullptr;
+	_effect = 0;
 	_children_related.clear_not_free();
 	_children_free.clear_not_free();
 }
@@ -273,14 +273,14 @@ void CParticleGroup::SItem::Stop(BOOL def_stop)
 			//::Render->model_Delete(*it);
 			IRenderVisual *pVisual = smart_cast<IRenderVisual*>(*it);
 			::Render->model_Delete(pVisual);
-			*it = nullptr;
+			*it = 0;
 		}
         for (it=_children_free.begin(); it!=_children_free.end(); it++)			
 		{
 			//::Render->model_Delete(*it);
 			IRenderVisual *pVisual = smart_cast<IRenderVisual*>(*it);
 			::Render->model_Delete(pVisual);
-			*it = nullptr;
+			*it = 0;
 		}
         _children_related.clear();
         _children_free.clear	();
@@ -326,7 +326,7 @@ void OnGroupParticleDead(void* owner, u32 param, PAPI::Particle& m, u32 idx)
 //------------------------------------------------------------------------------
 struct zero_vis_pred
 {
-	bool operator()(const dxRender_Visual* x){ return x==nullptr; }
+	bool operator()(const dxRender_Visual* x){ return x==0; }
 };
 void CParticleGroup::SItem::OnFrame(u32 u_dt, const CPGDef::SEffect& def, Fbox& box, bool& bPlaying)
 {
@@ -384,7 +384,7 @@ void CParticleGroup::SItem::OnFrame(u32 u_dt, const CPGDef::SEffect& def, Fbox& 
 					//::Render->model_Delete(*it);
 					IRenderVisual *pVisual = smart_cast<IRenderVisual*>(*it);
 					::Render->model_Delete(pVisual);
-					*it = nullptr;                    
+					*it = 0;                    
                 }
             }
         }

@@ -22,8 +22,8 @@ public:
 	virtual void	update_schedule			()											{}
 	virtual void	update_frame			()											{}
 
-	virtual CControl_ComControlled	*ced	()											{return nullptr;}
-	virtual CControl_ComControlling *cing	()											{return nullptr;}
+	virtual CControl_ComControlled	*ced	()											{return 0;}
+	virtual CControl_ComControlling *cing	()											{return 0;}
 
 			void	set_active				(bool val = true)							{m_active	= val; val ? activate() : deactivate();}
 			bool	is_active				()											{return m_active;}
@@ -48,10 +48,10 @@ private:
 // Controlled with data
 class CControl_ComControlled {
 public:
-	virtual	void					reinit		() {m_locked = false; m_capturer = nullptr; reset_data();}
+	virtual	void					reinit		() {m_locked = false; m_capturer = 0; reset_data();}
 	virtual void					reset_data	(){}
 	
-	virtual	ControlCom::IComData	*data		()	{return nullptr;}
+	virtual	ControlCom::IComData	*data		()	{return 0;}
 	
 	// init/deinit current work
 	virtual void					on_capture	() {reset_data();}

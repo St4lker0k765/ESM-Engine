@@ -58,9 +58,9 @@ void SPHCharacterRestrictor::Create(CPHCharacter* ch,dVector3 sizes)
 	VERIFY(ch);
 	if(m_character)return;
 	m_character=ch;
-	m_restrictor=dCreateCylinder(nullptr,m_restrictor_radius,sizes[1]);
+	m_restrictor=dCreateCylinder(0,m_restrictor_radius,sizes[1]);
 	dGeomSetPosition(m_restrictor,0.f,sizes[1]/2.f,0.f);
-	m_restrictor_transform=dCreateGeomTransform(nullptr);
+	m_restrictor_transform=dCreateGeomTransform(0);
 	dGeomTransformSetCleanup(m_restrictor_transform,0);
 	dGeomTransformSetInfo(m_restrictor_transform,1);
 	dGeomTransformSetGeom(m_restrictor_transform,m_restrictor);
@@ -127,14 +127,14 @@ void SPHCharacterRestrictor::Destroy()
 	if(m_restrictor) {
 		dGeomDestroyUserData(m_restrictor);
 		dGeomDestroy(m_restrictor);
-		m_restrictor= nullptr;
+		m_restrictor=NULL;
 	}
 
 	if(m_restrictor_transform){
 		dGeomDestroyUserData(m_restrictor_transform);
-		m_restrictor_transform= nullptr;
+		m_restrictor_transform=NULL;
 	}
-	m_character= nullptr;
+	m_character=NULL;
 }
 void CPHActorCharacter::SetPhysicsRefObject(CPhysicsShellHolder* ref_object)
 {
@@ -250,13 +250,13 @@ void CPHActorCharacter::InitContact(dContact* c,bool &do_collide,u16 material_id
 			!(b1 ? static_cast<CPHCharacter*>(retrieveGeomUserData(c->geom.g2)->ph_object)->ActorMovable():static_cast<CPHCharacter*>(retrieveGeomUserData(c->geom.g1)->ph_object)->ActorMovable())
 			)
 		{
-			dJointID contact_joint	= dJointCreateContactSpecial(nullptr, ContactGroup, c);
+			dJointID contact_joint	= dJointCreateContactSpecial(0, ContactGroup, c);
 			Enable();
 			CPHObject::Island().DActiveIsland()->ConnectJoint(contact_joint);
 			if(b1)
-				dJointAttach			(contact_joint, dGeomGetBody(c->geom.g1), nullptr);
+				dJointAttach			(contact_joint, dGeomGetBody(c->geom.g1), 0);
 			else
-				dJointAttach			(contact_joint, nullptr, dGeomGetBody(c->geom.g2));
+				dJointAttach			(contact_joint, 0, dGeomGetBody(c->geom.g2));
 			do_collide=false;
 			m_friction_factor*=0.1f;
 			
@@ -273,7 +273,7 @@ void CPHActorCharacter::InitContact(dContact* c,bool &do_collide,u16 material_id
 			CActor* A2=smart_cast<CActor*>(D2->ph_ref_object);
 			if(A1&&A2)
 			{
-				do_collide=do_collide&&!b_restrictor&&(A1->PPhysicsShell()==nullptr)==(A2->PPhysicsShell()==nullptr);
+				do_collide=do_collide&&!b_restrictor&&(A1->PPhysicsShell()==0)==(A2->PPhysicsShell()==0);
 				c->surface.mu=1.f;
 			}
 		}

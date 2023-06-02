@@ -10,7 +10,7 @@
 #include "..\xrRender\dxRenderDeviceRender.h"
 
 CSCompiler::CSCompiler(ComputeShader& target):
-	m_Target(target), m_cs(nullptr)
+	m_Target(target), m_cs(0)
 {
 }
 
@@ -180,7 +180,7 @@ void CSCompiler::compile(const char* name)
 {
 	if (0==stricmp(name, "null"))
 	{
-		m_cs = nullptr;
+		m_cs = 0;
 		return;
 	}
 

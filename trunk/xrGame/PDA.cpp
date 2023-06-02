@@ -19,7 +19,7 @@ CPda::CPda(void)
 	m_flags.set				(Fruck, TRUE);
 
 	m_idOriginalOwner		= u16(-1);
-	m_SpecificChracterOwner = nullptr;
+	m_SpecificChracterOwner = NULL;
 
 	
 	TurnOff					();

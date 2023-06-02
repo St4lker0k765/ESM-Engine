@@ -212,7 +212,7 @@ void CLightR_Manager::render_point	(u32 _priority)
 		bHUD				= F.testSphere_dirty	(Device.vCameraPosition,2.f);
 
 		//		5. Dump sorting tree
-		RCache.set_Constants((R_constant_table*)nullptr);
+		RCache.set_Constants((R_constant_table*)0);
 		if (bHUD&&_priority == 0)			g_hud->Render_Last		();	
 		RImplementation.r_dsgraph_render_graph					(_priority);
 		if (bHUD&&_priority == 0)			RImplementation.r_dsgraph_render_hud();	
@@ -292,7 +292,7 @@ void CLightR_Manager::render_spot	(u32 _priority)
 
 		//		4. Dump sorting tree
 		//	RCache.set_ClipPlanes					(true,	&L_combine);
-		RCache.set_Constants	((R_constant_table*)nullptr);
+		RCache.set_Constants	((R_constant_table*)0);
 		if (bHUD&&_priority == 0)	g_hud->Render_Last		();	
 		RImplementation.r_dsgraph_render_graph			(_priority);
 		if (bHUD&&_priority == 0)	RImplementation.r_dsgraph_render_hud();	
@@ -322,7 +322,7 @@ void CLightR_Manager::render		(u32 _priority)
 void CLightR_Manager::add			(light* L)
 {
 	if (L->range<0.1f)				return;
-	if (nullptr==L->spatial.sector)		return;
+	if (0==L->spatial.sector)		return;
 	if (IRender_Light::POINT==L->flags.type)
 	{
 		// PPA

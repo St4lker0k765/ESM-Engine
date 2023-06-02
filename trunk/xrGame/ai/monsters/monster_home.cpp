@@ -43,7 +43,7 @@ void check_path	(const CBaseMonster *monster, const CPatrolPath *path)
 
 void CMonsterHome::load(LPCSTR line)
 {
-	m_path			= nullptr;
+	m_path			= 0;
 	m_radius_min	= 20.f;
 	m_radius_max	= 40.f;
 
@@ -132,7 +132,7 @@ bool CMonsterHome::at_home(const Fvector &pos)
 
 void CMonsterHome::remove_home()
 {
-	m_path			= nullptr;
+	m_path			= 0;
 	m_aggressive	= false;
 }
 

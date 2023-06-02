@@ -21,7 +21,7 @@ CTrade::CTrade(CInventoryOwner *p_io)
 {
 	TradeState = false;
 	m_dwLastTradeTime	= 0;
-	pPartner.Set(TT_NONE,nullptr,nullptr);
+	pPartner.Set(TT_NONE,0,0);
 
 	m_bNeedToUpdateArtefactTasks = false;
 
@@ -54,7 +54,7 @@ CTrade::~CTrade()
 
 void CTrade::RemovePartner()
 {
-	pPartner.Set(TT_NONE,nullptr,nullptr);
+	pPartner.Set(TT_NONE,0,0);
 }
 //// предложение торговли
 //void CTrade::Communicate() 
@@ -164,7 +164,7 @@ void CTrade::StopTrade()
 	m_dwLastTradeTime = 0;
 //	Msg("--TRADE:: [%s]: Trade stopped...",*pThis.base->cName());
 
-	CAI_Trader* pTrader = nullptr;
+	CAI_Trader* pTrader = NULL;
 	if (pThis.type == TT_TRADER)
 	{
 		//pTrader = smart_cast<CAI_Trader*>(pThis.base);

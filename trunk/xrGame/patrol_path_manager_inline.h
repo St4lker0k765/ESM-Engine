@@ -13,7 +13,7 @@ IC	CPatrolPathManager::CPatrolPathManager			(CRestrictedObject *object, CGameObj
 	m_object				= object;
 	VERIFY					(game_object);
 	m_game_object			= game_object;
-	m_path					= nullptr;
+	m_path					= 0;
 	m_path_name				= "";
 	m_start_type			= ePatrolStartTypeDummy;
 	m_route_type			= ePatrolRouteTypeDummy;

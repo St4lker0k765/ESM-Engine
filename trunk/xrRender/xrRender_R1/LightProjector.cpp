@@ -29,8 +29,8 @@ float	clipD		(float R)		{ return P_distance*(R/P_ideal_size); }
 
 CLightProjector::CLightProjector()
 {
-	current				= nullptr;
-	RT					= nullptr;
+	current				= 0;
+	RT					= 0;
 
 	// 
 	RT.create			("$user$projector",P_rt_size,P_rt_size,P_rtf);
@@ -52,12 +52,12 @@ CLightProjector::~CLightProjector()
 
 void CLightProjector::set_object	(IRenderable* O)
 {
-	if ((nullptr==O) || (receivers.size()>=P_o_count))	current		= nullptr;
+	if ((0==O) || (receivers.size()>=P_o_count))	current		= 0;
 	else
 	{
 		if (!O->renderable_ShadowReceive() || RImplementation.val_bInvisible || ((CROS_impl*)O->renderable_ROS())->shadow_recv_frame==Device.dwFrame)	
 		{
-			current		= nullptr;
+			current		= 0;
 			return;
 		}
 
@@ -67,17 +67,17 @@ void CLightProjector::set_object	(IRenderable* O)
 		float		D	= C.distance_to	(Device.vCameraPosition)+R;
 
 		if (D < clipD(R))	current	= O;
-		else				current = nullptr;
+		else				current = 0;
 		
 		if (current)				{
 			ISpatial*	spatial		= dynamic_cast<ISpatial*>	(O);
-			if	(nullptr==spatial) current= nullptr;
+			if	(0==spatial) current= 0;
 			else					{
 				spatial->spatial_updatesector	();
-				if (nullptr==spatial->spatial.sector)	{
+				if (0==spatial->spatial.sector)	{
 					CObject*		obj = dynamic_cast<CObject*>(O);
 					if (obj)		Msg	("! Invalid object '%s' position. Outside of sector structure.",obj->cName().c_str());
-					current			= nullptr;
+					current			= 0;
 				}
 			}
 		}

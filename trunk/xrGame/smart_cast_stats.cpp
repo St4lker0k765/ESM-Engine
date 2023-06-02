@@ -58,7 +58,7 @@ public:
 	IC			void				show		();
 };
 
-CSmartCastStats* CSmartCastStats::m_instance = nullptr;
+CSmartCastStats* CSmartCastStats::m_instance = 0;
 
 IC	CSmartCastStats* CSmartCastStats::instance	()
 {

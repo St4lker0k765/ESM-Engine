@@ -128,7 +128,7 @@ CScriptEntityAction	*CScriptGameObject::GetCurrentAction	() const
 	else
 		if (l_tpScriptMonster->GetCurrentAction())
 			return		(xr_new<CScriptEntityAction>(l_tpScriptMonster->GetCurrentAction()));
-	return				(nullptr);
+	return				(0);
 }
 
 void CScriptGameObject::AddAction	(const CScriptEntityAction *tpEntityAction, bool bHighPriority)
@@ -145,7 +145,7 @@ const CScriptEntityAction *CScriptGameObject::GetActionByIndex(u32 action_index)
 	CScriptEntity	*l_tpScriptMonster = smart_cast<CScriptEntity*>(&object());
 	if (!l_tpScriptMonster) {
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CScriptEntity : cannot access class member GetActionByIndex!");
-		return			(nullptr);
+		return			(0);
 	}
 	else
 		return			(l_tpScriptMonster->GetActionByIndex(action_index));
@@ -158,7 +158,7 @@ const CScriptEntityAction *CScriptGameObject::GetActionByIndex(u32 action_index)
 CPhysicsShell* CScriptGameObject::get_physics_shell() const
 {
 	CPhysicsShellHolder* ph_shell_holder =smart_cast<CPhysicsShellHolder*>(&object());
-	if(! ph_shell_holder) return nullptr;
+	if(! ph_shell_holder) return NULL;
 	return ph_shell_holder->PPhysicsShell();
 }
 
@@ -205,11 +205,11 @@ LPCSTR CScriptGameObject::WhoHitName()
 {
 	CEntityAlive *entity_alive = smart_cast<CEntityAlive*>(&object());
 	if (entity_alive)
-		return			entity_alive->conditions().GetWhoHitLastTime()?(*entity_alive->conditions().GetWhoHitLastTime()->cName()): nullptr;
+		return			entity_alive->conditions().GetWhoHitLastTime()?(*entity_alive->conditions().GetWhoHitLastTime()->cName()):NULL;
 	else 
 	{
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CScriptGameObject : cannot access class member  WhoHitName()");
-		return nullptr;
+		return			NULL;
 	}
 }
 
@@ -217,11 +217,11 @@ LPCSTR CScriptGameObject::WhoHitSectionName()
 {
 	CEntityAlive *entity_alive = smart_cast<CEntityAlive*>(&object());
 	if (entity_alive)
-		return			entity_alive->conditions().GetWhoHitLastTime()?(*entity_alive->conditions().GetWhoHitLastTime()->cNameSect()): nullptr;
+		return			entity_alive->conditions().GetWhoHitLastTime()?(*entity_alive->conditions().GetWhoHitLastTime()->cNameSect()):NULL;
 	else 
 	{
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CScriptGameObject : cannot access class member  WhoHitName()");
-		return nullptr;
+		return			NULL;
 	}
 }
 
@@ -511,7 +511,7 @@ u32	CScriptGameObject::vertex_in_direction(u32 level_vertex_id, Fvector directio
 	Fvector			finish_position = Fvector(start_position).add(direction);
 	u32				result = u32(-1);
 	monster->movement().restrictions().add_border(level_vertex_id,max_distance);
-	ai().level_graph().farthest_vertex_in_direction(level_vertex_id,start_position,finish_position,result,nullptr,true);
+	ai().level_graph().farthest_vertex_in_direction(level_vertex_id,start_position,finish_position,result,0,true);
 	monster->movement().restrictions().remove_border();
 	return			(ai().level_graph().valid_vertex_id(result) ? result : level_vertex_id);
 }

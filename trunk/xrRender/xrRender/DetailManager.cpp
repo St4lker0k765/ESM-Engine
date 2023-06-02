@@ -70,13 +70,13 @@ void CDetailManager::SSwingValue::lerp(const SSwingValue& A, const SSwingValue& 
 
 CDetailManager::CDetailManager	()
 {
-	dtFS 		= nullptr;
-	dtSlots		= nullptr;
-	soft_Geom	= nullptr;
-	hw_Geom		= nullptr;
+	dtFS 		= 0;
+	dtSlots		= 0;
+	soft_Geom	= 0;
+	hw_Geom		= 0;
 	hw_BatchSize= 0;
-	hw_VB		= nullptr;
-	hw_IB		= nullptr;
+	hw_VB		= 0;
+	hw_IB		= 0;
 	m_time_rot_1 = 0;
 	m_time_rot_2 = 0;
 	m_time_pos	= 0;
@@ -105,7 +105,7 @@ void CDetailManager::Load		()
 	// Open file stream
 	if (!FS.exist("$level$","level.details"))
 	{
-		dtFS	= nullptr;
+		dtFS	= NULL;
 		return;
 	}
 
@@ -306,7 +306,7 @@ void CDetailManager::UpdateVisibleM()
 void CDetailManager::Render	()
 {
 #ifndef _EDITOR
-	if (nullptr==dtFS)						return;
+	if (0==dtFS)						return;
 	if (!psDeviceFlags.is(rsDetails))	return;
 #endif
 
@@ -334,8 +334,8 @@ void CDetailManager::Render	()
 void __stdcall	CDetailManager::MT_CALC		()
 {
 #ifndef _EDITOR
-	if (nullptr==RImplementation.Details)		return;	// possibly deleted
-	if (nullptr==dtFS)						return;
+	if (0==RImplementation.Details)		return;	// possibly deleted
+	if (0==dtFS)						return;
 	if (!psDeviceFlags.is(rsDetails))	return;
 #endif    
 

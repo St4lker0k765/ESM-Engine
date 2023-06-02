@@ -93,7 +93,7 @@ public:
 	virtual	CScriptEntityAction	*GetCurrentAction		();
 	virtual	void				AddAction				(const CScriptEntityAction*tpEntityAction, bool bHighPriority = false);
 	virtual void				ProcessScripts			();
-	virtual	void				ResetScriptData			(void				*P = nullptr);
+	virtual	void				ResetScriptData			(void				*P = 0);
 	virtual void				ClearActionQueue		();
 	virtual	bool				bfAssignMovement		(CScriptEntityAction		*tpEntityAction);
 	virtual	bool				bfAssignWatch			(CScriptEntityAction		*tpEntityAction);

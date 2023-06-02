@@ -15,10 +15,10 @@ extern CPHWorld*	ph_world;
 
 SCarLight::SCarLight()
 {
-	light_render	= nullptr;
-	glow_render		= nullptr;
+	light_render	=NULL;
+	glow_render		=NULL;
 	bone_id			=BI_NONE;
-	m_holder		= nullptr;
+	m_holder		=NULL;
 }
 
 SCarLight::~SCarLight()
@@ -123,7 +123,7 @@ void SCarLight::Update()
 
 CCarLights::CCarLights()
 {
-	m_pcar= nullptr;
+	m_pcar=NULL;
 }
 
 void CCarLights::Init(CCar* pcar)
@@ -180,7 +180,7 @@ void CCarLights::TurnOffHeadLights()
 
 bool CCarLights::IsLight(u16 bone_id)
 {
-	SCarLight* light= nullptr;
+	SCarLight* light=NULL;
 	return findLight(bone_id,light);
 }
 bool CCarLights::findLight(u16 bone_id,SCarLight* &light)

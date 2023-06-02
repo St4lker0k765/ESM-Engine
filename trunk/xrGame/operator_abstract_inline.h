@@ -18,7 +18,7 @@
 TEMPLATE_SPECIALIZATION
 IC	CAbstractOperator::COperatorAbstract	()
 {
-	m_actuality			= nullptr;
+	m_actuality			= 0;
 	m_weight_actual		= true;
 	m_min_weight		= 0;
 }
@@ -28,7 +28,7 @@ IC	CAbstractOperator::COperatorAbstract	(const CSConditionState &conditions, con
 {
 	m_conditions		= conditions;
 	m_effects			= effects;
-	m_actuality			= nullptr;
+	m_actuality			= 0;
 	m_weight_actual		= false;
 	m_min_weight		= 0;
 }

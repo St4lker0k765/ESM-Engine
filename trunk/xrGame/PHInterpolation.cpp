@@ -9,7 +9,7 @@ extern CPHWorld		*ph_world;
 
 CPHInterpolation::CPHInterpolation()
 {
-	m_body= nullptr;
+	m_body=NULL;
 
 //	fTimeDelta=0.f;
 }

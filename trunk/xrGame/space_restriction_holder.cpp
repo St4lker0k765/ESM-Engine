@@ -93,7 +93,7 @@ shared_str CSpaceRestrictionHolder::normalize_string		(shared_str space_restrict
 SpaceRestrictionHolder::CBaseRestrictionPtr CSpaceRestrictionHolder::restriction	(shared_str space_restrictors)
 {
 	if (!xr_strlen(space_restrictors))
-		return				(nullptr);
+		return				(0);
 
 	space_restrictors		= normalize_string(space_restrictors);
 	
@@ -114,7 +114,7 @@ void CSpaceRestrictionHolder::register_restrictor				(CSpaceRestrictor *space_re
 	string4096					m_temp_string;
 	shared_str					space_restrictors = space_restrictor->cName();
 	if (restrictor_type != RestrictionSpace::eDefaultRestrictorTypeNone) {
-		shared_str				*temp = nullptr, temp1;
+		shared_str				*temp = 0, temp1;
 		if (restrictor_type == RestrictionSpace::eDefaultRestrictorTypeOut)
 			temp			= &m_default_out_restrictions;
 		else

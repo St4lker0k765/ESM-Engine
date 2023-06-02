@@ -44,7 +44,7 @@ public:
 	// unspecified bool type
 	typedef T const * (FactoryPtr::*unspecified_bool_type) () const;
 	operator unspecified_bool_type () const	{return (!m_pObject ? 0 : &FactoryPtr::get);}
-	bool operator!	() const { return m_pObject == nullptr;}
+	bool operator!	() const { return m_pObject == 0;}
 
 private:
 	void CreateObject();

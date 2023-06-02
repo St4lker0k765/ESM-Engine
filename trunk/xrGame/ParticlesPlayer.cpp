@@ -17,7 +17,7 @@ CParticlesPlayer::SParticlesInfo* CParticlesPlayer::SBoneInfo::FindParticles(con
 {
 	for (ParticlesInfoListIt it=particles.begin(); it!=particles.end(); it++)
 		if (it->ps && it->ps->Name()==ps_name) return &(*it);
-	return nullptr;
+	return 0;
 }
 CParticlesPlayer::SParticlesInfo* CParticlesPlayer::SBoneInfo::AppendParticles(CObject* object, const shared_str& ps_name)
 {
@@ -60,7 +60,7 @@ CParticlesPlayer::CParticlesPlayer ()
 	m_Bones.push_back	(SBoneInfo(0,Fvector().set(0,0,0)));
 
 	SetParentVel		(zero_vel);
-	m_self_object		= nullptr;
+	m_self_object		= 0;
 }
 
 CParticlesPlayer::~CParticlesPlayer ()
@@ -114,7 +114,7 @@ void	CParticlesPlayer::net_DestroyParticles	()
 		b_info.particles.clear();
 	}
 
-	m_self_object	= nullptr;
+	m_self_object	= 0;
 }
 
 CParticlesPlayer::SBoneInfo* CParticlesPlayer::get_nearest_bone_info(IKinematics* K, u16 bone_index)

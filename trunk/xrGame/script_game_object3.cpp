@@ -49,7 +49,7 @@ const CCoverPoint *CScriptGameObject::best_cover	(const Fvector &position, const
 	CAI_Stalker		*stalker = smart_cast<CAI_Stalker*>(&object());
 	if (!stalker) {
 		ai().script_engine().script_log		(ScriptStorage::eLuaMessageTypeError,"CGameObject : cannot access class member best_cover!");
-		return		(nullptr);
+		return		(0);
 	}
 	stalker->m_ce_best->setup(enemy_position,min_enemy_distance,max_enemy_distance,0.f);
 	const CCoverPoint	*point = ai().cover_manager().best_cover(position,radius,*stalker->m_ce_best);
@@ -61,7 +61,7 @@ const CCoverPoint *CScriptGameObject::safe_cover	(const Fvector &position, float
 	CAI_Stalker		*stalker = smart_cast<CAI_Stalker*>(&object());
 	if (!stalker) {
 		ai().script_engine().script_log		(ScriptStorage::eLuaMessageTypeError,"CGameObject : cannot access class member best_cover!");
-		return		(nullptr);
+		return		(0);
 	}
 	stalker->m_ce_safe->setup(min_distance);
 	const CCoverPoint	*point = ai().cover_manager().best_cover(position,radius,*stalker->m_ce_safe);
@@ -112,10 +112,10 @@ CScriptGameObject *CScriptGameObject::GetEnemy() const
 	CCustomMonster		*l_tpCustomMonster = smart_cast<CCustomMonster*>(&object());
 	if (l_tpCustomMonster) {
 		if (l_tpCustomMonster->GetCurrentEnemy() && !l_tpCustomMonster->GetCurrentEnemy()->getDestroy()) return (l_tpCustomMonster->GetCurrentEnemy()->lua_game_object());
-		else return (nullptr);
+		else return (0);
 	} else {
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CScriptGameObject : cannot access class member GetEnemy!");
-		return			(nullptr);
+		return			(0);
 	}
 }
 
@@ -124,10 +124,10 @@ CScriptGameObject *CScriptGameObject::GetCorpse() const
 	CCustomMonster		*l_tpCustomMonster = smart_cast<CCustomMonster*>(&object());
 	if (l_tpCustomMonster)
 		if (l_tpCustomMonster->GetCurrentCorpse() && !l_tpCustomMonster->GetCurrentCorpse()->getDestroy()) return (l_tpCustomMonster->GetCurrentCorpse()->lua_game_object());
-		else return (nullptr);
+		else return (0);
 	else {
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CScriptGameObject : cannot access class member GetCorpse!");
-		return			(nullptr);
+		return			(0);
 	}
 }
 
@@ -147,10 +147,10 @@ CScriptGameObject *CScriptGameObject::GetCurrentWeapon() const
 	CAI_Stalker		*l_tpStalker = smart_cast<CAI_Stalker*>(&object());
 	if (!l_tpStalker) {
 		ai().script_engine().script_log		(ScriptStorage::eLuaMessageTypeError,"CAI_Stalker : cannot access class member GetCurrentWeapon!");
-		return		(nullptr);
+		return		(0);
 	}
 	CGameObject		*current_weapon = l_tpStalker->GetCurrentWeapon();
-	return			(current_weapon ? current_weapon->lua_game_object() : nullptr);
+	return			(current_weapon ? current_weapon->lua_game_object() : 0);
 }
 
 CScriptGameObject *CScriptGameObject::GetCurrentOutfit() const
@@ -158,10 +158,10 @@ CScriptGameObject *CScriptGameObject::GetCurrentOutfit() const
 	CInventoryOwner		*inventoryOwner = smart_cast<CInventoryOwner*>(&object());
 	if (!inventoryOwner) {
 		ai().script_engine().script_log		(ScriptStorage::eLuaMessageTypeError,"CInventoryOwner : cannot access class member GetCurrentOutfit!");
-		return		(nullptr);
+		return		(0);
 	}
-	CGameObject		*current_equipment = inventoryOwner->GetCurrentOutfit() ? &inventoryOwner->GetCurrentOutfit()->object() : nullptr;
-	return			(current_equipment ? current_equipment->lua_game_object() : nullptr);
+	CGameObject		*current_equipment = inventoryOwner->GetCurrentOutfit() ? &inventoryOwner->GetCurrentOutfit()->object() : 0;
+	return			(current_equipment ? current_equipment->lua_game_object() : 0);
 }
 
 #include "CustomOutfit.h"
@@ -185,10 +185,10 @@ CScriptGameObject *CScriptGameObject::GetFood() const
 	CAI_Stalker		*l_tpStalker = smart_cast<CAI_Stalker*>(&object());
 	if (!l_tpStalker) {
 		ai().script_engine().script_log		(ScriptStorage::eLuaMessageTypeError,"CAI_Stalker : cannot access class member GetFood!");
-		return		(nullptr);
+		return		(0);
 	}
-	CGameObject		*food = l_tpStalker->GetFood() ? &l_tpStalker->GetFood()->object() : nullptr;
-	return			(food ? food->lua_game_object() : nullptr);
+	CGameObject		*food = l_tpStalker->GetFood() ? &l_tpStalker->GetFood()->object() : 0;
+	return			(food ? food->lua_game_object() : 0);
 }
 
 CScriptGameObject *CScriptGameObject::GetMedikit() const
@@ -196,10 +196,10 @@ CScriptGameObject *CScriptGameObject::GetMedikit() const
 	CAI_Stalker		*l_tpStalker = smart_cast<CAI_Stalker*>(&object());
 	if (!l_tpStalker) {
 		ai().script_engine().script_log		(ScriptStorage::eLuaMessageTypeError,"CAI_Stalker : cannot access class member GetCurrentWeapon!");
-		return		(nullptr);
+		return		(0);
 	}
-	CGameObject		*medikit = l_tpStalker->GetMedikit() ? &l_tpStalker->GetMedikit()->object() : nullptr;
-	return			(medikit ? medikit->lua_game_object() : nullptr);
+	CGameObject		*medikit = l_tpStalker->GetMedikit() ? &l_tpStalker->GetMedikit()->object() : 0;
+	return			(medikit ? medikit->lua_game_object() : 0);
 }
 
 LPCSTR CScriptGameObject::GetPatrolPathName()
@@ -308,7 +308,7 @@ void CScriptGameObject::set_desired_position	()
 	if (!stalker)
 		ai().script_engine().script_log				(ScriptStorage::eLuaMessageTypeError,"CAI_Stalker : cannot access class member movement!");
 	else
-		stalker->movement().set_desired_position	(nullptr);
+		stalker->movement().set_desired_position	(0);
 }
 
 void CScriptGameObject::set_desired_position	(const Fvector *desired_position)
@@ -328,7 +328,7 @@ void  CScriptGameObject::set_desired_direction	()
 	if (!stalker)
 		ai().script_engine().script_log					(ScriptStorage::eLuaMessageTypeError,"CAI_Stalker : cannot access class member movement!");
 	else
-		stalker->movement().set_desired_direction	(nullptr);
+		stalker->movement().set_desired_direction	(0);
 }
 
 void  CScriptGameObject::set_desired_direction	(const Fvector *desired_direction)
@@ -579,10 +579,10 @@ CScriptGameObject	*CScriptGameObject::GetActiveItem()
 		if (l_tpInventoryOwner->inventory().ActiveItem())
 			return		(l_tpInventoryOwner->inventory().ActiveItem()->object().lua_game_object());
 		else
-			return		(nullptr);
+			return		(0);
 	else {
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CScriptGameObject : cannot access class member activge_item!");
-		return			(nullptr);
+		return			(0);
 	}
 }
 
@@ -593,13 +593,13 @@ CScriptGameObject	*CScriptGameObject::GetObjectByName	(LPCSTR caObjectName) cons
 		CInventoryItem	*l_tpInventoryItem = l_tpInventoryOwner->inventory().GetItemFromInventory(caObjectName);
 		CGameObject		*l_tpGameObject = smart_cast<CGameObject*>(l_tpInventoryItem);
 		if (!l_tpGameObject)
-			return		(nullptr);
+			return		(0);
 		else
 			return		(l_tpGameObject->lua_game_object());
 	}
 	else {
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CScriptGameObject : cannot access class member object!");
-		return			(nullptr);
+		return			(0);
 	}
 }
 
@@ -610,13 +610,13 @@ CScriptGameObject	*CScriptGameObject::GetObjectByIndex	(int iIndex) const
 		CInventoryItem	*l_tpInventoryItem = l_tpInventoryOwner->inventory().tpfGetObjectByIndex(iIndex);
 		CGameObject		*l_tpGameObject = smart_cast<CGameObject*>(l_tpInventoryItem);
 		if (!l_tpGameObject)
-			return		(nullptr);
+			return		(0);
 		else
 			return		(l_tpGameObject->lua_game_object());
 	}
 	else {
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CScriptGameObject : cannot access class member object!");
-		return			(nullptr);	
+		return			(0);	
 	}
 }
 
@@ -746,7 +746,7 @@ void CScriptGameObject::sell_condition			(CScriptIniFile *ini_file, LPCSTR secti
 		return;
 	}
 
-	inventory_owner->trade_parameters().process	(CTradeParameters::action_sell(nullptr),*ini_file,section);
+	inventory_owner->trade_parameters().process	(CTradeParameters::action_sell(0),*ini_file,section);
 }
 
 void CScriptGameObject::sell_condition			(float friend_factor, float enemy_factor)
@@ -758,7 +758,7 @@ void CScriptGameObject::sell_condition			(float friend_factor, float enemy_facto
 	}
 
 	inventory_owner->trade_parameters().default_factors	(
-		CTradeParameters::action_sell(nullptr),
+		CTradeParameters::action_sell(0),
 		CTradeFactors(
 			friend_factor,
 			enemy_factor
@@ -774,7 +774,7 @@ void CScriptGameObject::buy_condition			(CScriptIniFile *ini_file, LPCSTR sectio
 		return;
 	}
 
-	inventory_owner->trade_parameters().process	(CTradeParameters::action_buy(nullptr),*ini_file,section);
+	inventory_owner->trade_parameters().process	(CTradeParameters::action_buy(0),*ini_file,section);
 }
 
 void CScriptGameObject::buy_condition			(float friend_factor, float enemy_factor)
@@ -786,7 +786,7 @@ void CScriptGameObject::buy_condition			(float friend_factor, float enemy_factor
 	}
 
 	inventory_owner->trade_parameters().default_factors	(
-		CTradeParameters::action_buy(nullptr),
+		CTradeParameters::action_buy(0),
 		CTradeFactors(
 			friend_factor,
 			enemy_factor
@@ -803,7 +803,7 @@ void CScriptGameObject::show_condition			(CScriptIniFile *ini_file, LPCSTR secti
 	}
 
 	inventory_owner->trade_parameters().process	(
-		CTradeParameters::action_show(nullptr),
+		CTradeParameters::action_show(0),
 		*ini_file,
 		section
 	);
@@ -825,13 +825,13 @@ void CScriptGameObject::buy_supplies			(CScriptIniFile *ini_file, LPCSTR section
 
 void sell_condition								(CScriptIniFile *ini_file, LPCSTR section)
 {
-	default_trade_parameters().process	(CTradeParameters::action_sell(nullptr),*ini_file,section);
+	default_trade_parameters().process	(CTradeParameters::action_sell(0),*ini_file,section);
 }
 
 void sell_condition								(float friend_factor, float enemy_factor)
 {
 	default_trade_parameters().default_factors	(
-		CTradeParameters::action_sell(nullptr),
+		CTradeParameters::action_sell(0),
 		CTradeFactors(
 			friend_factor,
 			enemy_factor
@@ -841,13 +841,13 @@ void sell_condition								(float friend_factor, float enemy_factor)
 
 void buy_condition								(CScriptIniFile *ini_file, LPCSTR section)
 {
-	default_trade_parameters().process	(CTradeParameters::action_buy(nullptr),*ini_file,section);
+	default_trade_parameters().process	(CTradeParameters::action_buy(0),*ini_file,section);
 }
 
 void buy_condition								(float friend_factor, float enemy_factor)
 {
 	default_trade_parameters().default_factors	(
-		CTradeParameters::action_buy(nullptr),
+		CTradeParameters::action_buy(0),
 		CTradeFactors(
 			friend_factor,
 			enemy_factor
@@ -857,7 +857,7 @@ void buy_condition								(float friend_factor, float enemy_factor)
 
 void show_condition								(CScriptIniFile *ini_file, LPCSTR section)
 {
-	default_trade_parameters().process	(CTradeParameters::action_show(nullptr),*ini_file,section);
+	default_trade_parameters().process	(CTradeParameters::action_show(0),*ini_file,section);
 }
 
 LPCSTR CScriptGameObject::sound_prefix			() const
@@ -865,7 +865,7 @@ LPCSTR CScriptGameObject::sound_prefix			() const
 	CCustomMonster							*custom_monster = smart_cast<CCustomMonster*>(&object());
 	if (!custom_monster) {
 		ai().script_engine().script_log		(ScriptStorage::eLuaMessageTypeError,"CCustomMonster : cannot access class member sound_prefix!");
-		return								(nullptr);
+		return								(0);
 	}
 
 	return									(*custom_monster->sound().sound_prefix());

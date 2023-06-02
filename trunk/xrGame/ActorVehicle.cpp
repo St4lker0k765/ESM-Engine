@@ -29,7 +29,7 @@ void CActor::attach_Vehicle(CHolderCustom* vehicle)
 	R_ASSERT(V);
 	
 	if(!m_holder->attach_Actor(this)){
-		m_holder= nullptr;
+		m_holder=NULL;
 		return;
 	}
 	// temp play animation
@@ -50,7 +50,7 @@ void CActor::attach_Vehicle(CHolderCustom* vehicle)
 
 	SetWeaponHideState				(INV_STATE_CAR, true);
 
-	CStepManager::on_animation_start(MotionID(), nullptr);
+	CStepManager::on_animation_start(MotionID(), 0);
 }
 
 void CActor::detach_Vehicle()
@@ -74,7 +74,7 @@ void CActor::detach_Vehicle()
 	r_model_yaw=-m_holder->Camera()->yaw;
 	r_torso.yaw=r_model_yaw;
 	r_model_yaw_dest=r_model_yaw;
-	m_holder= nullptr;
+	m_holder=NULL;
 	SetCallbacks		();
 	IKinematicsAnimated* V= smart_cast<IKinematicsAnimated*>(Visual()); R_ASSERT(V);
 	V->PlayCycle		(m_anims->m_normal.legs_idle);
@@ -107,7 +107,7 @@ bool CActor::use_Vehicle(CHolderCustom* object)
 				if (pCamBobbing)
 				{
 					Cameras().RemoveCamEffector(eCEBobbing);
-					pCamBobbing = nullptr;
+					pCamBobbing = NULL;
 				}
 
 				attach_Vehicle(vehicle);

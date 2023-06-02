@@ -30,7 +30,7 @@ CScriptBinder::~CScriptBinder		()
 
 void CScriptBinder::init			()
 {
-	m_object				= nullptr;
+	m_object				= 0;
 }
 
 void CScriptBinder::clear			()
@@ -39,7 +39,7 @@ void CScriptBinder::clear			()
 		xr_delete			(m_object);
 	}
 	catch(...) {
-		m_object			= nullptr;
+		m_object			= 0;
 	}
 	init					();
 }
@@ -93,7 +93,7 @@ void CScriptBinder::reload			(LPCSTR section)
 	CGameObject				*game_object = smart_cast<CGameObject*>(this);
 
 	try {
-		lua_function		(game_object ? game_object->lua_game_object() : nullptr);
+		lua_function		(game_object ? game_object->lua_game_object() : 0);
 	}
 	catch(...) {
 		clear				();

@@ -21,7 +21,7 @@ xr_token					tparam_token							[ ]={
 	{ "Hamming",			STextureParams::kMIPFilterHamming			},
 	{ "Blackman",			STextureParams::kMIPFilterBlackman			},
 	{ "Kaiser",				STextureParams::kMIPFilterKaiser			},
-	{ nullptr,					0											}
+	{ 0,					0											}
 };
 
 xr_token					ttype_token								[ ]={
@@ -30,7 +30,7 @@ xr_token					ttype_token								[ ]={
 	{ "Bump Map",			STextureParams::ttBumpMap					},
 	{ "Normal Map",			STextureParams::ttNormalMap					},
 	{ "Terrain",			STextureParams::ttTerrain					},
-	{ nullptr,					0											}
+	{ 0,					0											}
 };
 
 xr_token					tfmt_token								[ ]={
@@ -44,7 +44,7 @@ xr_token					tfmt_token								[ ]={
 	{ "8 bit (alpha)",		STextureParams::tfA8						},
 	{ "8 bit (luminance)",	STextureParams::tfL8						},
 	{ "16 bit (alpha:luminance)",STextureParams::tfA8L8					},
-	{ nullptr,					0											}
+	{ 0,					0											}
 };
 
 xr_token					tmtl_token								[ ]={
@@ -52,14 +52,14 @@ xr_token					tmtl_token								[ ]={
 	{ "Blin <-> Phong",		STextureParams::tmBlin_Phong				},
 	{ "Phong <-> Metal",	STextureParams::tmPhong_Metal				},
 	{ "Metal <-> OrenNayar",STextureParams::tmMetal_OrenNayar			},
-	{ nullptr,					0											}
+	{ 0,					0											}
 };
 
 xr_token					tbmode_token							[ ]={
 	{ "None",				STextureParams::tbmNone						},
 	{ "Use",				STextureParams::tbmUse						},
 	{ "Use parallax",		STextureParams::tbmUseParallax				},
-	{ nullptr,					0											}
+	{ 0,					0											}
 };
 
 void STextureParams::Load(IReader& F)

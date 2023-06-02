@@ -90,6 +90,6 @@ virtual	const IBoneData&		_BCL	GetBoneData(u16 bone_id) const = 0;
 #endif
 };
 
-IC IKinematics* PKinematics (IRenderVisual* V) { return V?V->dcast_PKinematics():nullptr;}
+IC IKinematics* PKinematics (IRenderVisual* V) { return V?V->dcast_PKinematics():0;}
 
 #endif	//	Kinematics_included

@@ -162,7 +162,7 @@ void dxRainRender::Render(CEffect_Rain &owner)
 
 	// Particles
 	CEffect_Rain::Particle*	P		= owner.particle_active;
-	if (nullptr==P)			return;
+	if (0==P)			return;
 
 	{
 		float	dt				= Device.fTimeDelta;

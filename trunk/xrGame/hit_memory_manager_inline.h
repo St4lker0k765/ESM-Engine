@@ -14,7 +14,7 @@ IC	CHitMemoryManager::CHitMemoryManager							(CCustomMonster *object, CAI_Stalk
 	m_object		= object;
 	m_stalker		= stalker;
 #ifdef USE_SELECTED_HIT
-	m_selected_hit	= nullptr;
+	m_selected_hit	= 0;
 #endif
 }
 

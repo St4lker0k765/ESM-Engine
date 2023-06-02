@@ -115,6 +115,6 @@ struct SCalculateData : private boost::noncopyable {
 //	const motion_vec	&uneffected_motions	;
 
 	SCalculateData(CIKLimb& l,IKinematicsAnimated	*K,const Fmatrix &o):
-	m_limb(l), m_obj(o), m_K(K), m_angles(nullptr), apply(false), 
+	m_limb(l), m_obj(o), m_K(K), m_angles(0), apply(false), 
 	do_collide(false), foot_step(false) {}
 };

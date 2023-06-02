@@ -23,7 +23,7 @@ IC	void	CScriptRTokenList::remove	(u32 index)
 IC	LPCSTR	CScriptRTokenList::get		(u32 index)
 {
 	if (index >= size())
-		return	(nullptr);
+		return	(0);
 	return		(*m_values[index]);
 }
 

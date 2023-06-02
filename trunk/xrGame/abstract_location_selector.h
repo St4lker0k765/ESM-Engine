@@ -35,7 +35,7 @@ protected:
 public:
 	IC							CAbstractLocationSelector	(CRestrictedObject *object);
 	IC	virtual					~CAbstractLocationSelector	();
-	IC	virtual void			reinit						(const _Graph *graph = nullptr);
+	IC	virtual void			reinit						(const _Graph *graph = 0);
 
 	IC			_vertex_id_type get_selected_vertex_id		() const;
 

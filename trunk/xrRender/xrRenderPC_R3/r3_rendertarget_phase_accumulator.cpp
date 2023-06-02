@@ -7,13 +7,13 @@ void	CRenderTarget::phase_accumulator()
 		// normal operation - setup
       if( !RImplementation.o.dx10_msaa )
       {
-		   if (RImplementation.o.fp16_blend)	u_setrt	(rt_Accumulator, nullptr, nullptr,HW.pBaseZB);
-		   else								u_setrt	(rt_Accumulator_temp, nullptr, nullptr,HW.pBaseZB);
+		   if (RImplementation.o.fp16_blend)	u_setrt	(rt_Accumulator,		NULL,NULL,HW.pBaseZB);
+		   else								u_setrt	(rt_Accumulator_temp,	NULL,NULL,HW.pBaseZB);
       }
       else
       {
-         if (RImplementation.o.fp16_blend)	u_setrt	(rt_Accumulator, nullptr, nullptr, rt_MSAADepth->pZRT);
-         else								u_setrt	(rt_Accumulator_temp, nullptr, nullptr, rt_MSAADepth->pZRT);
+         if (RImplementation.o.fp16_blend)	u_setrt	(rt_Accumulator,		NULL,NULL, rt_MSAADepth->pZRT);
+         else								u_setrt	(rt_Accumulator_temp,	NULL,NULL, rt_MSAADepth->pZRT);
       }
 	} else {
 		// initial setup
@@ -21,16 +21,16 @@ void	CRenderTarget::phase_accumulator()
 
 		// clear
       if( !RImplementation.o.dx10_msaa )
-   		u_setrt								(rt_Accumulator, nullptr, nullptr,HW.pBaseZB);
+   		u_setrt								(rt_Accumulator,		NULL,NULL,HW.pBaseZB);
       else
-         u_setrt								(rt_Accumulator, nullptr, nullptr,rt_MSAADepth->pZRT);
+         u_setrt								(rt_Accumulator,		NULL,NULL,rt_MSAADepth->pZRT);
 		//dwLightMarkerID						= 5;					// start from 5, increment in 2 units
 		reset_light_marker();
 		//	Igor: AMD bug workaround. Should be fixed in 8.7 catalyst
 		//	Need for MSAA to work correctly.
 		if( RImplementation.o.dx10_msaa )
 		{
-			HW.pDevice->OMSetRenderTargets(1, &(rt_Accumulator->pRT), nullptr);
+			HW.pDevice->OMSetRenderTargets(1, &(rt_Accumulator->pRT), 0);
 		}
 //		u32		clr4clear					= color_rgba(0,0,0,0);	// 0x00
 		//CHK_DX	(HW.pDevice->Clear			( 0L, NULL, D3DCLEAR_TARGET, clr4clear, 1.0f, 0L));
@@ -66,9 +66,9 @@ void	CRenderTarget::phase_vol_accumulator()
 	{
 		m_bHasActiveVolumetric = true;
 		if( !RImplementation.o.dx10_msaa )
-			u_setrt								(rt_Generic_2, nullptr, nullptr,HW.pBaseZB);
+			u_setrt								(rt_Generic_2,		NULL,NULL,HW.pBaseZB);
 		else
-			u_setrt								(rt_Generic_2, nullptr, nullptr,RImplementation.Target->rt_MSAADepth->pZRT);
+			u_setrt								(rt_Generic_2,		NULL,NULL,RImplementation.Target->rt_MSAADepth->pZRT);
 		//u32		clr4clearVol				= color_rgba(0,0,0,0);	// 0x00
 		//CHK_DX	(HW.pDevice->Clear			( 0L, NULL, D3DCLEAR_TARGET, clr4clearVol, 1.0f, 0L));
 		FLOAT ColorRGBA[4] = {0.0f, 0.0f, 0.0f, 0.0f};
@@ -77,9 +77,9 @@ void	CRenderTarget::phase_vol_accumulator()
 	else
 	{
 		if( !RImplementation.o.dx10_msaa )
-			u_setrt								(rt_Generic_2, nullptr, nullptr,HW.pBaseZB);
+			u_setrt								(rt_Generic_2,		NULL,NULL,HW.pBaseZB);
 		else
-			u_setrt								(rt_Generic_2, nullptr, nullptr,RImplementation.Target->rt_MSAADepth->pZRT);
+			u_setrt								(rt_Generic_2,		NULL,NULL,RImplementation.Target->rt_MSAADepth->pZRT);
 	}
 
 	RCache.set_Stencil							(FALSE);

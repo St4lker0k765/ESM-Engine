@@ -234,7 +234,7 @@ CMemberOrder *CAgentMemberManager::get_member	(const ALife::_OBJECT_ID &object_i
 {
 	iterator			I = std::find_if(members().begin(),members().end(), CMemberPredicate2(object_id));
 	if (I == members().end())
-		return			(nullptr);
+		return			(0);
 
 	return				(&**I);
 }

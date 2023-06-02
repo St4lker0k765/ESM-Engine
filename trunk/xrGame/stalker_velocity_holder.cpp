@@ -11,7 +11,7 @@
 #include "object_broker.h"
 #include "stalker_velocity_collection.h"
 
-CStalkerVelocityHolder	*g_stalker_velocity_holder = nullptr;
+CStalkerVelocityHolder	*g_stalker_velocity_holder = 0;
 
 CStalkerVelocityHolder::~CStalkerVelocityHolder									()
 {

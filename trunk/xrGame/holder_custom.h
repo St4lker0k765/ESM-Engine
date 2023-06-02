@@ -16,11 +16,11 @@ protected:
 	CGameObject*			Owner				(){return m_owner;}
 	CActor*					OwnerActor			(){return m_ownerActor;}
 public:
-							CHolderCustom		()				{m_owner= nullptr;m_ownerActor= nullptr;}
+							CHolderCustom		()				{m_owner=NULL;m_ownerActor=NULL;}
 	virtual					~CHolderCustom		()				{;}
 	virtual	void			UpdateEx			(float fov){}; //called by owner
 	virtual CHolderCustom	*cast_holder_custom	()				{return this;}
-			bool			Engaged				()				{return m_owner!= nullptr;}
+			bool			Engaged				()				{return m_owner!=NULL;}
 	virtual void			OnMouseMove			(int x, int y)	= 0;
 	virtual void			OnKeyboardPress		(int dik)		= 0;
 	virtual void			OnKeyboardRelease	(int dik)		= 0;

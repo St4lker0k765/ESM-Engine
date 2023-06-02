@@ -101,7 +101,7 @@ void CRender::level_Load(IReader *fs)
 
 void CRender::level_Unload		()
 {
-	if (nullptr==g_pGameLevel)		return;
+	if (0==g_pGameLevel)		return;
 	if (!b_loaded)				return;
 
 	u32							I;
@@ -115,7 +115,7 @@ void CRender::level_Unload		()
 	//*** Sectors
 	// 1.
 	xr_delete					(rmPortals);
-	pLastSector					= nullptr;
+	pLastSector					= 0;
 	vLastCameraPos.set			(flt_max,flt_max,flt_max);
 	uLastLTRACK					= 0;
 
@@ -203,7 +203,7 @@ void CRender::LoadBuffers	(CStreamReader *base_fs)
 			Msg	("* [Loading VB] %d verts, %d Kb",vCount,(vCount*vSize)/1024);
 
 			// Create and fill
-			BYTE*	pData		= nullptr;
+			BYTE*	pData		= 0;
 			R_CHK				(HW.pDevice->CreateVertexBuffer(vCount*vSize,dwUsage,0,D3DPOOL_MANAGED,&VB[i],0));
 			HW.stats_manager.increment_stats		( vCount*vSize, enum_stats_buffer_type_vertex, D3DPOOL_MANAGED);
 			R_CHK				(VB[i]->Lock(0,0,(void**)&pData,0));
@@ -230,7 +230,7 @@ void CRender::LoadBuffers	(CStreamReader *base_fs)
 			Msg("* [Loading IB] %d indices, %d Kb",iCount,(iCount*2)/1024);
 
 			// Create and fill
-			BYTE*	pData		= nullptr;
+			BYTE*	pData		= 0;
 			R_CHK				(HW.pDevice->CreateIndexBuffer(iCount*2,dwUsage,D3DFMT_INDEX16,D3DPOOL_MANAGED,&IB[i],0));
 			HW.stats_manager.increment_stats		( iCount*2, enum_stats_buffer_type_index, D3DPOOL_MANAGED);
 			R_CHK				(IB[i]->Lock(0,0,(void**)&pData,0));
@@ -246,16 +246,16 @@ void CRender::LoadBuffers	(CStreamReader *base_fs)
 
 void CRender::LoadVisuals(IReader *fs)
 {
-	IReader*		chunk	= nullptr;
+	IReader*		chunk	= 0;
 	u32				index	= 0;
-	dxRender_Visual*	V		= nullptr;
+	dxRender_Visual*	V		= 0;
 	ogf_header		H;
 
-	while ((chunk=fs->open_chunk(index))!=nullptr)
+	while ((chunk=fs->open_chunk(index))!=0)
 	{
 		chunk->r_chunk_safe			(OGF_HEADER,&H,sizeof(H));
 		V = Models->Instance_Create	(H.type);
-		V->Load						(nullptr,chunk,0);
+		V->Load						(0,chunk,0);
 		Visuals.push_back			(V);
 
 		chunk->close();
@@ -297,7 +297,7 @@ void CRender::LoadSectors(IReader* fs)
 	for (u32 i=0; ; i++)
 	{
 		IReader* P = S->open_chunk(i);
-		if (nullptr==P) break;
+		if (0==P) break;
 
 		CSector* __S		= xr_new<CSector> ();
 		__S->load			(*P);
@@ -337,14 +337,14 @@ void CRender::LoadSectors(IReader* fs)
 		rmPortals = xr_new	<CDB::MODEL> ();
 		rmPortals->build	(CL.getV(),int(CL.getVS()),CL.getT(),int(CL.getTS()), nullptr, nullptr, false);
 	} else {
-		rmPortals = nullptr;
+		rmPortals = 0;
 	}
 
 	// debug
 	//	for (int d=0; d<Sectors.size(); d++)
 	//		Sectors[d]->DebugDump	();
 
-	pLastSector = nullptr;
+	pLastSector = 0;
 }
 
 void CRender::LoadSWIs(CStreamReader* base_fs)

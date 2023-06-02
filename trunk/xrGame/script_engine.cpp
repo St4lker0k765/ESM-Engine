@@ -33,7 +33,7 @@ CScriptEngine::CScriptEngine			()
 	*m_last_no_file			= 0;
 
 #ifdef USE_DEBUGGER
-	m_scriptDebugger		= nullptr;
+	m_scriptDebugger		= NULL;
 	restartDebugger			();	
 #endif
 }

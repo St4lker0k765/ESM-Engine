@@ -11,7 +11,7 @@
 #include "PhysicsShellHolder.h"
 
 extern	class CPHWorld	*ph_world;
-ObjectContactCallbackFun* saved_callback		=	nullptr	;
+ObjectContactCallbackFun* saved_callback		=	0	;
 static float max_depth							=	0.f	;
 
 struct STestCallbackPars
@@ -128,7 +128,7 @@ public:
 	virtual ~CVelocityLimiter()
 	{
 		Deactivate();
-		m_body =nullptr;
+		m_body =0;
 	}
 
 
@@ -428,7 +428,7 @@ bool CPHMovementControl:: ActivateBoxDynamic(DWORD id,int num_it/*=8*/,int num_s
 
 	SetOjectContactCallback(saved_callback);
 	SetVelocity(vel);
-	saved_callback=nullptr;
+	saved_callback=0;
 	if(!ret&&character_exist)
 	{
 		trying_times[id]=Device.dwTimeGlobal;

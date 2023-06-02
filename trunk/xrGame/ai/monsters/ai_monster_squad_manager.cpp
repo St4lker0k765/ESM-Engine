@@ -6,7 +6,7 @@
 //////////////////////////////////////////////////////////////////////////
 // SQUAD MANAGER Implementation
 //////////////////////////////////////////////////////////////////////////
-CMonsterSquadManager *g_monster_squad = nullptr;
+CMonsterSquadManager *g_monster_squad = 0;
 
 CMonsterSquadManager::CMonsterSquadManager()
 {
@@ -33,7 +33,7 @@ void CMonsterSquadManager::register_member(u8 team_id, u8 squad_id, u8 group_id,
 		team[team_id][squad_id].resize		(group_id + 1);
 		
 		for (u32 i=0; i<group_id; i++) 	
-			team[team_id][squad_id][i]		= nullptr;
+			team[team_id][squad_id][i]		= 0;
 
 		pSquad								= xr_new<CMonsterSquad>();
 		team[team_id][squad_id][group_id]	= pSquad;
@@ -45,7 +45,7 @@ void CMonsterSquadManager::register_member(u8 team_id, u8 squad_id, u8 group_id,
 		team[team_id][squad_id].resize		(group_id + 1);
 		
 		for (u32 i=0; i<group_id; i++) 	
-			team[team_id][squad_id][i]		= nullptr;
+			team[team_id][squad_id][i]		= 0;
 
 		pSquad								= xr_new<CMonsterSquad>();
 		team[team_id][squad_id][group_id]	= pSquad;
@@ -57,12 +57,12 @@ void CMonsterSquadManager::register_member(u8 team_id, u8 squad_id, u8 group_id,
 		team[team_id][squad_id].resize		(group_id + 1);
 
 		for (u32 i = prev_size; i < group_id; i++)
-			team[team_id][squad_id][i]		= nullptr;
+			team[team_id][squad_id][i]		= 0;
 		
 		pSquad								= xr_new<CMonsterSquad>();
 		team[team_id][squad_id][group_id]	= pSquad;
 	} else {
-		if (team[team_id][squad_id][group_id] == nullptr) {
+		if (team[team_id][squad_id][group_id] == 0) {
 			pSquad								= xr_new<CMonsterSquad>();
 			team[team_id][squad_id][group_id]	= pSquad;
 		} else {

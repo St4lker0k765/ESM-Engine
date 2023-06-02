@@ -122,7 +122,7 @@ R_occlusion::occq_result R_occlusion::occq_get		(u32&	ID		)
 	}
 
 	// remove from used and shrink as nesessary
-	used[ID].Q			= nullptr;
+	used[ID].Q			= 0;
 	fids.push_back		(ID);
 	ID					= 0;
 	return	fragments;

@@ -36,7 +36,7 @@ private:
 
 	//------------------------------
 	void					cam_Set					(EActorCameras style);
-	void					cam_Update				(CActor* A=nullptr);
+	void					cam_Update				(CActor* A=0);
 
 	CActor*					m_pActorToLookAt;
 	bool					SelectNextPlayerToLook	();

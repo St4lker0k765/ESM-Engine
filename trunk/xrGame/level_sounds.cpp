@@ -27,16 +27,16 @@ void SStaticSound::Load(IReader& F)
 void SStaticSound::Update(u32 game_time, u32 global_time)
 {
 	if ((0==m_ActiveTime.x)&&(0==m_ActiveTime.y)||((int(game_time)>=m_ActiveTime.x)&&(int(game_time)<m_ActiveTime.y))){
-		if (nullptr==m_Source._feedback()){
+		if (0==m_Source._feedback()){
 			if ((0==m_PauseTime.x)&&(0==m_PauseTime.y)){    
-				m_Source.play_at_pos	(nullptr,m_Position,sm_Looped);
+				m_Source.play_at_pos	(0,m_Position,sm_Looped);
 				m_Source.set_volume		(m_Volume);
 				m_Source.set_frequency	(m_Freq);
 				m_StopTime				= 0xFFFFFFFF;
 			}else{
 				if (global_time>=m_NextTime){
 					bool bFullPlay		= (0==m_PlayTime.x)&&(0==m_PlayTime.y);
-					m_Source.play_at_pos	(nullptr,m_Position,bFullPlay?0:sm_Looped);
+					m_Source.play_at_pos	(0,m_Position,bFullPlay?0:sm_Looped);
 					m_Source.set_volume		(m_Volume);
 					m_Source.set_frequency	(m_Freq);
 					if (bFullPlay){
@@ -53,7 +53,7 @@ void SStaticSound::Update(u32 game_time, u32 global_time)
 				m_Source.stop_deffered();
 		}
 	}else{
-		if (nullptr!=m_Source._feedback())
+		if (0!=m_Source._feedback())
 			m_Source.stop_deffered();
 	}
 }
@@ -84,8 +84,8 @@ void SMusicTrack::Load(LPCSTR fn, LPCSTR params)
 
 void	SMusicTrack::Play()
 {
-	m_SourceLeft.play_at_pos	(nullptr,Fvector().set(-0.5f,0.f,0.3f),sm_2D);
-	m_SourceRight.play_at_pos	(nullptr,Fvector().set(+0.5f,0.f,0.3f),sm_2D);
+	m_SourceLeft.play_at_pos	(0,Fvector().set(-0.5f,0.f,0.3f),sm_2D);
+	m_SourceRight.play_at_pos	(0,Fvector().set(+0.5f,0.f,0.3f),sm_2D);
 	SetVolume					(1.0f);
 }
 

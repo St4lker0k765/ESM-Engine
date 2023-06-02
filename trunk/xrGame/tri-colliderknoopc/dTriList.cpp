@@ -113,7 +113,7 @@ dColliderFn* dTriListColliderFn(int num)
 
 	if (num == dCylinderClassUser) return (dColliderFn*)&dCollideCTL;
 
-	return nullptr;
+	return 0;
 
 }
 

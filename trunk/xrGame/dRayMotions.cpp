@@ -18,8 +18,8 @@ struct dxRayMotions
 	dGeomID ray_ownwer;
 	dxRayMotions()
 	{
-		ray=nullptr;
-		ray_ownwer=nullptr;
+		ray=0;
+		ray_ownwer=0;
 	}
 };
 
@@ -88,7 +88,7 @@ static  dColliderFn * dRayMotionsColliderFn (int num)
 	if (num == dBoxClass) return (dColliderFn *) &dCollideRMB;
 	if (num == dSphereClass) return (dColliderFn *) &dCollideRMS;
 	if (num == dCylinderClassUser) return (dColliderFn *) &dCollideRMCyl;
-	return nullptr;
+	return 0;
 }
 
 
@@ -110,7 +110,7 @@ dxGeom *dCreateRayMotions (dSpaceID space)
 		c.bytes = sizeof (dxRayMotions);
 		c.collider = &dRayMotionsColliderFn;
 		c.aabb = &dRayMotionsAABB;
-		c.aabb_test = nullptr;
+		c.aabb_test = 0;
 		c.dtor = &dGeomRayMotionDestroy;
 		dRayMotionsClassUser =dCreateGeomClass (&c);
 		

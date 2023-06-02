@@ -82,7 +82,7 @@ void	CBlender_deffer_aref::Compile(CBlender_Compile& C)
 			
 			if (bUseATOC)
 			{
-				uber_deffer		(C,true,"base","base_atoc",true,nullptr,true);
+				uber_deffer		(C,true,"base","base_atoc",true,0,true);
 				C.r_Stencil		( TRUE,D3DCMP_ALWAYS,0xff,0x7f,D3DSTENCILOP_KEEP,D3DSTENCILOP_REPLACE,D3DSTENCILOP_KEEP);
 				C.r_ColorWriteEnable(false, false, false, false);
 				C.r_StencilRef	(0x01);
@@ -92,7 +92,7 @@ void	CBlender_deffer_aref::Compile(CBlender_Compile& C)
 			}
 			
 
-			uber_deffer		(C,true,"base","base",true,nullptr,true);
+			uber_deffer		(C,true,"base","base",true,0,true);
 			C.r_Stencil		( TRUE,D3DCMP_ALWAYS,0xff,0x7f,D3DSTENCILOP_KEEP,D3DSTENCILOP_REPLACE,D3DSTENCILOP_KEEP);
 			C.r_StencilRef	(0x01);
 			if (bUseATOC) C.RS.SetRS	( D3DRS_ZFUNC, D3DCMP_EQUAL);
@@ -104,7 +104,7 @@ void	CBlender_deffer_aref::Compile(CBlender_Compile& C)
 			
 			if (bUseATOC)
 			{
-				uber_deffer		(C,false,"base","base_atoc",true,nullptr,true);
+				uber_deffer		(C,false,"base","base_atoc",true,0,true);
 				C.r_Stencil		( TRUE,D3DCMP_ALWAYS,0xff,0x7f,D3DSTENCILOP_KEEP,D3DSTENCILOP_REPLACE,D3DSTENCILOP_KEEP);
 				C.r_StencilRef	(0x01);
 				C.r_ColorWriteEnable(false, false, false, false);
@@ -114,7 +114,7 @@ void	CBlender_deffer_aref::Compile(CBlender_Compile& C)
 			}
 			
 
-			uber_deffer		(C,false,"base","base",true,nullptr,true);
+			uber_deffer		(C,false,"base","base",true,0,true);
 			C.r_Stencil		( TRUE,D3DCMP_ALWAYS,0xff,0x7f,D3DSTENCILOP_KEEP,D3DSTENCILOP_REPLACE,D3DSTENCILOP_KEEP);
 			C.r_StencilRef	(0x01);
 			if (bUseATOC) C.RS.SetRS	( D3DRS_ZFUNC, D3DCMP_EQUAL);

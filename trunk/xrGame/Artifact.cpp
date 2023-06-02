@@ -62,9 +62,9 @@ CArtefact::CArtefact(void)
 {
 	shedule.t_min				= 20;
 	shedule.t_max				= 50;
-	m_sParticlesName			= nullptr;
-	m_pTrailLight				= nullptr;
-	m_activationObj				= nullptr;
+	m_sParticlesName			= NULL;
+	m_pTrailLight				= NULL;
+	m_activationObj				= NULL;
 }
 
 
@@ -288,7 +288,7 @@ void CArtefact::PhDataUpdate	(dReal step)
 bool CArtefact::CanTake() const
 {
 	if(!inherited::CanTake())return false;
-	return (m_activationObj== nullptr);
+	return (m_activationObj==NULL);
 }
 
 void CArtefact::Hide()
@@ -308,7 +308,7 @@ void CArtefact::UpdateXForm()
 	{
 		dwXF_Frame			= Device.dwFrame;
 
-		if (nullptr==H_Parent())	return;
+		if (0==H_Parent())	return;
 
 		// Get access to entity and its visual
 		CEntityAlive*		E		= smart_cast<CEntityAlive*>(H_Parent());
@@ -399,7 +399,7 @@ void CArtefact::OnStateSwitch		(u32 S)
 
 void CArtefact::PlayAnimIdle()
 {
-	m_pHUD->animPlay(random_anim(m_anim_idle),		FALSE, nullptr, eIdle);
+	m_pHUD->animPlay(random_anim(m_anim_idle),		FALSE, NULL, eIdle);
 }
 
 void CArtefact::OnAnimationEnd		(u32 state)
@@ -517,7 +517,7 @@ void SArtefactActivation::PhDataUpdate(dReal step)
 {
 	if (m_cur_activation_state==eFlying) {
 		Fvector dir	= {0, -1.f, 0};
-		if(Level().ObjectSpace.RayTest(m_af->Position(), dir, 1.0f, collide::rqtBoth, nullptr,m_af) ){
+		if(Level().ObjectSpace.RayTest(m_af->Position(), dir, 1.0f, collide::rqtBoth,NULL,m_af) ){
 			dir.y = ph_world->Gravity()*1.1f; 
 			m_af->m_pPhysicsShell->applyGravityAccel(dir);
 		}
@@ -607,9 +607,9 @@ void SArtefactActivation::SpawnAnomaly()
 
 shared_str clear_brackets(LPCSTR src)
 {
-	if	(nullptr==src)					return	shared_str(nullptr);
+	if	(0==src)					return	shared_str(0);
 	
-	if(nullptr == strchr(src,'"') )	return	shared_str(src);
+	if( NULL == strchr(src,'"') )	return	shared_str(src);
 
 	string512						_original;	
 	strcpy_s						(_original,src);

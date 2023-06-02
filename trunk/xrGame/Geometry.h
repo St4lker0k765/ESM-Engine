@@ -57,7 +57,7 @@ public:
 							}
 	IC			dGeomID		geometry()
 							{
-								return m_geom_transform ? (geom() ? geom() : m_geom_transform) : nullptr;
+								return m_geom_transform ? (geom() ? geom() : m_geom_transform) : NULL;
 							}
 	IC			dGeomID		geometry_bt()
 							{

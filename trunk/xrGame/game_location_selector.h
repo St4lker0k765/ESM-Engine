@@ -59,7 +59,7 @@ public:
 	IC						CBaseLocationSelector	(CRestrictedObject *object, CLocationManager *location_manager);
 	IC	virtual				~CBaseLocationSelector	();
 	IC			void		init					();
-	IC	virtual void		reinit					(const _Graph *graph = nullptr);
+	IC	virtual void		reinit					(const _Graph *graph = 0);
 	IC			void		set_selection_type		(const ESelectionType selection_type);
 	IC			void		selection_type			() const;
 	IC			bool		actual					(const _vertex_id_type start_vertex_id, bool path_completed);

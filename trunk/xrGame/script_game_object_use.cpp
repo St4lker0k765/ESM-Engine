@@ -69,7 +69,7 @@ CScriptGameObject *CScriptGameObject::Parent				() const
 	if (l_tpGameObject)
 		return		(l_tpGameObject->lua_game_object());
 	else
-		return		(nullptr);
+		return		(0);
 }
 
 int	CScriptGameObject::clsid				() const

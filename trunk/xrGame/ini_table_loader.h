@@ -80,7 +80,7 @@ TEMPLATE_SPECIALIZATION
 CSIni_Table::CIni_Table	()
 {
 	m_pTable = NULL;
-	table_sect = nullptr;
+	table_sect = NULL;
 	table_width = -1;
 }
 

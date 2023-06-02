@@ -39,7 +39,7 @@ CPHMovementControl::CPHMovementControl(CObject* parent)
 #endif
 
 	m_material			=0;
-	m_capture			= nullptr;
+	m_capture			=NULL;
 	b_exect_position	=true;
 	m_start_index		=0;
 	eOldEnvironment =	peInAir;
@@ -67,7 +67,7 @@ CPHMovementControl::CPHMovementControl(CObject* parent)
 
 	fContactSpeed		=	0.f;
 	fAirControlParam	=	0.f;
-	m_character			= nullptr;
+	m_character			=	NULL;
 	m_dwCurBox			=	0xffffffff;
 	fCollisionDamageFactor=1.f;
 	in_dead_area_count	=0;
@@ -741,7 +741,7 @@ void CPHMovementControl::Load					(LPCSTR section){
 		{ "medium_monster",	CPHCharacter::rtMonsterMedium},
 		{ "stalker",		CPHCharacter::rtStalker	},
 		{ "none",			CPHCharacter::rtNone	},
-		{ nullptr,							0}
+		{ 0,							0}
 	};
 
 	if(pSettings->line_exist(section,"actor_restrictor"))
@@ -1020,7 +1020,7 @@ void CPHMovementControl::CreateCharacter()
 CPHSynchronize*	CPHMovementControl::GetSyncItem()
 {
 	if(m_character)	return smart_cast<CPHSynchronize*>(m_character);
-	else			return nullptr;
+	else			return 0;
 }
 void CPHMovementControl::Freeze()
 {
@@ -1076,7 +1076,7 @@ void CPHMovementControl::MulFrictionFactor(float f)
 
 CElevatorState	*CPHMovementControl::ElevatorState()
 {
-	if(!m_character || !m_character->b_exist)return nullptr;
+	if(!m_character || !m_character->b_exist)return NULL;
 	return m_character->ElevatorState();
 	//m_character->SetElevator()
 }
@@ -1098,7 +1098,7 @@ BOOL CPHMovementControl::BorderTraceCallback(collide::rq_result& result, LPVOID 
 {
 	STraceBorderQParams& p	= *(STraceBorderQParams*)params;
 	u16 mtl_idx			=	GAMEMTL_NONE_IDX;
-	CDB::TRI* T			= nullptr;
+	CDB::TRI* T			=	NULL;
 	if(result.O){
 		return true;
 	}else{
@@ -1133,7 +1133,7 @@ void	CPHMovementControl::TraceBorder(const Fvector &prev_position)
 
 	STraceBorderQParams			p(this,dir);
 	storage.r_clear				();
-	g_pGameLevel->ObjectSpace.RayQuery(storage,RD,BorderTraceCallback,&p, nullptr,static_cast<CObject*>(m_character->PhysicsRefObject()));
+	g_pGameLevel->ObjectSpace.RayQuery(storage,RD,BorderTraceCallback,&p,NULL,static_cast<CObject*>(m_character->PhysicsRefObject()));
 }
 
 void	CPHMovementControl::				UpdateObjectBox(CPHCharacter *ach)

@@ -8,7 +8,7 @@ void CRenderTarget::phase_fxaa()
 	float _h = float(Device.dwHeight);
 	float du = ps_r1_pps_u, dv = ps_r1_pps_v;
 
-	u_setrt(rt_Generic, nullptr, nullptr, HW.pBaseZB);
+	u_setrt(rt_Generic, 0, NULL, HW.pBaseZB);
 
 	FVF::V* pv = (FVF::V*)	RCache.Vertex.Lock(4, g_fxaa->vb_stride, Offset);
 	pv->set(du + 0, dv + float(_h), 0, 0, 1);	pv++;

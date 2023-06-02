@@ -55,12 +55,12 @@ shell_root CPHShellSplitterHolder::SplitJoint(u16 aspl)
 	InitNewShell(new_shell_desc);
 	m_pShell->PassEndElements(start_element,end_element,new_shell_desc);
 	m_pShell->PassEndJoints(start_joint+1,end_joint,new_shell_desc);
-	new_shell_desc->set_PhysicsRefObject(nullptr);
+	new_shell_desc->set_PhysicsRefObject(0);
 	new_shell_desc->PureActivate();
 	//new_shell_desc->ObjectInRoot().identity();
 	m_pShell->DeleteJoint(start_joint);
-	new_shell->set_ObjectContactCallback(nullptr);
-	new_shell->set_PhysicsRefObject(nullptr);
+	new_shell->set_ObjectContactCallback(NULL);
+	new_shell->set_PhysicsRefObject(NULL);
 	return ret;
 }
 
@@ -339,17 +339,17 @@ shell_root CPHShellSplitterHolder::ElementSingleSplit(const element_fracture &sp
 	
 
 	m_pShell->PassEndJoints(split_elem.second.m_start_jt_num,split_elem.second.m_end_jt_num,new_shell_last_desc);
-	new_shell_last_desc->set_PhysicsRefObject(nullptr);
+	new_shell_last_desc->set_PhysicsRefObject(0);
 ///////////////////temporary for initialization set old Kinematics in new shell/////////////////
 	new_shell_last->set_Kinematics(m_pShell->PKinematics());
 	new_shell_last_desc->AfterSetActive();
-	new_shell_last->set_Kinematics(nullptr);
+	new_shell_last->set_Kinematics(NULL);
 	VERIFY2(split_elem.second.m_bone_id<64,"strange root");
 	VERIFY(_valid(new_shell_last->mXFORM));
 	VERIFY(dBodyStateValide(source_element->get_bodyConst()));
 	VERIFY(dBodyStateValide(split_elem.first->get_body()));
-	new_shell_last->set_ObjectContactCallback(nullptr);
-	new_shell_last->set_PhysicsRefObject(nullptr);
+	new_shell_last->set_ObjectContactCallback(NULL);
+	new_shell_last->set_PhysicsRefObject(NULL);
 	return mk_pair(new_shell_last,split_elem.second.m_bone_id);
 
 }

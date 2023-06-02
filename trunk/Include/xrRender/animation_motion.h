@@ -26,7 +26,7 @@ public:
 	ICF	operator	unspecified_bool_type () const 
 	{
 		if (valid())	return &MotionID::get;
-		else			return nullptr;
+		else			return 0;
 		//		return(!valid()?0:&MotionID::get);
 	}
 };

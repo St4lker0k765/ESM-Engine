@@ -19,7 +19,7 @@ IC	CCoverEvaluatorBase::CCoverEvaluatorBase	(CRestrictedObject *object)
 	m_best_value			= flt_max;
 	m_initialized			= false;
 	m_start_position.set	(flt_max,flt_max,flt_max);
-	m_selected				= nullptr;
+	m_selected				= 0;
 	m_object				= object;
 	m_actuality				= true;
 	m_last_radius			= flt_max;
@@ -56,7 +56,7 @@ IC	void CCoverEvaluatorBase::initialize				(const Fvector &start_position, bool 
 {
 	VERIFY					(initialized());
 	m_start_position		= start_position;
-	m_selected				= nullptr;
+	m_selected				= 0;
 	m_best_value			= 1000.f;
 	if (!fake_call)
 		m_last_update		= Device.dwTimeGlobal;

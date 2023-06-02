@@ -28,13 +28,13 @@
 CMapLocation::CMapLocation(LPCSTR type, u16 object_id)
 {
 	m_flags.zero			();
-	m_level_spot			= nullptr;
-	m_level_spot_pointer	= nullptr;
-	m_minimap_spot			= nullptr;
-	m_minimap_spot_pointer	= nullptr;
+	m_level_spot			= NULL;
+	m_level_spot_pointer	= NULL;
+	m_minimap_spot			= NULL;
+	m_minimap_spot_pointer	= NULL;
 
-	m_level_map_spot_border	= nullptr;
-	m_mini_map_spot_border	= nullptr;
+	m_level_map_spot_border	= NULL;
+	m_mini_map_spot_border	= NULL;
 
 	m_objectID				= object_id;
 	m_actual_time			= 0;
@@ -62,7 +62,7 @@ void CMapLocation::destroy()
 	delete_data(m_mini_map_spot_border);
 }
 
-CUIXml*	g_uiSpotXml= nullptr;
+CUIXml*	g_uiSpotXml=NULL;
 void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 {
 	if(!g_uiSpotXml){
@@ -71,7 +71,7 @@ void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 		R_ASSERT3(xml_result, "xml file not found", "map_spots.xml");
 	}
 
-	XML_NODE* node = nullptr;
+	XML_NODE* node = NULL;
 	string512 path_base, path;
 //	strconcat(path_base,"map_spots:",type);
 	strcpy_s		(path_base,type);
@@ -79,11 +79,11 @@ void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 	LPCSTR s		= g_uiSpotXml->ReadAttrib(path_base, 0, "hint", "no hint");
 	SetHint			(s);
 	
-	s = g_uiSpotXml->ReadAttrib(path_base, 0, "store", nullptr);
+	s = g_uiSpotXml->ReadAttrib(path_base, 0, "store", NULL);
 	if(s)
 		m_flags.set( eSerailizable, TRUE);
 
-	s = g_uiSpotXml->ReadAttrib(path_base, 0, "no_offline", nullptr);
+	s = g_uiSpotXml->ReadAttrib(path_base, 0, "no_offline", NULL);
 	if(s)
 		m_flags.set( eHideInOffline, TRUE);
 
@@ -93,7 +93,7 @@ void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 		m_actual_time = Device.dwTimeGlobal+m_ttl*1000;
 	}
 
-	s = g_uiSpotXml->ReadAttrib(path_base, 0, "pos_to_actor", nullptr);
+	s = g_uiSpotXml->ReadAttrib(path_base, 0, "pos_to_actor", NULL);
 	if(s)
 		m_flags.set( ePosToActor, TRUE);
 
@@ -141,7 +141,7 @@ void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 			VERIFY( !(bReload&&m_minimap_spot_pointer) );
 		}
 	};
-	if(nullptr ==m_minimap_spot && nullptr ==m_level_spot)
+	if(NULL==m_minimap_spot && NULL==m_level_spot)
 		DisableSpot	();
 }
 
@@ -281,7 +281,7 @@ bool CMapLocation::Update() //returns actual
 
 	if(ai().get_alife())		
 	{
-		m_cached.m_Actuality = (nullptr != ai().alife().objects().object(m_objectID,true) );
+		m_cached.m_Actuality = ( NULL != ai().alife().objects().object(m_objectID,true) );
 		if(m_cached.m_Actuality){
 			Position					();
 			Direction					();
@@ -302,7 +302,7 @@ xr_vector<u32> map_point_path;
 void CMapLocation::UpdateSpot(CUICustomMap* map, CMapSpot* sp )
 {
 	if( map->MapName()==LevelName() ){
-		CSE_ALifeDynamicObject* obj = nullptr;
+		CSE_ALifeDynamicObject* obj = NULL;
 		
 		if(ai().get_alife() && !IsUserDefined())
 		{
@@ -361,7 +361,7 @@ void CMapLocation::UpdateSpot(CUICustomMap* map, CMapSpot* sp )
 		GameGraph::_GRAPH_ID		dest_graph_id;
 
 		if(!IsUserDefined()){
-			CSE_ALifeDynamicObject* obj = nullptr;
+			CSE_ALifeDynamicObject* obj = NULL;
 			VERIFY(ai().get_alife());
 			obj = ai().alife().objects().object(m_objectID);
 			R_ASSERT(obj);
@@ -514,33 +514,33 @@ LPCSTR CMapLocation::GetHint	()
 CMapSpotPointer* CMapLocation::GetSpotPointer(CMapSpot* sp)
 {
 	R_ASSERT(sp);
-	if(!PointerEnabled()) return nullptr;
+	if(!PointerEnabled()) return NULL;
 	if(sp==m_level_spot)
 		return m_level_spot_pointer;
 	else
 	if(sp==m_minimap_spot)
 		return m_minimap_spot_pointer;
 
-	return nullptr;
+	return NULL;
 }
 
 CMapSpot* CMapLocation::GetSpotBorder(CMapSpot* sp)
 {
 	R_ASSERT(sp);
-	if(!PointerEnabled()) return nullptr;
+	if(!PointerEnabled()) return NULL;
 	if(sp==m_level_spot){
-		if(nullptr ==m_level_map_spot_border){
+		if(NULL==m_level_map_spot_border){
 			m_level_map_spot_border	= xr_new<CMapSpot>(this);
 			m_level_map_spot_border->Load(g_uiSpotXml,"level_map_spot_border");
 		}return m_level_map_spot_border;
 	}else
 		if(sp==m_minimap_spot){
-		if(nullptr ==m_mini_map_spot_border){
+		if(NULL==m_mini_map_spot_border){
 			m_mini_map_spot_border	= xr_new<CMapSpot>(this);
 			m_mini_map_spot_border->Load(g_uiSpotXml,"mini_map_spot_border");
 		}return m_mini_map_spot_border;
 	}
-	return nullptr;
+	return NULL;
 }
 
 
@@ -566,8 +566,8 @@ bool CRelationMapLocation::Update()
 
 	if(ai().get_alife())		
 	{
-		CSE_ALifeTraderAbstract*	pEnt = nullptr;
-		CSE_ALifeTraderAbstract*	pAct = nullptr;
+		CSE_ALifeTraderAbstract*	pEnt = NULL;
+		CSE_ALifeTraderAbstract*	pAct = NULL;
 		CSE_ALifeDynamicObject*		temp = ai().alife().objects().object(m_pInvOwnerEntityID,true);
 		pEnt = smart_cast<CSE_ALifeTraderAbstract*>(temp);
 		pAct = smart_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(m_pInvOwnerActorID,true));
@@ -577,8 +577,8 @@ bool CRelationMapLocation::Update()
 		if(pCreature) //maybe trader ?
 			bAlive = pCreature->g_Alive		();
 	}else{
-		CInventoryOwner*			pEnt = nullptr;
-		CInventoryOwner*			pAct = nullptr;
+		CInventoryOwner*			pEnt = NULL;
+		CInventoryOwner*			pAct = NULL;
 
 		pEnt = smart_cast<CInventoryOwner*>(Level().Objects.net_Find(m_pInvOwnerEntityID));
 		pAct = smart_cast<CInventoryOwner*>(Level().Objects.net_Find(m_pInvOwnerActorID));

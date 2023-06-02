@@ -80,7 +80,7 @@ void CControlRunAttack::on_event(ControlCom::EEventType type, ControlCom::IEvent
 	switch (type) {
 	case ControlCom::eventAnimationEnd:
 			m_time_next_attack					= time() + Random.randI(m_min_delay,m_max_delay);
-			m_man->notify						(ControlCom::eventRunAttackEnd, nullptr);
+			m_man->notify						(ControlCom::eventRunAttackEnd, 0);
 			break;
 	case ControlCom::eventAnimationStart: // handle blend params
 		{
@@ -109,7 +109,7 @@ void CControlRunAttack::on_event(ControlCom::EEventType type, ControlCom::IEvent
 			target_position.mad		(m_object->Position(), dir, path_dist);
 
 			if (!m_man->build_path_line	(this, target_position, u32(-1), velocity_mask | MonsterMovement::eVelocityParameterStand)) {
-				m_man->notify				(ControlCom::eventRunAttackEnd, nullptr);
+				m_man->notify				(ControlCom::eventRunAttackEnd, 0);
 			} else { 
 				// enable path
 				SControlPathBuilderData		*ctrl_path = (SControlPathBuilderData*)m_man->data(this, ControlCom::eControlPath); 

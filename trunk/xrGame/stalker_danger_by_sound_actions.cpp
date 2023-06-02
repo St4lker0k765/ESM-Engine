@@ -28,7 +28,7 @@ CStalkerActionDangerBySoundListenTo::CStalkerActionDangerBySoundListenTo	(CAI_St
 void CStalkerActionDangerBySoundListenTo::initialize						()
 {
 	inherited::initialize	();
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_nearest_accessible_position();
@@ -61,7 +61,7 @@ CStalkerActionDangerBySoundCheck::CStalkerActionDangerBySoundCheck	(CAI_Stalker 
 void CStalkerActionDangerBySoundCheck::initialize						()
 {
 	inherited::initialize	();
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_nearest_accessible_position();
@@ -94,7 +94,7 @@ CStalkerActionDangerBySoundTakeCover::CStalkerActionDangerBySoundTakeCover	(CAI_
 void CStalkerActionDangerBySoundTakeCover::initialize						()
 {
 	inherited::initialize	();
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_nearest_accessible_position();
@@ -127,7 +127,7 @@ CStalkerActionDangerBySoundLookOut::CStalkerActionDangerBySoundLookOut	(CAI_Stal
 void CStalkerActionDangerBySoundLookOut::initialize						()
 {
 	inherited::initialize	();
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_nearest_accessible_position();
@@ -160,7 +160,7 @@ CStalkerActionDangerBySoundLookAround::CStalkerActionDangerBySoundLookAround	(CA
 void CStalkerActionDangerBySoundLookAround::initialize						()
 {
 	inherited::initialize	();
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_nearest_accessible_position();

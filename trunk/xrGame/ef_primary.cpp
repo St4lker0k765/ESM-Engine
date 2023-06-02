@@ -154,7 +154,7 @@ float CPersonalWeaponTypeFunction::ffGetTheBestWeapon()
 						u32 dwCurrentBestWeapon = dwfGetWeaponType();
 						if (dwCurrentBestWeapon > dwBestWeapon)
 							dwBestWeapon = dwCurrentBestWeapon;
-						ef_storage().non_alife().member_item()	= nullptr;
+						ef_storage().non_alife().member_item()	= 0;
 					}
 				}
 		}	

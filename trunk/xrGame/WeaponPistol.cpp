@@ -104,12 +104,12 @@ void CWeaponPistol::PlayAnimIdle	()
 	VERIFY(GetState()==eIdle);
 	if(m_opened){ 
 		CWeaponPistol::WWPMotions& m = wwpm_current();
-		m_pHUD->animPlay(random_anim(m.mhud_empty), TRUE, nullptr, GetState());
+		m_pHUD->animPlay(random_anim(m.mhud_empty), TRUE, NULL, GetState());
 	}else{
 		CActor* A = smart_cast<CActor*>(H_Parent());
 		if(A && A->Holder()){
 			MotionSVec* m = (IsZoomed())?&wm_mhud_r.mhud_idle_aim:&wm_mhud_r.mhud_idle;
-			m_pHUD->animPlay(random_anim(*m), TRUE, nullptr, GetState());
+			m_pHUD->animPlay(random_anim(*m), TRUE, NULL, GetState());
 		}else
 			inherited::PlayAnimIdle		();
 	}

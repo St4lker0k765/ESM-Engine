@@ -44,12 +44,12 @@ CScriptMovementAction::CScriptMovementAction		()
 	SetBodyState		(MonsterSpace::eBodyStateStand);
 	SetMovementType		(MonsterSpace::eMovementTypeStand);
 	SetPathType			(DetailPathManager::eDetailPathTypeSmooth);
-	SetPatrolPath		(nullptr,"");
+	SetPatrolPath		(0,"");
 	SetPatrolStart		(PatrolPathManager::ePatrolStartTypeNearest);
 	SetPatrolStop		(PatrolPathManager::ePatrolRouteTypeContinue);
 	SetPatrolRandom		(true);
 	SetSpeed			(0);
-	SetObjectToGo		(nullptr);
+	SetObjectToGo		(0);
 	SetPosition			(Fvector().set(0,0,0));
 	m_tGoalType			= eGoalTypeDummy;
 	m_bCompleted		= true;
@@ -116,7 +116,7 @@ void CScriptMovementAction::SetObjectToGo		(CScriptGameObject *tpObjectToGo)
 	if (tpObjectToGo)
 		m_tpObjectToGo	= tpObjectToGo->operator CObject*();
 	else
-		m_tpObjectToGo	= nullptr;
+		m_tpObjectToGo	= 0;
 	m_tGoalType			= eGoalTypeObject;
 	m_bCompleted		= false;
 }

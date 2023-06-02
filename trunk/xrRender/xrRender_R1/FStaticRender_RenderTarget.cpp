@@ -10,11 +10,11 @@ static LPCSTR		RTname_distort	= "$user$distort";
 CRenderTarget::CRenderTarget()
 {
 	bAvailable			= FALSE;
-	RT					= nullptr;
-	RT_color_map		= nullptr;
-	pTempZB				= nullptr;
-	ZB					= nullptr;
-	pFB					= nullptr;
+	RT					= 0;
+	RT_color_map		= 0;
+	pTempZB				= 0;
+	ZB					= 0;
+	pFB					= 0;
 
 	param_blur			= 0.f;
 	param_gray			= 0.f;
@@ -77,7 +77,7 @@ BOOL CRenderTarget::Create	()
 	//	Create an RT for online screenshot makining
 	//u32		w = Device.dwWidth, h = Device.dwHeight;
 	//HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth,Device.dwHeight,D3DFMT_A8R8G8B8,D3DPOOL_SYSTEMMEM,&pFB,NULL);
-	HW.pDevice->CreateOffscreenPlainSurface(rtWidth,rtHeight,HW.Caps.fTarget,D3DPOOL_SYSTEMMEM,&pFB, nullptr);
+	HW.pDevice->CreateOffscreenPlainSurface(rtWidth,rtHeight,HW.Caps.fTarget,D3DPOOL_SYSTEMMEM,&pFB,NULL);
 
 	// Shaders and stream
 	s_postprocess[0].create				("postprocess");

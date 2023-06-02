@@ -298,7 +298,7 @@ bool CDetailPathManager::build_trajectory(
 	if (!build_line_trajectory(start,dest,vertex_id,path,velocity2))
 		return			(false);
 
-	if (!build_circle_trajectory(dest,path,nullptr,velocity3))
+	if (!build_circle_trajectory(dest,path,0,velocity3))
 		return			(false);
 
 	return				(true);
@@ -429,7 +429,7 @@ bool CDetailPathManager::compute_path(
 				dest.direction.mul	(-1.f);
 
 			m_temp_path.clear		();
-			if (compute_trajectory(start,dest,m_tpTravelLine ? &m_temp_path : nullptr,time,(*I).index,real_straight_line_index,(*i).index,direction_type)) {
+			if (compute_trajectory(start,dest,m_tpTravelLine ? &m_temp_path : 0,time,(*I).index,real_straight_line_index,(*i).index,direction_type)) {
 				if (!m_try_min_time || (time < min_time)) {
 					min_time		= time;
 					if (m_tpTravelLine) {

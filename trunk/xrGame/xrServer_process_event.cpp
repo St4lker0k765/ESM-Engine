@@ -106,7 +106,7 @@ void xrServer::Process_event	(NET_Packet& P, ClientID sender)
 		}break;
 	case GE_DESTROY:
 		{
-			Process_event_destroy	(P,sender,timestamp,destination, nullptr);
+			Process_event_destroy	(P,sender,timestamp,destination, NULL);
 			VERIFY					(verify_entities());
 		}
 		break;

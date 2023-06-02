@@ -58,26 +58,26 @@ void CWeaponBM16::PlayAnimIdle()
 		switch (m_magazine.size())
 		{
 		case 0:{
-			m_pHUD->animPlay(random_anim(mhud.mhud_idle_aim), TRUE, nullptr, GetState());
+			m_pHUD->animPlay(random_anim(mhud.mhud_idle_aim), TRUE, NULL, GetState());
 		}break;
 		case 1:{
-			m_pHUD->animPlay(random_anim(mhud_zoomed_idle1), TRUE, nullptr, GetState());
+			m_pHUD->animPlay(random_anim(mhud_zoomed_idle1), TRUE, NULL, GetState());
 		}break;
 		case 2:{
-			m_pHUD->animPlay(random_anim(mhud_zoomed_idle2), TRUE, nullptr, GetState());
+			m_pHUD->animPlay(random_anim(mhud_zoomed_idle2), TRUE, NULL, GetState());
 		}break;
 		};
 	}else{
 		switch (m_magazine.size())
 		{
 		case 0:{
-			m_pHUD->animPlay(random_anim(mhud.mhud_idle), TRUE, nullptr, GetState());
+			m_pHUD->animPlay(random_anim(mhud.mhud_idle), TRUE, NULL, GetState());
 		}break;
 		case 1:{
-			m_pHUD->animPlay(random_anim(mhud_idle1), TRUE, nullptr, GetState());
+			m_pHUD->animPlay(random_anim(mhud_idle1), TRUE, NULL, GetState());
 		}break;
 		case 2:{
-			m_pHUD->animPlay(random_anim(mhud_idle2), TRUE, nullptr, GetState());
+			m_pHUD->animPlay(random_anim(mhud_idle2), TRUE, NULL, GetState());
 		}break;
 		};
 	}

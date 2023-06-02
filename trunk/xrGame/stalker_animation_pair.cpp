@@ -48,21 +48,21 @@ void CStalkerAnimationPair::play_global_animation	(IKinematicsAnimated *skeleton
 void CStalkerAnimationPair::play_global_animation	(IKinematicsAnimated *skeleton_animated, PlayCallback callback, CAI_Stalker *object, const u32 &bone_part, const bool &use_animation_movement_control)
 #endif
 {
-	m_blend				= nullptr;
+	m_blend				= 0;
 	for (u16 i=0; i<MAX_PARTS; ++i) {
 #ifdef USE_HEAD_BONE_PART_FAKE
 		if (!(bone_part & (1 << i)))
 			continue;
 #endif
 
-		CBlend			*blend = nullptr;
+		CBlend			*blend = 0;
 		if (!m_blend) {
 			blend		= skeleton_animated->LL_PlayCycle(i,animation(),TRUE,callback,object);
 			if (use_animation_movement_control)
 				object->create_anim_mov_ctrl	(blend);
 		}
 		else
-			skeleton_animated->LL_PlayCycle(i,animation(),TRUE,nullptr,nullptr);
+			skeleton_animated->LL_PlayCycle(i,animation(),TRUE,0,0);
 
 		if (blend && !m_blend)
 			m_blend		= blend;
@@ -92,7 +92,7 @@ void CStalkerAnimationPair::play			(IKinematicsAnimated *skeleton_animated, Play
 
 	if (animation() != m_array_animation) {
 		m_array_animation.invalidate	();
-		m_array							= nullptr;
+		m_array							= 0;
 	}
 
 #ifdef DEBUG
@@ -142,7 +142,7 @@ void CStalkerAnimationPair::play			(IKinematicsAnimated *skeleton_animated, Play
 std::pair<LPCSTR,LPCSTR> *CStalkerAnimationPair::blend_id	(IKinematicsAnimated *skeleton_animated, std::pair<LPCSTR,LPCSTR> &result) const
 {
 	if (!blend())
-		return				(nullptr);
+		return				(0);
 
 	u32						bone_part_id = 0;
 	if (!global_animation())

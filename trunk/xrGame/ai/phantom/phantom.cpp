@@ -36,7 +36,7 @@ void CPhantom::Load( LPCSTR section )
 	fASpeed							= pSettings->r_float(section,"angular_speed");
 	fContactHit						= pSettings->r_float(section,"contact_hit");
 
-	LPCSTR snd_name			= nullptr;
+	LPCSTR snd_name			= 0;
 	m_state_data[stBirth].particles	= pSettings->r_string(section,"particles_birth");
 	snd_name						= pSettings->r_string(section,"sound_birth");
 	if (snd_name&&snd_name[0])		m_state_data[stBirth].sound.create(snd_name,st_Effect,sg_SourceType);
@@ -80,7 +80,7 @@ BOOL CPhantom::net_Spawn(CSE_Abstract* DC)
 	VERIFY			(m_enemy);
 
 	// default init 
-	m_fly_particles		= nullptr;
+	m_fly_particles		= 0;
 	SetfHealth			(0.001f);
 
 	// orientate to enemy
@@ -162,27 +162,27 @@ void CPhantom::SwitchToState_internal(EState new_state)
 		case stBirth:{
 			SStateData& sdata	= m_state_data[new_state];
 			PlayParticles		(sdata.particles.c_str(),TRUE,xform);
-			sdata.sound.play_at_pos(nullptr,xform.c);
+			sdata.sound.play_at_pos(0,xform.c);
 			K->PlayCycle		(sdata.motion, TRUE, animation_end_callback, this);
 		}break;
 		case stFly:{
 			UpdateEvent.bind	(this,&CPhantom::OnFlyState);
 			SStateData& sdata	= m_state_data[new_state];
 			m_fly_particles		= PlayParticles(sdata.particles.c_str(),FALSE,xform);
-			sdata.sound.play_at_pos(nullptr,xform.c,sm_Looped);
+			sdata.sound.play_at_pos(0,xform.c,sm_Looped);
 			K->PlayCycle		(sdata.motion);
 		}break;
 		case stContact:{
 			UpdateEvent.bind	(this,&CPhantom::OnDeadState);	
 			SStateData& sdata	= m_state_data[new_state];
-			sdata.sound.play_at_pos(nullptr,xform.c);
+			sdata.sound.play_at_pos(0,xform.c);
 			K->PlayCycle		(sdata.motion, TRUE, animation_end_callback, this);
 		}break;
 		case stShoot:{
 			UpdateEvent.bind	(this,&CPhantom::OnDeadState);	
 			SStateData& sdata	= m_state_data[new_state];
 			PlayParticles		(sdata.particles.c_str(),TRUE,xform);
-			sdata.sound.play_at_pos(nullptr,xform.c);
+			sdata.sound.play_at_pos(0,xform.c);
 			K->PlayCycle		(sdata.motion, TRUE, animation_end_callback, this);
 		}break;
 		case stIdle:{
@@ -278,7 +278,7 @@ CParticlesObject* CPhantom::PlayParticles(const shared_str& name, BOOL bAutoRemo
 	CParticlesObject* ps = CParticlesObject::Create(name.c_str(),bAutoRemove);
 	ps->UpdateParent	(xform, zero_vel);
 	ps->Play			();
-	return bAutoRemove?nullptr:ps;
+	return bAutoRemove?0:ps;
 }
 
 //---------------------------------------------------------------------

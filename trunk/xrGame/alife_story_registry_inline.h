@@ -32,7 +32,7 @@ IC	const CALifeStoryRegistry::STORY_REGISTRY &CALifeStoryRegistry::objects	() co
 IC	CSE_ALifeDynamicObject *CALifeStoryRegistry::object	(ALife::_STORY_ID id, bool no_assert) const
 {
 	if (id == INVALID_STORY_ID)
-		return				(nullptr);
+		return				(0);
 
 	STORY_REGISTRY::const_iterator	I = m_objects.find(id);
 	if (I == m_objects.end()) {
@@ -40,7 +40,7 @@ IC	CSE_ALifeDynamicObject *CALifeStoryRegistry::object	(ALife::_STORY_ID id, boo
 			Msg				("Cannot find story object with id [%d] in the Story registry!",id);
 			THROW			(false);
 		}
-		return				(nullptr);
+		return				(0);
 	}
 	return					((*I).second);
 }

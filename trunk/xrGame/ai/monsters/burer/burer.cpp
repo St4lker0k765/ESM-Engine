@@ -202,7 +202,7 @@ void CBurer::UpdateGraviObject()
 	float trace_dist = float(m_gravi_step);
 
 	collide::rq_result	l_rq;
-	if (Level().ObjectSpace.RayPick(new_pos, dir, trace_dist, collide::rqtBoth, l_rq, nullptr)) {
+	if (Level().ObjectSpace.RayPick(new_pos, dir, trace_dist, collide::rqtBoth, l_rq, NULL)) {
 		const CObject *enemy = smart_cast<const CObject *>(m_gravi_object.enemy);
 		if ((l_rq.O == enemy) && (l_rq.range < trace_dist)) {
 			
@@ -252,7 +252,7 @@ void CBurer::UpdateGraviObject()
 	
 	// hit objects
 	m_nearest.clear_not_free		();
-	Level().ObjectSpace.GetNearest	(m_nearest,m_gravi_object.cur_pos, m_gravi_radius, nullptr); 
+	Level().ObjectSpace.GetNearest	(m_nearest,m_gravi_object.cur_pos, m_gravi_radius, NULL); 
 	//xr_vector<CObject*> &m_nearest = Level().ObjectSpace.q_nearest;
 
 	for (u32 i=0;i<m_nearest.size();i++) {
@@ -270,7 +270,7 @@ void CBurer::UpdateGraviObject()
 	snd_pos.y += 0.5f;
 	if (sound_gravi_wave._feedback())		{
 		sound_gravi_wave.set_position	(snd_pos);
-	} else ::Sound->play_at_pos			(sound_gravi_wave,nullptr,snd_pos);
+	} else ::Sound->play_at_pos			(sound_gravi_wave,0,snd_pos);
 }
 
 void CBurer::UpdateCL()

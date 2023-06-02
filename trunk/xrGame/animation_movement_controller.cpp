@@ -32,7 +32,7 @@ void	animation_movement_controller::	deinitialize					()
 	VERIFY( B.callback() == RootBoneCallback );
 	VERIFY( B.callback_param() == (void*)this );
 	B.reset_callback( );
-	m_control_blend =  nullptr ;
+	m_control_blend =  0 ;
 }
 void animation_movement_controller::OnFrame( )
 {

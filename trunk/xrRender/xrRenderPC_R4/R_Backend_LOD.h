@@ -9,7 +9,7 @@ public:
 public:
 	R_LOD		();
 
-	void			unmap() {c_LOD = nullptr;}
+	void			unmap() {c_LOD = 0;}
 	void			set_LOD(R_constant* C) {c_LOD = C;}
 	void			set_LOD(float LOD);
 };

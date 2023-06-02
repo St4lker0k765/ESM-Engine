@@ -19,12 +19,12 @@ CPatternFunction::CPatternFunction(LPCSTR caFileName, CEF_Storage *storage) : CB
 	m_dwPatternCount		= 0;
 	m_dwVariableCount		= 0;
 	m_dwParameterCount		= 0;
-	m_dwaVariableTypes		= nullptr;
-	m_dwaAtomicFeatureRange = nullptr;
-	m_dwaPatternIndexes		= nullptr;
-	m_tpPatterns			= nullptr;
-	m_faParameters			= nullptr;
-	m_dwaVariableValues		= nullptr;
+	m_dwaVariableTypes		= 0;
+	m_dwaAtomicFeatureRange = 0;
+	m_dwaPatternIndexes		= 0;
+	m_tpPatterns			= 0;
+	m_faParameters			= 0;
+	m_dwaVariableValues		= 0;
 	vfLoadEF				(caFileName);
 }
 
@@ -106,7 +106,7 @@ void CPatternFunction::vfLoadEF(LPCSTR caFileName)
     
 	ef_storage().m_fpaBaseFunctions[m_dwFunctionType] = this;
 	
-	_splitpath		(caPath,nullptr,nullptr,m_caName,nullptr);
+	_splitpath		(caPath,0,0,m_caName,0);
 
 	// Msg			("* Evaluation function \"%s\" is successfully loaded",m_caName);
 }

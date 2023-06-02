@@ -69,7 +69,7 @@ void	CBlender_accum_direct_mask::Compile(CBlender_Compile& C)
 	}
 }
 
-CBlender_accum_direct_mask_msaa::CBlender_accum_direct_mask_msaa	()	{	Name = nullptr; Definition = nullptr; description.CLS		= 0;	}
+CBlender_accum_direct_mask_msaa::CBlender_accum_direct_mask_msaa	()	{	Name = 0; Definition = 0; description.CLS		= 0;	}
 CBlender_accum_direct_mask_msaa::~CBlender_accum_direct_mask_msaa	()	{	}
 
 //	TODO: DX10:	implement CBlender_accum_direct_mask::Compile

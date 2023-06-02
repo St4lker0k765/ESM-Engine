@@ -35,7 +35,7 @@ void CStalkerDangerUnknownPlanner::initialize				()
 {
 	inherited::initialize	();
 	
-	object().agent_manager().member().member(&object()).cover(nullptr);
+	object().agent_manager().member().member(&object()).cover(0);
 
 	CScriptActionPlanner::m_storage.set_property(eWorldPropertyCoverReached,false);
 	CScriptActionPlanner::m_storage.set_property(eWorldPropertyLookedAround,false);
@@ -55,8 +55,8 @@ void CStalkerDangerUnknownPlanner::add_evaluators			()
 {
 	add_evaluator			(eWorldPropertyDanger			,xr_new<CStalkerPropertyEvaluatorDangers>					(m_object,"danger"));
 	add_evaluator			(eWorldPropertyCoverActual		,xr_new<CStalkerPropertyEvaluatorDangerUnknownCoverActual>	(m_object,"danger unknown : cover actual"));
-	add_evaluator			(eWorldPropertyCoverReached		,xr_new<CStalkerPropertyEvaluatorMember>					((CPropertyStorage*)nullptr,eWorldPropertyCoverReached,true,true,"danger unknown : cover reached"));
-	add_evaluator			(eWorldPropertyLookedAround		,xr_new<CStalkerPropertyEvaluatorMember>					((CPropertyStorage*)nullptr,eWorldPropertyLookedAround,true,true,"danger unknown : looked around"));
+	add_evaluator			(eWorldPropertyCoverReached		,xr_new<CStalkerPropertyEvaluatorMember>					((CPropertyStorage*)0,eWorldPropertyCoverReached,true,true,"danger unknown : cover reached"));
+	add_evaluator			(eWorldPropertyLookedAround		,xr_new<CStalkerPropertyEvaluatorMember>					((CPropertyStorage*)0,eWorldPropertyLookedAround,true,true,"danger unknown : looked around"));
 }
 
 void CStalkerDangerUnknownPlanner::add_actions				()

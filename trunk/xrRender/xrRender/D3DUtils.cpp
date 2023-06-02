@@ -97,8 +97,8 @@ void SPrimitiveBuffer::CreateFromData(D3DPRIMITIVETYPE _pt, u32 _p_cnt, u32 FVF,
 //	TODO: DX10: Implement SPrimitiveBuffer::CreateFromData for DX10
 //	VERIFY(!"SPrimitiveBuffer::CreateFromData not implemented for dx10");
 #else	//	USE_DX10
-	ID3DVertexBuffer*	pVB=nullptr;
-	ID3DIndexBuffer*	pIB=nullptr;
+	ID3DVertexBuffer*	pVB=0;
+	ID3DIndexBuffer*	pIB=0;
 	p_cnt				= _p_cnt;
 	p_type				= _pt;
 	v_cnt				= _v_cnt;
@@ -787,7 +787,7 @@ void CDrawUtilities::DD_DrawFace_push(const Fvector& p0, const Fvector& p1, cons
 void CDrawUtilities::DD_DrawFace_end()
 {
     DD_DrawFace_flush	(FALSE); 	
-    m_DD_pv_start 		= nullptr;
+    m_DD_pv_start 		= 0;
 }
 //----------------------------------------------------
 

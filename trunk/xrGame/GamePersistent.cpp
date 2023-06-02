@@ -50,7 +50,7 @@ CGamePersistent::CGamePersistent(void)
 	m_game_params.m_e_game_type	= GAME_ANY;
 	ambient_effect_next_time = 0;
 	ambient_effect_stop_time = 0;
-	ambient_particles = nullptr;
+	ambient_particles = 0;
 
 	ambient_effect_wind_start = 0.f;
 	ambient_effect_wind_in_time = 0.f;
@@ -58,9 +58,9 @@ CGamePersistent::CGamePersistent(void)
 	ambient_effect_wind_out_time = 0.f;
 	ambient_effect_wind_on = false;
 
-	m_pUI_core					= nullptr;
-	m_pMainMenu					= nullptr;
-	m_intro						= nullptr;
+	m_pUI_core					= NULL;
+	m_pMainMenu					= NULL;
+	m_intro						= NULL;
 	m_intro_event.bind			(this,&CGamePersistent::start_logo_intro);
 #ifdef DEBUG
 	m_frame_counter				= 0;
@@ -72,7 +72,7 @@ CGamePersistent::CGamePersistent(void)
 	dSetFreeHandler				(ode_free		);
 
 	// 
-	BOOL	bDemoMode	= (nullptr!=strstr(Core.Params,"-demomode "));
+	BOOL	bDemoMode	= (0!=strstr(Core.Params,"-demomode "));
 	if (bDemoMode)
 	{
 		string256	fname;
@@ -85,8 +85,8 @@ CGamePersistent::CGamePersistent(void)
 		eDemoStart			=	Engine.Event.Handler_Attach("GAME:demo",this);	
 		uTime2Change		=	0;
 	} else {
-		pDemoFile			= nullptr;
-		eDemoStart			= nullptr;
+		pDemoFile			=	NULL;
+		eDemoStart			=	NULL;
 	}
 
 	CWeaponHUD::CreateSharedContainer();
@@ -266,7 +266,7 @@ void CGamePersistent::WeathersUpdate()
 						pos.z = _sin(angle);
 						pos.normalize().mul(ch.get_rnd_sound_dist()).add(Device.vCameraPosition);
 						pos.y += 10.f;
-						snd.play_at_pos(nullptr, pos);
+						snd.play_at_pos(0, pos);
 
 #ifdef DEBUG
 						if (!snd._handle() && strstr(Core.Params, "-nosound"))
@@ -298,7 +298,7 @@ void CGamePersistent::WeathersUpdate()
 							}
 				*/
 				// start effect
-				if ((FALSE == bIndoor) && (nullptr == ambient_particles) && Device.dwTimeGlobal > ambient_effect_next_time)
+				if ((FALSE == bIndoor) && (0 == ambient_particles) && Device.dwTimeGlobal > ambient_effect_next_time)
 				{
 					CEnvAmbient::SEffect* eff = env_amb->get_rnd_effect();
 					if (eff)
@@ -317,7 +317,7 @@ void CGamePersistent::WeathersUpdate()
 						pos.add(Device.vCameraPosition, eff->offset);
 						ambient_particles->play_at_pos(pos);
 						if (eff->sound._handle())
-							eff->sound.play_at_pos(nullptr, pos);
+							eff->sound.play_at_pos(0, pos);
 
 						Environment().wind_blast_strength_start_value = Environment().wind_strength_factor;
 						Environment().wind_blast_strength_stop_value = eff->wind_blast_strength;
@@ -436,12 +436,12 @@ void CGamePersistent::WeathersUpdate()
 						pos.z = _sin(angle);
 						pos.normalize().mul(env_amb->get_rnd_sound_dist()).add(Device.vCameraPosition);
 						pos.y += 10.f;
-						snd->play_at_pos(nullptr, pos);
+						snd->play_at_pos(0, pos);
 					}
 				}
 
 				// start effect
-				if ((FALSE == bIndoor) && (nullptr == ambient_particles) && Device.dwTimeGlobal > ambient_effect_next_time)
+				if ((FALSE == bIndoor) && (0 == ambient_particles) && Device.dwTimeGlobal > ambient_effect_next_time)
 				{
 					CEnvAmbient::SEffect* eff = env_amb->get_rnd_effect();
 					if (eff)
@@ -454,7 +454,7 @@ void CGamePersistent::WeathersUpdate()
 						pos.add(Device.vCameraPosition, eff->offset);
 						ambient_particles->play_at_pos(pos);
 						if (eff->sound._handle())
-							eff->sound.play_at_pos(nullptr, pos);
+							eff->sound.play_at_pos(0, pos);
 					}
 				}
 				else if (!ambient_particles && Device.dwTimeGlobal > ambient_effect_next_time)
@@ -483,7 +483,7 @@ void CGamePersistent::WeathersUpdate()
 void CGamePersistent::start_logo_intro		()
 {
 #if 1//def DEBUG
-	if (nullptr!=strstr(Core.Params,"-nointro")){
+	if (0!=strstr(Core.Params,"-nointro")){
 		m_intro_event			= 0;
 		Console->Show			();
 		Console->Execute		("main_menu on");
@@ -493,7 +493,7 @@ void CGamePersistent::start_logo_intro		()
 	if (Device.dwPrecacheFrame==0)
 	{
 		m_intro_event.bind		(this,&CGamePersistent::update_logo_intro);
-		if (!g_dedicated_server && 0==xr_strlen(m_game_params.m_game_or_spawn) && nullptr ==g_pGameLevel)
+		if (!g_dedicated_server && 0==xr_strlen(m_game_params.m_game_or_spawn) && NULL==g_pGameLevel)
 		{
 			VERIFY				(NULL==m_intro);
 			m_intro				= xr_new<CUISequencer>();
@@ -514,7 +514,7 @@ void CGamePersistent::update_logo_intro			()
 void CGamePersistent::start_game_intro		()
 {
 #if 1//def DEBUG
-	if (nullptr!=strstr(Core.Params,"-nointro")){
+	if (0!=strstr(Core.Params,"-nointro")){
 		m_intro_event			= 0;
 		return;
 	}
@@ -575,7 +575,7 @@ void CGamePersistent::OnFrame	()
 			}
 			else 
 			{
-				CCameraBase* C = nullptr;
+				CCameraBase* C = NULL;
 				if (g_actor)
 				{
 					if(!Actor()->Holder())
@@ -611,7 +611,7 @@ void CGamePersistent::OnFrame	()
 	if(!Device.Paused())
 		WeathersUpdate				();
 
-	if	(nullptr!=pDemoFile){
+	if	(0!=pDemoFile){
 		if	(Device.dwTimeGlobal>uTime2Change){
 			// Change level + play demo
 			if			(pDemoFile->elapsed()<3)	pDemoFile->seek(0);		// cycle

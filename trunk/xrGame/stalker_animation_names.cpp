@@ -13,7 +13,7 @@ LPCSTR state_names			[] = {
 	"cr_",
 	"norm_",
 	"dmg_norm_",
-	nullptr
+	0
 };
 
 LPCSTR weapon_names			[] = {
@@ -28,7 +28,7 @@ LPCSTR weapon_names			[] = {
 	"8_",
 	"9_",
 	"10_",
-	nullptr
+	0
 };
 
 LPCSTR weapon_action_names	[] = {
@@ -47,13 +47,13 @@ LPCSTR weapon_action_names	[] = {
 	"unstrap_",			// 12
 	"look_beack_ls_",	// 13
 	"look_beack_rs_",	// 14
-	nullptr
+	0
 };
 
 LPCSTR movement_names		[] = {
 	"walk_",
 	"run_",
-	nullptr
+	0
 };
 
 LPCSTR movement_action_names[] = {
@@ -61,7 +61,7 @@ LPCSTR movement_action_names[] = {
 	"back_",
 	"ls_",
 	"rs_",
-	nullptr
+	0
 };
 
 LPCSTR in_place_names		[] = {
@@ -75,7 +75,7 @@ LPCSTR in_place_names		[] = {
 	"jump_idle",
 	"jump_end",
 	"jump_end_1",
-	nullptr
+	0
 };
 
 LPCSTR global_names			[] = {
@@ -106,11 +106,11 @@ LPCSTR global_names			[] = {
 	"3_critical_hit_legs_right_",	// 21
 
 	"panic_stand_",
-	nullptr
+	0
 };
 
 LPCSTR head_names			[] = {
 	"head_idle_0",
 	"head_talk_0",
-	nullptr
+	0
 };

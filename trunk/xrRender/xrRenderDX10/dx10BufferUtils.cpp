@@ -41,7 +41,7 @@ HRESULT	CreateConstantBuffer( ID3DBuffer** ppBuffer, UINT DataSize)
 	desc.CPUAccessFlags = D3D_CPU_ACCESS_WRITE;
 	desc.MiscFlags = 0;
 
-	HRESULT res = HW.pDevice->CreateBuffer( &desc, nullptr, ppBuffer);
+	HRESULT res = HW.pDevice->CreateBuffer( &desc, 0, ppBuffer);
 	//R_CHK(res);
 	return res;
 }
@@ -120,7 +120,7 @@ LPCSTR	ConvertSemantic(D3DDECLUSAGE Semantic)
 	}
 
 	VERIFY(!"ConvertSemantic didn't find appropriate dx10 input semantic!");
-	return nullptr;
+	return 0;
 }
 
 void ConvertVertexDeclaration( const xr_vector<D3DVERTEXELEMENT9> &declIn, xr_vector<D3D_INPUT_ELEMENT_DESC> &declOut)

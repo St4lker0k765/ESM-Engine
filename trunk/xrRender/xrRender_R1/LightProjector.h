@@ -40,7 +40,7 @@ private:
 	shared_str				c_factor	;
 public:
 	void					set_object		(IRenderable*	O);
-	BOOL					shadowing		()			{ return current!=nullptr;	}
+	BOOL					shadowing		()			{ return current!=0;	}
 	void					calculate		();
 	void					setup			(int slot);
 	void					finalize		()			{ receivers.clear(); taskid.clear();	}

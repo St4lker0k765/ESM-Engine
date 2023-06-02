@@ -65,12 +65,12 @@ CParticleEffect::CParticleEffect()
 	m_HandleEffect 			= ParticleManager()->CreateEffect(1);		VERIFY(m_HandleEffect>=0);
 	m_HandleActionList		= ParticleManager()->CreateActionList();	VERIFY(m_HandleActionList>=0);
 	m_RT_Flags.zero			();
-	m_Def					= nullptr;
+	m_Def					= 0;
 	m_fElapsedLimit			= 0.f;
 	m_MemDT					= 0;
 	m_InitialPosition.set	(0,0,0);
-	m_DestroyCallback		= nullptr;
-	m_CollisionCallback		= nullptr;
+	m_DestroyCallback		= 0;
+	m_CollisionCallback		= 0;
 	m_XFORM.identity		();
 }
 CParticleEffect::~CParticleEffect()

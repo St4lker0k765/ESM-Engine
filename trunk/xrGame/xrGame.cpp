@@ -30,7 +30,7 @@ extern "C" {
 		DLL_Pure			*object = object_factory().client_object(clsid);
 #ifdef DEBUG
 		if (!object)
-			return			(nullptr);
+			return			(0);
 #endif
 		object->CLS_ID		= clsid;
 		return				(object);

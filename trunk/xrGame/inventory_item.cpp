@@ -74,12 +74,12 @@ net_updateData* CInventoryItem::NetSync()
 
 CInventoryItem::CInventoryItem() 
 {
-	m_net_updateData	= nullptr;
+	m_net_updateData	= NULL;
 	m_slot				= NO_ACTIVE_SLOT;
 	m_flags.set			(Fbelt,FALSE);
 	m_flags.set			(Fruck,TRUE);
 	m_flags.set			(FRuckDefault,TRUE);
-	m_pCurrentInventory	= nullptr;
+	m_pCurrentInventory	= NULL;
 
 	SetDropManual		(FALSE);
 
@@ -88,7 +88,7 @@ CInventoryItem::CInventoryItem()
 	m_flags.set			(FUsingCondition,FALSE);
 	m_fCondition		= 1.0f;
 
-	m_name = m_nameShort = nullptr;
+	m_name = m_nameShort = NULL;
 
 	m_eItemPlace		= eItemPlaceUndefined;
 	m_Description		= "";
@@ -276,7 +276,7 @@ void CInventoryItem::OnEvent (NET_Packet& P, u16 type)
 		{
 			Fvector p; 
 			P.r_vec3(p);
-			CPHSynchronize* pSyncObj = nullptr;
+			CPHSynchronize* pSyncObj = NULL;
 			pSyncObj = object().PHGetSyncItem(0);
 			if (!pSyncObj) return;
 			SPHNetState state;
@@ -457,7 +457,7 @@ void CInventoryItem::net_Export			(NET_Packet& P)
 		P.w_u8				(0);
 		return;
 	}
-	CPHSynchronize* pSyncObj				= nullptr;
+	CPHSynchronize* pSyncObj				= NULL;
 	SPHNetState								State;
 	pSyncObj = object().PHGetSyncItem		(0);
 
@@ -558,7 +558,7 @@ void CInventoryItem::PH_B_CrPr		()
 	object().CrPr_SetActivated(true);
 
 	///////////////////////////////////////////////
-	CPHSynchronize* pSyncObj				= nullptr;
+	CPHSynchronize* pSyncObj				= NULL;
 	pSyncObj = object().PHGetSyncItem		(0);
 	if (!pSyncObj)							return;
 	///////////////////////////////////////////////
@@ -584,7 +584,7 @@ void CInventoryItem::PH_I_CrPr		()		// actions & operations between two phisic p
 	//store recalculated data, then we able to restore it after small future prediction
 	if (!object().CrPr_IsActivated())	return;
 	////////////////////////////////////
-	CPHSynchronize* pSyncObj			= nullptr;
+	CPHSynchronize* pSyncObj			= NULL;
 	pSyncObj = object().PHGetSyncItem	(0);
 	if (!pSyncObj)						return;
 	////////////////////////////////////
@@ -608,7 +608,7 @@ void CInventoryItem::PH_Ch_CrPr			()
 	//restore recalculated data and get data for interpolation	
 	if (!object().CrPr_IsActivated())	return;
 	////////////////////////////////////
-	CPHSynchronize* pSyncObj			= nullptr;
+	CPHSynchronize* pSyncObj			= NULL;
 	pSyncObj = object().PHGetSyncItem	(0);
 	if (!pSyncObj)						return;
 	////////////////////////////////////
@@ -639,7 +639,7 @@ void CInventoryItem::PH_A_CrPr		()
 	//restore recalculated data and get data for interpolation	
 	if (!object().CrPr_IsActivated())	return;
 	////////////////////////////////////
-	CPHSynchronize* pSyncObj			= nullptr;
+	CPHSynchronize* pSyncObj			= NULL;
 	pSyncObj = object().PHGetSyncItem	(0);
 	if (!pSyncObj)						return;
 	////////////////////////////////////
@@ -674,7 +674,7 @@ void CInventoryItem::CalculateInterpolationParams()
 
 	Fvector P0, P1, P2, P3;
 
-	CPHSynchronize* pSyncObj = nullptr;
+	CPHSynchronize* pSyncObj = NULL;
 	pSyncObj = object().PHGetSyncItem(0);
 	
 	Fmatrix xformX0, xformX1;	
@@ -802,7 +802,7 @@ void CInventoryItem::make_Interpolation	()
 
 			object().m_pPhysicsShell->NetInterpolationModeOFF();
 
-			CPHSynchronize* pSyncObj		= nullptr;
+			CPHSynchronize* pSyncObj		= NULL;
 			pSyncObj						= object().PHGetSyncItem(0);
 			pSyncObj->set_State				(p->PredictedState);
 			Fmatrix xformI;
@@ -863,7 +863,7 @@ void CInventoryItem::reload		(LPCSTR section)
 
 void CInventoryItem::reinit		()
 {
-	m_pCurrentInventory	= nullptr;
+	m_pCurrentInventory	= NULL;
 	m_eItemPlace	= eItemPlaceUndefined;
 }
 
@@ -874,17 +874,17 @@ bool CInventoryItem::can_kill			() const
 
 CInventoryItem *CInventoryItem::can_kill	(CInventory *inventory) const
 {
-	return				(nullptr);
+	return				(0);
 }
 
 const CInventoryItem *CInventoryItem::can_kill			(const xr_vector<const CGameObject*> &items) const
 {
-	return				(nullptr);
+	return				(0);
 }
 
 CInventoryItem *CInventoryItem::can_make_killing	(const CInventory *inventory) const
 {
-	return				(nullptr);
+	return				(0);
 }
 
 bool CInventoryItem::ready_to_kill		() const
@@ -907,7 +907,7 @@ void CInventoryItem::activate_physic_shell()
 
 void CInventoryItem::UpdateXForm	()
 {
-	if (nullptr==object().H_Parent())	return;
+	if (0==object().H_Parent())	return;
 
 	// Get access to entity and its visual
 	CEntityAlive*	E		= smart_cast<CEntityAlive*>(object().H_Parent());

@@ -47,17 +47,17 @@ void	ActivateTestDepthCallback (bool& do_colide,bool bo1,dContact& c,SGameMtl* m
 }
 void	StaticEnvironment (bool& do_colide,bool bo1,dContact& c,SGameMtl* material_1,SGameMtl* material_2)
 {
-	dJointID contact_joint	= dJointCreateContact(nullptr, ContactGroup, &c);
+	dJointID contact_joint	= dJointCreateContact(0, ContactGroup, &c);
 
 	if(bo1)
 	{
 		((CPHActivationShape*)(retrieveGeomUserData(c.geom.g1)->callback_data))->DActiveIsland()->ConnectJoint(contact_joint);
-		dJointAttach			(contact_joint, dGeomGetBody(c.geom.g1), nullptr);
+		dJointAttach			(contact_joint, dGeomGetBody(c.geom.g1), 0);
 	}
 	else
 	{
 		((CPHActivationShape*)(retrieveGeomUserData(c.geom.g2)->callback_data))->DActiveIsland()->ConnectJoint(contact_joint);
-		dJointAttach			(contact_joint, nullptr, dGeomGetBody(c.geom.g2));
+		dJointAttach			(contact_joint, 0, dGeomGetBody(c.geom.g2));
 	}
 	do_colide=false;
 }
@@ -91,8 +91,8 @@ void RestoreVelocityState(V_PH_WORLD_STATE& state)
 
 CPHActivationShape::CPHActivationShape()
 {
-	m_geom= nullptr;
-	m_body= nullptr;
+	m_geom=NULL;
+	m_body=NULL;
 	m_flags.zero();
 	m_flags.set(flFixedRotation,TRUE);
 }
@@ -103,7 +103,7 @@ CPHActivationShape::~CPHActivationShape()
 void	CPHActivationShape::Create(const Fvector start_pos,const Fvector start_size,CPhysicsShellHolder* ref_obj,EType _type/*=etBox*/,u16	flags)
 {
 	VERIFY(ref_obj);
-	m_body			=	dBodyCreate	(nullptr)												;
+	m_body			=	dBodyCreate	(0)												;
 	dMass m;
 	dMassSetSphere(&m,1.f,100000.f);
 	dMassAdjust(&m,1.f);
@@ -111,11 +111,11 @@ void	CPHActivationShape::Create(const Fvector start_pos,const Fvector start_size
 	switch(_type)
 	{
 	case etBox:
-	m_geom			=	dCreateBox	(nullptr,start_size.x,start_size.y,start_size.z)		;
+	m_geom			=	dCreateBox	(0,start_size.x,start_size.y,start_size.z)		;
 	break;
 
 	case etSphere:
-	m_geom			=	dCreateSphere	(nullptr,start_size.x);
+	m_geom			=	dCreateSphere	(0,start_size.x);
 	break;
 	};
 
@@ -137,9 +137,9 @@ void CPHActivationShape::	Destroy	()
 	CPHObject::deactivate	()			;
 	dGeomDestroyUserData	(m_geom)	;
 	dGeomDestroy			(m_geom)	;
-	m_geom					= nullptr;
+	m_geom					=NULL		;
 	dBodyDestroy			(m_body)	;
-	m_body					= nullptr;
+	m_body					=NULL		;
 }
 bool	CPHActivationShape::	Activate							(const Fvector need_size,u16 steps,float max_displacement,float max_rotation,bool	un_freeze_later/*	=false*/)										
 {

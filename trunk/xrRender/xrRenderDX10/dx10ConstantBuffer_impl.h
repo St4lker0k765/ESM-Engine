@@ -191,7 +191,7 @@ IC void* dx10ConstantBuffer::AccessDirect(R_constant_load& L, u32 DataSize)
 		m_bChanged = true;
 		return res;
 	}
-	else return nullptr;
+	else return 0;
 }
 
 #endif	//	dx10ConstantBuffer_impl_included

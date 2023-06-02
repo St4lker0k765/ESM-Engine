@@ -39,9 +39,9 @@ void	CBlender_Compile::_cpp_Compile	(ShaderElement* _SH)
 	//	optimization?
 
 	// Analyze possibility to detail this shader
-	detail_texture	= nullptr;
-	detail_scaler	= nullptr;
-	LPCSTR	base	= nullptr;
+	detail_texture	= NULL;
+	detail_scaler	= NULL;
+	LPCSTR	base	= NULL;
 	if (bDetail && BT->canBeDetailed())
 	{
 		// 

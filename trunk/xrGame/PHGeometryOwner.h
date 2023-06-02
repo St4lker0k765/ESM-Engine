@@ -28,7 +28,7 @@ public:
 		void						add_Cylinder							(const Fcylinder&	V);															//aux
 		void						add_Shape								(const SBoneShape& shape);														//aux
 		void						add_Shape								(const SBoneShape& shape,const Fmatrix& offset);								//aux
-		CODEGeom*					last_geom								(){if(m_geoms.empty())return nullptr; return m_geoms.back();}						//aux
+		CODEGeom*					last_geom								(){if(m_geoms.empty())return NULL; return m_geoms.back();}						//aux
 		bool						has_geoms								(){return !m_geoms.empty();}
 		void						set_ContactCallback						(ContactCallbackFun* callback);													//aux (may not be)
 		void						set_ObjectContactCallback				(ObjectContactCallbackFun* callback);											//called anywhere ph state influent

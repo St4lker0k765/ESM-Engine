@@ -108,19 +108,19 @@ public:
 		if (ppPData)
 		{
 			if (C->destination&RC_dest_pixel)	{ access_direct(C,C->ps,ppPData,DataSize, BT_PixelBuffer); }
-			else *ppPData = nullptr;
+			else *ppPData = 0;
 		}
 
 		if (ppVData)
 		{
 			if (C->destination&RC_dest_vertex)	{ access_direct(C,C->vs,ppVData,DataSize, BT_VertexBuffer); }
-			else *ppVData = nullptr;
+			else *ppVData = 0;
 		}
 
 		if (ppGData)
 		{
 			if (C->destination&RC_dest_geometry){ access_direct(C,C->gs,ppGData,DataSize, BT_GeometryBuffer); }
-			else *ppGData = nullptr;
+			else *ppGData = 0;
 		}
 	}
 

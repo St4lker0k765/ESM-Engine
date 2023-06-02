@@ -82,9 +82,9 @@ void CStalkerKillWoundedPlanner::add_evaluators			()
 	add_evaluator			(eWorldPropertyEnemy				,xr_new<CStalkerPropertyEvaluatorEnemies>		(m_object,"is_there_enemies_delayed"));
 	add_evaluator			(eWorldPropertyWoundedEnemyReached	,xr_new<CStalkerPropertyEvaluatorEnemyReached>	(m_object,"is enemy reached"));
 	
-	add_evaluator			(eWorldPropertyWoundedEnemyPrepared	,xr_new<CStalkerPropertyEvaluatorMember>		((CPropertyStorage*)nullptr,eWorldPropertyWoundedEnemyPrepared,true,true,"is enemy prepared"));
-	add_evaluator			(eWorldPropertyWoundedEnemyAimed	,xr_new<CStalkerPropertyEvaluatorMember>		((CPropertyStorage*)nullptr,eWorldPropertyWoundedEnemyAimed,true,true,"is enemy aimed"));
-	add_evaluator			(eWorldPropertyPausedAfterKill		,xr_new<CStalkerPropertyEvaluatorMember>		((CPropertyStorage*)nullptr,eWorldPropertyPausedAfterKill,true,true,"is paused after enemy kill"));
+	add_evaluator			(eWorldPropertyWoundedEnemyPrepared	,xr_new<CStalkerPropertyEvaluatorMember>		((CPropertyStorage*)0,eWorldPropertyWoundedEnemyPrepared,true,true,"is enemy prepared"));
+	add_evaluator			(eWorldPropertyWoundedEnemyAimed	,xr_new<CStalkerPropertyEvaluatorMember>		((CPropertyStorage*)0,eWorldPropertyWoundedEnemyAimed,true,true,"is enemy aimed"));
+	add_evaluator			(eWorldPropertyPausedAfterKill		,xr_new<CStalkerPropertyEvaluatorMember>		((CPropertyStorage*)0,eWorldPropertyPausedAfterKill,true,true,"is paused after enemy kill"));
 }
 
 void CStalkerKillWoundedPlanner::add_actions			()

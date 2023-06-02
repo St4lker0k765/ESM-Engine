@@ -94,7 +94,7 @@ void CPolterFlame::create_flame(const CObject *target_object)
 	element->time_started			= time();
 	element->sound.clone			(m_sound, st_Effect,SOUND_TYPE_WORLD);
 	element->sound.play_at_pos		(m_object,element->position);
-	element->particles_object		= nullptr;
+	element->particles_object		= 0;
 	element->time_last_hit			= 0;
 
 	Fvector target_point			= get_head_position(const_cast<CObject*>(target_object));
@@ -159,7 +159,7 @@ void CPolterFlame::update_schedule()
 
 					// играть звук
 					//m_scan_sound.play_at_pos(m_object, get_head_position(Actor()),sm_2D);
-					::Sound->play_at_pos(m_scan_sound, nullptr, Actor()->Position());
+					::Sound->play_at_pos(m_scan_sound, 0, Actor()->Position());
 
 					// постпроцесс
 					Actor()->Cameras().AddPPEffector(xr_new<CMonsterEffector>(m_scan_effector_info, m_scan_effector_time, m_scan_effector_time_attack, m_scan_effector_time_release));
@@ -199,7 +199,7 @@ void CPolterFlame::update_schedule()
 				if (elem->time_last_hit + m_hit_delay < time()) {
 					// test hit
 					collide::rq_result rq;
-					if (Level().ObjectSpace.RayPick(elem->position, elem->target_dir, m_length, collide::rqtBoth, rq, nullptr)) {
+					if (Level().ObjectSpace.RayPick(elem->position, elem->target_dir, m_length, collide::rqtBoth, rq, NULL)) {
 						if ((rq.O == elem->target_object) && (rq.range < m_length)) {
 							float		hit_value;
 							hit_value	= m_hit_value - m_hit_value * rq.range / m_length;

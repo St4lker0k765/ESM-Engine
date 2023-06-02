@@ -80,7 +80,7 @@ void CControlRotationJump::on_event(ControlCom::EEventType type, ControlCom::IEv
 		if ((m_stage == eStop) && (m_data.flags.is(SControlRotationJumpData::eRotateOnce) == FALSE)) 
 			build_line_second();
 		else  
-			m_man->notify						(ControlCom::eventRotationJumpEnd, nullptr);
+			m_man->notify						(ControlCom::eventRotationJumpEnd, 0);
 		break;
 	}
 }
@@ -158,7 +158,7 @@ void CControlRotationJump::build_line_first()
 	target_position.mad(m_object->Position(), m_object->Direction(), m_dist);
 
 	if (!m_man->build_path_line(this, target_position, u32(-1), velocity_mask)) {
-		m_man->notify				(ControlCom::eventRotationJumpEnd, nullptr);
+		m_man->notify				(ControlCom::eventRotationJumpEnd, 0);
 	} else { 
 		// enable path
 		SControlPathBuilderData		*ctrl_path = (SControlPathBuilderData*)m_man->data(this, ControlCom::eControlPath); 
@@ -184,7 +184,7 @@ void CControlRotationJump::build_line_first()
 void CControlRotationJump::build_line_second()
 {
 	if (!m_object->EnemyMan.get_enemy()) {
-		m_man->notify				(ControlCom::eventRotationJumpEnd, nullptr);
+		m_man->notify				(ControlCom::eventRotationJumpEnd, 0);
 		return;
 	}
 	
@@ -230,7 +230,7 @@ void CControlRotationJump::build_line_second()
 	target_position.mad(m_object->Position(), dir_to_enemy, m_dist);
 
 	if (!m_man->build_path_line(this, target_position, u32(-1), velocity_mask)) {
-		m_man->notify				(ControlCom::eventRotationJumpEnd, nullptr);
+		m_man->notify				(ControlCom::eventRotationJumpEnd, 0);
 	} else { 
 		// enable path
 		SControlPathBuilderData		*ctrl_path = (SControlPathBuilderData*)m_man->data(this, ControlCom::eControlPath); 

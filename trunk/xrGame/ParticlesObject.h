@@ -58,7 +58,7 @@ public:
 	{
 		if (p){ 
 			p->PSI_destroy		();
-			p					= nullptr;
+			p					= 0;
 		}
 	}
 };

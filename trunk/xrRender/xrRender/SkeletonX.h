@@ -72,7 +72,7 @@ protected:
 	virtual BOOL			_PickBone			(IKinematics::pick_result &r, float range, const Fvector& S, const Fvector& D, Fvisual* V, u16 bone_id, u32 iBase, u32 iCount)						=0;
 public:
 	BOOL					has_visible_bones	();
-							CSkeletonX		()	{ Parent = nullptr; ChildIDX = u16(-1); }
+							CSkeletonX		()	{ Parent = 0; ChildIDX = u16(-1); }
 
 	virtual void			SetParent		(CKinematics* K)					{ Parent = K; }
 	virtual void			AfterLoad		(CKinematics* parent, u16 child_idx)=0;

@@ -12,11 +12,11 @@
 
 CGameSpy_Full::CGameSpy_Full()	
 {
-	m_pGSA	= nullptr;
-	m_pGS_HTTP = nullptr;
-	m_pGS_SB = nullptr;
+	m_pGSA	= NULL;
+	m_pGS_HTTP = NULL;
+	m_pGS_SB = NULL;
 
-	m_hGameSpyDLL	= nullptr;
+	m_hGameSpyDLL	= NULL;
 	m_bServicesAlreadyChecked	= false;
 
 	LoadGameSpy();
@@ -39,7 +39,7 @@ CGameSpy_Full::~CGameSpy_Full()
 	if (m_hGameSpyDLL)
 	{
 		FreeLibrary(m_hGameSpyDLL);
-		m_hGameSpyDLL = nullptr;
+		m_hGameSpyDLL = NULL;
 	}
 }
 
@@ -48,7 +48,7 @@ void	CGameSpy_Full::LoadGameSpy()
 	LPCSTR			g_name	= "xrGameSpy.dll";
 	Log				("Loading DLL:",g_name);
 	m_hGameSpyDLL			= LoadLibrary	(g_name);
-	if (nullptr==m_hGameSpyDLL)	R_CHK			(GetLastError());
+	if (0==m_hGameSpyDLL)	R_CHK			(GetLastError());
 	R_ASSERT2		(m_hGameSpyDLL,"GameSpy DLL raised exception during loading or there is no game DLL at all");
 
 	HMODULE	hGameSpyDLL = m_hGameSpyDLL;

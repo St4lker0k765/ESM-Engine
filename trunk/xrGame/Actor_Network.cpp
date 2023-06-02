@@ -43,7 +43,7 @@ int			g_cl_InterpolationType		= 0;
 u32			g_cl_InterpolationMaxPoints = 0;
 int			g_dwInputUpdateDelta		= 20;
 BOOL		net_cl_inputguaranteed		= FALSE;
-CActor*		g_actor						= nullptr;
+CActor*		g_actor						= NULL;
 
 CActor*			Actor()	
 {	
@@ -489,7 +489,7 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 	m_holder_id				= ALife::_OBJECT_ID(-1);
 	m_feel_touch_characters = 0;
 	m_snd_noise			= 0.0f;
-	m_sndShockEffector	= nullptr;
+	m_sndShockEffector	= NULL;
 /*	m_followers			= NULL;*/
 	if (m_pPhysicsShell)
 	{
@@ -512,8 +512,8 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 
 	// motions
 	m_bAnimTorsoPlayed			= false;
-	m_current_legs_blend		= nullptr;
-	m_current_jump_blend		= nullptr;
+	m_current_legs_blend		= 0;
+	m_current_jump_blend		= 0;
 	m_current_legs.invalidate	();
 	m_current_torso.invalidate	();
 	m_current_head.invalidate	();
@@ -705,7 +705,7 @@ void CActor::net_Destroy	()
 	xr_delete		(m_sndShockEffector);
 	xr_delete		(pStatGraph);
 	xr_delete		(m_pActorEffector);
-	pCamBobbing		= nullptr;
+	pCamBobbing		= NULL;
 	
 #ifdef DEBUG	
 	LastPosS.clear();
@@ -714,17 +714,17 @@ void CActor::net_Destroy	()
 #endif
 
 	processing_deactivate();
-	m_holder= nullptr;
+	m_holder=NULL;
 	m_holderID=u16(-1);
 	
 	m_ArtefactsOnBelt.clear();
 	if (Level().CurrentViewEntity() == this)
 		HUD().GetUI()->UIMainIngameWnd->m_artefactPanel->InitIcons(m_ArtefactsOnBelt);	
 
-	SetDefaultVisualOutfit(nullptr);
+	SetDefaultVisualOutfit(NULL);
 	
 
-	if(g_actor == this) g_actor= nullptr;
+	if(g_actor == this) g_actor= NULL;
 
 	Engine.Sheduler.Unregister	(this);
 }
@@ -735,16 +735,16 @@ void CActor::net_Relcase	(CObject* O)
  	VERIFY(O);
 	CGameObject* GO = smart_cast<CGameObject*>(O);
 	if(GO&&m_pObjectWeLookingAt==GO){
-		m_pObjectWeLookingAt= nullptr;
+		m_pObjectWeLookingAt=NULL;
 	}
 	CHolderCustom* HC=smart_cast<CHolderCustom*>(GO);
 	if(HC&&HC==m_pVehicleWeLookingAt){
-		m_pVehicleWeLookingAt= nullptr;
+		m_pVehicleWeLookingAt=NULL;
 	}
 	if(HC&&HC==m_holder)
 	{
 		m_holder->detach_Actor();
-		m_holder= nullptr;
+		m_holder=NULL;
 	}
 	inherited::net_Relcase	(O);
 
@@ -797,10 +797,10 @@ void	CActor::OnChangeVisual()
 ///	inherited::OnChangeVisual();
 	{
 		CPhysicsShell* tmp_shell=PPhysicsShell();
-		PPhysicsShell()= nullptr;
+		PPhysicsShell()=NULL;
 		inherited::OnChangeVisual();
 		PPhysicsShell()=tmp_shell;
-		tmp_shell= nullptr;
+		tmp_shell=NULL;
 	}
 
 	IKinematicsAnimated* V	= smart_cast<IKinematicsAnimated*>(Visual());
@@ -831,9 +831,9 @@ void	CActor::OnChangeVisual()
 		m_current_head.invalidate	();
 		m_current_legs.invalidate	();
 		m_current_torso.invalidate	();
-		m_current_legs_blend		= nullptr;
-		m_current_torso_blend		= nullptr;
-		m_current_jump_blend		= nullptr;
+		m_current_legs_blend		= NULL;
+		m_current_torso_blend		= NULL;
+		m_current_jump_blend		= NULL;
 	}
 };
 
@@ -897,7 +897,7 @@ void CActor::PH_B_CrPr		()	// actions & operations before physic correction-pred
 					pIStart->o_torso.roll	-= PI_MUL_2;
 		}
 		///////////////////////////////////////////////
-		CPHSynchronize* pSyncObj = nullptr;
+		CPHSynchronize* pSyncObj = NULL;
 		pSyncObj = PHGetSyncItem(0);
 		if (!pSyncObj) return;
 		pSyncObj->get_State(LastState);
@@ -968,7 +968,7 @@ void CActor::PH_I_CrPr		()		// actions & operations between two phisic predictio
 	if (g_Alive())
 	{
 		////////////////////////////////////
-		CPHSynchronize* pSyncObj = nullptr;
+		CPHSynchronize* pSyncObj = NULL;
 		pSyncObj = PHGetSyncItem(0);
 		if (!pSyncObj) return;
 		////////////////////////////////////
@@ -985,7 +985,7 @@ void CActor::PH_A_CrPr		()
 	if (!CrPr_IsActivated()) return;
 	if (!g_Alive()) return;
 	////////////////////////////////////
-	CPHSynchronize* pSyncObj = nullptr;
+	CPHSynchronize* pSyncObj = NULL;
 	pSyncObj = PHGetSyncItem(0);
 	if (!pSyncObj) return;
 	////////////////////////////////////
@@ -1003,7 +1003,7 @@ extern	float		g_cl_lvInterp;
 void	CActor::CalculateInterpolationParams()
 {	
 	//	Fmatrix xformX0, xformX1;
-	CPHSynchronize* pSyncObj = nullptr;
+	CPHSynchronize* pSyncObj = NULL;
 	pSyncObj = PHGetSyncItem(0);
 	///////////////////////////////////////////////
 	InterpData* pIStart = &IStart;
@@ -1183,7 +1183,7 @@ void CActor::make_Interpolation	()
 			mstate_real = mstate_wishful = NET_Last.mstate;
 			NET_SavedAccel = NET_Last.p_accel;
 
-			CPHSynchronize* pSyncObj = nullptr;
+			CPHSynchronize* pSyncObj = NULL;
 			pSyncObj = PHGetSyncItem(0);
 			if (!pSyncObj) return;
 			pSyncObj->set_State(PredictedState);//, PredictedState.enabled);
@@ -1465,15 +1465,15 @@ void	CActor::OnRender_Network()
 //		dbg_draw_piramid(tmp.add(IEndT.Pos, tmp1), IEndT.Vel, size, -IEndT.o_model, color_rgba(0, 155, 0, 155));
 		dbg_draw_piramid(NET_Last.p_pos, NET_Last.p_velocity, size*3/4, -NET_Last.o_model, color_rgba(255, 255, 255, 255));
 		
-		Fmatrix MS, MH, ML, *pM = nullptr;
+		Fmatrix MS, MH, ML, *pM = NULL;
 		ML.translate(0, 0.2f, 0);
 		MS.translate(0, 0.2f, 0);
 		MH.translate(0, 0.2f, 0);
 
-		Fvector point0S, point1S, point0H, point1H, point0L, point1L, *ppoint0 = nullptr, *ppoint1 = nullptr;
+		Fvector point0S, point1S, point0H, point1H, point0L, point1L, *ppoint0 = NULL, *ppoint1 = NULL;
 		Fvector tS, tH;
 		u32	cColor = 0, sColor = 0;
-		VIS_POSITION*	pLastPos = nullptr;
+		VIS_POSITION*	pLastPos = NULL;
 
 		switch (g_cl_InterpolationType)
 		{
@@ -1726,7 +1726,7 @@ void	CActor::Check_for_AutoPickUp()
 	{
 		ISpatial*		spatial	= ISpatialResult[o_it];
 		CInventoryItem*	pIItem	= smart_cast<CInventoryItem*> (spatial->dcast_CObject        ());
-		if (nullptr == pIItem)							continue;
+		if (0 == pIItem)							continue;
 		if (!pIItem->CanTake())						continue;
 		if (Level().m_feel_deny.is_object_denied(pIItem->cast_game_object()) )	continue;
 
@@ -1755,8 +1755,8 @@ void	CActor::Check_for_AutoPickUp()
 
 void				CActor::SetHitInfo				(CObject* who, CObject* weapon, s16 element, Fvector Pos, Fvector Dir)
 {
-	m_iLastHitterID = (who!= nullptr) ? who->ID() : u16(-1);
-	m_iLastHittingWeaponID = (weapon != nullptr) ? weapon->ID() : u16(-1);
+	m_iLastHitterID = (who!= NULL) ? who->ID() : u16(-1);
+	m_iLastHittingWeaponID = (weapon != NULL) ? weapon->ID() : u16(-1);
 	m_s16LastHittedElement = element;
 	m_fLastHealth = GetfHealth();
 	m_bWasHitted = true;
@@ -1879,7 +1879,7 @@ void CActor::OnPlayHeadShotParticle(NET_Packet P)
 	Fmatrix pos; 	
 	CParticlesPlayer::MakeXFORM(this,element,HitDir,HitPos,pos);
 	// установить particles
-	CParticlesObject* ps = nullptr;
+	CParticlesObject* ps = NULL;
 	
 	ps = CParticlesObject::Create(m_sHeadShotParticle.c_str(),TRUE);
 

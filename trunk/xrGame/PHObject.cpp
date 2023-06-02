@@ -82,7 +82,7 @@ void CPHObject::Collide()
 		CPHMoveStorage::iterator I=tracers->begin(),E=tracers->end();
 		for(;E!=I;I++)
 		{
-				const Fvector	*from=nullptr,	*to=nullptr;
+				const Fvector	*from=0,	*to=0;
 				Fvector dir;
 				I.Positions(from,to);
 				if(from->x==-dInfinity) continue;

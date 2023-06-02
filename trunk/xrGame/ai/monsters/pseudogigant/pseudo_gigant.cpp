@@ -237,7 +237,7 @@ void CPseudoGigant::on_threaten_execute()
 {
 	// נאחבנמסטעü מבתוךעû
 	m_nearest.clear_not_free		();
-	Level().ObjectSpace.GetNearest	(m_nearest,Position(), 15.f, nullptr); 
+	Level().ObjectSpace.GetNearest	(m_nearest,Position(), 15.f, NULL); 
 	for (u32 i=0;i<m_nearest.size();i++) {
 		CPhysicsShellHolder  *obj = smart_cast<CPhysicsShellHolder *>(m_nearest[i]);
 		if (!obj || !obj->m_pPhysicsShell) continue;

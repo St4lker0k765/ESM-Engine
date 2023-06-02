@@ -5,8 +5,8 @@
 
 CMonsterCorpseManager::CMonsterCorpseManager()
 {
-	monster		= nullptr;
-	corpse		= nullptr;
+	monster		= 0;
+	corpse		= 0;
 	forced		= false;
 }
 
@@ -23,7 +23,7 @@ void CMonsterCorpseManager::update()
 {
 	if (forced) {
 		if (corpse->m_fFood < 1) {
-			corpse = nullptr;
+			corpse = 0;
 			return;
 		}
 	} else {
@@ -64,7 +64,7 @@ void CMonsterCorpseManager::unforce_corpse()
 
 void CMonsterCorpseManager::reinit()
 {
-	corpse			= nullptr;
+	corpse			= 0;
 	forced			= false;
 	time_last_seen	= 0;
 }

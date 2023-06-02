@@ -130,9 +130,9 @@ void CWeaponShotgun::OnShotBoth()
 	StartFlameParticles2		();
 
 	//дым из 2х стволов
-	CParticlesObject* pSmokeParticles = nullptr;
+	CParticlesObject* pSmokeParticles = NULL;
 	CShootingObject::StartParticles(pSmokeParticles, *m_sSmokeParticlesCurrent, get_LastFP(),  zero_vel, true);
-	pSmokeParticles = nullptr;
+	pSmokeParticles = NULL;
 	CShootingObject::StartParticles(pSmokeParticles, *m_sSmokeParticlesCurrent, get_LastFP2(), zero_vel, true);
 
 }
@@ -157,7 +157,7 @@ void CWeaponShotgun::switch2_Fire2	()
 		CEntity*					E = smart_cast<CEntity*>(H_Parent());
 		if (E){
 		CInventoryOwner* io		= smart_cast<CInventoryOwner*>(H_Parent());
-			if(nullptr == io->inventory().ActiveItem())
+			if(NULL == io->inventory().ActiveItem())
 			{
 			Log("current_state", GetState() );
 			Log("next_state", GetNextState());
@@ -325,7 +325,7 @@ void CWeaponShotgun::PlayAnimCloseWeapon()
 bool CWeaponShotgun::HaveCartridgeInInventory		(u8 cnt)
 {
 	if (unlimited_ammo()) return true;
-	m_pAmmo = nullptr;
+	m_pAmmo = NULL;
 	if(m_pCurrentInventory) 
 	{
 		//попытаться найти в инвентаре патроны текущего типа 
@@ -345,7 +345,7 @@ bool CWeaponShotgun::HaveCartridgeInInventory		(u8 cnt)
 			}
 		}
 	}
-	return (m_pAmmo!= nullptr)&&(m_pAmmo->m_boxCurr>=cnt) ;
+	return (m_pAmmo!=NULL)&&(m_pAmmo->m_boxCurr>=cnt) ;
 }
 
 u8 CWeaponShotgun::AddCartridge		(u8 cnt)
@@ -379,7 +379,7 @@ u8 CWeaponShotgun::AddCartridge		(u8 cnt)
 		m_magazine.push_back(l_cartridge);
 //		m_fCurrentCartirdgeDisp = l_cartridge.m_kDisp;
 	}
-	m_ammoName = (m_pAmmo) ? m_pAmmo->m_nameShort : nullptr;
+	m_ammoName = (m_pAmmo) ? m_pAmmo->m_nameShort : NULL;
 
 	VERIFY((u32)iAmmoElapsed == m_magazine.size());
 

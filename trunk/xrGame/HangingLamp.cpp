@@ -29,11 +29,11 @@ void CHangingLamp::Init()
 	fHealth					= 100.f;
 	light_bone				= BI_NONE;
 	ambient_bone			= BI_NONE;
-	lanim					= nullptr;
+	lanim					= 0;
 	ambient_power			= 0.f;
-	light_render			= nullptr;
-	light_ambient			= nullptr;
-	glow_render				= nullptr;
+	light_render			= 0;
+	light_ambient			= 0;
+	glow_render				= 0;
 }
 
 void CHangingLamp::RespawnInit()
@@ -177,7 +177,7 @@ void	CHangingLamp::net_Save			(NET_Packet& P)
 
 BOOL	CHangingLamp::net_SaveRelevant	()
 {
-	return (inherited::net_SaveRelevant() || BOOL(PPhysicsShell()!= nullptr));
+	return (inherited::net_SaveRelevant() || BOOL(PPhysicsShell()!=NULL));
 }
 
 void CHangingLamp::shedule_Update	(u32 dt)

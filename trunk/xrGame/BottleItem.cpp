@@ -50,7 +50,7 @@ void CBottleItem::OnEvent(NET_Packet& P, u16 type)
 void CBottleItem::BreakToPieces()
 {
 	//играем звук
-	sndBreaking.play_at_pos(nullptr, Position(), false);
+	sndBreaking.play_at_pos(0, Position(), false);
 
 	//отыграть партиклы разбивания
 	if(*m_sBreakParticles)

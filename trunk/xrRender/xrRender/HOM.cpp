@@ -32,8 +32,8 @@ void __stdcall	CHOM::MT_RENDER()
 CHOM::CHOM()
 {
 	bEnabled		= FALSE;
-	m_pModel		= nullptr;
-	m_pTris			= nullptr;
+	m_pModel		= 0;
+	m_pTris			= 0;
 #ifdef DEBUG
 	Device.seqRender.Add(this,REG_PRIORITY_LOW-1000);
 #endif
@@ -208,7 +208,7 @@ void CHOM::Render_DB			(CFrustum& base)
 		src.push_back	(v[t.verts[1]]);
 		src.push_back	(v[t.verts[2]]);
 		sPoly* P =		clip.ClipPoly	(src,dst);
-		if (nullptr==P)		{ T.skip=next; continue; }
+		if (0==P)		{ T.skip=next; continue; }
 
 		// XForm and Rasterize
 #ifdef DEBUG

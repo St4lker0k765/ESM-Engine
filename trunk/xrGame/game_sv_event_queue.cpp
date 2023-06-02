@@ -24,7 +24,7 @@ GameEventQueue::~GameEventQueue()
 static u32 LastTimeCreate = 0;
 GameEvent*		GameEventQueue::Create	()
 {
-	GameEvent*	ge			= nullptr;
+	GameEvent*	ge			= 0;
 	cs.Enter		();
 	if (unused.empty())	
 	{
@@ -46,7 +46,7 @@ GameEvent*		GameEventQueue::Create	()
 }
 GameEvent*		GameEventQueue::Create	(NET_Packet& P, u16 type, u32 time, ClientID clientID)
 {
-	GameEvent*	ge			= nullptr;
+	GameEvent*	ge			= 0;
 	cs.Enter		();
 	if (unused.empty())	
 	{
@@ -73,7 +73,7 @@ GameEvent*		GameEventQueue::Create	(NET_Packet& P, u16 type, u32 time, ClientID 
 }
 GameEvent*		GameEventQueue::Retreive	()
 {
-	GameEvent*	ge			= nullptr;
+	GameEvent*	ge			= 0;
 	cs.Enter		();
 	if (!ready.empty())		ge = ready.front();
 	//---------------------------------------------	

@@ -11,7 +11,7 @@ bool CActor::use_MountedWeapon(CHolderCustom* object)
 		if(!wpn||(m_holder==wpn)){
 			m_holder->detach_Actor();
 			character_physics_support()->movement()->CreateCharacter();
-			m_holder= nullptr;
+			m_holder=NULL;
 		}
 		return true;
 	}else{
@@ -25,7 +25,7 @@ bool CActor::use_MountedWeapon(CHolderCustom* object)
 					m_holder=wpn;
 					if (pCamBobbing){
 						Cameras().RemoveCamEffector(eCEBobbing);
-						pCamBobbing = nullptr;
+						pCamBobbing = NULL;
 					}
 					return true;
 				}

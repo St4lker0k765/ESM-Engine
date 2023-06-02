@@ -53,7 +53,7 @@ protected:
 
 public:
 	IC					CBasePathManager			(CRestrictedObject *object);
-	IC			void	reinit						(const CLevelGraph *graph = nullptr);
+	IC			void	reinit						(const CLevelGraph *graph = 0);
 	IC			bool	actual						() const;
 	IC			void	on_restrictions_change		();
 };

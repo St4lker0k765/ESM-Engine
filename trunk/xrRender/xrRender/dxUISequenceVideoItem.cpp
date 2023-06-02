@@ -3,7 +3,7 @@
 
 dxUISequenceVideoItem::dxUISequenceVideoItem()
 {
-	m_texture = nullptr;
+	m_texture = 0;
 }
 
 void dxUISequenceVideoItem::Copy(IUISequenceVideoItem&_in)

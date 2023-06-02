@@ -30,8 +30,8 @@ ICF void CalculateTriangle(CDB::TRI* XTri,dGeomID g,Triangle& triangle)
 {
 	dVector3	v											;
 	dMatrix3	m											;
-	const float *p						= nullptr;
-	const float *r						= nullptr;
+	const float *p						=NULL				;
+	const float *r						=NULL				;
 	VERIFY								(g)					;
 	CODEGeom::get_final_tx				(g,p,r,v,m)			;
 	VERIFY								(p)					;

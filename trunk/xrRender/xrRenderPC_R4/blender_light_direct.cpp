@@ -149,7 +149,7 @@ void	CBlender_accum_direct::Compile(CBlender_Compile& C)
 }
 
 
-CBlender_accum_direct_msaa::CBlender_accum_direct_msaa	()	{		Name = nullptr; Definition = nullptr; description.CLS		= 0;	}
+CBlender_accum_direct_msaa::CBlender_accum_direct_msaa	()	{		Name = 0; Definition = 0; description.CLS		= 0;	}
 CBlender_accum_direct_msaa::~CBlender_accum_direct_msaa	()	{	}
 
 //	TODO: DX10:	implement CBlender_accum_direct::Compile
@@ -294,7 +294,7 @@ void	CBlender_accum_direct_msaa::Compile(CBlender_Compile& C)
    ::Render->m_MSAASample = -1;
 }
 
-CBlender_accum_direct_volumetric_msaa::CBlender_accum_direct_volumetric_msaa	()	{		Name = nullptr; Definition = nullptr; description.CLS		= 0;	}
+CBlender_accum_direct_volumetric_msaa::CBlender_accum_direct_volumetric_msaa	()	{		Name = 0; Definition = 0; description.CLS		= 0;	}
 CBlender_accum_direct_volumetric_msaa::~CBlender_accum_direct_volumetric_msaa	()	{	}
 
 //	TODO: DX10:	implement CBlender_accum_direct::Compile
@@ -330,7 +330,7 @@ void	CBlender_accum_direct_volumetric_msaa::Compile(CBlender_Compile& C)
    ::Render->m_MSAASample = -1;
 }
 
-CBlender_accum_direct_volumetric_sun_msaa::CBlender_accum_direct_volumetric_sun_msaa	()	{		Name = nullptr; Definition = nullptr; description.CLS		= 0;	}
+CBlender_accum_direct_volumetric_sun_msaa::CBlender_accum_direct_volumetric_sun_msaa	()	{		Name = 0; Definition = 0; description.CLS		= 0;	}
 CBlender_accum_direct_volumetric_sun_msaa::~CBlender_accum_direct_volumetric_sun_msaa	()	{	}
 
 //	TODO: DX10:	implement CBlender_accum_direct::Compile

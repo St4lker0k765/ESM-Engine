@@ -25,7 +25,7 @@
 #include "ui/UIProgressShape.h"
 #include "ui/UIXmlInit.h"
 
-CUIProgressShape* g_MissileForceShape = nullptr;
+CUIProgressShape* g_MissileForceShape = NULL;
 
 void create_force_progress()
 {
@@ -56,7 +56,7 @@ void CMissile::reinit		()
 	m_fThrowForce		= 0;
 	m_dwDestroyTime		= 0xffffffff;
 	m_bPending			= false;
-	m_fake_missile		= nullptr;
+	m_fake_missile		= NULL;
 	SetHUDmode			(FALSE);
 	SetState			( MS_HIDDEN );
 }
@@ -108,7 +108,7 @@ BOOL CMissile::net_Spawn(CSE_Abstract* DC)
 void CMissile::net_Destroy() 
 {
 	inherited::net_Destroy();
-	m_fake_missile = nullptr;
+	m_fake_missile = 0;
 }
 
 void CMissile::OnActiveItem		()
@@ -350,7 +350,7 @@ void CMissile::UpdateXForm	()
 	{
 		dwXF_Frame			= Device.dwFrame;
 
-		if (nullptr==H_Parent())	return;
+		if (0==H_Parent())	return;
 
 		// Get access to entity and its visual
 		CEntityAlive*		E		= smart_cast<CEntityAlive*>(H_Parent());
@@ -416,7 +416,7 @@ void CMissile::setup_throw_params()
 	if (this == inventory_owner->inventory().ActiveItem())
 	{
 		CInventoryOwner* io		= smart_cast<CInventoryOwner*>(H_Parent());
-		if(nullptr == io->inventory().ActiveItem())
+		if(NULL == io->inventory().ActiveItem())
 		{
 				Log("current_state", GetState() );
 				Log("next_state", GetNextState());
@@ -481,7 +481,7 @@ void CMissile::OnEvent(NET_Packet& P, u16 type)
 			bool IsFakeMissile = false;
 			if (m_fake_missile && (id == m_fake_missile->ID()))
 			{
-				m_fake_missile	= nullptr;
+				m_fake_missile	= NULL;
 				IsFakeMissile = true;
 			}
 
@@ -490,7 +490,7 @@ void CMissile::OnEvent(NET_Packet& P, u16 type)
 			{
 				break;
 			}
-			missile->H_SetParent(nullptr,!P.r_eof() && P.r_u8());
+			missile->H_SetParent(0,!P.r_eof() && P.r_u8());
 			if (IsFakeMissile && OnClient()) 
 				missile->set_destroy_time(m_dwDestroyTimeMax);
 			break;
@@ -548,7 +548,7 @@ bool CMissile::Action(s32 cmd, u32 flags)
 
 void  CMissile::UpdateFireDependencies_internal	()
 {
-	if (nullptr==H_Parent())		return;
+	if (0==H_Parent())		return;
 
     if (Device.dwFrame!=dwFP_Frame){
 		dwFP_Frame = Device.dwFrame;
@@ -637,7 +637,7 @@ void	CMissile::net_Relcase(CObject* O)
 		if(O==smart_cast<CObject*>((CPhysicsShellHolder*)PPhysicsShell()->get_CallbackData()))
 		{
 			PPhysicsShell()->remove_ObjectContactCallback(ExitContactCallback);
-			PPhysicsShell()->set_CallbackData(nullptr);
+			PPhysicsShell()->set_CallbackData(NULL);
 		}
 	}
 
@@ -682,7 +682,7 @@ void CMissile::OnDrawUI()
 
 void	 CMissile::ExitContactCallback(bool& do_colide,bool bo1,dContact& c,SGameMtl * /*material_1*/,SGameMtl * /*material_2*/)
 {
-	dxGeomUserData	*gd1= nullptr,	*gd2= nullptr;
+	dxGeomUserData	*gd1=NULL,	*gd2=NULL;
 	if(bo1)
 	{
 		gd1 =retrieveGeomUserData(c.geom.g1);

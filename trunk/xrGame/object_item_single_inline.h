@@ -25,7 +25,7 @@ TEMPLATE_SPECIALIZATION
 ObjectFactory::CLIENT_BASE_CLASS *CSObjectItemSingle::client_object	() const
 {
 	FATAL				("Cannot instantiate client object, because client class is not declared!");
-	return				(nullptr);
+	return				(0);
 }
 #endif
 
@@ -52,7 +52,7 @@ template <typename _unknown_type>
 ObjectFactory::SERVER_BASE_CLASS *CObjectItemSingle<_unknown_type,true>::server_object	(LPCSTR section) const
 {
 	FATAL				("Cannot instantiate server object, because server class is not declared!");
-	return				(nullptr);
+	return				(0);
 }
 #endif
 

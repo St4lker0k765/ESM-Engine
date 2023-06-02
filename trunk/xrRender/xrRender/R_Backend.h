@@ -225,11 +225,11 @@ public:
 		else
 		{
 			VERIFY(!"Invalid texture stage");
-			return nullptr;
+			return 0;
 		}
 #else	//	USE_DX10
 		VERIFY(!"Invalid texture stage");
-		return nullptr;
+		return 0;
 #endif	//	USE_DX10
 	}
 
@@ -280,21 +280,21 @@ public:
 	ICF  void						set_Format			(IDirect3DVertexDeclaration9* _decl);
 #endif	//	USE_DX10
 
-	ICF void						set_PS				(ID3DPixelShader* _ps, LPCSTR _n=nullptr);
+	ICF void						set_PS				(ID3DPixelShader* _ps, LPCSTR _n=0);
 	ICF void						set_PS				(ref_ps& _ps)						{ set_PS(_ps->ps,_ps->cName.c_str());				}
 
 #if defined(USE_DX10) || defined(USE_DX11)
-	ICF void						set_GS				(ID3DGeometryShader* _gs, LPCSTR _n=nullptr);
+	ICF void						set_GS				(ID3DGeometryShader* _gs, LPCSTR _n=0);
 	ICF void						set_GS				(ref_gs& _gs)						{ set_GS(_gs->gs,_gs->cName.c_str());				}
 
 #	ifdef USE_DX11
-	ICF void						set_HS				(ID3D11HullShader* _hs, LPCSTR _n=nullptr);
+	ICF void						set_HS				(ID3D11HullShader* _hs, LPCSTR _n=0);
 	ICF void						set_HS				(ref_hs& _hs)						{ set_HS(_hs->sh,_hs->cName.c_str());				}
 
-	ICF void						set_DS				(ID3D11DomainShader* _ds, LPCSTR _n=nullptr);
+	ICF void						set_DS				(ID3D11DomainShader* _ds, LPCSTR _n=0);
 	ICF void						set_DS				(ref_ds& _ds)						{ set_DS(_ds->sh,_ds->cName.c_str());				}
 
-	ICF void						set_CS				(ID3D11ComputeShader* _cs, LPCSTR _n=nullptr);
+	ICF void						set_CS				(ID3D11ComputeShader* _cs, LPCSTR _n=0);
 	ICF void						set_CS				(ref_cs& _cs)						{ set_CS(_cs->sh,_cs->cName.c_str());				}
 #	endif
 
@@ -311,7 +311,7 @@ public:
 	ICF void						set_VS				(SVS* _vs);
 protected:	//	In DX10 we need input shader signature which is stored in ref_vs
 #endif	//	USE_DX10
-	ICF void						set_VS				(ID3DVertexShader* _vs, LPCSTR _n=nullptr);
+	ICF void						set_VS				(ID3DVertexShader* _vs, LPCSTR _n=0);
 #if defined(USE_DX10) || defined(USE_DX11)
 public:
 #endif	//	USE_DX10
@@ -327,13 +327,13 @@ public:
 	IC  void						set_ColorWriteEnable(u32 _mask = D3DCOLORWRITEENABLE_RED | D3DCOLORWRITEENABLE_GREEN | D3DCOLORWRITEENABLE_BLUE | D3DCOLORWRITEENABLE_ALPHA);
 	IC  void						set_CullMode		(u32 _mode);
 	IC  u32							get_CullMode		(){return cull_mode;}
-	void							set_ClipPlanes		(u32 _enable, Fplane*	_planes= nullptr, u32 count=0);
-	void							set_ClipPlanes		(u32 _enable, Fmatrix*	_xform = nullptr, u32 fmask=0xff);
-	IC	void						set_Scissor			(Irect*	rect= nullptr);
+	void							set_ClipPlanes		(u32 _enable, Fplane*	_planes=NULL, u32 count=0);
+	void							set_ClipPlanes		(u32 _enable, Fmatrix*	_xform =NULL, u32 fmask=0xff);
+	IC	void						set_Scissor			(Irect*	rect=NULL);
 
 	// constants
-	ICF	ref_constant				get_c				(LPCSTR			n)													{ if (ctable)	return ctable->get(n);else return nullptr;}
-	ICF	ref_constant				get_c				(shared_str&	n)													{ if (ctable)	return ctable->get(n);else return nullptr;}
+	ICF	ref_constant				get_c				(LPCSTR			n)													{ if (ctable)	return ctable->get(n);else return 0;}
+	ICF	ref_constant				get_c				(shared_str&	n)													{ if (ctable)	return ctable->get(n);else return 0;}
 
 	// constants - direct (fast)
 	ICF	void						set_c				(R_constant* C, const Fmatrix& A)									{ if (C)		constants.set(C,A);					}

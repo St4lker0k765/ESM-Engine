@@ -295,7 +295,7 @@ void CControlJump::grounding()
 
 void CControlJump::stop()
 {
-	m_man->notify (ControlCom::eventJumpEnd, nullptr);
+	m_man->notify (ControlCom::eventJumpEnd, 0);
 }
 
 //////////////////////////////////////////////////////////////////////////

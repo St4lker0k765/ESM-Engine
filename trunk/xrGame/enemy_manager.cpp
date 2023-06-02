@@ -131,8 +131,8 @@ float CEnemyManager::evaluate				(const CEntityAlive *object) const
 //	}
 
 #ifdef USE_EVALUATOR
-	ai().ef_storage().non_alife().member_item()	= nullptr;
-	ai().ef_storage().non_alife().enemy_item()	= nullptr;
+	ai().ef_storage().non_alife().member_item()	= 0;
+	ai().ef_storage().non_alife().enemy_item()	= 0;
 	ai().ef_storage().non_alife().member()		= m_object;
 	ai().ef_storage().non_alife().enemy()		= object;
 
@@ -170,7 +170,7 @@ void CEnemyManager::reload					(LPCSTR section)
 	m_ignore_monster_threshold	= READ_IF_EXISTS(pSettings,r_float,section,"ignore_monster_threshold",1.f);
 	m_max_ignore_distance		= READ_IF_EXISTS(pSettings,r_float,section,"max_ignore_distance",0.f);
 	m_last_enemy_time			= 0;
-	m_last_enemy				= nullptr;
+	m_last_enemy				= 0;
 	m_last_enemy_change			= 0;
 	m_useful_callback.clear		();
 	VERIFY						(m_ready_to_save);
@@ -195,10 +195,10 @@ void CEnemyManager::remove_links			(CObject *object)
 		m_objects.erase			(I);
 
 	if (m_last_enemy == object)
-		m_last_enemy			= nullptr;
+		m_last_enemy			= 0;
 
 	if (m_selected == object)
-		m_selected				= nullptr;
+		m_selected				= 0;
 }
 
 void CEnemyManager::ignore_monster_threshold			(const float &ignore_monster_threshold)

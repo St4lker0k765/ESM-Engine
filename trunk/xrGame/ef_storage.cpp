@@ -89,5 +89,5 @@ CBaseFunction *CEF_Storage::function	(LPCSTR function) const
 		if (!xr_strcmp(function,m_fpaBaseFunctions[i]->Name()))
 			return						(m_fpaBaseFunctions[i]);
 	}
-	return								(nullptr);
+	return								(0);
 }

@@ -22,13 +22,13 @@ int CRender::translateSector(IRender_Sector* pSector)
 
 IRender_Sector* CRender::detectSector(const Fvector& P)
 {
-	IRender_Sector*	S	= nullptr;	
+	IRender_Sector*	S	= NULL;	
 	Fvector			dir; 
 	Sectors_xrc.ray_options		(CDB::OPT_ONLYNEAREST);
 
 	dir.set				(0,-1,0);
 	S					= detectSector(P,dir);
-	if (nullptr ==S)		
+	if (NULL==S)		
 	{
 		dir.set				(0,1,0);
 		S					= detectSector(P,dir);
@@ -65,7 +65,7 @@ IRender_Sector* CRender::detectSector(const Fvector& P, Fvector& dir)
 		if (id2>=0) ID = (range1<=range2+EPS)?id1:id2;	// both was found
 		else ID = id1;									// only id1 found
 	} else if (id2>=0) ID = id2;						// only id2 found
-	else return nullptr;
+	else return 0;
 
 	if (ID==id1) {
 		// Take sector, facing to our point from portal

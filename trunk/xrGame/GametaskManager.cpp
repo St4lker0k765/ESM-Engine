@@ -66,12 +66,12 @@ CGameTask* CGameTaskManager::HasGameTask(const TASK_ID& id)
 	if( it!=GameTasks().end() )
 		return (*it).game_task;
 	
-	return nullptr;
+	return 0;
 }
 
 CGameTask* CGameTaskManager::GiveGameTaskToActor(const TASK_ID& id, u32 timeToComplete, bool bCheckExisting)
 {
-	if(bCheckExisting && HasGameTask(id)) return nullptr;
+	if(bCheckExisting && HasGameTask(id)) return NULL;
 	CGameTask* t					= xr_new<CGameTask>(id);
 
 	return GiveGameTaskToActor		(t, timeToComplete, bCheckExisting);
@@ -79,7 +79,7 @@ CGameTask* CGameTaskManager::GiveGameTaskToActor(const TASK_ID& id, u32 timeToCo
 
 CGameTask*	CGameTaskManager::GiveGameTaskToActor(CGameTask* t, u32 timeToComplete, bool bCheckExisting)
 {
-	if(bCheckExisting && HasGameTask(t->m_ID)) return nullptr;
+	if(bCheckExisting && HasGameTask(t->m_ID)) return NULL;
 	m_flags.set					(eChanged, TRUE);
 
 	GameTasks().push_back				(SGameTaskKey(t->m_ID) );
@@ -93,7 +93,7 @@ CGameTask*	CGameTaskManager::GiveGameTaskToActor(CGameTask* t, u32 timeToComplet
 	ARTICLE_VECTOR& article_vector = Actor()->encyclopedia_registry->registry().objects();
 
 
-	SGameTaskObjective	*obj = nullptr;
+	SGameTaskObjective	*obj = NULL;
 	for (u32 i = 0; i < t->m_Objectives.size(); ++i){
 		obj = &t->m_Objectives[i];
 		if(obj->article_id.size()){
@@ -113,7 +113,7 @@ CGameTask*	CGameTaskManager::GiveGameTaskToActor(CGameTask* t, u32 timeToComplet
 		}
 	}
 	CGameTask* _at = ActiveTask();
-	if	( (nullptr ==_at) || (_at->m_priority > t->m_priority) )
+	if	( (NULL==_at) || (_at->m_priority > t->m_priority) )
 	{
 		SetActiveTask(t->m_ID, 1);
 	}
@@ -142,7 +142,7 @@ void CGameTaskManager::SetTaskState(CGameTask* t, u16 objective_num, ETaskState 
 
 	if(((state==eTaskStateFail)||(state==eTaskStateCompleted)) && ml ){
 		Level().MapManager().RemoveMapLocation(o->map_location, o->object_id);
-		o->map_location				= nullptr;
+		o->map_location				= NULL;
 		o->object_id				= u16(-1);
 	}
 
@@ -179,7 +179,7 @@ void CGameTaskManager::SetTaskState(CGameTask* t, u16 objective_num, ETaskState 
 void CGameTaskManager::SetTaskState(const TASK_ID& id, u16 objective_num, ETaskState state)
 {
 	CGameTask* t				= HasGameTask(id);
-	if (nullptr ==t)				{Msg("actor does not has task [%s]", *id);	return;}
+	if (NULL==t)				{Msg("actor does not has task [%s]", *id);	return;}
 	SetTaskState				(t,objective_num, state);
 }
 
@@ -290,7 +290,7 @@ void CGameTaskManager::UpdateActiveTask				()
 CGameTask* CGameTaskManager::ActiveTask()
 {
 	const TASK_ID&	t_id		= g_active_task_id;
-	if(!t_id.size())			return nullptr;
+	if(!t_id.size())			return NULL;
 	return						HasGameTask( t_id );
 }
 
@@ -318,5 +318,5 @@ SGameTaskObjective* CGameTaskManager::ActiveObjective()
 {
 	CGameTask*		t			= ActiveTask();
 	
-	return (t)?&t->Objective(g_active_task_objective_id): nullptr;
+	return (t)?&t->Objective(g_active_task_objective_id):NULL;
 }

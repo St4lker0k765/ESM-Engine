@@ -64,7 +64,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic	(dxRender_Visual *pVisual, Fv
 
 	// Select shader
 	ShaderElement*	sh		=	RImplementation.rimp_select_sh_dynamic	(pVisual,distSQ);
-	if (nullptr==sh)								return;
+	if (0==sh)								return;
 	if (!pmask[sh->flags.iPriority/2])		return;
 
 	// Create common node
@@ -250,7 +250,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static	(dxRender_Visual *pVisual)
 	if (RImplementation.o.distortion && sh_d && sh_d->flags.bDistort && pmask[sh_d->flags.iPriority/2]) {
 		mapSorted_Node* N		= mapDistort.insertInAnyWay		(distSQ);
 		N->val.ssa				= SSA;
-		N->val.pObject			= nullptr;
+		N->val.pObject			= NULL;
 		N->val.pVisual			= pVisual;
 		N->val.Matrix			= Fidentity;
 		N->val.se				= &*pVisual->shader->E[4];		// 4=L_special
@@ -258,13 +258,13 @@ void R_dsgraph_structure::r_dsgraph_insert_static	(dxRender_Visual *pVisual)
 
 	// Select shader
 	ShaderElement*		sh		= RImplementation.rimp_select_sh_static(pVisual,distSQ);
-	if (nullptr==sh)								return;
+	if (0==sh)								return;
 	if (!pmask[sh->flags.iPriority/2])		return;
 
 	// strict-sorting selection
 	if (sh->flags.bStrictB2F) {
 		mapSorted_Node* N			= mapSorted.insertInAnyWay(distSQ);
-		N->val.pObject				= nullptr;
+		N->val.pObject				= NULL;
 		N->val.pVisual				= pVisual;
 		N->val.Matrix				= Fidentity;
 		N->val.se					= sh;
@@ -280,7 +280,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static	(dxRender_Visual *pVisual)
 	if (sh->flags.bEmissive) {
 		mapSorted_Node* N		= mapEmissive.insertInAnyWay	(distSQ);
 		N->val.ssa				= SSA;
-		N->val.pObject			= nullptr;
+		N->val.pObject			= NULL;
 		N->val.pVisual			= pVisual;
 		N->val.Matrix			= Fidentity;
 		N->val.se				= &*pVisual->shader->E[4];		// 4=L_special
@@ -288,7 +288,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static	(dxRender_Visual *pVisual)
 	if (sh->flags.bWmark	&& pmask_wmark)	{
 		mapSorted_Node* N		= mapWmark.insertInAnyWay		(distSQ);
 		N->val.ssa				= SSA;
-		N->val.pObject			= nullptr;
+		N->val.pObject			= NULL;
 		N->val.pVisual			= pVisual;
 		N->val.Matrix			= Fidentity;
 		N->val.se				= sh;							
@@ -393,7 +393,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static	(dxRender_Visual *pVisual)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CRender::add_leafs_Dynamic	(dxRender_Visual *pVisual)
 {
-	if (nullptr==pVisual)				return;
+	if (0==pVisual)				return;
 
 	// Visual is 100% visible - simply add it
 	xr_vector<dxRender_Visual*>::iterator I,E;	// it may be useful for 'hierrarhy' visual

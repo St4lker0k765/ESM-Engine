@@ -122,8 +122,8 @@ public:
 	CCC_MemStats(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = TRUE; };
 	virtual void Execute(LPCSTR args) {
 		Memory.mem_compact		();
-		u32		_crt_heap		= mem_usage_impl((HANDLE)_get_heap_handle(),nullptr,nullptr);
-		u32		_process_heap	= mem_usage_impl(GetProcessHeap(),nullptr,nullptr);
+		u32		_crt_heap		= mem_usage_impl((HANDLE)_get_heap_handle(),0,0);
+		u32		_process_heap	= mem_usage_impl(GetProcessHeap(),0,0);
 #ifdef SEVERAL_ALLOCATORS
 		u32		_game_lua		= game_lua_memory_usage();
 		u32		_render			= ::Render->memory_usage();
@@ -892,7 +892,7 @@ public:
 	  virtual void	Execute	(LPCSTR args)
 	  {
 		  CCC_Integer::Execute	(args);
-		  dWorldSetQuickStepNumIterations(nullptr,phIterations);
+		  dWorldSetQuickStepNumIterations(NULL,phIterations);
 	  }
 };
 
@@ -1206,7 +1206,7 @@ public:
 	CCC_RadioMask(LPCSTR N, Flags32* V, u32 M):
 	  CCC_Mask(N,V,M)
 	 {
-		group= nullptr;
+		group=NULL;
 	 }
 		void	SetGroup	(CCC_RadioGroupMask2		*G)
 	{
@@ -1280,7 +1280,7 @@ public		:
 	virtual void	Execute	(LPCSTR args)
 	{
 		if( CAttachableItem::m_dbgItem){
-			CAttachableItem::m_dbgItem = nullptr;	
+			CAttachableItem::m_dbgItem = NULL;	
 			Msg("CCC_TuneAttachableItem switched to off");
 			return;
 		};
@@ -1307,7 +1307,7 @@ public:
 	CCC_Crash(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = true; };
 	virtual void Execute(LPCSTR /**args/**/) {
 		VERIFY3					(false,"This is a test crash","Do not post it as a bug");
-		int						*pointer = nullptr;
+		int						*pointer = 0;
 		*pointer				= 0;
 	}
 };
@@ -1348,7 +1348,7 @@ public:
 		string_path				name;
 		string_path				fn;
 
-		if (nullptr==strext(arguments))
+		if (0==strext(arguments))
 			strconcat			(sizeof(name),name,arguments,".ogf");
 		else
 			strcpy_s			(name,sizeof(name),arguments);

@@ -21,7 +21,7 @@
 
 CSE_ALifeItemWeapon	*CSE_ALifeAnomalousZone::tpfGetBestWeapon(ALife::EHitType &tHitType, float &fHitPower)
 {
-	m_tpCurrentBestWeapon		= nullptr;
+	m_tpCurrentBestWeapon		= 0;
 	m_tTimeID					= ai().alife().time_manager().game_time();
 	fHitPower					= m_maxPower;
 	tHitType					= m_tHitType;
@@ -43,7 +43,7 @@ CSE_ALifeDynamicObject *CSE_ALifeAnomalousZone::tpfGetBestDetector()
 	VERIFY2						(false,"This function shouldn't be called");
 	NODEFAULT;
 #ifdef DEBUG
-	return						(nullptr);
+	return						(0);
 #endif
 }
 

@@ -8,7 +8,7 @@
 
 FProgressive::FProgressive	() : Fvisual()
 {
-	xSWI			= nullptr;
+	xSWI			= 0;
 	last_lod		= 0;
 }
 

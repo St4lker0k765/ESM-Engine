@@ -133,7 +133,7 @@ public:
 	//максимальный переносимы вес
 	virtual float MaxCarryWeight			() const;
 
-	virtual CCustomOutfit*			GetOutfit()	const {return nullptr;};
+	virtual CCustomOutfit*			GetOutfit()	const {return NULL;};
 
 	//////////////////////////////////////////////////////////////////////////
 	//игровые характеристики персонажа

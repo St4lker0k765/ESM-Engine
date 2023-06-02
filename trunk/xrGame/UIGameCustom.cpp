@@ -161,7 +161,7 @@ SDrawStaticStruct* CUIGameCustom::GetCustomStatic		(LPCSTR id)
 	if(it!=m_custom_statics.end()){
 		return &(*it);
 	}
-	return nullptr;
+	return NULL;
 }
 
 void CUIGameCustom::RemoveCustomStatic		(LPCSTR id)
@@ -195,7 +195,7 @@ void CUIGameCustom::reset_ui()
 }
 SDrawStaticStruct::SDrawStaticStruct	()
 {
-	m_static	= nullptr;
+	m_static	= NULL;
 	m_endTime	= -1.0f;	
 }
 
@@ -324,7 +324,7 @@ SGameTypeMaps* CMapListHelper::GetMapListInt(const shared_str& game_type)
 		if(game_type==(*it).m_game_type_name )
 			return &(*it);
 	}
-	return nullptr;
+	return NULL;
 }
 
 const SGameTypeMaps& CMapListHelper::GetMapListFor(const EGameTypes game_id)

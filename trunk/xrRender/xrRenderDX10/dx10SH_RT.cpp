@@ -11,7 +11,7 @@ CRT::CRT			()
 	pRT				= nullptr;
 	pZRT			= nullptr;
 #ifdef USE_DX11
-	pUAView			= nullptr;
+	pUAView			= NULL;
 #endif
 	dwWidth			= 0;
 	dwHeight		= 0;

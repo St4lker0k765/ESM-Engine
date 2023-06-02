@@ -48,8 +48,8 @@ public:
     IC PS::PGDIt		FirstPGD		()	{return m_PGDs.begin();}
     IC PS::PGDIt		LastPGD			()	{return m_PGDs.end();}
 
-    PS::CPEDef*			AppendPED		(PS::CPEDef* src=nullptr);
-    PS::CPGDef*			AppendPGD		(PS::CPGDef* src=nullptr);
+    PS::CPEDef*			AppendPED		(PS::CPEDef* src=0);
+    PS::CPGDef*			AppendPGD		(PS::CPGDef* src=0);
     void				Remove			(LPCSTR name);
     void				RenamePED		(PS::CPEDef* src, LPCSTR new_name);
     void				RenamePGD		(PS::CPGDef* src, LPCSTR new_name);

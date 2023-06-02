@@ -45,7 +45,7 @@ void CControlCriticalWound::on_event(ControlCom::EEventType type, ControlCom::IE
 {
 	switch (type) {
 	case ControlCom::eventAnimationEnd:
-		m_man->notify						(ControlCom::eventCriticalWoundEnd, nullptr);
+		m_man->notify						(ControlCom::eventCriticalWoundEnd, 0);
 		break;
 	}
 }

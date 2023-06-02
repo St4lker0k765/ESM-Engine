@@ -7,8 +7,8 @@ CDetail::~CDetail()
 
 void CDetail::Unload	()
 {
-	if (vertices)		{ xr_free(vertices);	vertices=nullptr; }
-	if (indices)		{ xr_free(indices);		indices=nullptr;	}
+	if (vertices)		{ xr_free(vertices);	vertices=0; }
+	if (indices)		{ xr_free(indices);		indices=0;	}
 	shader.destroy		();
 }
 

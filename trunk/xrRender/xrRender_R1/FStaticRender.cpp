@@ -30,7 +30,7 @@ ShaderElement*			CRender::rimp_select_sh_dynamic	(dxRender_Visual	*pVisual, floa
 	default:			NODEFAULT;
 	}
 #ifdef DEBUG
-	return	nullptr;
+	return	0;
 #endif
 }
 //////////////////////////////////////////////////////////////////////////
@@ -43,16 +43,16 @@ ShaderElement*			CRender::rimp_select_sh_static	(dxRender_Visual	*pVisual, float
 	default:			NODEFAULT;
 	}
 #ifdef DEBUG
-	return	nullptr;
+	return	0;
 #endif
 }
 
 //////////////////////////////////////////////////////////////////////////
 void					CRender::create					()
 {
-	L_DB				= nullptr;
-	L_Shadows			= nullptr;
-	L_Projector			= nullptr;
+	L_DB				= 0;
+	L_Shadows			= 0;
+	L_Projector			= 0;
 
 	Device.seqFrame.Add	(this,REG_PRIORITY_HIGH+0x12345678);
 
@@ -148,7 +148,7 @@ void					CRender::model_Delete			(IRenderVisual* &V, BOOL bDiscard)
 { 
 	dxRender_Visual* pVisual = (dxRender_Visual*)V;
 	Models->Delete(pVisual, bDiscard);
-	V = nullptr;
+	V = 0;
 }
 IRender_DetailModel*	CRender::model_CreateDM			(IReader*F)
 {
@@ -163,7 +163,7 @@ void					CRender::model_Delete			(IRender_DetailModel* & F)
 		CDetail*	D	= (CDetail*)F;
 		D->Unload		();
 		xr_delete		(D);
-		F				= nullptr;
+		F				= NULL;
 	}
 }
 IRenderVisual*			CRender::model_CreatePE			(LPCSTR name)	
@@ -274,15 +274,15 @@ void					CRender::set_Object				(IRenderable*		O )
 			L_Projector->set_object	(O);
 	} else {
 		if (L_Shadows)
-			L_Shadows->set_object(nullptr);
+			L_Shadows->set_object(0);
 
 		if (L_Projector)
-			L_Projector->set_object	(nullptr);
+			L_Projector->set_object	(0);
 	}
 }
 void					CRender::apply_object			(IRenderable*		O )
 {
-	if (nullptr==O)			return	;
+	if (0==O)			return	;
 	if (PHASE_NORMAL==phase	&& O->renderable_ROS())		{
 		CROS_impl& LT		= *((CROS_impl*)O->renderable.pROS);
 		VERIFY(dynamic_cast<CObject*>(O)||dynamic_cast<CPS_Instance*>(O));
@@ -353,7 +353,7 @@ void CRender::Calculate				()
 
 	// Frustum & HOM rendering
 	ViewBase.CreateFromMatrix		(Device.mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
-	View							= nullptr;
+	View							= 0;
 	HOM.Enable						();
 	HOM.Render						(ViewBase);
 	gm_SetNearer					(FALSE);
@@ -366,7 +366,7 @@ void CRender::Calculate				()
 		if (pSector && (pSector!=pLastSector))
 			g_pGamePersistent->OnSectorChanged( translateSector(pSector) );
 
-		if (nullptr==pSector) pSector = pLastSector;
+		if (0==pSector) pSector = pLastSector;
 		pLastSector = pSector;
 		vLastCameraPos.set(Device.vCameraPosition);
 	}
@@ -429,7 +429,7 @@ void CRender::Calculate				()
 			std::sort							(lstRenderables.begin(),lstRenderables.end(),pred_sp_sort);
 
 			// Determine visibility for dynamic part of scene
-			set_Object							(nullptr);
+			set_Object							(0);
 			g_hud->Render_First					( );	// R1 shadows
 			g_hud->Render_Last					( );	
 			u32 uID_LTRACK						= 0xffffffff;
@@ -448,7 +448,7 @@ void CRender::Calculate				()
 			{
 				ISpatial*	spatial		= lstRenderables[o_it];		spatial->spatial_updatesector	();
 				CSector*	sector		= (CSector*)spatial->spatial.sector	;
-				if	(nullptr==sector)										
+				if	(0==sector)										
 					continue;	// disassociated from S/P structure
 
 				// Filter only not light spatial
@@ -463,7 +463,7 @@ void CRender::Calculate				()
 						if (!View->testSphere_dirty(spatial->spatial.sphere.P,spatial->spatial.sphere.R) /*&& (spatial->spatial.type & STYPE_RENDERABLE)*/)	continue;
 						// renderable
 						IRenderable*	renderable		= spatial->dcast_Renderable	();
-						if (nullptr==renderable)	{
+						if (0==renderable)	{
 							// It may be an glow
 							CGlow*		glow				= dynamic_cast<CGlow*>(spatial);
 							VERIFY							(glow);
@@ -488,7 +488,7 @@ void CRender::Calculate				()
 							}
 							set_Object						(renderable);
 							renderable->renderable_Render	();
-							set_Object						(nullptr);	//? is it needed at all
+							set_Object						(0);	//? is it needed at all
 						}
 						break;	// exit loop on frustums
 					}
@@ -516,7 +516,7 @@ void CRender::Calculate				()
 	}
 	else
 	{
-		set_Object											(nullptr);
+		set_Object											(0);
 		/*
 		g_pGameLevel->pHUD->Render_First					();	
 		g_pGameLevel->pHUD->Render_Last						();	
@@ -658,10 +658,10 @@ public:
 		string_path				pname;
 		strconcat				(sizeof(pname),pname,::Render->getShaderPath(),pFileName);
 		IReader*		R		= FS.r_open	("$game_shaders$",pname);
-		if (nullptr==R)				{
+		if (0==R)				{
 			// possibly in shared directory or somewhere else - open directly
 			R					= FS.r_open	("$game_shaders$",pFileName);
-			if (nullptr==R)			return			E_FAIL;
+			if (0==R)			return			E_FAIL;
 		}
 
 		// duplicate and zero-terminate
@@ -701,8 +701,8 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		LPCVOID			data		= nullptr;
-		_result			= D3DXFindShaderComment	(buffer,MAKEFOURCC('C','T','A','B'),&data, nullptr);
+		LPCVOID			data		= NULL;
+		_result			= D3DXFindShaderComment	(buffer,MAKEFOURCC('C','T','A','B'),&data,NULL);
 		if (SUCCEEDED(_result) && data)
 		{
 			LPD3DXSHADER_CONSTANTTABLE	pConstants	= LPD3DXSHADER_CONSTANTTABLE(data);
@@ -723,8 +723,8 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		LPCVOID			data		= nullptr;
-		_result			= D3DXFindShaderComment	(buffer,MAKEFOURCC('C','T','A','B'),&data, nullptr);
+		LPCVOID			data		= NULL;
+		_result			= D3DXFindShaderComment	(buffer,MAKEFOURCC('C','T','A','B'),&data,NULL);
 		if (SUCCEEDED(_result) && data)
 		{
 			LPD3DXSHADER_CONSTANTTABLE	pConstants	= LPD3DXSHADER_CONSTANTTABLE(data);
@@ -739,8 +739,8 @@ static HRESULT create_shader				(
 
 	if (disasm)
 	{
-		ID3DXBuffer*	disasm	= nullptr;
-		D3DXDisassembleShader(LPDWORD(buffer), FALSE, nullptr, &disasm );
+		ID3DXBuffer*	disasm	= 0;
+		D3DXDisassembleShader(LPDWORD(buffer), FALSE, 0, &disasm );
 		string_path		dname;
 		strconcat		(sizeof(dname),dname,"disasm\\",file_name,('v'==pTarget[0])?".vs":".ps" );
 		IWriter*		W = FS.w_open("$logs$",dname);
@@ -822,8 +822,8 @@ HRESULT	CRender::shader_compile			(
 	sh_name[len]='0'+char(4==m_skinning); ++len;
 
 	// finish
-	defines[def_it].Name			=	nullptr;
-	defines[def_it].Definition		=	nullptr;
+	defines[def_it].Name			=	0;
+	defines[def_it].Definition		=	0;
 	def_it							++;
 	R_ASSERT						(def_it<128);
 
@@ -882,9 +882,9 @@ HRESULT	CRender::shader_compile			(
 	if (FAILED(_result))
 	{
 		includer					Includer;
-		LPD3DXBUFFER				pShaderBuf	= nullptr;
-		LPD3DXBUFFER				pErrorBuf	= nullptr;
-		LPD3DXCONSTANTTABLE			pConstants	= nullptr;
+		LPD3DXBUFFER				pShaderBuf	= NULL;
+		LPD3DXBUFFER				pErrorBuf	= NULL;
+		LPD3DXCONSTANTTABLE			pConstants	= NULL;
 		LPD3DXINCLUDE               pInclude	= (LPD3DXINCLUDE)&Includer;
 
 		_result						= D3DXCompileShader((LPCSTR)pSrcData,SrcDataLen,defines,pInclude,pFunctionName,pTarget,Flags|D3DXSHADER_USE_LEGACY_D3DX9_31_DLL,&pShaderBuf,&pErrorBuf,&pConstants);

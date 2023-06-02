@@ -179,7 +179,7 @@ void	game_sv_mp::KillPlayer				(ClientID id_who, u16 GameID)
 	if (xrCData) 
 	{
 		//-------------------------------------------------------
-		OnPlayerKillPlayer(xrCData->ps, xrCData->ps, KT_HIT, SKT_NONE, nullptr);
+		OnPlayerKillPlayer(xrCData->ps, xrCData->ps, KT_HIT, SKT_NONE, NULL);
 		xrCData->ps->m_bClearRun = false;
 	};
 	//-------------------------------------------------------
@@ -195,7 +195,7 @@ void	game_sv_mp::KillPlayer				(ClientID id_who, u16 GameID)
 		m_CorpseList.push_back(pActor->ID());
 	}
 	//-------------------------------------------------------
-	u16 PlayerID = (xrCData != nullptr) ? xrCData->ps->GameID : GameID;
+	u16 PlayerID = (xrCData != 0) ? xrCData->ps->GameID : GameID;
 	//-------------------------------------------------------
 	SendPlayerKilledMessage(PlayerID, KT_HIT, PlayerID, 0, SKT_NONE);
 	//-------------------------------------------------------
@@ -418,7 +418,7 @@ void	game_sv_mp::SpawnPlayer(ClientID id, LPCSTR N)
 			}
 		};
 	
-	Msg		("* %s respawned as %s", get_name_id(id) , (nullptr == pA) ? "spectator" : "actor");
+	Msg		("* %s respawned as %s", get_name_id(id) , (0 == pA) ? "spectator" : "actor");
 	spawn_end				(E,id);
 
 	ps_who->SetGameID(CL->owner->ID);
@@ -542,10 +542,10 @@ bool	game_sv_mp::GetPosAngleFromActor				(ClientID id, Fvector& Pos, Fvector &An
 TeamStruct* game_sv_mp::GetTeamData				(u32 Team)
 {
 	VERIFY(TeamList.size());
-	if (TeamList.empty()) return nullptr;
+	if (TeamList.empty()) return NULL;
 	
 	VERIFY(TeamList.size()>Team);
-	if (TeamList.size()<=Team) return nullptr;
+	if (TeamList.size()<=Team) return NULL;
 
 	return &(TeamList[Team]);
 };
@@ -658,7 +658,7 @@ _votecommands	votecommands[] = {
 	{ "ban",			"sv_banplayer",				flVoteBan			},
 	{ "changemap",		"sv_changelevel",			flVoteMap			},
 	{ "changeweather",	"sv_setenvtime",			flVoteWeather		},
-	{nullptr, nullptr}
+	{ NULL, 			NULL }
 };
 
 void game_sv_mp::OnVoteStart				(LPCSTR VoteCommand, ClientID sender)
@@ -720,7 +720,7 @@ void game_sv_mp::OnVoteStart				(LPCSTR VoteCommand, ClientID sender)
 		m_pVoteCommand.sprintf("%s", VoteCommand+1);
 	};
 
-	xrClientData *pStartedPlayer = nullptr;
+	xrClientData *pStartedPlayer = NULL;
 	u32	cnt = get_players_count();	
 	for(u32 it=0; it<cnt; it++)	
 	{

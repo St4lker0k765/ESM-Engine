@@ -77,7 +77,7 @@ void CALifeSpawnRegistry::load				(IReader &file_stream, LPCSTR game_name)
 	R_ASSERT3					(file_exists,"Can't find spawn file:",*m_spawn_name);
 	
 #ifndef PRIQUEL
-	IReader						*m_file = nullptr;
+	IReader						*m_file = 0;
 #endif // PRIQUEL
 	VERIFY						(!m_file);
 	m_file						= FS.r_open(file_name);
@@ -97,7 +97,7 @@ void CALifeSpawnRegistry::load				(LPCSTR spawn_name)
 	R_ASSERT3					(FS.exist(file_name, "$game_spawn$", *m_spawn_name, ".spawn"),"Can't find spawn file:",*m_spawn_name);
 	
 #ifndef PRIQUEL
-	IReader						*m_file = nullptr;
+	IReader						*m_file = 0;
 #endif // PRIQUEL
 	VERIFY						(!m_file);
 	m_file						= FS.r_open(file_name);

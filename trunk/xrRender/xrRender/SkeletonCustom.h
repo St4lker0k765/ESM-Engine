@@ -235,7 +235,7 @@ public:
 	virtual void					Depart				();
     virtual void 					Release				();
 
-	virtual	IKinematicsAnimated*dcast_PKinematicsAnimated() { return nullptr;	}
+	virtual	IKinematicsAnimated*dcast_PKinematicsAnimated() { return 0;	}
 	virtual IRenderVisual*	_BCL dcast_RenderVisual() { return this; }
 	virtual IKinematics*	_BCL dcast_PKinematics()  { return this; }
 //	virtual	CKinematics*		dcast_PKinematics	()				{ return this;	}
@@ -255,6 +255,6 @@ private:
 	bool						m_is_original_lod;
 
 };
-IC CKinematics* PCKinematics		(dxRender_Visual* V)		{ return V?(CKinematics*)V->dcast_PKinematics():nullptr; }
+IC CKinematics* PCKinematics		(dxRender_Visual* V)		{ return V?(CKinematics*)V->dcast_PKinematics():0; }
 //---------------------------------------------------------------------------
 #endif

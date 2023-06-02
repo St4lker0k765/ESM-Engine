@@ -45,7 +45,7 @@ public:
 		tess_tri*			tris;
 		u32					tcnt;
 	
-		cache_item()		{ O=nullptr; L=nullptr; tris=nullptr; }
+		cache_item()		{ O=0; L=0; tris=0; }
 	};
 private:
 	IRenderable*			current;

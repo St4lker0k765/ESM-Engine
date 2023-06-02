@@ -33,7 +33,7 @@ void CRender::Calculate		()
 		if (pSector && (pSector!=pLastSector))
 			g_pGamePersistent->OnSectorChanged( translateSector(pSector) );
 
-		if (nullptr==pSector) pSector = pLastSector;
+		if (0==pSector) pSector = pLastSector;
 		pLastSector = pSector;
 		vLastCameraPos.set(Device.vCameraPosition);
 	}
@@ -60,7 +60,7 @@ void CRender::Calculate		()
 	for (u32 _it=0; _it<lstRenderables.size(); _it++)	{
 		ISpatial*	spatial		= lstRenderables[_it];		spatial->spatial_updatesector	();
 		CSector*	sector		= (CSector*)spatial->spatial.sector;
-		if	(nullptr==sector)										continue;	// disassociated from S/P structure
+		if	(0==sector)										continue;	// disassociated from S/P structure
 
 		VERIFY							(spatial->spatial.type & STYPE_LIGHTSOURCE);
 		// lightsource

@@ -85,7 +85,7 @@ public:
 	virtual void			OnKeyboardRelease	(int dik);
 	virtual void			OnKeyboardHold		(int dik);
 
-	virtual CInventory*		GetInventory		(){return nullptr;}
+	virtual CInventory*		GetInventory		(){return 0;}
 
 	virtual void			cam_Update			(float dt, float fov=90.0f);
 

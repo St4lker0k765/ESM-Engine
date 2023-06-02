@@ -15,7 +15,7 @@ IRender_Mesh::~IRender_Mesh()
 dxRender_Visual::dxRender_Visual		()
 {
 	Type				= 0;
-	shader				= nullptr;
+	shader				= 0;
 	vis.clear			();
 }
 

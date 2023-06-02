@@ -104,7 +104,7 @@ void CLevel::g_sv_Spawn		(CSE_Abstract* E)
 #ifdef DEBUG_MEMORY_MANAGER
 	mem_alloc_gather_stats		(false);
 #endif // DEBUG_MEMORY_MANAGER
-	if (nullptr==O || (!O->net_Spawn	(E))) 
+	if (0==O || (!O->net_Spawn	(E))) 
 	{
 		O->net_Destroy			( );
 		if(!g_dedicated_server)
@@ -122,7 +122,7 @@ void CLevel::g_sv_Spawn		(CSE_Abstract* E)
 			client_spawn_manager().callback(O);
 		//Msg			("--spawn--SPAWN: %f ms",1000.f*T.GetAsync());
 		if ((E->s_flags.is(M_SPAWN_OBJECT_LOCAL)) && (E->s_flags.is(M_SPAWN_OBJECT_ASPLAYER)))	{
-			if (CurrentEntity() != nullptr) 
+			if (CurrentEntity() != NULL) 
 			{
 				CGameObject* pGO = smart_cast<CGameObject*>(CurrentEntity());
 				if (pGO) pGO->On_B_NotCurrentEntity();
@@ -186,7 +186,7 @@ CSE_Abstract *CLevel::spawn_item		(LPCSTR section, const Fvector &position, u32 
 		abstract->Spawn_Write	(P,TRUE);
 		Send					(P,net_flags(TRUE));
 		F_entity_Destroy		(abstract);
-		return					(nullptr);
+		return					(0);
 	}
 	else
 		return				(abstract);

@@ -79,7 +79,7 @@ void CStalkerActionReachWounded::initialize					()
 
 	m_storage->set_property						(eWorldPropertyWoundedEnemyPrepared,false);
 	m_storage->set_property						(eWorldPropertyWoundedEnemyAimed,false);
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_body_state			(eBodyStateStand);
@@ -159,7 +159,7 @@ void CStalkerActionAimWounded::initialize				()
 {
 	inherited::initialize	();
 
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_mental_state		(eMentalStateDanger);
@@ -224,7 +224,7 @@ void CStalkerActionPrepareWounded::initialize				()
 {
 	inherited::initialize	();
 
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_mental_state		(eMentalStateDanger);
@@ -281,7 +281,7 @@ void CStalkerActionKillWounded::initialize					()
 	inherited::initialize	();
 
 	m_storage->set_property						(eWorldPropertyPausedAfterKill,true);
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_mental_state		(eMentalStateDanger);
@@ -341,7 +341,7 @@ void CStalkerActionPauseAfterKill::initialize	()
 {
 	inherited::initialize	();
 
-	object().movement().set_desired_direction	(nullptr);
+	object().movement().set_desired_direction	(0);
 	object().movement().set_path_type			(MovementManager::ePathTypeLevelPath);
 	object().movement().set_detail_path_type	(DetailPathManager::eDetailPathTypeSmooth);
 	object().movement().set_mental_state		(eMentalStateDanger);

@@ -24,7 +24,7 @@ IC void CBackend::set_RT(ID3DRenderTargetView* RT, u32 ID)
 		//HW.pDevice->OMSetRenderTargets(sizeof(pRT)/sizeof(pRT[0]), pRT, pZB);
 		//	Reset all RT's here to allow RT to be bounded as input
 		if (!m_bChangedRTorZB)
-			HW.pContext->OMSetRenderTargets(0, nullptr, nullptr);
+			HW.pContext->OMSetRenderTargets(0, 0, 0);
 
 		m_bChangedRTorZB = true;
 	}
@@ -41,7 +41,7 @@ IC void	CBackend::set_ZB(ID3DDepthStencilView* ZB)
 		//HW.pDevice->OMSetRenderTargets(sizeof(pRT)/sizeof(pRT[0]), pRT, pZB);
 		//	Reset all RT's here to allow RT to be bounded as input
 		if (!m_bChangedRTorZB)
-			HW.pContext->OMSetRenderTargets(0, nullptr, nullptr);
+			HW.pContext->OMSetRenderTargets(0, 0, 0);
 		m_bChangedRTorZB = true;
 	}
 }
@@ -66,7 +66,7 @@ ICF void CBackend::set_PS(ID3DPixelShader* _ps, LPCSTR _n)
 		stat.ps			++;
 		ps				= _ps;
 #ifdef USE_DX11
-		HW.pContext->PSSetShader(ps, nullptr, 0);
+		HW.pContext->PSSetShader(ps, 0, 0);
 #else
 		HW.pContext->PSSetShader(ps);
 #endif
@@ -86,7 +86,7 @@ ICF void CBackend::set_GS(ID3DGeometryShader* _gs, LPCSTR _n)
 		//stat.gs			++;
 		gs				= _gs;
 #ifdef USE_DX11
-		HW.pContext->GSSetShader(gs, nullptr, 0);
+		HW.pContext->GSSetShader(gs, 0, 0);
 #else
 		HW.pContext->GSSetShader(gs);
 #endif
@@ -106,7 +106,7 @@ ICF void CBackend::set_HS(ID3D11HullShader* _hs, LPCSTR _n)
 		//	TODO: DX10: Get statistics for H Shader change
 		//stat.hs			++;
 		hs				= _hs;
-		HW.pContext->HSSetShader(hs, nullptr, 0);
+		HW.pContext->HSSetShader(hs, 0, 0);
 
 #ifdef DEBUG
 		hs_name			= _n;
@@ -122,7 +122,7 @@ ICF void CBackend::set_DS(ID3D11DomainShader* _ds, LPCSTR _n)
 		//	TODO: DX10: Get statistics for D Shader change
 		//stat.ds			++;
 		ds				= _ds;
-		HW.pContext->DSSetShader(ds, nullptr, 0);
+		HW.pContext->DSSetShader(ds, 0, 0);
 
 #ifdef DEBUG
 		ds_name			= _n;
@@ -138,7 +138,7 @@ ICF void CBackend::set_CS(ID3D11ComputeShader* _cs, LPCSTR _n)
 		//	TODO: DX10: Get statistics for D Shader change
 		//stat.cs			++;
 		cs				= _cs;
-		HW.pContext->CSSetShader(cs, nullptr, 0);
+		HW.pContext->CSSetShader(cs, 0, 0);
 
 #ifdef DEBUG
 		cs_name			= _n;
@@ -148,7 +148,7 @@ ICF void CBackend::set_CS(ID3D11ComputeShader* _cs, LPCSTR _n)
 
 ICF	bool CBackend::is_TessEnabled()
 {
-	return HW.FeatureLevel>=D3D_FEATURE_LEVEL_11_0 && (ds!=nullptr || hs!=nullptr);
+	return HW.FeatureLevel>=D3D_FEATURE_LEVEL_11_0 && (ds!=0 || hs!=0);
 }
 
 #	endif
@@ -162,7 +162,7 @@ ICF void CBackend::set_VS(ID3DVertexShader* _vs, LPCSTR _n)
 		stat.vs			++;
 		vs				= _vs;
 #ifdef USE_DX11
-		HW.pContext->VSSetShader(vs, nullptr, 0);
+		HW.pContext->VSSetShader(vs, 0, 0);
 #else
 		HW.pContext->VSSetShader(vs);
 #endif
@@ -289,7 +289,7 @@ IC void CBackend::Render(D3DPRIMITIVETYPE T, u32 baseV, u32 startV, u32 countV, 
 
 	//!!! HACK !!!
 #ifdef USE_DX11
-	if (hs != nullptr || ds != nullptr)
+	if (hs != 0 || ds != 0)
 	{
 		R_ASSERT(Topology == D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		Topology = D3D11_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST;
@@ -379,7 +379,7 @@ IC void	CBackend::set_Scissor(Irect*	R)
 	{
 		//CHK_DX		(HW.pDevice->SetRenderState(D3DRS_SCISSORTESTENABLE,FALSE));
 		StateManager.EnableScissoring(FALSE);
-		HW.pContext->RSSetScissorRects(0, nullptr);
+		HW.pContext->RSSetScissorRects(0, 0);
 	}
 }
 
@@ -524,7 +524,7 @@ IC void CBackend::set_Constants			(R_constant_table* C)
 	LOD.unmap		();
 #endif
 	StateManager.UnmapConstants();
-	if (nullptr==C)		return;
+	if (0==C)		return;
 
 	PGO				(Msg("PGO:c-table"));
 
@@ -552,14 +552,14 @@ IC void CBackend::set_Constants			(R_constant_table* C)
 			aComputeConstants[i] = m_aComputeConstants[i];
 #endif
 
-			m_aPixelConstants[i] = nullptr;
-			m_aVertexConstants[i] = nullptr;
-			m_aGeometryConstants[i] = nullptr;
+			m_aPixelConstants[i] = 0;
+			m_aVertexConstants[i] = 0;
+			m_aGeometryConstants[i] = 0;
 
 #ifdef USE_DX11
-			m_aHullConstants[i] = nullptr;
-			m_aDomainConstants[i] = nullptr;
-			m_aComputeConstants[i] = nullptr;
+			m_aHullConstants[i] = 0;
+			m_aDomainConstants[i] = 0;
+			m_aComputeConstants[i] = 0;
 #endif
 		}
 		R_constant_table::cb_table::iterator	it	= C->m_CBTable.begin();
@@ -619,7 +619,7 @@ IC void CBackend::set_Constants			(R_constant_table* C)
 				if (m_aPixelConstants[i])
 					tempBuffer[i] = m_aPixelConstants[i]->GetBuffer();
 				else
-					tempBuffer[i] = nullptr;
+					tempBuffer[i] = 0;
 			}
 
 			HW.pContext->PSSetConstantBuffers(uiMin, uiMax-uiMin, &tempBuffer[uiMin]);
@@ -635,7 +635,7 @@ IC void CBackend::set_Constants			(R_constant_table* C)
 				if (m_aVertexConstants[i])
 					tempBuffer[i] = m_aVertexConstants[i]->GetBuffer();
 				else
-					tempBuffer[i] = nullptr;
+					tempBuffer[i] = 0;
 			}
 			HW.pContext->VSSetConstantBuffers(uiMin, uiMax-uiMin, &tempBuffer[uiMin]);
 		}
@@ -650,7 +650,7 @@ IC void CBackend::set_Constants			(R_constant_table* C)
 				if (m_aGeometryConstants[i])
 					tempBuffer[i] = m_aGeometryConstants[i]->GetBuffer();
 				else
-					tempBuffer[i] = nullptr;
+					tempBuffer[i] = 0;
 			}
 			HW.pContext->GSSetConstantBuffers(uiMin, uiMax-uiMin, &tempBuffer[uiMin]);
 		}
@@ -665,7 +665,7 @@ IC void CBackend::set_Constants			(R_constant_table* C)
 				if (m_aHullConstants[i])
 					tempBuffer[i] = m_aHullConstants[i]->GetBuffer();
 				else
-					tempBuffer[i] = nullptr;
+					tempBuffer[i] = 0;
 			}
 			HW.pContext->HSSetConstantBuffers(uiMin, uiMax-uiMin, &tempBuffer[uiMin]);
 		}
@@ -679,7 +679,7 @@ IC void CBackend::set_Constants			(R_constant_table* C)
 				if (m_aDomainConstants[i])
 					tempBuffer[i] = m_aDomainConstants[i]->GetBuffer();
 				else
-					tempBuffer[i] = nullptr;
+					tempBuffer[i] = 0;
 			}
 			HW.pContext->DSSetConstantBuffers(uiMin, uiMax-uiMin, &tempBuffer[uiMin]);
 		}
@@ -693,7 +693,7 @@ IC void CBackend::set_Constants			(R_constant_table* C)
 				if (m_aComputeConstants[i])
 					tempBuffer[i] = m_aComputeConstants[i]->GetBuffer();
 				else
-					tempBuffer[i] = nullptr;
+					tempBuffer[i] = 0;
 			}
 			HW.pContext->CSSetConstantBuffers(uiMin, uiMax-uiMin, &tempBuffer[uiMin]);
 		}
@@ -757,9 +757,9 @@ IC	void CBackend::get_ConstantDirect(shared_str& n, u32 DataSize, void** pVData,
 		constants.access_direct(&*C, DataSize, pVData, pGData, pPData);
 	else
 	{
-		if (pVData)	*pVData = nullptr;
-		if (pGData)	*pGData = nullptr;
-		if (pPData)	*pPData = nullptr;
+		if (pVData)	*pVData = 0;
+		if (pGData)	*pGData = 0;
+		if (pPData)	*pPData = 0;
 	}
 }
 

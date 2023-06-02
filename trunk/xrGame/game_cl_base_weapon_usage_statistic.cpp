@@ -43,7 +43,7 @@ void			HitData::net_load			(NET_Packet* P)
 Weapon_Statistic::Weapon_Statistic(LPCSTR Name)
 {
 	WName = Name;
-	InvName = nullptr;
+	InvName = NULL;
 	NumBought = 0;
 
 	m_dwRoundsFired = m_dwRoundsFired_d = 0;
@@ -561,7 +561,7 @@ void WeaponUsageStatistic::OnExplosionKill(game_PlayerState* ps, const SHit& hit
 	NewHit.Pos0			= killer->Position();
 	NewHit.Pos1			= weapon_object->Position();
 	NewHit.TargetName	= ps->getName();
-	NewHit.BoneName		= nullptr;
+	NewHit.BoneName		= 0;
 	//---------------------------
 	WeaponIt->m_Hits.push_back(NewHit);
 }

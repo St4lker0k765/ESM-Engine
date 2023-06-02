@@ -15,7 +15,7 @@ void CCar::InitDebug()
 {
 	m_dbg_power_rpm		.Clear()	;
 	m_dbg_torque_rpm	.Clear()	;
-	m_dbg_dynamic_plot	=nullptr			;
+	m_dbg_dynamic_plot	=0			;
 	b_plots				=false		;
 }
 void CCar::DbgSheduleUpdate()

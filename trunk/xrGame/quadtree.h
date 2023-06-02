@@ -42,7 +42,7 @@ public:
 						m_max_object_count	(max_object_count)
 		{
 			m_objects			= xr_alloc<T>(m_max_object_count);
-			T					*B = nullptr;
+			T					*B = 0;
 			T					*I = m_objects;
 			T					*E = m_objects + m_max_object_count;
 			for ( ; I != E; B = I, ++I)
@@ -66,7 +66,7 @@ public:
 
 		IC	void	clear					()
 		{
-			T					*B = nullptr;
+			T					*B = 0;
 			T					*I = m_objects;
 			T					*E = m_objects + m_max_object_count;
 			m_free				= E - 1;

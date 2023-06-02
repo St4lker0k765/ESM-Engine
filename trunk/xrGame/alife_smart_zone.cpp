@@ -11,7 +11,7 @@
 
 CSE_ALifeItemWeapon	*CSE_ALifeSmartZone::tpfGetBestWeapon	(ALife::EHitType		&tHitType,			float		&fHitPower)
 {
-	m_tpCurrentBestWeapon		= nullptr;
+	m_tpCurrentBestWeapon		= 0;
 	return						(m_tpCurrentBestWeapon);
 }
 
@@ -30,5 +30,5 @@ bool CSE_ALifeSmartZone::bfActive							()
 CSE_ALifeDynamicObject *CSE_ALifeSmartZone::tpfGetBestDetector	()
 {
 	VERIFY2						(false,"This function shouldn't be called");
-	return						(nullptr);
+	return						(0);
 }

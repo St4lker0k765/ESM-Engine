@@ -250,7 +250,7 @@ class AngleIntList
     void add(float l, float h);
 
 public:
-    AngleIntList() : head(nullptr), tail(nullptr) {}
+    AngleIntList() : head(0), tail(0) {}
 
     void Clear()
     {
@@ -260,7 +260,7 @@ public:
 	    head = head->next;
 	    delete temp;
 	}
-	head = tail = nullptr;
+	head = tail = 0;
     }
 
     ~AngleIntList() { Clear(); }
@@ -271,7 +271,7 @@ public:
 
     void Add(float l, float h, float eps = AINT_BIG_EPSILON);
 
-    void Map(void (*f)(AngleInt &a, void *), void *data = nullptr) const
+    void Map(void (*f)(AngleInt &a, void *), void *data = 0) const
     {
 	for (AngleIntListNode *t = head; t; t = t->next)
 	    f(t->D, data);
@@ -315,7 +315,7 @@ class AngleIntListIterator
     AngleIntListNode *a;
 
 public:
-    AngleIntListIterator() { a = nullptr; } 
+    AngleIntListIterator() { a = 0; } 
 
     void Start(const AngleIntList &A)
     { a = A.head; } 
@@ -328,7 +328,7 @@ public:
 	AngleIntListNode *t = a;
 	if (a)
 	    a = a->next;
-	return t ? &t->D : nullptr;
+	return t ? &t->D : 0;
     }
 };
 

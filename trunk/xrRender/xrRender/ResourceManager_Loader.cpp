@@ -55,7 +55,7 @@ void	CResourceManager::OnDeviceCreate	(IReader* F)
 	// scripting
 	LS_Load					();
 #endif
-	IReader*	fs			= nullptr;
+	IReader*	fs			= 0;
 	// Load constants
  	fs	 		  			= F->open_chunk	(0);
 	if (fs){
@@ -81,14 +81,14 @@ void	CResourceManager::OnDeviceCreate	(IReader* F)
 	// Load blenders
     fs						= F->open_chunk	(2);
 	if (fs){
-		IReader*	chunk	= nullptr;
+		IReader*	chunk	= NULL;
 		int			chunk_id= 0;
 
-		while ((chunk=fs->open_chunk(chunk_id))!= nullptr){
+		while ((chunk=fs->open_chunk(chunk_id))!=NULL){
 			CBlender_DESC	desc;
 			chunk->r		(&desc,sizeof(desc));
 			IBlender*		B = IBlender::Create(desc.CLS);
-			if	(nullptr==B)
+			if	(0==B)
 			{
 				Msg				("! Renderer doesn't support blender '%s'",desc.cName);
 			}

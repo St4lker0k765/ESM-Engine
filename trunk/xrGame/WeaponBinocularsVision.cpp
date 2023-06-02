@@ -111,7 +111,7 @@ void SBinocVisibleObj::Update()
 			u32 clr	= subst_alpha(m_lt.GetColor(),255);
 
 			//-----------------------------------------------------
-			CActor* pActor = nullptr;
+			CActor* pActor = NULL;
 			if (IsGameTypeSingle()) pActor = Actor();
 			else
 			{
@@ -188,7 +188,7 @@ void CBinocularsVision::Update()
 	if (g_dedicated_server)
 		return;
 	//-----------------------------------------------------
-	const CActor* pActor = nullptr;
+	const CActor* pActor = NULL;
 	if (IsGameTypeSingle()) pActor = Actor();
 	else
 	{
@@ -233,8 +233,8 @@ void CBinocularsVision::Update()
 			new_vis_obj->m_object			= object_;
 			new_vis_obj->create_default		(m_frame_color.get());
 			new_vis_obj->m_upd_speed			= m_rotating_speed;
-			if(nullptr ==m_snd_found._feedback())
-				m_snd_found.play_at_pos			(nullptr,Fvector().set(0,0,0),sm_2D);
+			if(NULL==m_snd_found._feedback())
+				m_snd_found.play_at_pos			(0,Fvector().set(0,0,0),sm_2D);
 		}
 	}
 	std::sort								(m_active_objects.begin(), m_active_objects.end());

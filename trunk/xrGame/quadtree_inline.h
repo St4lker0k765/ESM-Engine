@@ -116,7 +116,7 @@ IC	_object_type *CSQuadTree::find	(const Fvector &position)
 	CQuadNode			*node = m_root;
 	for (int depth = 0; ; ++depth) {
 		if (!node)
-			return		(nullptr);
+			return		(0);
 
 		distance		*= .5f;
 		u32				index = neighbour_index(position,center,distance);
@@ -127,7 +127,7 @@ IC	_object_type *CSQuadTree::find	(const Fvector &position)
 			for ( ; leaf; leaf = leaf->m_next)
 				if (leaf->m_object->position().similar(position))
 					return	(leaf->m_object);
-			return		(nullptr);
+			return		(0);
 		}
 
 		node			= node->m_neighbours[index];
@@ -237,7 +237,7 @@ IC	_object_type *CSQuadTree::remove		(const _object_type *object, CQuadNode *&no
 	VERIFY			(node);
 	if (depth == m_max_depth) {
 		CListItem	*leaf = ((CListItem*)((void*)(node)));
-		CListItem	*leaf_prev = nullptr;
+		CListItem	*leaf_prev = 0;
 		for ( ; leaf; leaf_prev = leaf, leaf = leaf->m_next)
 			if (leaf->m_object == object) {
 				if (!leaf_prev)

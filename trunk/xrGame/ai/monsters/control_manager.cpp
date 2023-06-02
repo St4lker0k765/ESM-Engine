@@ -92,7 +92,7 @@ void CControl_Manager::reinit()
 
 struct predicate_remove {
 	IC bool	operator() (const CControl_Com *com) {
-		return (com == nullptr);
+		return (com == 0);
 	}
 };
 
@@ -184,7 +184,7 @@ ControlCom::IComData *CControl_Manager::data(CControl_Com *who, ControlCom::ECon
 		return target->ced()->data();
 	}
 	
-	return nullptr;
+	return 0;
 }
 
 // TODO: check construction of SControl_Element and check init in add-function
@@ -205,12 +205,12 @@ void CControl_Manager::install_path_manager(CControlPathBuilder *pman)
 
 bool CControl_Manager::is_pure(CControl_Com *com)
 {
-	return (com->cing() == nullptr);
+	return (com->cing() == 0);
 }
 
 bool CControl_Manager::is_base(CControl_Com *com)
 {
-	return (com->ced() == nullptr);
+	return (com->ced() == 0);
 }
 bool CControl_Manager::is_locked(CControl_Com *com)
 {
@@ -252,7 +252,7 @@ void CControl_Manager::release(CControl_Com *com, ControlCom::EControlType type)
 	CONTROLLERS_MAP_IT it = m_base_elems.find(type);
 	if (it != m_base_elems.end()) { 
 		com->cing()->on_stop_control(type);
-		target->ced()->set_capturer	(nullptr);
+		target->ced()->set_capturer	(0);
 
 		capture(m_base_elems[type], type);
 	} else {
@@ -263,7 +263,7 @@ void CControl_Manager::release(CControl_Com *com, ControlCom::EControlType type)
 		}
 
 		com->cing()->on_stop_control		(type);
-		target->ced()->set_capturer			(nullptr);
+		target->ced()->set_capturer			(0);
 	}
 }
 
@@ -383,7 +383,7 @@ void CControl_Manager::check_active_com(CControl_Com *com, bool b_add)
 		}
 	} else {
 		COM_VEC_IT it = std::find(m_active_elems.begin(),m_active_elems.end(),com);
-		if (it != m_active_elems.end()) (*it) = nullptr; // do not remove just mark
+		if (it != m_active_elems.end()) (*it) = 0; // do not remove just mark
 	}
 }
 

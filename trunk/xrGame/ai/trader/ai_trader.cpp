@@ -192,7 +192,7 @@ void CAI_Trader::OnEvent		(NET_Packet& P, u16 type)
 				bool just_before_destroy	= !P.r_eof() && P.r_u8();
 				Obj->SetTmpPreDestroy				(just_before_destroy);
 				if(inventory().DropItem(smart_cast<CGameObject*>(Obj))) 
-					Obj->H_SetParent(nullptr, just_before_destroy);
+					Obj->H_SetParent(0, just_before_destroy);
 			}break;
 		case GE_TRANSFER_AMMO:
 			break;

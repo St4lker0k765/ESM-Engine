@@ -23,7 +23,7 @@ const float hinge2_damping=1000.f;
 
 IC dBodyID body_for_joint(CPhysicsElement* e)
 {
-	 return e->isFixed() ? nullptr : e->get_body();//return e->get_body();//
+	 return e->isFixed() ? 0 : e->get_body();//return e->get_body();//
 }
 IC void SwapLimits(float &lo,float &hi)
 {
@@ -35,7 +35,7 @@ CPHJoint::~CPHJoint(){
 	xr_delete(m_destroy_info);
 	VERIFY(!bActive);
 	axes.clear();
-	if(m_back_ref)*m_back_ref= nullptr;
+	if(m_back_ref)*m_back_ref=NULL;
 };
 
 void CPHJoint::SetBackRef(CPhysicsJoint** j)
@@ -46,7 +46,7 @@ void CPHJoint::SetBackRef(CPhysicsJoint** j)
 void CPHJoint::CreateBall()
 {
 
-	m_joint=dJointCreateBall(nullptr,nullptr);
+	m_joint=dJointCreateBall(0,0);
 	Fvector pos;
 	Fmatrix first_matrix,second_matrix;
 	CPHElement* first=(pFirst_element);
@@ -75,7 +75,7 @@ default:NODEFAULT;
 void CPHJoint::CreateHinge()
 {
 
-	m_joint=dJointCreateHinge(nullptr,nullptr);
+	m_joint=dJointCreateHinge(0,0);
 
 	Fvector pos;
 	Fmatrix first_matrix,second_matrix;
@@ -129,7 +129,7 @@ default:NODEFAULT;
 void CPHJoint::CreateHinge2()
 {
 
-	m_joint=dJointCreateHinge2(nullptr,nullptr);
+	m_joint=dJointCreateHinge2(0,0);
 
 	Fvector pos;
 	Fmatrix first_matrix,second_matrix;
@@ -226,7 +226,7 @@ void CPHJoint::CreateSlider()
 	//////////////////////////////////////
 
 
-	m_joint=dJointCreateSlider(nullptr,nullptr);
+	m_joint=dJointCreateSlider(0,0);
 	dJointAttach(m_joint,body1,body2);
 	if (body1)
 	{
@@ -242,7 +242,7 @@ void CPHJoint::CreateSlider()
 
 
 
-	m_joint1=dJointCreateAMotor(nullptr,nullptr);
+	m_joint1=dJointCreateAMotor(0,0);
 	dJointSetAMotorMode (m_joint1, dAMotorEuler);
 	dJointSetAMotorNumAxes (m_joint1, 1);
 
@@ -339,13 +339,13 @@ default:NODEFAULT;
 
 
 
-	m_joint=dJointCreateBall(nullptr,nullptr);
+	m_joint=dJointCreateBall(0,0);
 	dJointAttach(m_joint,body1,body2);
 	dJointSetBallAnchor(m_joint,pos.x,pos.y,pos.z);
 
 
 
-	m_joint1=dJointCreateAMotor(nullptr,nullptr);
+	m_joint1=dJointCreateAMotor(0,0);
 	dJointSetAMotorMode (m_joint1, dAMotorEuler);
 	dJointSetAMotorNumAxes (m_joint1, 3);
 
@@ -503,15 +503,15 @@ void CPHJoint::SetLimits(const float low, const float high, const int axis_num)
 CPHJoint::CPHJoint(CPhysicsJoint::enumType type ,CPhysicsElement* first,CPhysicsElement* second)
 {
 
-	pShell= nullptr;
+	pShell=NULL;
 	m_bone_id=u16(-1);
-	m_back_ref	= nullptr;
-	m_destroy_info= nullptr;
-	pFirstGeom	  = nullptr;
+	m_back_ref	=NULL;
+	m_destroy_info=NULL;
+	pFirstGeom	  =NULL;
 	pFirst_element=cast_PHElement(first);
 	pSecond_element=cast_PHElement(second); 
-	m_joint= nullptr;
-	m_joint1= nullptr;
+	m_joint=NULL;
+	m_joint1=NULL;
 	eType=type;
 	bActive=false;
 
@@ -605,10 +605,10 @@ void CPHJoint::Deactivate()
 								if(m_joint1->world)pShell->Island().RemoveJoint(m_joint1);
 								dJointDestroy(m_joint);
 								dJointDestroy(m_joint1);
-		m_joint1= nullptr;
+		m_joint1=NULL;
 		break;
 	}
-	m_joint= nullptr;
+	m_joint=NULL;
 	bActive=false;
 }
 void CPHJoint::ReattachFirstElement(CPHElement* new_element)

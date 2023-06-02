@@ -297,24 +297,24 @@ void CBaseMonster::ProcessScripts()
 
 CEntity *CBaseMonster::GetCurrentEnemy()
 {
-	CEntity *enemy = nullptr;
+	CEntity *enemy = 0;
 	
 	if (EnemyMan.get_enemy()) 
 		enemy = const_cast<CEntity *>(smart_cast<const CEntity*>(EnemyMan.get_enemy()));
 
-	if (!enemy || enemy->getDestroy() || !enemy->g_Alive()) enemy = nullptr;
+	if (!enemy || enemy->getDestroy() || !enemy->g_Alive()) enemy = 0;
 
 	return (enemy);
 }
 
 CEntity *CBaseMonster::GetCurrentCorpse()
 {
-	CEntity *corpse = nullptr;
+	CEntity *corpse = 0;
 
 	if (CorpseMan.get_corpse()) 
 		corpse = const_cast<CEntity *>(smart_cast<const CEntity*>(CorpseMan.get_corpse()));
 
-	if (!corpse || corpse->getDestroy() || corpse->g_Alive()) corpse = nullptr;
+	if (!corpse || corpse->getDestroy() || corpse->g_Alive()) corpse = 0;
 
 	return (corpse);
 }

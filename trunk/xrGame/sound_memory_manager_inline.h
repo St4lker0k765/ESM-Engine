@@ -17,7 +17,7 @@ IC	CSoundMemoryManager::CSoundMemoryManager						(CCustomMonster *object, CAI_St
 	m_stalker					= stalker;
 	m_max_sound_count			= 0;
 #ifdef USE_SELECTED_SOUND
-	m_selected_sound			= nullptr;
+	m_selected_sound			= 0;
 #endif
 }
 

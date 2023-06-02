@@ -195,7 +195,7 @@ extern "C" int dCylBox (const dVector3 p1, const dMatrix3 R1,
 			int maxc, dContactGeom *contact, int skip)
 {
   dVector3 p,pp,normalC;
-  const dReal *normalR = nullptr;
+  const dReal *normalR = 0;
   dReal B1,B2,B3,R11,R12,R13,R21,R22,R23,R31,R32,R33,
     Q11,Q12,Q13,Q21,Q22,Q23,Q31,Q32,Q33,s,s2,l,sQ21,sQ22,sQ23;
   int i,invert_normal;
@@ -611,7 +611,7 @@ extern "C" int dCylCyl (const dVector3 p1, const dMatrix3 R1,
 			int maxc, dContactGeom *contact, int skip)
 {
   dVector3 p,pp1,pp2,normalC;
-  const dReal *normalR = nullptr;
+  const dReal *normalR = 0;
   dReal hlz1,hlz2,s,s2;
   int i,invert_normal;
 
@@ -1065,7 +1065,7 @@ int dCollideCylS (dxGeom *o1, dxGeom *o2, int flags,
   const dReal* p2=dGeomGetPosition(o2);
   const dReal* R=dGeomGetRotation(o1);
   dVector3 p,normalC,normal;
-  const dReal *normalR = nullptr;
+  const dReal *normalR = 0;
   dReal cylRadius;
   dReal hl;
   dGeomCylinderGetParams(o1,&cylRadius,&hl);
@@ -1472,7 +1472,7 @@ static  dColliderFn * dCylinderColliderFn (int num)
   if (num == dSphereClass) return (dColliderFn *) &dCollideCylS;
   if (num == dCylinderClassUser) return (dColliderFn *) &dCollideCylCyl;
   if (num == dPlaneClass) return (dColliderFn *) &dCollideCylPlane;
-  return nullptr;
+  return 0;
 }
 
 
@@ -1507,8 +1507,8 @@ dxGeom *dCreateCylinder (dSpaceID space, dReal r, dReal lz)
     c.bytes = sizeof (dxCylinder);
     c.collider = &dCylinderColliderFn;
     c.aabb = &dCylinderAABB;
-    c.aabb_test = nullptr;
-    c.dtor = nullptr;
+    c.aabb_test = 0;
+    c.dtor = 0;
     dCylinderClassUser=dCreateGeomClass (&c);
 
   }

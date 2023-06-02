@@ -649,7 +649,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 
 			void			set_input_external_handler			(CActorInputHandler *handler);
-			bool			input_external_handler_installed	() const {return (m_input_external_handler != nullptr);}
+			bool			input_external_handler_installed	() const {return (m_input_external_handler != 0);}
 			
 	IC		void			lock_accel_for						(u32 time){m_time_lock_accel = Device.dwTimeGlobal + time;}
 

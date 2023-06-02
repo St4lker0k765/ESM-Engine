@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "occRasterizer.h"
 
-static occTri*	currentTri	= nullptr;
+static occTri*	currentTri	= 0;
 static u32		dwPixels	= 0;
 static float	currentA[3],currentB[3],currentC[3];
 

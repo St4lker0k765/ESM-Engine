@@ -54,7 +54,7 @@ struct CLoader {
 		struct has_value_compare {
 		template <typename _P> static object_type_traits::detail::yes	select(object_type_traits::detail::other<typename _P::value_compare>*);
 			template <typename _P> static object_type_traits::detail::no		select(...);
-			enum { value = sizeof(object_type_traits::detail::yes) == sizeof(select<T>(nullptr)) };
+			enum { value = sizeof(object_type_traits::detail::yes) == sizeof(select<T>(0)) };
 		};
 
 		template <typename T>

@@ -180,7 +180,7 @@ public:
 	// Models
 	virtual IRenderVisual*			model_CreateParticles	(LPCSTR name);
 	virtual IRender_DetailModel*	model_CreateDM			(IReader*F);
-	virtual IRenderVisual*			model_Create			(LPCSTR name, IReader*data=nullptr);
+	virtual IRenderVisual*			model_Create			(LPCSTR name, IReader*data=0);
 	virtual IRenderVisual*			model_CreateChild		(LPCSTR name, IReader*data);
 	virtual IRenderVisual*			model_Duplicate			(IRenderVisual*	V);
 	virtual void					model_Delete			(IRenderVisual* &	V, BOOL bDiscard);
@@ -197,7 +197,7 @@ public:
 	// Main
 	virtual void					Calculate				();
 	virtual void					Render					();
-	virtual void					Screenshot				(ScreenshotMode mode=SM_NORMAL, LPCSTR name = nullptr);
+	virtual void					Screenshot				(ScreenshotMode mode=SM_NORMAL, LPCSTR name = 0);
 	virtual void					Screenshot				(ScreenshotMode mode, CMemoryWriter& memory_writer);
 	virtual void					ScreenshotAsyncBegin	();
 	virtual void					ScreenshotAsyncEnd		(CMemoryWriter& memory_writer);

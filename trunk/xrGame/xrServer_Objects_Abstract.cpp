@@ -19,7 +19,7 @@ CSE_Visual::CSE_Visual		   	(LPCSTR name)
 		xr_strlwr					(tmp);
 		visual_name					= tmp;
 	}else
-		visual_name					= nullptr;
+		visual_name					= NULL;
 
     startup_animation			= "$editor";
 	flags.zero					();

@@ -150,7 +150,7 @@ SVS*	CResourceManager::_CreateVS		(LPCSTR _name)
 		_vs->dwFlags				|= xr_resource_flagged::RF_REGISTERED;
 		m_vs.insert					(mk_pair(_vs->set_name(name),_vs));
 		if (0==stricmp(_name,"null"))	{
-			_vs->vs				= nullptr;
+			_vs->vs				= NULL;
 			return _vs;
 		}
 
@@ -222,7 +222,7 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 		_ps->dwFlags				|=	xr_resource_flagged::RF_REGISTERED;
 		m_ps.insert					(mk_pair(_ps->set_name(name),_ps));
 		if (0==stricmp(name,"null"))	{
-			_ps->ps				= nullptr;
+			_ps->ps				= NULL;
 			return _ps;
 		}
 
@@ -281,7 +281,7 @@ void	CResourceManager::_DeletePS			(const SPS* ps)
 
 R_constant_table*	CResourceManager::_CreateConstantTable	(R_constant_table& C)
 {
-	if (C.empty())		return nullptr;
+	if (C.empty())		return NULL;
 	for (u32 it=0; it<v_constant_tables.size(); it++)
 		if (v_constant_tables[it]->equal(C))	return v_constant_tables[it];
 	v_constant_tables.push_back			(xr_new<R_constant_table>(C));
@@ -417,7 +417,7 @@ void		CResourceManager::DeleteGeom		(const SGeometry* Geom)
 CTexture* CResourceManager::_CreateTexture	(LPCSTR _Name)
 {
 	// DBG_VerifyTextures	();
-	if (0==xr_strcmp(_Name,"null"))	return nullptr;
+	if (0==xr_strcmp(_Name,"null"))	return 0;
 	R_ASSERT		(_Name && _Name[0]);
 	string_path		Name;
 	xr_strcpy			(Name,_Name); //. andy if (strext(Name)) *strext(Name)=0;
@@ -474,7 +474,7 @@ void	CResourceManager::DBG_VerifyTextures	()
 CMatrix*	CResourceManager::_CreateMatrix	(LPCSTR Name)
 {
 	R_ASSERT(Name && Name[0]);
-	if (0==stricmp(Name,"$null"))	return nullptr;
+	if (0==stricmp(Name,"$null"))	return NULL;
 
 	LPSTR N = LPSTR(Name);
 	map_Matrix::iterator I = m_matrices.find	(N);
@@ -508,7 +508,7 @@ void	CResourceManager::ED_UpdateMatrix		(LPCSTR Name, CMatrix* data)
 CConstant*	CResourceManager::_CreateConstant	(LPCSTR Name)
 {
 	R_ASSERT(Name && Name[0]);
-	if (0==stricmp(Name,"$null"))	return nullptr;
+	if (0==stricmp(Name,"$null"))	return NULL;
 
 	LPSTR N = LPSTR(Name);
 	map_Constant::iterator I	= m_constants.find	(N);
@@ -568,7 +568,7 @@ SMatrixList*	CResourceManager::_CreateMatrixList(SMatrixList& L)
 {
 	BOOL bEmpty = TRUE;
 	for (u32 i=0; i<L.size(); i++)	if (L[i]) { bEmpty=FALSE; break; }
-	if (bEmpty)	return nullptr;
+	if (bEmpty)	return NULL;
 
 	for (u32 it=0; it<lst_matrices.size(); it++)
 	{
@@ -591,7 +591,7 @@ SConstantList*	CResourceManager::_CreateConstantList(SConstantList& L)
 {
 	BOOL bEmpty = TRUE;
 	for (u32 i=0; i<L.size(); i++)	if (L[i]) { bEmpty=FALSE; break; }
-	if (bEmpty)	return nullptr;
+	if (bEmpty)	return NULL;
 
 	for (u32 it=0; it<lst_constants.size(); it++)
 	{

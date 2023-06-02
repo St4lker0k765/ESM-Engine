@@ -44,7 +44,7 @@ CScriptEntity::~CScriptEntity()
 
 void CScriptEntity::init()
 {
-	m_current_sound						= nullptr;
+	m_current_sound						= 0;
 	ResetScriptData						();
 }
 
@@ -80,7 +80,7 @@ void CScriptEntity::ClearActionQueue()
 	}
 
 	m_tpScriptAnimation.invalidate		();
-	m_tpCurrentEntityAction				= nullptr;
+	m_tpCurrentEntityAction				= 0;
 	m_tpNextAnimation.invalidate		();
 	m_use_animation_movement_controller	= false;
 }
@@ -188,7 +188,7 @@ void CScriptEntity::AddAction(const CScriptEntityAction *tpEntityAction, bool bH
 CScriptEntityAction *CScriptEntity::GetCurrentAction()
 {
 	if (m_tpActionQueue.empty())
-		return(nullptr);
+		return(0);
 	else
 		return(m_tpActionQueue.front());
 }
@@ -232,7 +232,7 @@ void CScriptEntity::vfFinishAction(CScriptEntityAction *tpEntityAction)
 
 void CScriptEntity::ProcessScripts()
 {
-	CScriptEntityAction	*l_tpEntityAction = nullptr;
+	CScriptEntityAction	*l_tpEntityAction = 0;
 #ifdef DEBUG
 	bool			empty_queue = m_tpActionQueue.empty();
 #endif
@@ -588,11 +588,11 @@ bool CScriptEntity::bfScriptAnimation()
 			IKinematicsAnimated	*skeleton_animated = smart_cast<IKinematicsAnimated*>(object().Visual());
 			LPCSTR				animation_id = *GetCurrentAction()->m_tAnimationAction.m_caAnimationToPlay;
 			MotionID			animation = skeleton_animated->ID_Cycle(animation_id);
-			CBlend				*result = nullptr;
+			CBlend				*result = 0;
 			for (u16 i=0; i<MAX_PARTS; ++i) {
-				CBlend			*blend = nullptr;
+				CBlend			*blend = 0;
 				if (result) {
-					skeleton_animated->LL_PlayCycle(i,animation,TRUE,nullptr,nullptr);
+					skeleton_animated->LL_PlayCycle(i,animation,TRUE,0,0);
 					continue;
 				}
 
@@ -648,11 +648,11 @@ void CScriptEntity::sound_callback	(const CObject *object, int sound_type, const
 
 CEntity	*CScriptEntity::GetCurrentEnemy()
 {
-	return (nullptr);
+	return (0);
 }
 CEntity	*CScriptEntity::GetCurrentCorpse()
 {
-	return (nullptr);
+	return (0);
 }
 
 int CScriptEntity::get_enemy_strength()

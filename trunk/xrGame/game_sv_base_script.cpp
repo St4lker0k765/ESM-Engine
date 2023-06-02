@@ -19,8 +19,8 @@
 using namespace luabind;
 
 
-CUISequencer* g_tutorial = nullptr;
-CUISequencer* g_tutorial2 = nullptr;
+CUISequencer* g_tutorial = NULL;
+CUISequencer* g_tutorial2 = NULL;
 
 void start_tutorial(LPCSTR name)
 {
@@ -43,7 +43,7 @@ LPCSTR translate_string(LPCSTR str)
 
 bool has_active_tutotial()
 {
-	return (g_tutorial!= nullptr);
+	return (g_tutorial!=NULL);
 }
 
 #pragma optimize("s",on)

@@ -59,10 +59,10 @@ protected :
 public:
 	IC SBoneInfo*			get_bone_info			(u16 bone_index)
 	{
-		if (BI_NONE==bone_index) return nullptr;
+		if (BI_NONE==bone_index) return 0;
 		for (BoneInfoVecIt it=m_Bones.begin(); it!=m_Bones.end(); it++)
 			if (it->index==bone_index) return &(*it);
-		return nullptr;
+		return 0;
 	}
 	SBoneInfo*				get_nearest_bone_info	(IKinematics* K, u16 bone_index);
 	Fvector					parent_vel;

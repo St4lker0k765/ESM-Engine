@@ -22,9 +22,6 @@ public:
 	
 	CBlender_Model();
 	virtual ~CBlender_Model();
-
-private:
-	xrP_TOKEN	oTessellation;
 };
 
 #endif // !defined(AFX_BLENDER_MODEL_H__A215FA40_D885_4D06_9032_ED934AE295E3__INCLUDED_)

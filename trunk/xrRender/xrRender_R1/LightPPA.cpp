@@ -4,10 +4,10 @@
 
 #include "stdafx.h"
 #include "LightPPA.h"
-#include "../../xr_3da/igame_persistent.h"
-#include "../../xr_3da/environment.h"
-#include "../xrRender/fbasicvisual.h"
-#include "../../xr_3da/CustomHUD.h"
+#include "..\..\xr_3da\igame_persistent.h"
+#include "..\..\xr_3da\environment.h"
+#include "..\xrRender\FBasicVisual.h"
+#include "..\..\xr_3da\CustomHUD.h"
 
 const u32	MAX_POLYGONS			=	1024*8;
 const float MAX_DISTANCE			=	50.f;
@@ -141,7 +141,7 @@ void CLightR_Manager::render_point	()
 }
 */
 
-void CLightR_Manager::render_point	(u32 _priority)
+void CLightR_Manager::render_point	()
 {
 	// for each light
 	Fvector		lc_COP		= Device.vCameraPosition	;
@@ -165,8 +165,7 @@ void CLightR_Manager::render_point	(u32 _priority)
 		L_right.crossproduct		(L_up,L_dir);			L_right.normalize	();
 		L_up.crossproduct			(L_dir,L_right);		L_up.normalize		();
 		float	_camrange			= 300.f;
-		L_pos.set					(L->position);			
-		//L_pos.y	+=	_camrange;
+		L_pos.set					(L->position);			L_pos.y	+=	_camrange;
 		L_view.build_camera_dir		(L_pos,L_dir,L_up);
 		L_project.build_projection	(deg2rad(2.f),1.f,_camrange-L->range,_camrange+L->range);
 		L_combine.mul				(L_project,L_view);
@@ -191,19 +190,13 @@ void CLightR_Manager::render_point	(u32 _priority)
 
 		//		3. Calculate visibility for light + build soring tree
 		VERIFY										(L->spatial.sector);
-		if( _priority == 1)
-			RImplementation.r_pmask						(false,true);
-
+		RImplementation.r_pmask						(true,false);
 		RImplementation.r_dsgraph_render_subspace	(
 			L->spatial.sector,
 			L_combine,
 			L_pos,
-			true,
-			true
+			TRUE
 			);
-
-		if( _priority == 1)
-			RImplementation.r_pmask						(true,true);
 
 		//		4. Analyze if HUD intersects light volume
 		BOOL				bHUD	= FALSE;
@@ -213,14 +206,14 @@ void CLightR_Manager::render_point	(u32 _priority)
 
 		//		5. Dump sorting tree
 		RCache.set_Constants((R_constant_table*)0);
-		if (bHUD&&_priority == 0)			g_hud->Render_Last		();	
-		RImplementation.r_dsgraph_render_graph					(_priority);
-		if (bHUD&&_priority == 0)			RImplementation.r_dsgraph_render_hud();	
+		if (bHUD)			g_pGameLevel->pHUD->Render_Last		();	
+		RImplementation.r_dsgraph_render_graph					(0);
+		if (bHUD)			RImplementation.r_dsgraph_render_hud();	
 	}
 	//		??? grass ???
 }
 
-void CLightR_Manager::render_spot	(u32 _priority)
+void CLightR_Manager::render_spot	()
 {
 	// for each light
 	//	Msg	("l=%d",selected_spot.size());
@@ -269,9 +262,7 @@ void CLightR_Manager::render_spot	(u32 _priority)
 		//		3. Calculate visibility for light + build soring tree
 		VERIFY										(L->spatial.sector);
 		// RImplementation.marker					++;
-		if( _priority == 1)
-			RImplementation.r_pmask						(false,true);
-
+		RImplementation.r_pmask						(true,false);
 		RImplementation.r_dsgraph_render_subspace	(
 			L->spatial.sector,
 			L_combine,
@@ -279,9 +270,6 @@ void CLightR_Manager::render_spot	(u32 _priority)
 			TRUE,
 			TRUE			// precise portals
 			);
-
-		if( _priority == 1)
-			RImplementation.r_pmask						(true,true);
 
 		//		4. Analyze if HUD intersects light volume
 		BOOL				bHUD	= FALSE;
@@ -293,29 +281,25 @@ void CLightR_Manager::render_spot	(u32 _priority)
 		//		4. Dump sorting tree
 		//	RCache.set_ClipPlanes					(true,	&L_combine);
 		RCache.set_Constants	((R_constant_table*)0);
-		if (bHUD&&_priority == 0)	g_hud->Render_Last		();	
-		RImplementation.r_dsgraph_render_graph			(_priority);
-		if (bHUD&&_priority == 0)	RImplementation.r_dsgraph_render_hud();	
+		if (bHUD)	g_pGameLevel->pHUD->Render_Last		();	
+		RImplementation.r_dsgraph_render_graph			(0);
+		if (bHUD)	RImplementation.r_dsgraph_render_hud();	
 		//	RCache.set_ClipPlanes					(false,	&L_combine);
 	}
-	//		??? grass ???l
+	//		??? grass ???
 }
 
-void CLightR_Manager::render		(u32 _priority)
+void CLightR_Manager::render		()
 {
 	if (selected_spot.size())		{ 
 		RImplementation.phase		= CRender::PHASE_SPOT;
-		render_spot			(_priority);	
-
-		if(_priority == 1)
-			selected_spot.clear	();
+		render_spot			();	
+		selected_spot.clear	();	
 	}
 	if (selected_point.size())		{ 
 		RImplementation.phase		= CRender::PHASE_POINT;
-		render_point		(_priority);	
-		
-		if(_priority == 1)
-			selected_point.clear();
+		render_point		();	
+		selected_point.clear(); 
 	}
 }
 

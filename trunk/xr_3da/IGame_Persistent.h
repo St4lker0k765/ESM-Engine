@@ -85,9 +85,6 @@ public:
 	virtual void					GetCurrentDof(Fvector3& dof) { dof.set(-1.4f, 0.0f, 250.f); };
 	virtual void					SetBaseDof(const Fvector3& dof) {};
 
-	//morrazzzz: Эту перегрузку надо доделать!
-	virtual void OnSectorChanged(int sector) {};
-
 	virtual void					RegisterModel		(IRenderVisual* V)
 #ifndef _EDITOR
      = 0;

@@ -1,12 +1,12 @@
 #include "stdafx.h"
-#include "../xrRender/fbasicvisual.h"
+#include "..\xrRender\FBasicVisual.h"
 #include "../../xr_3da/fmesh.h"
 #include "../../xr_3da/xrLevel.h"
 #include "../../xr_3da/x_ray.h"
 #include "../../xr_3da/IGame_Persistent.h"
-#include "../../xrCore/stream_reader.h"
+#include "../xrCore/stream_reader.h"
 
-#include "../xrRender/dxRenderDeviceRender.h"
+#include "..\xrRender\dxRenderDeviceRender.h"
 
 #pragma warning(push)
 #pragma warning(disable:4995)
@@ -20,12 +20,12 @@ void CRender::level_Load(IReader *fs)
 
 	// Begin
 	pApp->LoadBegin					();
-	dxRenderDeviceRender::Instance().Resources->DeferredLoad	(TRUE);
+	DEV->DeferredLoad	(TRUE);
 	IReader*						chunk;
 
 	// Shaders
 //	g_pGamePersistent->LoadTitle		("st_loading_shaders");
-	g_pGamePersistent->LoadTitle		();
+	g_pGamePersistent->LoadTitle();
 	{
 		chunk = fs->open_chunk		(fsL_SHADERS);
 		R_ASSERT2					(chunk,"Level doesn't builded correctly.");
@@ -37,11 +37,11 @@ void CRender::level_Load(IReader *fs)
 			LPCSTR			n		= LPCSTR(chunk->pointer());
 			chunk->skip_stringZ		();
 			if (0==n[0])			continue;
-			xr_strcpy					(n_sh,n);
+			strcpy					(n_sh,n);
 			LPSTR			delim	= strchr(n_sh,'/');
 			*delim					= 0;
-			xr_strcpy					(n_tlist,delim+1);
-			Shaders[i]				= dxRenderDeviceRender::Instance().Resources->Create(n_sh,n_tlist);
+			strcpy					(n_tlist,delim+1);
+			Shaders[i]				= DEV->Create(n_sh,n_tlist);
 		}
 		chunk->close();
 	}
@@ -161,7 +161,7 @@ void CRender::level_Unload		()
 
 	//. dbg
 #ifdef DEBUG
-	// dxRenderDeviceRender::Instance().Resources->_DumpMemoryUsage	();
+	// Device.Resources->_DumpMemoryUsage	();
 	dxRenderDeviceRender::Instance().Resources->DBG_VerifyGeoms	();
 	dxRenderDeviceRender::Instance().Resources->DBG_VerifyTextures();
 #endif
@@ -170,7 +170,7 @@ void CRender::level_Unload		()
 
 void CRender::LoadBuffers	(CStreamReader *base_fs)
 {
-	dxRenderDeviceRender::Instance().Resources->Evict	();
+	DEV->Evict	();
 	u32	dwUsage				= D3DUSAGE_WRITEONLY | (HW.Caps.geometry.bSoftware?D3DUSAGE_SOFTWAREPROCESSING:0);
 
 	// Vertex buffers
@@ -205,7 +205,6 @@ void CRender::LoadBuffers	(CStreamReader *base_fs)
 			// Create and fill
 			BYTE*	pData		= 0;
 			R_CHK				(HW.pDevice->CreateVertexBuffer(vCount*vSize,dwUsage,0,D3DPOOL_MANAGED,&VB[i],0));
-			HW.stats_manager.increment_stats		( vCount*vSize, enum_stats_buffer_type_vertex, D3DPOOL_MANAGED);
 			R_CHK				(VB[i]->Lock(0,0,(void**)&pData,0));
 			fs->r				(pData,vCount*vSize);
 //			CopyMemory			(pData,fs->pointer(),vCount*vSize);	//.???? copy while skip T&B
@@ -232,7 +231,6 @@ void CRender::LoadBuffers	(CStreamReader *base_fs)
 			// Create and fill
 			BYTE*	pData		= 0;
 			R_CHK				(HW.pDevice->CreateIndexBuffer(iCount*2,dwUsage,D3DFMT_INDEX16,D3DPOOL_MANAGED,&IB[i],0));
-			HW.stats_manager.increment_stats		( iCount*2, enum_stats_buffer_type_index, D3DPOOL_MANAGED);
 			R_CHK				(IB[i]->Lock(0,0,(void**)&pData,0));
 //			CopyMemory			(pData,fs->pointer(),iCount*2);
 			fs->r				(pData,iCount*2);
@@ -335,16 +333,18 @@ void CRender::LoadSectors(IReader* fs)
 
 		// build portal model
 		rmPortals = xr_new	<CDB::MODEL> ();
-		rmPortals->build	(CL.getV(),int(CL.getVS()),CL.getT(),int(CL.getTS()));
-	} else {
-		rmPortals = 0;
+		rmPortals->build(CL.getV(), int(CL.getVS()), CL.getT(), int(CL.getTS()), nullptr, nullptr, false);
+	}
+	else 
+	{
+		rmPortals = nullptr;
 	}
 
 	// debug
 	//	for (int d=0; d<Sectors.size(); d++)
 	//		Sectors[d]->DebugDump	();
 
-	pLastSector = 0;
+	pLastSector = nullptr;
 }
 
 void CRender::LoadSWIs(CStreamReader* base_fs)

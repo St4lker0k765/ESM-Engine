@@ -2,9 +2,12 @@
 //
 
 #include "stdafx.h"
+#include "../xrRender/xrRender_console.h"
 #include "../xrRender/dxRenderFactory.h"
 #include "../xrRender/dxUIRender.h"
 #include "../xrRender/dxDebugRender.h"
+
+#pragma comment(lib,"xr_3DA")
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
@@ -15,12 +18,11 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 	{
 	case DLL_PROCESS_ATTACH:
 		::Render							= &RImplementation;
-		::RenderFactory				= &RenderFactoryImpl;
-		::DU						= &DUImpl;
-		//::vid_mode_token			= inited by HW;
-		UIRender					= &UIRenderImpl;
+		::RenderFactory = &RenderFactoryImpl;
+		::DU = &DUImpl;
+		UIRender = &UIRenderImpl;
 #ifdef DEBUG
-		DRender						= &DebugRenderImpl;
+		DRender = &DebugRenderImpl;
 #endif // DEBUG
 		xrRender_initconsole				();
 		break;

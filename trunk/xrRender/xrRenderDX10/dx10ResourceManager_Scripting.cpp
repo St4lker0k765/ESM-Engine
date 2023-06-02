@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include	"../../xr_3da/Render.h"
@@ -14,6 +14,7 @@
 #include	"../../xr_3da/ai_script_lua_extension.h"
 
 #include	"../xrRender/dxRenderDeviceRender.h"
+#include "luabind/return_reference_to_policy.hpp"
 
 using namespace				luabind;
 
@@ -141,55 +142,86 @@ void LuaError(lua_State* L)
 #endif // PURE_ALLOC
 
 #ifndef USE_DL_ALLOCATOR
-static void *lua_alloc	(void *ud, void *ptr, size_t osize, size_t nsize) {
+static void* lua_alloc_xr(void* ud, void* ptr, size_t osize, size_t nsize) {
 	(void)ud;
 	(void)osize;
 	if (nsize == 0) {
-		xr_free	(ptr);
+		xr_free(ptr);
 		return	NULL;
 	}
 	else
-#ifdef DEBUG_MEMORY_NAME
-		return Memory.mem_realloc		(ptr, nsize, "LUA");
-#else // DEBUG_MEMORY_MANAGER
-		return Memory.mem_realloc		(ptr, nsize);
-#endif // DEBUG_MEMORY_MANAGER
+#	ifdef DEBUG_MEMORY_NAME
+		return Memory.mem_realloc(ptr, nsize, "LUA:Render");
+#	else // DEBUG_MEMORY_MANAGER
+		return Memory.mem_realloc(ptr, nsize);
+#	endif // DEBUG_MEMORY_MANAGER
 }
 #else // USE_DL_ALLOCATOR
+#include "../xr_3da/doug_lea_memory_allocator.h"
+#include <Luabind/luabind/luabind_memory.h>
+#include <Luabind/luabind/luabind_delete.h>
 
-#include "../../xrCore/memory_allocator_options.h"
-
-#ifdef USE_ARENA_ALLOCATOR
-	static const u32	s_arena_size = 8*1024*1024;
-	static char			s_fake_array[s_arena_size];
-	doug_lea_allocator	g_render_lua_allocator( s_fake_array, s_arena_size, "render:lua" );
-#else // #ifdef USE_ARENA_ALLOCATOR
-	doug_lea_allocator	g_render_lua_allocator( 0, 0, "render:lua" );
-#endif // #ifdef USE_ARENA_ALLOCATOR
-
+static void* lua_alloc_dl(void* ud, void* ptr, size_t osize, size_t nsize) {
+	(void)ud;
+	(void)osize;
+	if (nsize == 0) { dlfree(ptr);	 return	NULL; }
+	else				return dlrealloc(ptr, nsize);
+}
 #endif // USE_DL_ALLOCATOR
 
-// export
-void	CResourceManager::LS_Load			()
+using namespace luabind;
+
+static void* __cdecl luabind_allocator(luabind::memory_allocation_function_parameter, const void* pointer, size_t const size) //Ðàíüøå âñåãî èíèòèòñÿ çäåñü, ïîýòîìó ïóñòü çäåñü è áóäåò
 {
-	LSVM			= luaL_newstate();
-	if (!LSVM)		{
-		Msg			("! ERROR : Cannot initialize LUA VM!");
+	if (!size)
+	{
+		void* non_const_pointer = const_cast<LPVOID>(pointer);
+		xr_free(non_const_pointer);
+		return nullptr;
+	}
+
+	if (!pointer)
+	{
+#ifndef DEBUG
+		return Memory.mem_alloc(size);
+#else
+		return Memory.mem_alloc(size, "void");
+#endif
+	}
+
+	void* non_const_pointer = const_cast<LPVOID>(pointer);
+#ifndef DEBUG
+	return Memory.mem_realloc(non_const_pointer, size);
+#else
+	return Memory.mem_realloc(non_const_pointer, size, "void");
+#endif
+	}
+
+// export
+void	CResourceManager::LS_Load()
+{
+	luabind::allocator = &luabind_allocator; //Àëëîêàòîð èíèòèòñÿ òîëüêî çäåñü è òîëüêî îäèí ðàç!
+	luabind::allocator_parameter = nullptr;
+
+#ifndef USE_DL_ALLOCATOR
+	LSVM = lua_newstate(lua_alloc_xr, NULL);
+#else // USE_XR_ALLOCAOR
+	LSVM = lua_newstate(lua_alloc_dl, NULL);
+#endif // USE_XR_ALLOCAOR
+	if (!LSVM) {
+		Msg("! ERROR : Cannot initialize LUA VM!");
 		return;
 	}
 
 	// initialize lua standard library functions 
-	luaopen_base	(LSVM); 
-	luaopen_table	(LSVM);
-	luaopen_string	(LSVM);
-	luaopen_math	(LSVM);
-	luaopen_jit		(LSVM);
+	luaL_openlibs(LSVM);
 
-	luabind::open						(LSVM);
+	luabind::open(LSVM);
 #if !XRAY_EXCEPTIONS
-	if (0==luabind::get_error_callback())
-		luabind::set_error_callback		(LuaError);
+	if (!luabind::get_error_callback())
+		luabind::set_error_callback(LuaError);
 #endif
+
 
 	module			(LSVM)
 	[
@@ -225,25 +257,25 @@ void	CResourceManager::LS_Load			()
 		,
 
 		class_<adopt_compiler>("_compiler")
-			.def(								constructor<const adopt_compiler&>())
-			.def("begin",						&adopt_compiler::_pass			,return_reference_to(_1))
-			.def("begin",						&adopt_compiler::_passgs		,return_reference_to(_1))
-			.def("sorting",						&adopt_compiler::_options		,return_reference_to(_1))
-			.def("emissive",					&adopt_compiler::_o_emissive	,return_reference_to(_1))
-			.def("distort",						&adopt_compiler::_o_distort		,return_reference_to(_1))
-			.def("wmark",						&adopt_compiler::_o_wmark		,return_reference_to(_1))
-			.def("fog",							&adopt_compiler::_fog			,return_reference_to(_1))
-			.def("zb",							&adopt_compiler::_ZB			,return_reference_to(_1))
-			.def("blend",						&adopt_compiler::_blend			,return_reference_to(_1))
-			.def("aref",						&adopt_compiler::_aref			,return_reference_to(_1))
-			//	For compatibility only
-			.def("dx10color_write_enable",		&adopt_compiler::_dx10color_write_enable,return_reference_to(_1))
-			.def("color_write_enable",			&adopt_compiler::_dx10color_write_enable,return_reference_to(_1))
-			.def("dx10texture",					&adopt_compiler::_dx10texture	,return_reference_to(_1))
-			.def("dx10stencil",					&adopt_compiler::_dx10Stencil	,return_reference_to(_1))
-			.def("dx10stencil_ref",				&adopt_compiler::_dx10StencilRef,return_reference_to(_1))
-			.def("dx10atoc",					&adopt_compiler::_dx10ATOC		,return_reference_to(_1))
-			.def("dx10zfunc",					&adopt_compiler::_dx10ZFunc		,return_reference_to(_1))			
+		.def(constructor<const adopt_compiler&>())
+		.def("begin", &adopt_compiler::_pass, return_reference_to<1>())
+		.def("begin", &adopt_compiler::_passgs, return_reference_to<1>())
+		.def("sorting", &adopt_compiler::_options, return_reference_to<1>())
+		.def("emissive", &adopt_compiler::_o_emissive, return_reference_to<1>())
+		.def("distort", &adopt_compiler::_o_distort, return_reference_to<1>())
+		.def("wmark", &adopt_compiler::_o_wmark, return_reference_to<1>())
+		.def("fog", &adopt_compiler::_fog, return_reference_to<1>())
+		.def("zb", &adopt_compiler::_ZB, return_reference_to<1>())
+		.def("blend", &adopt_compiler::_blend, return_reference_to<1>())
+		.def("aref", &adopt_compiler::_aref, return_reference_to<1>())
+		//	For compatibility only
+		.def("dx10color_write_enable", &adopt_compiler::_dx10color_write_enable, return_reference_to<1>())
+		.def("color_write_enable", &adopt_compiler::_dx10color_write_enable, return_reference_to<1>())
+		.def("dx10texture", &adopt_compiler::_dx10texture, return_reference_to<1>())
+		.def("dx10stencil", &adopt_compiler::_dx10Stencil, return_reference_to<1>())
+		.def("dx10stencil_ref", &adopt_compiler::_dx10StencilRef, return_reference_to<1>())
+		.def("dx10atoc", &adopt_compiler::_dx10ATOC, return_reference_to<1>())
+		.def("dx10zfunc", &adopt_compiler::_dx10ZFunc, return_reference_to<1>())
 
 			.def("dx10sampler",					&adopt_compiler::_dx10sampler		)	// returns sampler-object
 			.def("dx10Options",					&adopt_compiler::_dx10Options		),	// returns options-object			
@@ -433,7 +465,7 @@ ShaderElement*		CBlender_Compile::_lua_Compile	(LPCSTR namesp, LPCSTR name)
 	LPCSTR				t_1		= (L_textures.size() > 1)	? *L_textures[1] : "null";
 	LPCSTR				t_d		= detail_texture			? detail_texture : "null" ;
 	lua_State*			LSVM	= dxRenderDeviceRender::Instance().Resources->LSVM;
-	object				shader	= globals(LSVM)[namesp];
+	object				shader	= get_globals(LSVM)[namesp];
 	bool				bFirstPass = false;
 	adopt_compiler		ac		= adopt_compiler(this, bFirstPass);
 	call_function<void>(shader[name], ac, t_0, t_1, t_d);

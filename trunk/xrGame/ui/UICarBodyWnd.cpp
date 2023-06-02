@@ -400,7 +400,7 @@ bool CUICarBodyWnd::OnKeyboard(int dik, EUIMessages keyboard_action)
 			GetHolder()->StartStopMenu(this, true);
 			return true;
 		}
-		if(DIK_LSHIFT == dik || MOUSE_3 == dik)
+		if(DIK_LSHIFT == dik)
 		{
 			TakeAll();
 			return true;

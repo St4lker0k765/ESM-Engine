@@ -346,7 +346,7 @@ IC void CBackend::Render(D3DPRIMITIVETYPE T, u32 startV, u32 PC)
 	ApplyPrimitieTopology(Topology);
 	SRVSManager.Apply();
 	ApplyRTandZB();
-		ApplyVertexLayout();
+	ApplyVertexLayout();
 	StateManager.Apply();
 	//	State manager may alter constants
 	constants.flush();

@@ -82,14 +82,6 @@ xr_token							qminmax_sm_token					[ ]={
 	{ 0,							0												}
 };
 
-u32 ps_r_aa_mode = 1;
-xr_token qaa_mode_token[] =
-{
-	{ "st_opt_off",					0 },
-	{ "ui_mm_fxaa",					1 },
-	{ 0,							0 }
-};
-
 //	“Off”
 //	“DX10.0 style [Standard]”
 //	“DX10.1 style [Higher quality]”
@@ -404,32 +396,6 @@ public:
 				ps_r2_ls_flags_ext.set(R2FLAGEXT_SSAO_OPT_DATA, 1);
 				break;
 			}
-		}
-	}
-};
-
-class	CCC_AA_Mode : public CCC_Token
-{
-public:
-	CCC_AA_Mode(LPCSTR N, u32* V, xr_token* T) : CCC_Token(N, V, T) {};
-
-	virtual void	Execute(LPCSTR args)
-	{
-		CCC_Token::Execute(args);
-
-		switch (*value)
-		{
-		case 0:
-		{
-			ps_r2_ls_flags_ext.set(R2FLAGEXT_AA_FXAA, 0);
-			break;
-		}
-		case 1:
-		{
-
-			ps_r2_ls_flags_ext.set(R2FLAGEXT_AA_FXAA, 1);
-			break;
-		}
 		}
 	}
 };
@@ -888,8 +854,6 @@ void		xrRender_initconsole	()
 	CMD3(CCC_Mask,		"r4_wireframe",					&ps_r2_ls_flags_ext,		R2FLAGEXT_WIREFRAME);//Need restart
 	CMD3(CCC_Mask,		"r2_steep_parallax",			&ps_r2_ls_flags,			R2FLAG_STEEP_PARALLAX);
 	CMD3(CCC_Mask,		"r2_detail_bump",				&ps_r2_ls_flags,			R2FLAG_DETAIL_BUMP);
-
-	CMD3(CCC_AA_Mode, "r2_aa_mode", &ps_r_aa_mode, qaa_mode_token);
 
 	CMD3(CCC_Token,		"r2_sun_quality",				&ps_r_sun_quality,			qsun_quality_token);
 

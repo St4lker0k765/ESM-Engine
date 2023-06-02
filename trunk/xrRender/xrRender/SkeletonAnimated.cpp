@@ -6,7 +6,7 @@
 
 #include	"AnimationKeyCalculate.h"
 #include	"SkeletonX.h"
-#include	"../../xr_3da/fmesh.h"
+#include	"../../xrEngine/fmesh.h"
 #ifdef DEBUG
 #include	"../../xrcore/dump_string.h"
 #endif
@@ -655,7 +655,7 @@ void CKinematicsAnimated::IBlend_Startup	()
 #endif
 	}
 	// cycles+fx clear
-	for (u32 i=0; i<MAX_PARTS; i++)
+	for (i=0; i<MAX_PARTS; i++)
 		blend_cycles[i].clear();
 	blend_fx.clear		();
 	ChannelFactorsStartup();

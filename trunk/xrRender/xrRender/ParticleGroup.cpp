@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "../../xr_3da/psystem.h"
+#include "../../xrEngine/psystem.h"
 
 #ifndef _EDITOR
-#include "../../xrGame/smart_cast.h"
+#include "../../xrServerEntities/smart_cast.h"
 #endif
 
 #include "ParticleGroup.h"

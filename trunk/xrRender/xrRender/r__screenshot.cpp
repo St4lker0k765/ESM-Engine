@@ -3,7 +3,7 @@
 #include "xr_effgamma.h"
 #include "dxRenderDeviceRender.h"
 #include "../xrRender/tga.h"
-#include "../../xr_3da/xrImage_Resampler.h"
+#include "../../xrEngine/xrImage_Resampler.h"
 
 #if defined(USE_DX10) || defined(USE_DX11)
 #include <d3dx/d3dx10tex.h>

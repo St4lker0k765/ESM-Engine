@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "../../xr_3da/gamefont.h"
+#include "../../xrEngine/gamefont.h"
 #include "d3dutils.h"
 #include "du_box.h"
 #include "du_sphere.h"
@@ -15,7 +15,7 @@
 
 #pragma warning(push)
 #pragma warning(disable:4995)
-#include <d3dx9.h>
+#include <d3dx/d3dx9.h>
 #pragma warning(pop)
 
 CDrawUtilities DUImpl;
@@ -170,7 +170,7 @@ void CDrawUtilities::UpdateGrid(int number_of_cell, float square_size, int subdi
 				m_GridPoints.push_back( right );
 			}
 		}
-		for(int i=-m_GridCounts[1]; i<=m_GridCounts[1]; i++){
+		for(i=-m_GridCounts[1]; i<=m_GridCounts[1]; i++){
 			if( (!!thin) != !!(i%m_GridSubDiv[1]) ){
 				left.p.x = -m_GridCounts[0]*m_GridStep.x;
 				right.p.x = m_GridCounts[0]*m_GridStep.x;
@@ -216,7 +216,7 @@ void CDrawUtilities::OnDeviceCreate()
     // initialize identity box
 	Fbox bb;
 	bb.set(-0.505f,-0.505f,-0.505f, 0.505f,0.505f,0.505f);
-	for (int i=0; i<8; i++){
+	for (i=0; i<8; i++){
     	Fvector S;
     	Fvector p;
         bb.getpoint(i,p);

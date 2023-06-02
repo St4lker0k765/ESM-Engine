@@ -4,11 +4,11 @@
 #include "ResourceManager.h"
 
 #ifndef _EDITOR
-#include "../../xr_3da/render.h"
+#include "../../xrEngine/render.h"
 #endif
 
-#include "../../xr_3da/tntQAVI.h"
-#include "../../xr_3da/xrTheora_Surface.h"
+#include "../../xrEngine/tntQAVI.h"
+#include "../../xrEngine/xrTheora_Surface.h"
 
 #include "dxRenderDeviceRender.h"
 

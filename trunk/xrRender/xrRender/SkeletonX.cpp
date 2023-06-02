@@ -6,18 +6,18 @@
 #pragma hdrstop
 
 #pragma warning(disable:4995)
-#include <d3dx9.h>
+#include <d3dx/d3dx9.h>
 #pragma warning(default:4995)
 
 #ifndef _EDITOR
-	#include	"../../xr_3da/Render.h"
+	#include	"../../xrEngine/Render.h"
 #else
 	#include "../../Include/xrAPI/xrAPI.h"
 #endif
 
 #include "SkeletonX.h"
 #include "SkeletonCustom.h"
-#include "../../xr_3da/fmesh.h"
+#include "../../xrEngine/fmesh.h"
 #include "../../xrCPU_Pipe/xrCPU_Pipe.h"
 
 shared_str	s_bones_array_const;

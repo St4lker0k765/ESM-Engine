@@ -4,18 +4,15 @@
 #include "hwcaps.h"
 #include "hw.h"
 
-//morrazzzz: Подумать и решить, нужно ли это
-
-/*
 #ifndef _EDITOR
 	#include "NVAPI/nvapi.h"
 	#include "ATI/atimgpud.h"
 #endif
-*/
 
 namespace
 {
-#if 0
+
+#ifndef _EDITOR
 u32 GetNVGpuNum()
 {
 	NvLogicalGpuHandle  logicalGPUs[NVAPI_MAX_LOGICAL_GPUS];

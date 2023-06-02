@@ -3,7 +3,7 @@
 
 #include "ResourceManager.h"
 #ifndef _EDITOR
-#include	"../../xr_3da/Render.h"
+#include	"../../xrEngine/Render.h"
 #else
 	#include "../../Include/xrAPI/xrAPI.h"
 #endif

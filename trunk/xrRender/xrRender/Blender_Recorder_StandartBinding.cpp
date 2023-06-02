@@ -3,15 +3,15 @@
 
 #pragma warning(push)
 #pragma warning(disable:4995)
-#include <d3dx9.h>
+#include <d3dx/d3dx9.h>
 #pragma warning(pop)
 
 #include "ResourceManager.h"
 #include "blenders\Blender_Recorder.h"
 #include "blenders\Blender.h"
 
-#include "../../xr_3da/igame_persistent.h"
-#include "../../xr_3da/environment.h"
+#include "../../xrEngine/igame_persistent.h"
+#include "../../xrEngine/environment.h"
 
 #include "dxRenderDeviceRender.h"
 

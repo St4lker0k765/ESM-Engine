@@ -1,13 +1,13 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #pragma hdrstop
 
-#include	"../../xr_3da/Render.h"
+#include	"../../xrEngine/Render.h"
 #include	"ResourceManager.h"
 #include	"tss.h"
 #include	"blenders\blender.h"
 #include	"blenders\blender_recorder.h"
-#include	"../../xr_3da/ai_script_space.h"
-#include	"../../xr_3da/ai_script_lua_extension.h"
+#include	"../../xrEngine/ai_script_space.h"
+#include	"../../xrEngine/ai_script_lua_extension.h"
 #include	"luabind/return_reference_to_policy.hpp"
 
 #include	"dxRenderDeviceRender.h"
@@ -93,143 +93,99 @@ void LuaError(lua_State* L)
 //#	endif // USE_MEMORY_MONITOR
 #endif // PURE_ALLOC
 
-#ifndef USE_DL_ALLOCATOR
-static void* lua_alloc_xr(void* ud, void* ptr, size_t osize, size_t nsize) {
-	(void)ud;
-	(void)osize;
-	if (nsize == 0) {
-		xr_free(ptr);
-		return	NULL;
-	}
-	else
-#	ifdef DEBUG_MEMORY_NAME
-		return Memory.mem_realloc(ptr, nsize, "LUA:Render");
-#	else // DEBUG_MEMORY_MANAGER
-		return Memory.mem_realloc(ptr, nsize);
-#	endif // DEBUG_MEMORY_MANAGER
-}
-#else // USE_DL_ALLOCATOR
-#include "doug_lea_memory_allocator.h"
-#include <Luabind/luabind/luabind_memory.h>
-#include <Luabind/luabind/luabind_delete.h>
+#ifdef USE_DL_ALLOCATOR
 
-static void* lua_alloc_dl(void* ud, void* ptr, size_t osize, size_t nsize) {
-	(void)ud;
-	(void)osize;
-	if (nsize == 0) { dlfree(ptr);	 return	NULL; }
-	else				return dlrealloc(ptr, nsize);
-}
+#include "../../xrCore/memory_allocator_options.h"
+
+#ifdef USE_ARENA_ALLOCATOR
+	static const u32	s_arena_size = 8*1024*1024;
+	static char			s_fake_array[s_arena_size];
+	doug_lea_allocator	g_render_lua_allocator( s_fake_array, s_arena_size, "render:lua" );
+#else // #ifdef USE_ARENA_ALLOCATOR
+	doug_lea_allocator	g_render_lua_allocator( 0, 0, "render:lua" );
+#endif // #ifdef USE_ARENA_ALLOCATOR
+
 #endif // USE_DL_ALLOCATOR
-
-using namespace luabind;
-
-static void* __cdecl luabind_allocator(luabind::memory_allocation_function_parameter, const void* pointer, size_t const size) //Ðàíüøå âñåãî èíèòèòñÿ çäåñü, ïîýòîìó ïóñòü çäåñü è áóäåò
-{
-	if (!size)
-	{
-		void* non_const_pointer = const_cast<LPVOID>(pointer);
-		xr_free(non_const_pointer);
-		return nullptr;
-	}
-
-	if (!pointer)
-	{
-#ifndef DEBUG
-		return Memory.mem_alloc(size);
-#else
-		return Memory.mem_alloc(size, "void");
-#endif
-	}
-
-	void* non_const_pointer = const_cast<LPVOID>(pointer);
-#ifndef DEBUG
-	return Memory.mem_realloc(non_const_pointer, size);
-#else
-	return Memory.mem_realloc(non_const_pointer, size, "void");
-#endif
-}
 
 // export
 void	CResourceManager::LS_Load()
 {
-	luabind::allocator = &luabind_allocator; //Àëëîêàòîð èíèòèòñÿ òîëüêî çäåñü è òîëüêî îäèí ðàç!
-	luabind::allocator_parameter = nullptr;
-
-#ifndef USE_DL_ALLOCATOR
-	LSVM = lua_newstate(lua_alloc_xr, NULL);
-#else // USE_XR_ALLOCAOR
-	LSVM = lua_newstate(lua_alloc_dl, NULL);
-#endif // USE_XR_ALLOCAOR
+	LSVM = luaL_newstate();
 	if (!LSVM) {
 		Msg("! ERROR : Cannot initialize LUA VM!");
 		return;
 	}
 
 	// initialize lua standard library functions 
-	luaL_openlibs(LSVM);
+	luaopen_base(LSVM);
+	luaopen_table(LSVM);
+	luaopen_string(LSVM);
+	luaopen_math(LSVM);
+	luaopen_jit(LSVM);
 
 	luabind::open(LSVM);
 #if !XRAY_EXCEPTIONS
-	if (!luabind::get_error_callback())
+	if (0 == luabind::get_error_callback())
 		luabind::set_error_callback(LuaError);
 #endif
 
-	//	std::function		(LSVM, "log",	LuaLog);
+	module			(LSVM)
+	[
+		def("log", LuaLog),
 
-	module(LSVM)
-		[def("log", &LuaLog),
 		class_<adopt_sampler>("_sampler")
-		.def(constructor<const adopt_sampler&>())
-		.def("texture", &adopt_sampler::_texture, return_reference_to<1>())
-		.def("project", &adopt_sampler::_projective, return_reference_to<1>())
-		.def("clamp", &adopt_sampler::_clamp, return_reference_to<1>())
-		.def("wrap", &adopt_sampler::_wrap, return_reference_to<1>())
-		.def("mirror", &adopt_sampler::_mirror, return_reference_to<1>())
-		.def("f_anisotropic", &adopt_sampler::_f_anisotropic, return_reference_to<1>())
-		.def("f_trilinear", &adopt_sampler::_f_trilinear, return_reference_to<1>())
-		.def("f_bilinear", &adopt_sampler::_f_bilinear, return_reference_to<1>())
-		.def("f_linear", &adopt_sampler::_f_linear, return_reference_to<1>())
-		.def("f_none", &adopt_sampler::_f_none, return_reference_to<1>())
-		.def("fmin_none", &adopt_sampler::_fmin_none, return_reference_to<1>())
-		.def("fmin_point", &adopt_sampler::_fmin_point, return_reference_to<1>())
-		.def("fmin_linear", &adopt_sampler::_fmin_linear, return_reference_to<1>())
-		.def("fmin_aniso", &adopt_sampler::_fmin_aniso, return_reference_to<1>())
-		.def("fmip_none", &adopt_sampler::_fmip_none, return_reference_to<1>())
-		.def("fmip_point", &adopt_sampler::_fmip_point, return_reference_to<1>())
-		.def("fmip_linear", &adopt_sampler::_fmip_linear, return_reference_to<1>())
-		.def("fmag_none", &adopt_sampler::_fmag_none, return_reference_to<1>())
-		.def("fmag_point", &adopt_sampler::_fmag_point, return_reference_to<1>())
-		.def("fmag_linear", &adopt_sampler::_fmag_linear, return_reference_to<1>()),
+			.def(								constructor<const adopt_sampler&>())
+			.def("texture",						&adopt_sampler::_texture		,return_reference_to(_1))
+			.def("project",						&adopt_sampler::_projective		,return_reference_to(_1))
+			.def("clamp",						&adopt_sampler::_clamp			,return_reference_to(_1))
+			.def("wrap",						&adopt_sampler::_wrap			,return_reference_to(_1))
+			.def("mirror",						&adopt_sampler::_mirror			,return_reference_to(_1))
+			.def("f_anisotropic",				&adopt_sampler::_f_anisotropic	,return_reference_to(_1))
+			.def("f_trilinear",					&adopt_sampler::_f_trilinear	,return_reference_to(_1))
+			.def("f_bilinear",					&adopt_sampler::_f_bilinear		,return_reference_to(_1))
+			.def("f_linear",					&adopt_sampler::_f_linear		,return_reference_to(_1))
+			.def("f_none",						&adopt_sampler::_f_none			,return_reference_to(_1))
+			.def("fmin_none",					&adopt_sampler::_fmin_none		,return_reference_to(_1))
+			.def("fmin_point",					&adopt_sampler::_fmin_point		,return_reference_to(_1))
+			.def("fmin_linear",					&adopt_sampler::_fmin_linear	,return_reference_to(_1))
+			.def("fmin_aniso",					&adopt_sampler::_fmin_aniso		,return_reference_to(_1))
+			.def("fmip_none",					&adopt_sampler::_fmip_none		,return_reference_to(_1))
+			.def("fmip_point",					&adopt_sampler::_fmip_point		,return_reference_to(_1))
+			.def("fmip_linear",					&adopt_sampler::_fmip_linear	,return_reference_to(_1))
+			.def("fmag_none",					&adopt_sampler::_fmag_none		,return_reference_to(_1))
+			.def("fmag_point",					&adopt_sampler::_fmag_point		,return_reference_to(_1))
+			.def("fmag_linear",					&adopt_sampler::_fmag_linear	,return_reference_to(_1)),
 
 		class_<adopt_compiler>("_compiler")
-		.def(constructor<const adopt_compiler&>())
-		.def("begin", &adopt_compiler::_pass, return_reference_to<1>())
-		.def("sorting", &adopt_compiler::_options, return_reference_to<1>())
-		.def("emissive", &adopt_compiler::_o_emissive, return_reference_to<1>())
-		.def("distort", &adopt_compiler::_o_distort, return_reference_to<1>())
-		.def("wmark", &adopt_compiler::_o_wmark, return_reference_to<1>())
-		.def("fog", &adopt_compiler::_fog, return_reference_to<1>())
-		.def("zb", &adopt_compiler::_ZB, return_reference_to<1>())
-		.def("blend", &adopt_compiler::_blend, return_reference_to<1>())
-		.def("aref", &adopt_compiler::_aref, return_reference_to<1>())
-		.def("sampler", &adopt_compiler::_sampler),	// returns sampler-object
+			.def(								constructor<const adopt_compiler&>())
+			.def("begin",						&adopt_compiler::_pass			,return_reference_to(_1))
+			.def("sorting",						&adopt_compiler::_options		,return_reference_to(_1))
+			.def("emissive",					&adopt_compiler::_o_emissive	,return_reference_to(_1))
+			.def("distort",						&adopt_compiler::_o_distort		,return_reference_to(_1))
+			.def("wmark",						&adopt_compiler::_o_wmark		,return_reference_to(_1))
+			.def("fog",							&adopt_compiler::_fog			,return_reference_to(_1))
+			.def("zb",							&adopt_compiler::_ZB			,return_reference_to(_1))
+			.def("blend",						&adopt_compiler::_blend			,return_reference_to(_1))
+			.def("aref",						&adopt_compiler::_aref			,return_reference_to(_1))
+			.def("color_write_enable",			&adopt_compiler::_color_write_enable,return_reference_to(_1))
+			.def("sampler",						&adopt_compiler::_sampler		),	// returns sampler-object
 
 		class_<adopt_blend>("blend")
-		.enum_("blend")
-		[
-			value("zero", int(D3DBLEND_ZERO)),
-			value("one", int(D3DBLEND_ONE)),
-			value("srccolor", int(D3DBLEND_SRCCOLOR)),
-			value("invsrccolor", int(D3DBLEND_INVSRCCOLOR)),
-			value("srcalpha", int(D3DBLEND_SRCALPHA)),
-			value("invsrcalpha", int(D3DBLEND_INVSRCALPHA)),
-			value("destalpha", int(D3DBLEND_DESTALPHA)),
-			value("invdestalpha", int(D3DBLEND_INVDESTALPHA)),
-			value("destcolor", int(D3DBLEND_DESTCOLOR)),
-			value("invdestcolor", int(D3DBLEND_INVDESTCOLOR)),
-			value("srcalphasat", int(D3DBLEND_SRCALPHASAT))
-		]
-		];
+			.enum_("blend")
+			[
+				value("zero",					int(D3DBLEND_ZERO)),
+				value("one",					int(D3DBLEND_ONE)),
+				value("srccolor",				int(D3DBLEND_SRCCOLOR)),
+				value("invsrccolor",			int(D3DBLEND_INVSRCCOLOR)),
+				value("srcalpha",				int(D3DBLEND_SRCALPHA)),
+				value("invsrcalpha",			int(D3DBLEND_INVSRCALPHA)),
+				value("destalpha",				int(D3DBLEND_DESTALPHA)),
+				value("invdestalpha",			int(D3DBLEND_INVDESTALPHA)),
+				value("destcolor",				int(D3DBLEND_DESTCOLOR)),
+				value("invdestcolor",			int(D3DBLEND_INVDESTCOLOR)),
+				value("srcalphasat",			int(D3DBLEND_SRCALPHASAT))
+			]
+	];
 
 	// load shaders
 	xr_vector<char*>*	folder			= FS.file_list_open	("$game_shaders$",::Render->getShaderPath(),FS_ListFiles|FS_RootOnly);
@@ -372,7 +328,7 @@ ShaderElement*		CBlender_Compile::_lua_Compile	(LPCSTR namesp, LPCSTR name)
 	LPCSTR				t_1		= (L_textures.size() > 1)	? *L_textures[1] : "null";
 	LPCSTR				t_d		= detail_texture			? detail_texture : "null" ;
 	lua_State*			LSVM	= dxRenderDeviceRender::Instance().Resources->LSVM;
-	object				shader	= get_globals(LSVM)[namesp];
+	object				shader	= globals(LSVM)[namesp];
 	adopt_compiler		ac		= adopt_compiler(this);
 	call_function<void>(shader[name], ac, t_0, t_1, t_d);
 	r_End				();

@@ -63,7 +63,7 @@ void		IBlender::CreatePalette(xr_vector<IBlender*> &palette)
 
 #ifndef _EDITOR
 // Engine
-#include "../../../xr_3da/render.h"
+#include "../../../xrEngine/render.h"
 IBlender*	IBlender::Create	(CLASS_ID cls)
 {
 	return ::RImplementation.blender_create	(cls);

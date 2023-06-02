@@ -6,18 +6,18 @@
 #pragma hdrstop
 
 #pragma warning(disable:4995)
-#include <d3dx9.h>
+#include <d3dx/d3dx9.h>
 #pragma warning(default:4995)
 
 #ifndef _EDITOR
-	#include	"../../xr_3da/Render.h"
+	#include	"../../xrEngine/Render.h"
 #else
 	#include "../../Include/xrAPI/xrAPI.h"
 #endif
 
 #include "SkeletonX.h"
 #include "SkeletonCustom.h"
-#include "../../xr_3da/fmesh.h"
+#include "../../xrEngine/fmesh.h"
 #include "../../xrCPU_Pipe/xrCPU_Pipe.h"
 
 shared_str	s_bones_array_const;
@@ -178,8 +178,8 @@ void CSkeletonX::_Load	(const char* N, IReader *data, u32& dwVertCount)
 	u16			hw_bones_cnt		= u16((HW.Caps.geometry.dwRegisters-22-3)/3);
 
 	#if RENDER == R_R1
-//		if ( ps_r1_SoftwareSkinning == 1 )
-//			hw_bones_cnt = 0;
+		if ( ps_r1_SoftwareSkinning == 1 )
+			hw_bones_cnt = 0;
 	#endif // RENDER == R_R1
 
 	u16			sw_bones_cnt		= 0;

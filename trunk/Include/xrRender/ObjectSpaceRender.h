@@ -1,3 +1,5 @@
+#ifndef ObjectSpaceRender_included
+#define ObjectSpaceRender_included
 #pragma once
 
 #ifdef DEBUG
@@ -14,3 +16,5 @@ public:
 };
 
 #endif // DEBUG
+
+#endif	//	ObjectSpaceRender_included

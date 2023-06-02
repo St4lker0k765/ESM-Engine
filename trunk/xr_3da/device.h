@@ -13,7 +13,6 @@
 #define DEVICE_RESET_PRECACHE_FRAME_COUNT 10
 
 #include "../Include/xrRender/RenderDeviceRender.h"
-#include "Threading/xrThreadingCriticalSection.h"
 
 // refs
 class ENGINE_API CRenderDevice 
@@ -162,17 +161,10 @@ public:
 		return					(Timer.time_factor());
 	}
 
-#define SEQUANTIAL_AUX_THREADS_COUNT 1
 	// Multi-threading
 	xrCriticalSection	mt_csEnter;
 	xrCriticalSection	mt_csLeave;
 	volatile BOOL		mt_bMustExit;
-
-	// Dependable from MainThread Aux thread 5 workload pool
-	xr_vector		<fastdelegate::FastDelegate0<>>	auxThreadPool_5_;
-
-	// Locks
-	AccessLock		AuxPool_5_Protection_;
 
 	ICF		void			remove_from_seq_parallel	(const fastdelegate::FastDelegate0<> &delegate)
 	{
@@ -183,36 +175,6 @@ public:
 		);
 		if (I != seqParallel.end())
 			seqParallel.erase	(I);
-	}
-
-	ICF	void			AddToAuxThread_Pool(u8 aux_thread_no, const fastdelegate::FastDelegate0<>& delegate)
-	{
-		R_ASSERT(aux_thread_no > 0 && aux_thread_no <= SEQUANTIAL_AUX_THREADS_COUNT);
-
-		if (aux_thread_no == 1)
-		{
-			AuxPool_5_Protection_.Enter();
-			auxThreadPool_5_.push_back(delegate);
-			AuxPool_5_Protection_.Leave();
-		}
-		else
-			R_ASSERT(false);
-	}
-
-	ICF	void			RemoveFromAuxthread5Pool(const fastdelegate::FastDelegate0<>& delegate)
-	{
-		AuxPool_5_Protection_.Enter();
-
-		xr_vector<fastdelegate::FastDelegate0<> >::iterator I = std::find(
-			auxThreadPool_5_.begin(),
-			auxThreadPool_5_.end(),
-			delegate
-		);
-
-		if (I != auxThreadPool_5_.end())
-			auxThreadPool_5_.erase(I);
-
-		AuxPool_5_Protection_.Leave();
 	}
 public:
 	void xr_stdcall		on_idle();

@@ -167,7 +167,6 @@ public:
 	// static particles
 	DEFINE_VECTOR				(CParticlesObject*,POVec,POIt);
 	POVec						m_StaticParticles;
-	POVec						allParticles_;
 
 	game_cl_GameState			*game;
 	BOOL						m_bGameConfigStarted;

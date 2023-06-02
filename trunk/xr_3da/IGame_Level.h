@@ -109,7 +109,7 @@ public:
 
 	// Loader interface
 	void						LL_CheckTextures		();
-	virtual void SetEnvironmentGameTimeFactor(u64 const& GameTime, float const& fTimeFactor) = 0;
+	virtual void SetEnvironmentGameTimeFactor(ALife::_TIME_ID GameTime, float const fTimeFactor) = 0;
 	virtual void OnChangeCurrentWeather(const char* sect) = 0;
 };
 

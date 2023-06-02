@@ -305,7 +305,7 @@ public:
 	float				GetGameTimeFactor		();
 	void				SetGameTimeFactor		(const float fTimeFactor);
 	void				SetGameTimeFactor		(ALife::_TIME_ID GameTime, const float fTimeFactor);
-	void				SetEnvironmentGameTimeFactor(u64 const& GameTime, float const& fTimeFactor);
+	void				SetEnvironmentGameTimeFactor		(ALife::_TIME_ID GameTime, const float fTimeFactor);
 //	void				SetGameTime				(ALife::_TIME_ID GameTime);
 
 	// gets current daytime [0..23]

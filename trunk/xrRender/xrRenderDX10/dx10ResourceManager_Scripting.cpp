@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include	"../../xr_3da/Render.h"
+#include	"../../xrEngine/Render.h"
 #include	"../xrRender/ResourceManager.h"
 #include	"../xrRender/tss.h"
 #include	"../xrRender/blenders/blender.h"
@@ -9,9 +9,10 @@
 //	adopt_compiler don't have = operator And it can't have = operator
 #pragma warning( push )
 #pragma warning( disable : 4512)
-#include	"../../xr_3da/ai_script_space.h"
+#include	"../../xrEngine/ai_script_space.h"
 #pragma warning( pop )
-#include	"../../xr_3da/ai_script_lua_extension.h"
+#include	"../../xrEngine/ai_script_lua_extension.h"
+#include	"luabind/return_reference_to_policy.hpp"
 
 #include	"../xrRender/dxRenderDeviceRender.h"
 

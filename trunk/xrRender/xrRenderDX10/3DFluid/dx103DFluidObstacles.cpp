@@ -1,13 +1,11 @@
 #include "stdafx.h"
-
-#ifdef DX10_FLUID_ENABLE
 #include "dx103DFluidObstacles.h"
 
 #include "../../xrRender/dxRenderDeviceRender.h"
-#include "../../../xr_3da/xr_object.h"
-#include "../../../xr_3da/IPhysicsShell.h"
-#include "../../../xr_3da/IObjectPhysicsCollision.h"
-#include "../../../xr_3da/IPhysicsGeometry.h"
+#include "../../../xrEngine/xr_object.h"
+#include "../../../xrEngine/IPhysicsShell.h"
+#include "../../../xrEngine/IObjectPhysicsCollision.h"
+#include "../../../xrEngine/IPhysicsGeometry.h"
 
 #include "dx103DFluidBlenders.h"
 #include "dx103DFluidData.h"
@@ -422,5 +420,3 @@ void dx103DFluidObstacles::RenderDynamicOOBB( const IPhysicsGeometry &Geometry, 
 
 	m_pGrid->DrawSlices();
 }
-
-#endif

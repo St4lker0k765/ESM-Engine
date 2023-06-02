@@ -2,8 +2,6 @@
 #define	dx103DFluidGrid_included
 #pragma once
 
-#ifdef DX10_FLUID_ENABLE
-
 struct VS_INPUT_FLUIDSIM_STRUCT;
 
 class dx103DFluidGrid
@@ -53,4 +51,3 @@ private:
 };
 
 #endif	//	dx103DFluidGrid_included
-#endif

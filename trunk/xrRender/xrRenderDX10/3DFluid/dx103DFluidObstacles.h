@@ -2,8 +2,6 @@
 #define	dx103DFluidObstacles_included
 #pragma once
 
-#ifdef DX10_FLUID_ENABLE
-
 class dx103DFluidGrid;
 class dx103DFluidData;
 class IPhysicsShell;
@@ -56,4 +54,3 @@ private:
 };
 
 #endif	//	dx103DFluidObstacles_included
-#endif

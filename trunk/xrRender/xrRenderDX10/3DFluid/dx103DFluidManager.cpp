@@ -1,7 +1,4 @@
 #include "stdafx.h"
-
-#ifdef DX10_FLUID_ENABLE
-
 #include "dx103DFluidManager.h"
 
 #include "../../xrRender/dxRenderDeviceRender.h"
@@ -826,4 +823,3 @@ void dx103DFluidManager::UpdateProfiles()
 }
 
 #endif	//	DEBUG
-#endif

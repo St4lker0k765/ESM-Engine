@@ -2,8 +2,6 @@
 #define	dx103DFluidData_included
 #pragma once
 
-#ifdef DX10_FLUID_ENABLE
-
 #include "dx103DFluidEmitters.h"
 
 class dx103DFluidData
@@ -77,4 +75,3 @@ private:
 };
 
 #endif	//	dx103DFluidData_included
-#endif

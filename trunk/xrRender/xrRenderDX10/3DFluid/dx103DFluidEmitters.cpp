@@ -5,6 +5,8 @@
 #include "dx103DFluidData.h"
 #include "dx103DFluidGrid.h"
 
+#ifdef DX10_FLUID_ENABLE
+
 namespace
 {
 	shared_str	strImpulseSize("size");
@@ -173,3 +175,4 @@ void dx103DFluidEmitters::ApplyVelocity( const CEmitter &Emitter)
 
 	m_pGrid->DrawSlices();
 }
+#endif

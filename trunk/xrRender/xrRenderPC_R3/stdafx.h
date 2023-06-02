@@ -5,9 +5,9 @@
 #pragma once
 
 #pragma warning(disable:4995)
-#include "../../xrEngine/stdafx.h"
+#include "../../xr_3da/stdafx.h"
 #pragma warning(disable:4995)
-#include <d3dx/d3dx9.h>
+#include <d3dx9.h>
 #pragma warning(default:4995)
 #pragma warning(disable:4714)
 #pragma warning( 4 : 4018 )
@@ -16,7 +16,7 @@
 
 #include <d3d10_1.h>
 #include <d3d11.h>
-#include <d3dx/D3Dx10core.h>
+#include <D3Dx10core.h>
 #include <D3DCompiler.h>
 
 #include "../xrRender/xrD3DDefs.h"
@@ -30,7 +30,7 @@
 #define		RENDER	R_R3
 
 
-#include "../../xrEngine/psystem.h"
+#include "../../xr_3da/psystem.h"
 
 #include "../xrRender/HW.h"
 #include "../xrRender/Shader.h"
@@ -39,10 +39,10 @@
 
 #include "../xrRender/resourcemanager.h"
 
-#include "../../xrEngine/vis_common.h"
-#include "../../xrEngine/render.h"
-#include "../../xrEngine/_d3d_extensions.h"
-#include "../../xrEngine/igame_level.h"
+#include "../../xr_3da/vis_common.h"
+#include "../../xr_3da/render.h"
+#include "../../xr_3da/_d3d_extensions.h"
+#include "../../xr_3da/igame_level.h"
 #include "../xrRender/blenders\blender.h"
 #include "../xrRender/blenders\blender_clsid.h"
 #include "../xrRender/xrRender_console.h"

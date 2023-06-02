@@ -735,6 +735,7 @@
     <ClInclude Include="..\xrRender\Debug\dxPixEventWrapper.h">
       <Filter>Debug</Filter>
     </ClInclude>
+    <ClInclude Include="..\xrRender\doug_lea_memory_allocator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1333,5 +1334,6 @@
     </ClCompile>
     <ClCompile Include="..\..\xr_3da\ai_script_lua_debug.cpp" />
     <ClCompile Include="..\..\xr_3da\ai_script_lua_extension.cpp" />
+    <ClCompile Include="..\xrRender\doug_lea_memory_allocator.c" />
   </ItemGroup>
 </Project>

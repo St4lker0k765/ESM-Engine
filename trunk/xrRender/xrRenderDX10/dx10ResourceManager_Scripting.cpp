@@ -16,7 +16,6 @@
 #include	"../xrRender/dxRenderDeviceRender.h"
 #include "luabind/return_reference_to_policy.hpp"
 
-lua_State* LSVM = nullptr;
 using namespace				luabind;
 
 #ifdef	DEBUG
@@ -135,24 +134,40 @@ void LuaError(lua_State* L)
 {
 	Debug.fatal(DEBUG_INFO,"LUA error: %s",lua_tostring(L,-1));
 }
-int lua_pcall_failed(lua_State* L)
-{
-	Debug.fatal(DEBUG_INFO, "LUA error: %s", lua_tostring(L, -1));
 
-	return LUA_ERRRUN;
+#ifndef PURE_ALLOC
+//#	ifndef USE_MEMORY_MONITOR
+#		define USE_DL_ALLOCATOR
+//#	endif // USE_MEMORY_MONITOR
+#endif // PURE_ALLOC
+
+#ifndef USE_DL_ALLOCATOR
+static void* lua_alloc_xr(void* ud, void* ptr, size_t osize, size_t nsize) {
+	(void)ud;
+	(void)osize;
+	if (nsize == 0) {
+		xr_free(ptr);
+		return	NULL;
+	}
+	else
+#	ifdef DEBUG_MEMORY_NAME
+		return Memory.mem_realloc(ptr, nsize, "LUA:Render");
+#	else // DEBUG_MEMORY_MANAGER
+		return Memory.mem_realloc(ptr, nsize);
+#	endif // DEBUG_MEMORY_MANAGER
 }
+#else // USE_DL_ALLOCATOR
+#include "../xrRender/doug_lea_memory_allocator.h"
+#include <Luabind/luabind/luabind_memory.h>
+#include <Luabind/luabind/luabind_delete.h>
 
-int lua_panic(lua_State* L)
-{
-	Debug.fatal(DEBUG_INFO, "LUA error: %s", lua_tostring(L, -1));
-
-	return 0;
+static void* lua_alloc_dl(void* ud, void* ptr, size_t osize, size_t nsize) {
+	(void)ud;
+	(void)osize;
+	if (nsize == 0) { dlfree(ptr);	 return	NULL; }
+	else				return dlrealloc(ptr, nsize);
 }
-
-static void lua_cast_failed(lua_State* L, LUABIND_TYPE_INFO info)
-{
-	Debug.fatal(DEBUG_INFO, "LUA error: %s", lua_tostring(L, -1));
-}
+#endif // USE_DL_ALLOCATOR
 
 using namespace luabind;
 
@@ -185,27 +200,26 @@ static void* __cdecl luabind_allocator(luabind::memory_allocation_function_param
 // export
 void	CResourceManager::LS_Load()
 {
-	// Msg("[CResourceManager] Starting LuaJIT");
-	R_ASSERT2(!LSVM, "! LuaJIT is already running"); //На всякий случай
-	//
 	luabind::allocator = &luabind_allocator; //Àëëîêàòîð èíèòèòñÿ òîëüêî çäåñü è òîëüêî îäèí ðàç!
 	luabind::allocator_parameter = nullptr;
-	LSVM = luaL_newstate(); //Запускаем LuaJIT. Память себе он выделит сам.
+
+#ifndef USE_DL_ALLOCATOR
+	LSVM = lua_newstate(lua_alloc_xr, NULL);
+#else // USE_XR_ALLOCAOR
+	LSVM = lua_newstate(lua_alloc_dl, NULL);
+#endif // USE_XR_ALLOCAOR
+	if (!LSVM) {
+		Msg("! ERROR : Cannot initialize LUA VM!");
+		return;
+	}
+
+	// initialize lua standard library functions 
 	luaL_openlibs(LSVM);
-	R_ASSERT2(LSVM, "! ERROR : Cannot initialize LUA VM!"); //Надо проверить, случается ли такое
-	luabind::open(LSVM);  //Запуск луабинда
 
-	//--------------Установка калбеков------------------//
-#ifdef LUABIND_NO_EXCEPTIONS
-	luabind::set_error_callback(LuaError); //Калбек на ошибки.
-	luabind::set_cast_failed_callback(lua_cast_failed);
-#endif
-	luabind::set_pcall_callback(lua_pcall_failed); // KRodin: НЕ ЗАКОММЕНТИРОВАТЬ НИ В КОЕМ СЛУЧАЕ!!!
-	lua_atpanic(LSVM, lua_panic);
-
+	luabind::open(LSVM);
 #if !XRAY_EXCEPTIONS
-	//	if (!luabind::get_error_callback())
-	//		luabind::set_error_callback(LuaError);
+	if (!luabind::get_error_callback())
+		luabind::set_error_callback(LuaError);
 #endif
 
 
@@ -450,7 +464,7 @@ ShaderElement*		CBlender_Compile::_lua_Compile	(LPCSTR namesp, LPCSTR name)
 	LPCSTR				t_0		= *L_textures[0]			? *L_textures[0] : "null";
 	LPCSTR				t_1		= (L_textures.size() > 1)	? *L_textures[1] : "null";
 	LPCSTR				t_d		= detail_texture			? detail_texture : "null" ;
-
+	lua_State*			LSVM	= dxRenderDeviceRender::Instance().Resources->LSVM;
 	object				shader	= get_globals(LSVM)[namesp];
 	bool				bFirstPass = false;
 	adopt_compiler		ac		= adopt_compiler(this, bFirstPass);

@@ -184,6 +184,9 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{56ff2c0f-69a0-4b75-a499-7f294fd340eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\memory">
+      <UniqueIdentifier>{3b901c60-62a3-480b-8f77-130a9cbcabc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cl_intersect.h">
@@ -719,6 +722,9 @@
     </ClInclude>
     <ClInclude Include="..\xrRender\Debug\dxPixEventWrapper.h">
       <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xrRender\doug_lea_memory_allocator.h">
+      <Filter>Core\memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1303,6 +1309,9 @@
     </ClCompile>
     <ClCompile Include="..\..\xr_3da\ai_script_lua_debug.cpp" />
     <ClCompile Include="..\..\xr_3da\ai_script_lua_extension.cpp" />
+    <ClCompile Include="..\xrRender\doug_lea_memory_allocator.c">
+      <Filter>Core\memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="todo.txt" />

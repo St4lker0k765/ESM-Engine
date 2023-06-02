@@ -158,25 +158,24 @@ void CScriptEngine::setup_auto_load		()
 
 void CScriptEngine::init				()
 {
-	lua_State* LSVM = luaL_newstate(); //Запускаем LuaJIT. Память себе он выделит сам.
-	R_ASSERT2(LSVM, "! ERROR : Cannot initialize LUA VM!");
-	reinit(LSVM);
-	luabind::open(LSVM); //Запуск луабинда
-	//--------------Установка калбеков------------------//
-#ifdef LUABIND_NO_EXCEPTIONS
-	luabind::set_error_callback(lua_error);
-	luabind::set_cast_failed_callback(lua_cast_failed);
-#endif
-	luabind::set_pcall_callback(lua_pcall_failed); // KRodin: НЕ ЗАКОММЕНТИРОВАТЬ НИ В КОЕМ СЛУЧАЕ!!!
-	lua_atpanic(LSVM, lua_panic);
-	//-----------------------------------------------------//
-	export_classes(LSVM);
-	luaL_openlibs(LSVM); //Инициализация функций LuaJIT
+	CScriptStorage::reinit				();
+
+	luabind::open						(lua());
+	setup_callbacks						();
+	export_classes						(lua());
 	setup_auto_load						();
 
 #ifdef DEBUG
 	m_stack_is_ready					= true;
 #endif
+
+#ifdef DEBUG
+#	ifdef USE_DEBUGGER
+		if( !debugger() || !debugger()->Active()  )
+#	endif
+			lua_sethook					(lua(),lua_hook_call,	LUA_MASKLINE|LUA_MASKCALL|LUA_MASKRET,	0);
+#endif
+
 	bool								save = m_reload_modules;
 	m_reload_modules					= true;
 	process_file_if_exists				("_G",false);

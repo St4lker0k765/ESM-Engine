@@ -13,6 +13,9 @@
     <Filter Include="TTAPI">
       <UniqueIdentifier>{34bbe16a-ae21-498f-97a2-5c875b7854ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PLC">
+      <UniqueIdentifier>{ad135564-3d87-428f-b9cb-c686fcfe8d9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -53,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="xrSkin2W_thread.cpp">
       <Filter>Generic x86</Filter>
+    </ClCompile>
+    <ClCompile Include="PLC.cpp">
+      <Filter>PLC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

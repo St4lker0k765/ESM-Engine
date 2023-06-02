@@ -28,6 +28,9 @@ extern xrSkin4W			xrSkin4W_thread;
 
 xrSkin4W* skin4W_func = nullptr;
 
+extern xrPLC_calc3		PLC_calc3_x86;
+extern xrPLC_calc3		PLC_calc3_SSE;
+
 extern xrM44_Mul		xrM44_Mul_x86;
 extern xrM44_Mul		xrM44_Mul_3DNow;
 extern xrM44_Mul		xrM44_Mul_SSE;
@@ -47,6 +50,7 @@ extern "C" {
 		T->skin1W	= xrSkin1W_x86;
 		T->skin2W	= xrSkin2W_x86;
 		skin4W_func = xrSkin4W_x86;
+		T->PLC_calc3 = PLC_calc3_x86;
 		// T->blerp	= xrBoneLerp_x86;
 //		T->m44_mul	= xrM44_Mul_x86;
 		T->transfer = xrTransfer_x86;

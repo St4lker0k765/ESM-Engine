@@ -1,3 +1,5 @@
+#ifndef xrMemoryH
+#define xrMemoryH
 #pragma once
 
 #include "memory_monitor.h"
@@ -7,6 +9,12 @@
 #ifdef USE_MEMORY_MONITOR
 #	define DEBUG_MEMORY_NAME
 #endif // USE_MEMORY_MONITOR
+
+#ifndef M_BORLAND
+#	if 0//def DEBUG
+#		define DEBUG_MEMORY_MANAGER
+#	endif // DEBUG
+#endif // M_BORLAND
 
 #ifdef DEBUG_MEMORY_MANAGER
 	XRCORE_API	extern BOOL	g_bMEMO;
@@ -81,7 +89,12 @@ extern XRCORE_API	xrMemory	Memory;
 #define CopyMemory(a,b,c)	memcpy(a,b,c)			//. CopyMemory(a,b,c)
 #define FillMemory(a,b,c)	Memory.mem_fill(a,c,b)
 
-
+// delete
+#ifdef __BORLANDC__
+	#include "xrMemory_subst_borland.h"
+#else
+	#include "xrMemory_subst_msvc.h"
+#endif
 
 // generic "C"-like allocations/deallocations
 #ifdef DEBUG_MEMORY_NAME
@@ -109,29 +122,6 @@ template <class T>
 	IC void*	xr_malloc	(size_t size)			{	return	Memory.mem_alloc(size);					}
 	IC void*	xr_realloc	(void* P, size_t size)	{	return Memory.mem_realloc(P,size);				}
 #endif // DEBUG_MEMORY_NAME
-
-template <bool _is_pm, typename T>
-struct xr_special_free
-{
-	IC void operator()(T*& ptr)
-	{
-		void* _real_ptr = dynamic_cast<void*>(ptr);
-		ptr->~T();
-		xr_free(_real_ptr);
-	}
-};
-
-template <typename T>
-struct xr_special_free<false, T>
-{
-	IC void operator()(T*& ptr)
-	{
-		ptr->~T();
-		xr_free(ptr);
-	}
-};
-
-#include "xrMemory_subst_msvc.h"
 
 XRCORE_API	char* 	xr_strdup	(const char* string);
 
@@ -163,3 +153,5 @@ extern		BOOL		mem_initialized;
 XRCORE_API void vminfo			(size_t *_free, size_t *reserved, size_t *committed);
 XRCORE_API void log_vminfo		();
 XRCORE_API u32	mem_usage_impl	(HANDLE heap_handle, u32* pBlocksUsed, u32* pBlocksFree);
+
+#endif // xrMemoryH

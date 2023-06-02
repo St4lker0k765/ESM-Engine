@@ -16,6 +16,27 @@ IC T* xr_new(Args&&... args)
 }
 #endif // DEBUG_MEMORY_NAME
 
+template <bool _is_pm, typename T>
+struct xr_special_free
+{
+	IC void operator()(T* &ptr)
+	{
+		void*	_real_ptr	= dynamic_cast<void*>(ptr);
+		ptr->~T			();
+		Memory.mem_free	(_real_ptr);
+	}
+};
+
+template <typename T>
+struct xr_special_free<false,T>
+{
+	IC void operator()(T* &ptr)
+	{
+		ptr->~T			();
+		Memory.mem_free	(ptr);
+	}
+};
+
 template <class T>
 IC void xr_delete(T*& ptr)
 {

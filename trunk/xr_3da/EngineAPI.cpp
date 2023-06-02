@@ -58,11 +58,12 @@ void CEngineAPI::Initialize(void)
 	LPCSTR			r3_name = "xrRender_R3.dll";
 	LPCSTR			r4_name = "xrRender_R4.dll";
 
+#ifndef DEDICATED_SERVER
 	if (psDeviceFlags.test(rsR4)) {
 		// try to initialize R2
 		Log("Loading DLL:", r4_name);
 		hRender = LoadLibrary(r4_name);
-		if (!hRender) {
+		if (nullptr == hRender) {
 			// try to load R1
 			Msg("...Failed - incompatible hardware.");
 		}
@@ -72,7 +73,7 @@ void CEngineAPI::Initialize(void)
 		// try to initialize R2
 		Log("Loading DLL:", r3_name);
 		hRender = LoadLibrary(r3_name);
-		if (!hRender) {
+		if (nullptr == hRender) {
 			// try to load R1
 			Msg("...Failed - incompatible hardware.");
 		}
@@ -82,13 +83,14 @@ void CEngineAPI::Initialize(void)
 		// try to initialize R2
 		Log				("Loading DLL:",	r2_name);
 		hRender			= LoadLibrary		(r2_name);
-		if (!hRender)	{
+		if (nullptr==hRender)	{
 			// try to load R1
 			Msg			("...Failed - incompatible hardware.");
 		}
 	}
+#endif
 
-	if (!hRender)		{
+	if (nullptr==hRender)		{
 		// try to load R1
 		psDeviceFlags.set(rsR3, FALSE);
 		psDeviceFlags.set	(rsR2,FALSE);
@@ -96,8 +98,7 @@ void CEngineAPI::Initialize(void)
 
 		Log				("Loading DLL:",	r1_name);
 		hRender			= LoadLibrary		(r1_name);
-		if (!hRender)	
-			R_CHK				(GetLastError());
+		if (nullptr==hRender)	R_CHK				(GetLastError());
 		R_ASSERT		(hRender);
 	}
 
@@ -108,8 +109,7 @@ void CEngineAPI::Initialize(void)
 		LPCSTR			g_name	= "xrGame.dll";
 		Log				("Loading DLL:",g_name);
 		hGame			= LoadLibrary	(g_name);
-		if (!hGame)	
-			R_CHK			(GetLastError());
+		if (nullptr==hGame)	R_CHK			(GetLastError());
 		R_ASSERT2		(hGame,"Game DLL raised exception during loading or there is no game DLL at all");
 		pCreate			= (Factory_Create*)		GetProcAddress(hGame,"xrFactory_Create"		);	R_ASSERT(pCreate);
 		pDestroy		= (Factory_Destroy*)	GetProcAddress(hGame,"xrFactory_Destroy"	);	R_ASSERT(pDestroy);
@@ -122,7 +122,7 @@ void CEngineAPI::Initialize(void)
 		LPCSTR			g_name	= "vTuneAPI.dll";
 		Log				("Loading DLL:",g_name);
 		hTuner			= LoadLibrary	(g_name);
-		if (!hTuner)	R_CHK			(GetLastError());
+		if (nullptr==hTuner)	R_CHK			(GetLastError());
 		R_ASSERT2		(hTuner,"Intel vTune is not installed");
 		tune_enabled	= TRUE;
 		tune_pause		= (VTPause*)	GetProcAddress(hTuner,"VTPause"		);	R_ASSERT(tune_pause);

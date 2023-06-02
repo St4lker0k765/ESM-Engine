@@ -389,6 +389,10 @@
     </ClCompile>
     <ClCompile Include="ttapi.cpp" />
     <ClCompile Include="xrCPU_Pipe.cpp" />
+    <ClCompile Include="3DNow!Lib.cpp" />
+    <ClCompile Include="xrM44mul_3DNow!.cpp" />
+    <ClCompile Include="xrMemCopy8_3DNow!.cpp" />
+    <ClCompile Include="xrMemFill32_3DNow!.cpp" />
     <ClCompile Include="xrM44mul.cpp">
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">AssemblyCode</AssemblerOutput>
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">AssemblyCode</AssemblerOutput>

@@ -4,6 +4,7 @@
 
 #include "../../xrCore/xr_resource.h"
 
+class  ENGINE_API CAviPlayerCustom;
 class  CTheoraSurface;
 
 class  ECORE_API CTexture : public xr_resource_named
@@ -25,6 +26,7 @@ public:
 public:
 	void	__stdcall					apply_load		(u32	stage);
 	void	__stdcall					apply_theora	(u32	stage);
+	void	__stdcall					apply_avi		(u32	stage);
 	void	__stdcall					apply_seq		(u32	stage);
 	void	__stdcall					apply_normal	(u32	stage);
 
@@ -78,6 +80,8 @@ public:	//	Public class members (must be encapsulated furthur)
 	}									flags;
 	fastdelegate::FastDelegate<void(u32)>	bind;
 
+
+	CAviPlayerCustom*					pAVI;
 	CTheoraSurface*						pTheora;
 	float								m_material;
 	shared_str							m_bumpmap;

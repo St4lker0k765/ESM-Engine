@@ -12,6 +12,7 @@
 #include "../xr_3da/IGame_Persistent.h"
 
 #include "../xr_3da/XR_IOConsole.h"
+//#include "script_engine.h"
 #include "ui/UIInventoryUtilities.h"
 
 #pragma warning(push)
@@ -45,7 +46,7 @@ xrClientData::~xrClientData()
 }
 
 
-xrServer::xrServer():IPureServer(Device.GetTimerGlobal(), false)
+xrServer::xrServer():IPureServer(Device.GetTimerGlobal(), g_dedicated_server)
 {
 	m_iCurUpdatePacket = 0;
 	m_aUpdatePackets.push_back(NET_Packet());
@@ -65,6 +66,15 @@ xrServer::~xrServer()
 	}		
 	m_aUpdatePackets.clear();
 	m_aDelayedPackets.clear();
+}
+
+bool  xrServer::HasBattlEye()
+{
+#ifdef BATTLEYE
+	return (g_pGameLevel && Level().battleye_system.server)? true : false;
+#else
+	return false;
+#endif // BATTLEYE
 }
 
 //--------------------------------------------------------------------
@@ -403,6 +413,13 @@ void xrServer::SendUpdatesToAll()
 	if (game->sv_force_sync)	Perform_game_export();
 
 	VERIFY						(verify_entities());
+
+#ifdef BATTLEYE
+	if ( g_pGameLevel )
+	{
+		Level().battleye_system.UpdateServer( this );
+	}
+#endif // BATTLEYE
 }
 
 xr_vector<shared_str>	_tmp_log;
@@ -550,6 +567,13 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 				CL->ps->DeathTime = Device.dwTimeGlobal;
 				game->OnPlayerConnectFinished(sender);
 				CL->ps->setName( CL->name.c_str() );
+				
+#ifdef BATTLEYE
+				if ( g_pGameLevel && Level().battleye_system.server )
+				{
+					Level().battleye_system.server->AddConnected_OnePlayer( CL );
+				}
+#endif // BATTLEYE
 			};
 			game->signal_Syncronize	();
 			VERIFY					(verify_entities());
@@ -602,6 +626,10 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 			ClientID CID; CID.set		(0xffffffff);
 			SendBroadcast				(CID,P,net_flags(TRUE,TRUE));
 		}break;
+	case M_CL_AUTH:
+		{
+			game->AddDelayedEvent		(P,GAME_EVENT_PLAYER_AUTH, 0, sender);
+		}break;
 	case M_STATISTIC_UPDATE:
 		{
 			if (SV_Client)
@@ -651,6 +679,15 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 		{
 			AddDelayedPacket(P, sender);
 		}break;
+	case M_BATTLEYE:
+		{
+#ifdef BATTLEYE
+			if ( g_pGameLevel )
+			{
+				Level().battleye_system.ReadPacketServer( sender.value(), &P );
+			}
+#endif // BATTLEYE
+		}
 	}
 
 	VERIFY							(verify_entities());

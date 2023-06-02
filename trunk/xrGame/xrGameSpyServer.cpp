@@ -134,12 +134,17 @@ void			xrGameSpyServer::Update				()
 int				xrGameSpyServer::GetPlayersCount()
 {
 	int NumPlayers = client_Count();
-	if (NumPlayers < 1) return NumPlayers;
+	if (!g_dedicated_server || NumPlayers < 1) return NumPlayers;
 	return NumPlayers - 1;
 };
 
 bool			xrGameSpyServer::NeedToCheckClient_GameSpy_CDKey	(IClient* CL)
 {
+	if (!m_bCDKey_Initialized || (CL == GetServerClient() && g_dedicated_server))
+	{
+		return false;
+	};
+
 	SendChallengeString_2_Client(CL);
 
 	return true;
@@ -293,6 +298,16 @@ void xrGameSpyServer::GetServerInfo( CServerInfo* si )
 	si->AddItem( "Game version", QR2()->GetGameVersion( res ), RGB(0,158,255) );
 	
 	strcpy_s( res, "" );
+	if ( HasProtected() || Password.size() > 0 || HasBattlEye() )
+	{
+		if ( HasProtected() )			strcat_s( res, "protected  " );
+		if ( Password.size() > 0 )		strcat_s( res, "password  " );
+		if ( HasBattlEye() )			strcat_s( res, "battleye  " );
+	}
+	else
+	{
+		if ( xr_strlen( res ) == 0 )	strcat_s( res, "free" );
+	}
 	si->AddItem( "Access to server", res, RGB(200,155,155) );
 
 	si->AddItem( "GameSpy port", itoa( iGameSpyBasePort, tmp, 10 ), RGB(200,5,155) );

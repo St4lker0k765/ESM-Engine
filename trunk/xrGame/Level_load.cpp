@@ -12,6 +12,8 @@
 #include "GamePersistent.h"
 #include "../xr_3da/Rain.h"
 
+ENGINE_API bool g_dedicated_server;
+
 BOOL CLevel::Load_GameSpecific_Before()
 {
 	// AI space
@@ -22,7 +24,7 @@ BOOL CLevel::Load_GameSpecific_Before()
 	if (GamePersistent().GameType() == GAME_SINGLE && !ai().get_alife() && FS.exist(fn_game,"$level$","level.ai"))
 		ai().load						(net_SessionName());
 
-	if (!ai().get_alife() && ai().get_game_graph() && FS.exist(fn_game, "$level$", "level.game")) {
+	if (!g_dedicated_server && !ai().get_alife() && ai().get_game_graph() && FS.exist(fn_game, "$level$", "level.game")) {
 		IReader							*stream = FS.r_open		(fn_game);
 		ai().patrol_path_storage_raw	(*stream);
 		FS.r_close						(stream);
@@ -52,45 +54,49 @@ BOOL CLevel::Load_GameSpecific_After()
 		}
 		FS.r_close		(F);
 	}
-
-	// loading static sounds
-	VERIFY								(m_level_sound_manager);
-	m_level_sound_manager->Load			();
-
-	// loading sound environment
-	if ( FS.exist(fn_game, "$level$", "level.snd_env")) 
+	
+	if	(!g_dedicated_server)
 	{
-		IReader *F				= FS.r_open	(fn_game);
-		::Sound->set_geometry_env(F);
-		FS.r_close				(F);
-	}
-	// loading SOM
-	if (FS.exist(fn_game, "$level$", "level.som")) {
-		IReader *F				= FS.r_open	(fn_game);
-		::Sound->set_geometry_som(F);
-		FS.r_close				(F);
-	}
+		// loading static sounds
+		VERIFY								(m_level_sound_manager);
+		m_level_sound_manager->Load			();
 
-	// loading random (around player) sounds
-	if (pSettings->section_exist("sounds_random")){ 
-		CInifile::Sect& S		= pSettings->r_section("sounds_random");
-		Sounds_Random.reserve	(S.Data.size());
-		for (CInifile::SectCIt I=S.Data.begin(); S.Data.end()!=I; ++I) 
-		{
-			Sounds_Random.push_back	(ref_sound());
-			Sound->create			(Sounds_Random.back(),*I->first,st_Effect,sg_SourceType);
+		// loading sound environment
+		if ( FS.exist(fn_game, "$level$", "level.snd_env")) {
+			IReader *F				= FS.r_open	(fn_game);
+			::Sound->set_geometry_env(F);
+			FS.r_close				(F);
 		}
-		Sounds_Random_dwNextTime= Device.TimerAsync	()	+ 50000;
-		Sounds_Random_Enabled	= FALSE;
-	}
+		// loading SOM
+		if (FS.exist(fn_game, "$level$", "level.som")) {
+			IReader *F				= FS.r_open	(fn_game);
+			::Sound->set_geometry_som(F);
+			FS.r_close				(F);
+		}
 
+		// loading random (around player) sounds
+		if (pSettings->section_exist("sounds_random")){ 
+			CInifile::Sect& S		= pSettings->r_section("sounds_random");
+			Sounds_Random.reserve	(S.Data.size());
+			for (CInifile::SectCIt I=S.Data.begin(); S.Data.end()!=I; ++I) 
+			{
+				Sounds_Random.push_back	(ref_sound());
+				Sound->create			(Sounds_Random.back(),*I->first,st_Effect,sg_SourceType);
+			}
+			Sounds_Random_dwNextTime= Device.TimerAsync	()	+ 50000;
+			Sounds_Random_Enabled	= FALSE;
+		}
+	}	
+
+	if (!g_dedicated_server) {
 		// loading scripts
-	ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorLevel);
+		ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorLevel);
 
-	if (pLevel->section_exist("level_scripts") && pLevel->line_exist("level_scripts","script"))
-		ai().script_engine().add_script_process(ScriptEngine::eScriptProcessorLevel,xr_new<CScriptProcess>("level",pLevel->r_string("level_scripts","script")));
-	else
-		ai().script_engine().add_script_process(ScriptEngine::eScriptProcessorLevel,xr_new<CScriptProcess>("level",""));
+		if (pLevel->section_exist("level_scripts") && pLevel->line_exist("level_scripts","script"))
+			ai().script_engine().add_script_process(ScriptEngine::eScriptProcessorLevel,xr_new<CScriptProcess>("level",pLevel->r_string("level_scripts","script")));
+		else
+			ai().script_engine().add_script_process(ScriptEngine::eScriptProcessorLevel,xr_new<CScriptProcess>("level",""));
+	}
 
 	if (pSettings->section_exist("engine_callbacks") && pSettings->line_exist("engine_callbacks", "on_change_weather"))
 		on_change_weather_callback = pSettings->r_string("engine_callbacks", "on_change_weather");

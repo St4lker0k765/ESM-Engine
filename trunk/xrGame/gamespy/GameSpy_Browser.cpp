@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "..\game_base_space.h"
+#include "..\Spectator.h"
 #include "GameSpy_Browser.h"
 #include "GameSpy_Base_Defs.h"
 #include "..\ui\ServerList.h"
@@ -339,6 +340,10 @@ void	CGameSpy_Browser::ReadServerInfo	(ServerInfo* pServerInfo, void* pServer)
 	pServerInfo->m_bPassword	= xrGS_SBServerGetBoolValue(pServer, m_pQR2->xrGS_RegisteredKey(PASSWORD_KEY), SBFalse) == SBTrue;
 	pServerInfo->m_bUserPass	= xrGS_SBServerGetBoolValue(pServer, m_pQR2->xrGS_RegisteredKey(G_USER_PASSWORD_KEY), SBFalse) == SBTrue;
 
+#ifdef BATTLEYE
+	pServerInfo->m_bBattlEye	= xrGS_SBServerGetBoolValue(pServer, m_pQR2->xrGS_RegisteredKey(G_BATTLEYE_KEY), SBFalse) == SBTrue;
+#endif // BATTLEYE
+
 	pServerInfo->m_Ping = (s16)(xrGS_SBServerGetPing(pServer) & 0xffff);
 	pServerInfo->m_ServerNumPlayers = (s16)xrGS_SBServerGetIntValue(pServer, m_pQR2->xrGS_RegisteredKey(NUMPLAYERS_KEY), 0);
 	pServerInfo->m_ServerMaxPlayers = (s16)xrGS_SBServerGetIntValue(pServer, m_pQR2->xrGS_RegisteredKey(MAXPLAYERS_KEY), 32);
@@ -347,7 +352,7 @@ void	CGameSpy_Browser::ReadServerInfo	(ServerInfo* pServerInfo, void* pServer)
 	pServerInfo->m_HPort	= (s16)xrGS_SBServerGetPublicQueryPort(pServer);
 	pServerInfo->m_bDedicated	= (xrGS_SBServerGetBoolValue(pServer, m_pQR2->xrGS_RegisteredKey(DEDICATED_KEY), SBFalse)) == SBTrue;
 	pServerInfo->m_GameType = (u8)xrGS_SBServerGetIntValue(pServer, m_pQR2->xrGS_RegisteredKey(GAMETYPE_NAME_KEY), 0);
-/*	if (pServerInfo->m_GameType == 0)
+	if (pServerInfo->m_GameType == 0)
 	{
 		if (!xr_strcmp(pServerInfo->m_ServerGameType, "deathmatch"))
 			pServerInfo->m_GameType = GAME_DEATHMATCH;
@@ -356,7 +361,6 @@ void	CGameSpy_Browser::ReadServerInfo	(ServerInfo* pServerInfo, void* pServer)
 		else if (!xr_strcmp(pServerInfo->m_ServerGameType, "artefacthunt"))
 			pServerInfo->m_GameType = GAME_ARTEFACTHUNT;
 	}
-*/	
 	sprintf_s(pServerInfo->m_ServerVersion, "%s", xrGS_SBServerGetStringValue(pServer, m_pQR2->xrGS_RegisteredKey(GAMEVER_KEY), "--"));
 
 	//--------- Read Game Infos ---------------------------//
@@ -369,6 +373,10 @@ void	CGameSpy_Browser::ReadServerInfo	(ServerInfo* pServerInfo, void* pServer)
 //	pServerInfo->m_aInfos.push_back(GameInfo("Version:", pServerInfo->m_ServerVersion));
 	pServerInfo->m_aInfos.push_back(GameInfo(*st.translate("mp_si_servername"), pServerInfo->m_ServerName));
 	pServerInfo->m_aInfos.push_back(GameInfo(*st.translate("mp_si_version"), pServerInfo->m_ServerVersion));
+	
+#ifdef BATTLEYE
+	ADD_BOOL_INFO(pServerInfo, pServer, "BattlEye", G_BATTLEYE_KEY);
+#endif // BATTLEYE
 
 	ADD_INT_INFO_N (pServerInfo, pServer, 1, "Max ping", "", G_MAX_PING_KEY);	
 	ADD_BOOL_INFO(pServerInfo, pServer, *st.translate("mp_si_maprotation"), G_MAP_ROTATION_KEY);
@@ -380,10 +388,9 @@ void	CGameSpy_Browser::ReadServerInfo	(ServerInfo* pServerInfo, void* pServer)
 
 //	ADD_BOOL_INFO(pServerInfo, pServer, *st.translate("mp_si_voting"), G_VOTING_ENABLED_KEY);
 	//-----------------------------------------------------------------------
-/*	pServerInfo->m_aInfos.push_back(GameInfo(*st.translate("mp_si_spectatormodes"), ""));
+	pServerInfo->m_aInfos.push_back(GameInfo(*st.translate("mp_si_spectatormodes"), ""));
 	int SpectrModes = xrGS_SBServerGetIntValue(pServer, m_pQR2->xrGS_RegisteredKey(G_SPECTATOR_MODES_KEY), 0);
-
-
+	
 	pServerInfo->m_aInfos.push_back(GameInfo(*st.translate("mp_si_free_fly"), ((SpectrModes & (1<<CSpectator::eacFreeFly	)) != 0) ? *st.translate("mp_si_yes") : *st.translate("mp_si_no")));
 	pServerInfo->m_aInfos.push_back(GameInfo(*st.translate("mp_si_first_eye"), ((SpectrModes & (1<<CSpectator::eacFirstEye	)) != 0) ? *st.translate("mp_si_yes") : *st.translate("mp_si_no")));
 	pServerInfo->m_aInfos.push_back(GameInfo(*st.translate("mp_si_look_at"), ((SpectrModes & (1<<CSpectator::eacLookAt	)) != 0) ? *st.translate("mp_si_yes") : *st.translate("mp_si_no")));
@@ -391,7 +398,6 @@ void	CGameSpy_Browser::ReadServerInfo	(ServerInfo* pServerInfo, void* pServer)
 	if (pServerInfo->m_GameType != GAME_DEATHMATCH)
 		pServerInfo->m_aInfos.push_back(GameInfo(*st.translate("mp_si_team_only"), ((SpectrModes & (1<<CSpectator::eacMaxCam	)) != 0) ? *st.translate("mp_si_yes") : *st.translate("mp_si_no")));
 	//-----------------------------------------------------------------------
-*/
 	
 	if (pServerInfo->m_GameType == GAME_DEATHMATCH || pServerInfo->m_GameType == GAME_TEAMDEATHMATCH) 
 	{
@@ -428,7 +434,7 @@ void	CGameSpy_Browser::ReadServerInfo	(ServerInfo* pServerInfo, void* pServer)
 		ADD_BOOL_INFO(pServerInfo, pServer, *st.translate("mp_si_friendly_indicators"), G_FRIENDLY_INDICATORS_KEY);
 		ADD_BOOL_INFO(pServerInfo, pServer, *st.translate("mp_si_friendly_names"), G_FRIENDLY_NAMES_KEY);
 
-//		ADD_INT_INFO_N (pServerInfo, pServer, 1/100.0f, *st.translate("mp_si_friendly_fire"), " %%", G_FRIENDLY_FIRE_KEY);
+		ADD_INT_INFO_N (pServerInfo, pServer, 1/100.0f, *st.translate("mp_si_friendly_fire"), " %%", G_FRIENDLY_FIRE_KEY);
 	};
 
 	if (pServerInfo->m_GameType == GAME_ARTEFACTHUNT)

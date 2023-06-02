@@ -240,6 +240,10 @@ void CLevel::ClientReceive()
 			{
 				OnGameSpyChallenge(P);
 			}break;
+		case M_AUTH_CHALLENGE:
+			{
+				OnBuildVersionChallenge();
+			}break;
 		case M_CLIENT_CONNECT_RESULT:
 			{
 				OnConnectResult(P);
@@ -313,6 +317,12 @@ void CLevel::ClientReceive()
 				if (!game) break;
 				if (GameID() != GAME_SINGLE)
 					Game().m_WeaponUsageStatistic->OnUpdateRespond(P);
+			}break;
+		case M_BATTLEYE:
+			{
+#ifdef BATTLEYE
+			battleye_system.ReadPacketClient( P );
+#endif // BATTLEYE
 			}break;
 		}
 

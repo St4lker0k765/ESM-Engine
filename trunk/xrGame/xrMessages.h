@@ -50,6 +50,8 @@ enum {
 	M_CL_PING_CHALLENGE,
 	M_CL_PING_CHALLENGE_RESPOND,
 	//-----------------------------------------------------
+	M_AUTH_CHALLENGE,
+	M_CL_AUTH,
 	M_BULLET_CHECK_RESPOND,
 	//-----------------------------------------------------
 	M_STATISTIC_UPDATE,
@@ -63,6 +65,7 @@ enum {
 	M_CHANGE_SELF_NAME,
 	M_REMOTE_CONTROL_AUTH,
 	M_REMOTE_CONTROL_CMD,
+	M_BATTLEYE,
 	M_MAP_SYNC,
 
 	MSG_FORCEDWORD				= u32(-1)
@@ -187,11 +190,13 @@ enum EGameMessages {  //game_cl <----> game_sv messages
 	GAME_EVENT_VOTE_END,
 //	GAME_EVENT_VOTE_PLAYER_VOTED,
 
+	GAME_EVENT_PLAYER_AUTH,
 	GAME_EVENT_PLAYER_NAME,
 
 	GAME_EVENT_SPEECH_MESSAGE,
 
 	//-----------------------------------------
+	GAME_EVENT_PLAYERS_MONEY_CHANGED,
 	GAME_EVENT_SERVER_STRING_MESSAGE,
 	GAME_EVENT_SERVER_DIALOG_MESSAGE,
 

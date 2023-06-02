@@ -31,6 +31,7 @@ extern xrPLC_calc3		PLC_calc3_x86;
 extern xrPLC_calc3		PLC_calc3_SSE;
 
 extern xrM44_Mul		xrM44_Mul_x86;
+extern xrM44_Mul		xrM44_Mul_3DNow;
 extern xrM44_Mul		xrM44_Mul_SSE;
 extern xrTransfer		xrTransfer_x86;
 //extern xrMemFill_32b	xrMemFill32_MMX;

@@ -69,23 +69,27 @@ CMainMenu::CMainMenu	()
 	m_NeedErrDialog					= ErrNoError;
 	m_start_time					= 0;
 
-	g_btnHint						= xr_new<CUIButtonHint>();
-	m_pGameSpyFull					= xr_new<CGameSpy_Full>();
-		
-	for (u32 i=0; i<u32(ErrMax); i++)
+	if(!g_dedicated_server)
 	{
-		CUIMessageBoxEx*			pNewErrDlg;
-		INIT_MSGBOX					(pNewErrDlg, ErrMsgBoxTemplate[i]);
-		m_pMB_ErrDlgs.push_back		(pNewErrDlg);
+		g_btnHint						= xr_new<CUIButtonHint>();
+		m_pGameSpyFull					= xr_new<CGameSpy_Full>();
+		
+		for (u32 i=0; i<u32(ErrMax); i++)
+		{
+			CUIMessageBoxEx*			pNewErrDlg;
+			INIT_MSGBOX					(pNewErrDlg, ErrMsgBoxTemplate[i]);
+			m_pMB_ErrDlgs.push_back		(pNewErrDlg);
+		}
+
+		Register						(m_pMB_ErrDlgs[PatchDownloadSuccess]);
+		m_pMB_ErrDlgs[PatchDownloadSuccess]->SetWindowName	("msg_box");
+		m_pMB_ErrDlgs[PatchDownloadSuccess]->AddCallback	("msg_box", MESSAGE_BOX_YES_CLICKED, CUIWndCallback::void_function(this, &CMainMenu::OnRunDownloadedPatch));
+
+		Register						(m_pMB_ErrDlgs[ConnectToMasterServer]);
+		m_pMB_ErrDlgs[PatchDownloadSuccess]->SetWindowName	("msg_box_connecting");
+		m_pMB_ErrDlgs[PatchDownloadSuccess]->AddCallback	("msg_box_connecting", MESSAGE_BOX_OK_CLICKED, CUIWndCallback::void_function(this, &CMainMenu::OnConnectToMasterServerOkClicked));
+
 	}
-
-	Register						(m_pMB_ErrDlgs[PatchDownloadSuccess]);
-	m_pMB_ErrDlgs[PatchDownloadSuccess]->SetWindowName	("msg_box");
-	m_pMB_ErrDlgs[PatchDownloadSuccess]->AddCallback	("msg_box", MESSAGE_BOX_YES_CLICKED, CUIWndCallback::void_function(this, &CMainMenu::OnRunDownloadedPatch));
-
-	Register						(m_pMB_ErrDlgs[ConnectToMasterServer]);
-	m_pMB_ErrDlgs[PatchDownloadSuccess]->SetWindowName	("msg_box_connecting");
-	m_pMB_ErrDlgs[PatchDownloadSuccess]->AddCallback	("msg_box_connecting", MESSAGE_BOX_OK_CLICKED, CUIWndCallback::void_function(this, &CMainMenu::OnConnectToMasterServerOkClicked));
 }
 
 CMainMenu::~CMainMenu	()
@@ -128,6 +132,8 @@ void CMainMenu::Activate	(bool bActivate)
 			(m_screenshotFrame == Device.dwFrame+1))	return;
 
 	bool b_is_single		= IsGameTypeSingle();
+
+	if(g_dedicated_server && bActivate) return;
 
 	if(bActivate)
 	{

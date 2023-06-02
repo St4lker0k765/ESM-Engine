@@ -225,7 +225,7 @@ void CGamePersistent::WeathersUpdate()
 {
 	if (g_pGamePersistent->Environment().USED_COP_WEATHER)
 	{
-		if (g_pGameLevel)
+		if (g_pGameLevel && !g_dedicated_server)
 		{
 			CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
 			BOOL bIndoor = TRUE;
@@ -406,7 +406,7 @@ void CGamePersistent::WeathersUpdate()
 	}
 	else
 	{
-		if (g_pGameLevel)
+		if (g_pGameLevel && !g_dedicated_server)
 		{
 			CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
 			BOOL bIndoor = TRUE;
@@ -493,7 +493,7 @@ void CGamePersistent::start_logo_intro		()
 	if (Device.dwPrecacheFrame==0)
 	{
 		m_intro_event.bind		(this,&CGamePersistent::update_logo_intro);
-		if (0==xr_strlen(m_game_params.m_game_or_spawn) && !g_pGameLevel)
+		if (!g_dedicated_server && 0==xr_strlen(m_game_params.m_game_or_spawn) && nullptr ==g_pGameLevel)
 		{
 			VERIFY				(NULL==m_intro);
 			m_intro				= xr_new<CUISequencer>();
@@ -554,7 +554,7 @@ void CGamePersistent::OnFrame	()
 #ifdef DEBUG
 	++m_frame_counter;
 #endif
-	if (!m_intro_event.empty())	m_intro_event();
+	if (!g_dedicated_server && !m_intro_event.empty())	m_intro_event();
 
 	if(Device.dwPrecacheFrame == 0 && g_pGameLevel)
 		Discord.Update(CStringTable().translate(Level().name()).c_str(), Level().name().c_str());

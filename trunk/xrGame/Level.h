@@ -12,6 +12,7 @@
 #include "alife_space.h"
 #include "xrDebug.h"
 #include "xrServer.h"
+#include "battleye_system.h"
 
 class	CHUDManager;
 class	CParticlesObject;
@@ -159,6 +160,7 @@ private:
 	xr_string					m_sConnectResult;
 public:	
 	void						OnGameSpyChallenge				(NET_Packet* P);
+	void						OnBuildVersionChallenge			();
 	void						OnConnectResult					(NET_Packet* P);
 public:
 	//////////////////////////////////////////////	
@@ -174,6 +176,12 @@ public:
 	xr_deque<CSE_Abstract*>		game_spawn_queue;
 	xrServer*					Server;
 	GlobalFeelTouch				m_feel_deny;
+
+
+#ifdef BATTLEYE
+	BattlEyeSystem				battleye_system;
+	virtual bool				TestLoadBEClient();
+#endif // BATTLEYE
 
 private:
 	// preload sounds registry

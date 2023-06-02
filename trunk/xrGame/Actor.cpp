@@ -176,7 +176,7 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
 	m_game_task_manager		= nullptr;
 	m_statistic_manager		= nullptr;
 	//-----------------------------------------------------------------------------------
-	m_memory				= xr_new<CActorMemory>(this);
+	m_memory				= g_dedicated_server ? nullptr : xr_new<CActorMemory>(this);
 	m_bOutBorder			= false;
 	hit_probability			= 1.f;
 	m_feel_touch_characters = 0;
@@ -230,8 +230,8 @@ void CActor::reinit	()
 	material().reinit							();
 
 	m_pUsableObject								= nullptr;
-	
-	memory().reinit							();
+	if (!g_dedicated_server)
+		memory().reinit							();
 	
 	set_input_external_handler					(nullptr);
 	m_time_lock_accel							= 0;
@@ -243,7 +243,8 @@ void CActor::reload	(LPCSTR section)
 	CInventoryOwner::reload		(section);
 	material().reload			(section);
 	CStepManager::reload		(section);
-	memory().reload			(section);
+	if (!g_dedicated_server)
+		memory().reload			(section);
 	m_location_manager->reload	(section);
 }
 
@@ -340,6 +341,8 @@ void CActor::Load	(LPCSTR section )
 
 	//Weapons				= xr_new<CWeaponList> (this);
 
+if(!g_dedicated_server)
+{
 	LPCSTR hit_snd_sect = pSettings->r_string(section,"hit_sounds");
 	for(int hit_type=0; hit_type<(int)ALife::eHitTypeMax; ++hit_type)
 	{
@@ -363,7 +366,7 @@ void CActor::Load	(LPCSTR section )
 		m_HeavyBreathSnd.create	(pSettings->r_string(section,"heavy_breath_snd"), st_Effect,SOUND_TYPE_MONSTER_INJURING);
 		m_BloodSnd.create		(pSettings->r_string(section,"heavy_blood_snd"), st_Effect,SOUND_TYPE_MONSTER_INJURING);
 	}
-
+}
 	if( psActorFlags.test(AF_PSP) )
 		cam_Set					(eacLookAt);
 	else
@@ -444,10 +447,42 @@ void	CActor::Hit							(SHit* pHDS)
 #endif // DEBUG
 
 	bool bPlaySound = true;
-	if (!g_Alive()) 
-		bPlaySound = false;
+	if (!g_Alive()) bPlaySound = false;
 
-	if(!sndHit[HDS.hit_type].empty() && (ALife::eHitTypeTelepatic != HDS.hit_type))
+	if (!IsGameTypeSingle() && !g_dedicated_server)
+	{
+		game_PlayerState* ps = Game().GetPlayerByGameID(ID());
+		if (ps && ps->testFlag(GAME_PLAYER_FLAG_INVINCIBLE))
+		{
+			bPlaySound = false;
+			if (Device.dwFrame != last_hit_frame &&
+				HDS.bone() != BI_NONE)
+			{		
+				// вычислить позицию и направленность партикла
+				Fmatrix pos; 
+
+				CParticlesPlayer::MakeXFORM(this,HDS.bone(),HDS.dir,HDS.p_in_bone_space,pos);
+
+				// установить particles
+				CParticlesObject* ps = nullptr;
+
+				if (eacFirstEye == cam_active && this == Level().CurrentEntity())
+					ps = CParticlesObject::Create(invincibility_fire_shield_1st,TRUE);
+				else
+					ps = CParticlesObject::Create(invincibility_fire_shield_3rd,TRUE);
+
+				ps->UpdateParent(pos,Fvector().set(0.f,0.f,0.f));
+				GamePersistent().ps_needtoplay.push_back(ps);
+			};
+		};
+		 
+
+		last_hit_frame = Device.dwFrame;
+	};
+
+	if(	!g_dedicated_server	&& 
+		!sndHit[HDS.hit_type].empty()			&& 
+		(ALife::eHitTypeTelepatic != HDS.hit_type))
 	{
 		ref_sound& S = sndHit[HDS.hit_type][Random.randI(sndHit[HDS.hit_type].size())];
 		bool b_snd_hit_playing = sndHit[HDS.hit_type].end() != std::find_if(sndHit[HDS.hit_type].begin(), sndHit[HDS.hit_type].end(), playing_pred());
@@ -483,7 +518,7 @@ void	CActor::Hit							(SHit* pHDS)
 	else
 		hit_slowmo = 0.f;
 	//---------------------------------------------------------------
-	if (Level().CurrentViewEntity() == this && HDS.hit_type == ALife::eHitTypeFireWound)
+	if (Level().CurrentViewEntity() == this && !g_dedicated_server && HDS.hit_type == ALife::eHitTypeFireWound)
 	{
 		CObject* pLastHitter = Level().Objects.net_Find(m_iLastHitterID);
 		CObject* pLastHittingWeapon = Level().Objects.net_Find(m_iLastHittingWeaponID);
@@ -497,24 +532,70 @@ void	CActor::Hit							(SHit* pHDS)
 	{
 //		mstate_real	&=~mcSprint;
 		mstate_wishful	&=~mcSprint;
+	};
+	if(!g_dedicated_server)
+	{
+		HitMark			(HDS.damage(), HDS.dir, HDS.who, HDS.bone(), HDS.p_in_bone_space, HDS.impulse, HDS.hit_type);
 	}
-	
-	HitMark			(HDS.damage(), HDS.dir, HDS.who, HDS.bone(), HDS.p_in_bone_space, HDS.impulse, HDS.hit_type);
-	
-	float hit_power = HitArtefactsOnBelt(HDS.damage(), HDS.hit_type);
 
-	if (GodMode())
+	switch (GameID())
 	{
-		HDS.power = 0.0f;
-		//				inherited::Hit(0.f,dir,who,element,position_in_bone_space,impulse, hit_type);
-		inherited::Hit(&HDS);
-		return;
-	}
-	else
-	{
-		// inherited::Hit		(hit_power,dir,who,element,position_in_bone_space, impulse, hit_type);
-		HDS.power = hit_power;
-		inherited::Hit(&HDS);
+	case GAME_SINGLE:		
+		{
+			float hit_power	= HitArtefactsOnBelt(HDS.damage(), HDS.hit_type);
+
+			if (GodMode())//psActorFlags.test(AF_GODMODE))
+			{
+				HDS.power = 0.0f;
+//				inherited::Hit(0.f,dir,who,element,position_in_bone_space,impulse, hit_type);
+				inherited::Hit(&HDS);
+				return;
+			}
+			else 
+			{
+				//inherited::Hit		(hit_power,dir,who,element,position_in_bone_space, impulse, hit_type);
+				HDS.power = hit_power;
+				inherited::Hit(&HDS);
+			};
+		}
+		break;
+	default:
+		{
+			m_bWasBackStabbed = false;
+			if (HDS.hit_type == ALife::eHitTypeWound_2 && Check_for_BackStab_Bone(HDS.bone()))
+			{
+				// convert impulse into local coordinate system
+				Fmatrix					mInvXForm;
+				mInvXForm.invert		(XFORM());
+				Fvector					vLocalDir;
+				mInvXForm.transform_dir	(vLocalDir,HDS.dir);
+				vLocalDir.invert		();
+
+				Fvector a	= {0,0,1};
+				float res = a.dotproduct(vLocalDir);
+				if (res < -0.707)
+				{
+					game_PlayerState* ps = Game().GetPlayerByGameID(ID());
+					if (!ps || !ps->testFlag(GAME_PLAYER_FLAG_INVINCIBLE))						
+						m_bWasBackStabbed = true;
+				}
+			};
+			
+			float hit_power = 0;
+
+			if (m_bWasBackStabbed) hit_power = (HDS.damage() == 0) ? 0 : 100000.0f;
+			else hit_power	= HitArtefactsOnBelt(HDS.damage(), HDS.hit_type);
+
+			HDS.power			= hit_power;
+			inherited::Hit		(&HDS);
+
+			if(OnServer() && !g_Alive() && HDS.hit_type==ALife::eHitTypeExplosion)
+			{
+				game_PlayerState* ps							= Game().GetPlayerByGameID(ID());
+				Game().m_WeaponUsageStatistic->OnExplosionKill	(ps, HDS);
+			}
+		}		
+		break;
 	}
 }
 
@@ -683,10 +764,13 @@ void CActor::Die(CObject* who)
 	mstate_wishful	&=		~mcAnyMove;
 	mstate_real		&=		~mcAnyMove;
 
-	::Sound->play_at_pos	(sndDie[Random.randI(SND_DIE_COUNT)],this,Position());
+	if(!g_dedicated_server)
+	{
+		::Sound->play_at_pos	(sndDie[Random.randI(SND_DIE_COUNT)],this,Position());
 
-	m_HeavyBreathSnd.stop	();
-	m_BloodSnd.stop			();		
+		m_HeavyBreathSnd.stop	();
+		m_BloodSnd.stop			();		
+	}
 
 	if(IsGameTypeSingle())
 	{
@@ -1007,7 +1091,7 @@ void CActor::shedule_Update	(u32 DT)
 	pCamBobbing->SetState						(mstate_real, conditions().IsLimping(), IsZoomAimingMode());
 
 	//звук тяжелого дыхания при уталости и хромании
-	if(this==Level().CurrentControlEntity() )
+	if(this==Level().CurrentControlEntity() && !g_dedicated_server )
 	{
 		if(conditions().IsLimping() && g_Alive())
 		{

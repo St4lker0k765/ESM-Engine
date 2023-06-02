@@ -237,6 +237,10 @@ void CConsole::OnRender()
 	{
 		 bGame = true;
 	}
+	if ( g_dedicated_server )
+	{
+		bGame = false;
+	}
 	
 	DrawBackgrounds( bGame );
 
@@ -623,6 +627,12 @@ void CConsole::Hide()
 	{
 		return;
 	}
+	if ( g_pGamePersistent && g_dedicated_server )
+	{
+		return;
+	}
+//	if  ( g_pGameLevel || 
+//		( g_pGamePersistent && g_pGamePersistent->m_pMainMenu && g_pGamePersistent->m_pMainMenu->IsActive() ))
 
 	if ( pInput->get_exclusive_mode() )
 	{

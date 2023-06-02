@@ -11,6 +11,7 @@
 #	include "gamepersistent.h"
 #	include "hudmanager.h"
 #	include "actor.h"
+#	include "spectator.h"
 
 #	include "ai/monsters/flesh/flesh.h"
 #	include "ai/monsters/chimera/chimera.h"
@@ -184,7 +185,7 @@ void CObjectFactory::register_classes	()
 	add<CSE_ALifeOnlineOfflineGroup>							(CLSID_ONLINE_OFFLINE_GROUP		,"online_offline_group");
 	
 	// client and server entities
-//	ADD(CSpectator				,CSE_Spectator					,CLSID_SPECTATOR				,"spectator");
+	ADD(CSpectator				,CSE_Spectator					,CLSID_SPECTATOR				,"spectator");
 
 	ADD(CAI_Flesh				,CSE_ALifeMonsterBase			,CLSID_AI_FLESH					,"flesh");
 	ADD(CChimera				,CSE_ALifeMonsterBase			,CLSID_AI_CHIMERA				,"chimera");

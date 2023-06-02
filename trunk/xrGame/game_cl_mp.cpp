@@ -28,7 +28,6 @@
 #include "../xr_3da/IGame_Persistent.h"
 #include "MainMenu.h"
 
-//TODO xrMorrazzzz: Using, but trash
 
 #define EQUIPMENT_ICONS "ui\\ui_mp_icon_kill"
 #define KILLEVENT_ICONS "ui\\ui_hud_mp_icon_death"

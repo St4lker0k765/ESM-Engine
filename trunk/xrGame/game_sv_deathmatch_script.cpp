@@ -3,8 +3,6 @@
 #include "xrServer_script_macroses.h"
 #include "xrserver.h"
 
-//TODO xrMorrazzzz: This not using! Delete!!
-
 using namespace luabind;
 
 /*

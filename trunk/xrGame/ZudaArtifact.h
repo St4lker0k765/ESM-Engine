@@ -1,11 +1,9 @@
 ///////////////////////////////////////////////////////////////
 // ZudaArtifact.h
 // ZudaArtefact - артефакт зуда
-// TODO: xrMorrazzzz: This class not using. Please delete this file!
 ///////////////////////////////////////////////////////////////
 
 #pragma once
-/*
 #include "artifact.h"
 
 class CZudaArtefact : public CArtefact 
@@ -20,4 +18,3 @@ public:
 
 protected:
 };
-*/

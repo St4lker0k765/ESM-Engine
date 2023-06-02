@@ -3,10 +3,6 @@
 #include "xrServer.h"
 #include "xrMessages.h"
 
-
-
-//TODO xrMorrazzzz: Using, but trash
-
 void	game_sv_TeamDeathmatch::OnEvent (NET_Packet &P, u16 type, u32 time, ClientID sender )
 {
 

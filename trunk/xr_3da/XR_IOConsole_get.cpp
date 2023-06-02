@@ -1,6 +1,14 @@
+////////////////////////////////////////////////////////////////////////////
+//	Module 		: XR_IOConsole_get.cpp
+//	Created 	: 17.05.2008
+//	Author		: Evgeniy Sokolov
+//	Description : Console`s get-functions class implementation
+////////////////////////////////////////////////////////////////////////////
+
 #include "stdafx.h"
 #include "XR_IOConsole.h"
 #include "xr_ioc_cmd.h"
+
 
 bool CConsole::GetBool( LPCSTR cmd ) const
 {
@@ -37,7 +45,7 @@ IConsole_Command* CConsole::GetCommand( LPCSTR cmd ) const
 {
 	vecCMD_CIT it = Commands.find( cmd );
 	if ( it == Commands.end() )
-		return nullptr;
+		return NULL;
 	else
 		return it->second;
 }
@@ -69,7 +77,7 @@ LPCSTR CConsole::GetString( LPCSTR cmd ) const
 {
 	IConsole_Command* cc	= GetCommand(cmd);
 	if(!cc)
-		return nullptr;
+		return				NULL;
 
 	static IConsole_Command::TStatus stat;
 	cc->Status				( stat );
@@ -90,7 +98,7 @@ xr_token* CConsole::GetXRToken( LPCSTR cmd ) const
 	{
 		return cf->GetToken();
 	}
-	return nullptr;
+	return					NULL;
 }
 
 Fvector* CConsole::GetFVectorPtr( LPCSTR cmd ) const
@@ -101,7 +109,7 @@ Fvector* CConsole::GetFVectorPtr( LPCSTR cmd ) const
 	{
 		return cf->GetValuePtr();
 	}
-	return nullptr;
+	return					NULL;
 }
 
 Fvector CConsole::GetFVector( LPCSTR cmd ) const

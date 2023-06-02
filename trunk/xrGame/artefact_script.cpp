@@ -26,7 +26,7 @@ void CArtefact::script_register(lua_State *L)
 		class_<CBlackGraviArtefact	,CGameObject>("CBlackGraviArtefact").def(constructor<>()),
 		class_<CBastArtefact		,CGameObject>("CBastArtefact").def		(constructor<>()),
 		class_<CDummyArtefact		,CGameObject>("CDummyArtefact").def		(constructor<>()),
-//     	class_<CZudaArtefact		,CGameObject>("CZudaArtefact").def		(constructor<>()), //TODO: xrMorrazzzz: Not using class! Delete!
+		class_<CZudaArtefact		,CGameObject>("CZudaArtefact").def		(constructor<>()),
 		class_<CThornArtefact		,CGameObject>("CThornArtefact").def		(constructor<>()),
 		class_<CFadedBall			,CGameObject>("CFadedBall").def			(constructor<>()),
 		class_<CElectricBall		,CGameObject>("CElectricBall").def		(constructor<>()),

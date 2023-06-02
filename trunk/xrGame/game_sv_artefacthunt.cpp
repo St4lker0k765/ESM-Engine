@@ -11,8 +11,6 @@
 #include "ui\UIBuyWndShared.h"
 #include "game_cl_base_weapon_usage_statistic.h"
 
-//TODO xrMorrazzzz: This not using! Delete!!
-
 /*
 BOOL	g_SV_Force_Artefact_Spawn = FALSE;
 

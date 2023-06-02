@@ -8,8 +8,6 @@
 
 #include "ui\UIBuyWndShared.h"
 
-//TODO xrMorrazzzz: This not using! Delete!!
-
 /*
 //-------------------------------------------------------
 extern	s32		g_sv_dm_dwFragLimit;

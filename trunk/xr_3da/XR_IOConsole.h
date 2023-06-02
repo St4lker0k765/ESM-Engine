@@ -1,4 +1,8 @@
-#pragma once
+// XR_IOConsole.h: interface for the CConsole class.
+//
+//////////////////////////////////////////////////////////////////////
+#ifndef XR_IOCONSOLE_H_INCLUDED
+#define XR_IOCONSOLE_H_INCLUDED
 
 #include "../Include/xrRender/FactoryPtr.h"
 #include "../Include/xrRender/UIShader.h"
@@ -207,3 +211,5 @@ protected:
 }; // class CConsole
 
 ENGINE_API extern CConsole* Console;
+
+#endif // XR_IOCONSOLE_H_INCLUDED

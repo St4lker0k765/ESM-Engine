@@ -1,3 +1,6 @@
+// XR_IOConsole.cpp: implementation of the CConsole class.
+// modify 15.05.2008 sea
+
 #include "stdafx.h"
 #include "XR_IOConsole.h"
 #include "line_editor.h"
@@ -31,7 +34,7 @@ static u32 const tips_scroll_back_color  = color_rgba( 15, 15, 15, 230 );
 static u32 const tips_scroll_pos_color   = color_rgba( 70, 70, 70, 240 );
 
 
-ENGINE_API CConsole*		Console		= nullptr;
+ENGINE_API CConsole*		Console		=	NULL;
 
 extern char const * const	ioc_prompt;
        char const * const	ioc_prompt	=	">>> ";
@@ -84,31 +87,24 @@ bool CConsole::is_mark( Console_mark type )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CConsole::CConsole()
-:m_hShader_back(nullptr)
+:m_hShader_back(NULL)
 {
-	m_editor          = xr_new<text_editor::line_editor>( static_cast<u32>(CONSOLE_BUF_SIZE) );
+	m_editor          = xr_new<text_editor::line_editor>( (u32)CONSOLE_BUF_SIZE );
 	m_cmd_history_max = cmd_history_max;
 	m_disable_tips    = false;
 	Register_callbacks();
-}
-
-CConsole::~CConsole()
-{
-	xr_delete( m_hShader_back );
-	xr_delete( m_editor );
-	CConsole::Destroy();
 }
 
 void CConsole::Initialize()
 {
 	scroll_delta	= 0;
 	bVisible		= false;
-	pFont			= nullptr;
-	pFont2			= nullptr;
+	pFont			= NULL;
+	pFont2			= NULL;
 
 	m_mouse_pos.x	= 0;
 	m_mouse_pos.y	= 0;
-	m_last_cmd		= nullptr;
+	m_last_cmd		= NULL;
 	
 	m_cmd_history.reserve( m_cmd_history_max + 2 );
 	m_cmd_history.clear_not_free();
@@ -121,7 +117,7 @@ void CConsole::Initialize()
 
 	m_tips_mode		= 0;
 	m_prev_length_str = 0;
-	m_cur_cmd		= nullptr;
+	m_cur_cmd		= NULL;
 	reset_selected_tip();
 
 	// Commands
@@ -129,7 +125,12 @@ void CConsole::Initialize()
 	CCC_Register();
 }
 
-
+CConsole::~CConsole()
+{
+	xr_delete( m_hShader_back );
+	xr_delete( m_editor );
+	Destroy();
+}
 
 void CConsole::Destroy()
 {
@@ -171,7 +172,7 @@ void CConsole::OutFont( LPCSTR text, float& pos_y )
 		float f	= 0.0f;
 		int sz	= 0;
 		int ln	= 0;
-		auto one_line = static_cast<PSTR>(_alloca((CONSOLE_BUF_SIZE + 1) * sizeof(char)));
+		PSTR one_line = (PSTR)_alloca( (CONSOLE_BUF_SIZE + 1) * sizeof(char) );
 		
 		while( text[sz] && (ln + sz < CONSOLE_BUF_SIZE-5) )// перенос строк
 		{
@@ -245,7 +246,7 @@ void CConsole::OnRender()
 	DrawBackgrounds( bGame );
 
 	float fMaxY;
-	float dwMaxY = static_cast<float>(Device.dwHeight);
+	float dwMaxY = (float)Device.dwHeight;
 	// float dwMaxX=float(Device.dwWidth/2);
 	if ( bGame )
 	{
@@ -340,7 +341,7 @@ void CConsole::OnRender()
 		{
 			continue;
 		}
-		Console_mark cm = static_cast<Console_mark>(ls[0]);
+		Console_mark cm = (Console_mark)ls[0];
 		pFont->SetColor( get_mark_color( cm ) );
 		//u8 b = (is_mark( cm ))? 2 : 0;
 		//OutFont( ls + b, ypos );
@@ -362,7 +363,7 @@ void CConsole::DrawBackgrounds( bool bGame )
 	float ky = (bGame)? 0.5f : 1.0f;
 
 	Frect r;
-	r.set( 0.0f, 0.0f, static_cast<float>(Device.dwWidth), ky * static_cast<float>(Device.dwHeight) );
+	r.set( 0.0f, 0.0f, float(Device.dwWidth), ky * float(Device.dwHeight) );
 
 	UIRender->SetShader( **m_hShader_back );
 	// 6 = back, 12 = tips, (VIEW_TIPS_COUNT+1)*6 = highlight_words, 12 = scroll
@@ -395,7 +396,7 @@ void CConsole::DrawBackgrounds( bool bGame )
 	float list_w    = pFont->SizeOf_( max_str ) + 2.0f * w1;
 
 	float font_h    = pFont->CurrentHeight_();
-	float tips_h    = _min( m_tips.size(), static_cast<u32>(VIEW_TIPS_COUNT) ) * font_h;
+	float tips_h    = _min( m_tips.size(), (u32)VIEW_TIPS_COUNT ) * font_h;
 	tips_h			+= ( m_tips.size() > 0 )? 5.0f : 0.0f;
 
 	Frect pr, sr;
@@ -403,14 +404,14 @@ void CConsole::DrawBackgrounds( bool bGame )
 	pr.x2 = pr.x1 + list_w;
 
 	pr.y1 = UI_BASE_HEIGHT * 0.5f;
-	pr.y1 *= static_cast<float>(Device.dwHeight)/UI_BASE_HEIGHT;
+	pr.y1 *= float(Device.dwHeight)/UI_BASE_HEIGHT;
 
 	pr.y2 = pr.y1 + tips_h;
 
 	float select_y = 0.0f;
 	float select_h = 0.0f;
 	
-	if ( m_select_tip >= 0 && m_select_tip < static_cast<int>(m_tips.size()) )
+	if ( m_select_tip >= 0 && m_select_tip < (int)m_tips.size() )
 	{
 		int sel_pos = m_select_tip - m_start_tip;
 
@@ -429,7 +430,7 @@ void CConsole::DrawBackgrounds( bool bGame )
 
 	// --------------------------- highlight words --------------------
 
-	if ( m_select_tip < static_cast<int>(m_tips.size()) )
+	if ( m_select_tip < (int)m_tips.size() )
 	{
 		Frect rFrect;
 
@@ -442,14 +443,14 @@ void CConsole::DrawBackgrounds( bool bGame )
 			{
 				continue;
 			}
-			int    str_size = static_cast<int>(ts.text.size());
+			int    str_size = (int)ts.text.size();
 			if ( (ts.HL_start >= str_size) || (ts.HL_finish > str_size) )
 			{
 				continue;
 			}
 
 			rFrect.null();
-			LPSTR  tmp      = static_cast<PSTR>(_alloca((str_size + 1) * sizeof(char)));
+			LPSTR  tmp      = (PSTR)_alloca( (str_size + 1) * sizeof(char) );
 
 			strncpy_s( tmp, str_size+1, ts.text.c_str(), ts.HL_start );
 			rFrect.x1 = pr.x1 + w1 + pFont->SizeOf_( tmp );
@@ -483,14 +484,14 @@ void CConsole::DrawBackgrounds( bool bGame )
 
 		VERIFY( rb.y2 - rb.y1 >= 1.0f );
 		float back_height = rb.y2 - rb.y1;
-		float u_height = (back_height * VIEW_TIPS_COUNT)/ static_cast<float>(tips_sz);
+		float u_height = (back_height * VIEW_TIPS_COUNT)/ float(tips_sz);
 		if ( u_height < 0.5f * font_h )
 		{
 			u_height = 0.5f * font_h;
 		}
 
 		//float u_pos = (back_height - u_height) * float(m_start_tip) / float(tips_sz);
-		float u_pos = back_height * static_cast<float>(m_start_tip) / static_cast<float>(tips_sz);
+		float u_pos = back_height * float(m_start_tip) / float(tips_sz);
 		
 		//clamp( u_pos, 0.0f, back_height - u_height );
 		
@@ -517,9 +518,9 @@ void CConsole::DrawRect( Frect const& r, u32 color )
 void CConsole::ExecuteCommand( LPCSTR cmd_str, bool record_cmd )
 {
 	u32  str_size = xr_strlen( cmd_str );
-	PSTR edt   = static_cast<PSTR>(_alloca((str_size + 1) * sizeof(char)));
-	PSTR first = static_cast<PSTR>(_alloca((str_size + 1) * sizeof(char)));
-	PSTR last  = static_cast<PSTR>(_alloca((str_size + 1) * sizeof(char)));
+	PSTR edt   = (PSTR)_alloca( (str_size + 1) * sizeof(char) );
+	PSTR first = (PSTR)_alloca( (str_size + 1) * sizeof(char) );
+	PSTR last  = (PSTR)_alloca( (str_size + 1) * sizeof(char) );
 	
 	xr_strcpy( edt, str_size+1, cmd_str );
 	edt[str_size] = 0;
@@ -539,7 +540,7 @@ void CConsole::ExecuteCommand( LPCSTR cmd_str, bool record_cmd )
 		c[0] = mark2;
 		c[1] = 0;
 
-		if ( m_last_cmd.c_str() == nullptr || xr_strcmp( m_last_cmd, edt ) != 0 )
+		if ( m_last_cmd.c_str() == 0 || xr_strcmp( m_last_cmd, edt ) != 0 )
 		{
 			Log( c, edt );
 			add_cmd_history( edt );
@@ -654,7 +655,7 @@ void CConsole::SelectCommand()
 	{
 		return;
 	}
-	VERIFY( 0 <= m_cmd_history_idx && m_cmd_history_idx < static_cast<int>(m_cmd_history.size()) );
+	VERIFY( 0 <= m_cmd_history_idx && m_cmd_history_idx < (int)m_cmd_history.size() );
 		
 	vecHistory::reverse_iterator	it_rb = m_cmd_history.rbegin() + m_cmd_history_idx;
 	ec().set_edit( (*it_rb).c_str() );
@@ -669,7 +670,7 @@ void CConsole::Execute( LPCSTR cmd )
 void CConsole::ExecuteScript( LPCSTR str )
 {
 	u32  str_size = xr_strlen( str );
-	PSTR buf = static_cast<PSTR>(_alloca((str_size + 10) * sizeof(char)));
+	PSTR buf = (PSTR)_alloca( (str_size + 10) * sizeof(char) );
 	xr_strcpy( buf, str_size + 10, "cfg_load " );
 	xr_strcat( buf, str_size + 10, str );
 	Execute( buf );
@@ -692,7 +693,7 @@ IConsole_Command* CConsole::find_next_cmd( LPCSTR in_str, shared_str& out_str )
 		IConsole_Command* cc = it->second;
 		LPCSTR name_cmd      = cc->Name();
 		u32    name_cmd_size = xr_strlen( name_cmd );
-		PSTR   new_str       = static_cast<PSTR>(_alloca((offset + name_cmd_size + 2) * sizeof(char)));
+		PSTR   new_str       = (PSTR)_alloca( (offset + name_cmd_size + 2) * sizeof(char) );
 
 		xr_strcpy( new_str, offset + name_cmd_size + 2, (b_ra)? radmin_cmd_name : "" );
 		xr_strcat( new_str, offset + name_cmd_size + 2, name_cmd );
@@ -700,7 +701,7 @@ IConsole_Command* CConsole::find_next_cmd( LPCSTR in_str, shared_str& out_str )
 		out_str._set( (LPCSTR)new_str );
 		return cc;
 	}
-	return nullptr;
+	return NULL;
 }
 
 bool CConsole::add_next_cmds( LPCSTR in_str, vecTipsEx& out_v )
@@ -764,7 +765,7 @@ bool CConsole::add_internal_cmds( LPCSTR in_str, vecTipsEx& out_v )
 	{
 		LPCSTR name = itb->first;
 		u32 name_sz = xr_strlen(name);
-		PSTR  name2 = static_cast<PSTR>(_alloca((name_sz + 1) * sizeof(char)));
+		PSTR  name2 = (PSTR)_alloca( (name_sz+1) * sizeof(char) );
 		
 		if ( name_sz >= in_sz )
 		{
@@ -824,7 +825,7 @@ void CConsole::update_tips()
 	m_temp_tips.clear_not_free();
 	m_tips.clear_not_free();
 
-	m_cur_cmd  = nullptr;
+	m_cur_cmd  = NULL;
 	if ( !bVisible )
 	{
 		return;
@@ -845,8 +846,8 @@ void CConsole::update_tips()
 	}
 	m_prev_length_str = cur_length;
 
-	PSTR first = static_cast<PSTR>(_alloca((cur_length + 1) * sizeof(char)));
-	PSTR last  = static_cast<PSTR>(_alloca((cur_length + 1) * sizeof(char)));
+	PSTR first = (PSTR)_alloca( (cur_length + 1) * sizeof(char) );
+	PSTR last  = (PSTR)_alloca( (cur_length + 1) * sizeof(char) );
 	text_editor::split_cmd( first, last, cur );
 	
 	u32 first_lenght = xr_strlen(first);
@@ -881,7 +882,7 @@ void CConsole::update_tips()
 				{
 					m_tips.push_back( TipString( "(empty)" ) );
 				}
-				if ( static_cast<int>(m_tips.size()) <= m_select_tip )
+				if ( (int)m_tips.size() <= m_select_tip )
 				{
 					reset_selected_tip();
 				}
@@ -902,7 +903,7 @@ void CConsole::update_tips()
 		m_tips_mode = 0;
 		reset_selected_tip();
 	}
-	if ( static_cast<int>(m_tips.size()) <= m_select_tip )
+	if ( (int)m_tips.size() <= m_select_tip )
 	{
 		reset_selected_tip();
 	}

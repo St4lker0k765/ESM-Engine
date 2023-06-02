@@ -3,8 +3,6 @@
 #include "xrServer.h"
 #include "xrMessages.h"
 
-//TODO xrMorrazzzz: This not using! Delete!!
-
 /*
 void	game_sv_Deathmatch::OnEvent (NET_Packet &P, u16 type, u32 time, ClientID sender )
 {

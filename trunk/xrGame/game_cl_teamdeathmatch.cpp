@@ -17,8 +17,6 @@
 #include "ui/TeamInfo.h"
 #include "string_table.h"
 
-//TODO xrMorrazzzz: Using, but trash
-
 //.#define	TEAM0_MENU		"teamdeathmatch_team0"
 //.#define	TEAM1_MENU		"teamdeathmatch_team1"
 //.#define	TEAM2_MENU		"teamdeathmatch_team2"

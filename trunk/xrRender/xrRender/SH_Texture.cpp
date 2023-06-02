@@ -205,10 +205,8 @@ void CTexture::Load		()
 
 			}
 		} 
-		else if (FS.exist(fn,"$game_textures$",*cName,".avi")) //TODO xrMorrazzzz: I don't recall .avi being used in gamedata
+		else if (FS.exist(fn,"$game_textures$",*cName,".avi"))
 		{
-			//TODO xrMorrazzzz: Please check this code AVI! Should I delete it?
-
 			// AVI
 			pAVI = xr_new<CAviPlayerCustom>();
 

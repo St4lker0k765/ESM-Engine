@@ -10,8 +10,6 @@
 #include "Missile.h"
 #include "clsid_game.h"
 
-//TODO xrMorrazzzz: Using, but trash
-
 static	u16 SlotsToCheck [] = {
 //		APPARATUS_SLOT	,		// 4
 		OUTFIT_SLOT		,		// 5

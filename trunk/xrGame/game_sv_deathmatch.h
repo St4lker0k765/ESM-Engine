@@ -6,8 +6,6 @@
 #include "Hit.h"
 #include "../xr_3da/pure_relcase.h"
 
-//TODO xrMorrazzzz: This not using! Delete!!
-
 /*
 class	game_sv_Deathmatch			: public game_sv_mp,private pure_relcase
 {

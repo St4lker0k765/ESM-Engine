@@ -49,7 +49,8 @@ void IGame_Persistent::OnAppDeactivate		()
 
 void IGame_Persistent::OnAppStart	()
 {
-		Environment().load();
+	if(!g_dedicated_server)
+		Environment().load				();
 }
 
 void IGame_Persistent::OnAppEnd		()
@@ -57,7 +58,9 @@ void IGame_Persistent::OnAppEnd		()
 	Environment().unload				();
 	OnGameEnd						();
 
-	DEL_INSTANCE					(g_hud)
+#ifndef _EDITOR
+	DEL_INSTANCE					(g_hud);
+#endif    
 }
 
 

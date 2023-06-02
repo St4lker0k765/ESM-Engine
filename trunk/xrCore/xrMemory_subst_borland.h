@@ -1,6 +1,3 @@
-//TODO xrMorrazzzz: !!WARNING!! THIS IS NOT OPERATOR MEW/DELETE USING!!!
-
-
 // new(0)
 template <class T>
 IC	T*		xr_new		()

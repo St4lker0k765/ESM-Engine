@@ -1,4 +1,3 @@
-//TODO xrMorrazzzz: Using, but trash
 #pragma once
 #include "game_cl_mp.h"
 

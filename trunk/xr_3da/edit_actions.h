@@ -13,7 +13,7 @@
 namespace text_editor
 {
 
-enum	key_state : u32;
+enum	key_state;
 class	line_edit_control;
 
 class base : private boost::noncopyable

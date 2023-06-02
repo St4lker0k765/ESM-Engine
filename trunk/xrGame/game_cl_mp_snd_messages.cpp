@@ -3,8 +3,6 @@
 #include "game_cl_mp_snd_messages.h"
 #include "Level.h"
 
-//TODO xrMorrazzzz: Using, but trash
-
 void	game_cl_mp::LoadSndMessage			(LPCSTR caSection, LPCSTR caLine, u32 ID)
 {
 	if (!pSettings->section_exist(caSection)) return;

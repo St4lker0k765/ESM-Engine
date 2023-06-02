@@ -26,8 +26,6 @@
 
 #include "ActorCondition.h"
 
-//TODO xrMorrazzzz: Using, but trash
-
 #ifdef _new_buy_wnd
 	#include	"ui\UIMpTradeWnd.h"
 #else

@@ -1,7 +1,5 @@
 #pragma once
 
-//TODO xrMorrazzzz: This not using! Delete!!
-
 #include "game_cl_mp.h"
 #include "script_export_space.h"
 class CScriptGameObject;

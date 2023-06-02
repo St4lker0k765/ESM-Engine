@@ -18,8 +18,6 @@
 
 #include "game_sv_mp_vote_flags.h"
 
-//TODO xrMorrazzzz: Using, but trash
-
 u32		g_dwMaxCorpses = 10;
 //-----------------------------------------------------------------
 BOOL		g_sv_mp_bSpectator_FreeFly		= FALSE;

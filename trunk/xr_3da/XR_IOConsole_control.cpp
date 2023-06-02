@@ -1,5 +1,13 @@
+////////////////////////////////////////////////////////////////////////////
+//	Module 		: XR_IOConsole_control.cpp
+//	Created 	: 03.10.2008
+//	Author		: Evgeniy Sokolov
+//	Description : Console`s control-functions class implementation
+////////////////////////////////////////////////////////////////////////////
+
 #include "stdafx.h"
 #include "XR_IOConsole.h"
+
 
 void CConsole::add_cmd_history( shared_str const& str )
 {
@@ -26,9 +34,9 @@ void CConsole::next_cmd_history_idx()
 void CConsole::prev_cmd_history_idx()
 {
 	++m_cmd_history_idx;
-	if ( m_cmd_history_idx >= static_cast<int>(m_cmd_history.size()) )
+	if ( m_cmd_history_idx >= (int)m_cmd_history.size() )
 	{
-		m_cmd_history_idx = static_cast<int>(m_cmd_history.size()) - 1;
+		m_cmd_history_idx = m_cmd_history.size() - 1;
 	}
 }
 
@@ -45,9 +53,9 @@ void CConsole::next_selected_tip()
 
 void CConsole::check_next_selected_tip()
 {
-	if ( m_select_tip >= static_cast<int>(m_tips.size()) )
+	if ( m_select_tip >= (int)m_tips.size() )
 	{
-		m_select_tip = static_cast<int>(m_tips.size()) - 1;
+		m_select_tip = m_tips.size() - 1;
 	}
 
 	int sel_dif = m_select_tip - VIEW_TIPS_COUNT + 1;

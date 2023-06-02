@@ -1,3 +1,10 @@
+////////////////////////////////////////////////////////////////////////////
+//	Module 		: XR_IOConsole_callback.cpp
+//	Created 	: 17.05.2008
+//	Author		: Evgeniy Sokolov
+//	Description : Console`s callback functions class implementation
+////////////////////////////////////////////////////////////////////////////
+
 #include "stdafx.h"
 #include "XR_IOConsole.h"
 
@@ -37,9 +44,9 @@ void CConsole::Register_callbacks()
 void CConsole::Prev_log() // DIK_PRIOR=PAGE_UP
 {
 	scroll_delta++;
-	if ( scroll_delta > static_cast<int>(LogFile->size())-1 )
+	if ( scroll_delta > int(LogFile->size())-1 )
 	{
-		scroll_delta = static_cast<int>(LogFile->size()) - 1;
+		scroll_delta = LogFile->size()-1;
 	}
 }
 
@@ -54,7 +61,7 @@ void CConsole::Next_log() // DIK_NEXT=PAGE_DOWN
 
 void CConsole::Begin_log() // PAGE_UP+Ctrl
 {
-	scroll_delta = static_cast<int>(LogFile->size()) - 1;
+	scroll_delta = LogFile->size()-1;
 }
 
 void CConsole::End_log() // PAGE_DOWN+Ctrl
@@ -76,17 +83,18 @@ void CConsole::Find_cmd() // DIK_TAB
 void CConsole::Find_cmd_back() // DIK_TAB+shift
 {
 	LPCSTR edt      = ec().str_edit();
-	auto radmin_cmd_name = "ra ";
+	LPCSTR radmin_cmd_name = "ra ";
 	bool b_ra  = (edt == strstr( edt, radmin_cmd_name ) );
 	u32 offset = (b_ra)? xr_strlen( radmin_cmd_name ) : 0;
 
-	if (auto it = Commands.lower_bound( edt + offset ); it != Commands.begin() )
+	vecCMD_IT it = Commands.lower_bound( edt + offset );
+	if ( it != Commands.begin() )
 	{
 		--it;
 		IConsole_Command& cc = *(it->second);
 		LPCSTR name_cmd      = cc.Name();
 		u32    name_cmd_size = xr_strlen( name_cmd );
-		auto   new_str  = static_cast<PSTR>(_alloca((offset + name_cmd_size + 2) * sizeof(char)));
+		PSTR   new_str  = (PSTR)_alloca( (offset + name_cmd_size + 2) * sizeof(char) );
 
 		xr_strcpy( new_str, offset + name_cmd_size + 2, (b_ra)? radmin_cmd_name : "" );
 		xr_strcat( new_str, offset + name_cmd_size + 2, name_cmd );
@@ -136,7 +144,7 @@ void CConsole::Begin_tips()
 
 void CConsole::End_tips()
 {
-	m_select_tip = static_cast<int>(m_tips.size()) - 1;
+	m_select_tip = m_tips.size() - 1;
 	m_start_tip = m_select_tip - VIEW_TIPS_COUNT + 1;
 	check_next_selected_tip();
 }
@@ -155,7 +163,7 @@ void CConsole::PageDown_tips()
 
 void CConsole::Execute_cmd() // DIK_RETURN, DIK_NUMPADENTER
 {
-	if ( 0 <= m_select_tip && m_select_tip < static_cast<int>(m_tips.size()) )
+	if ( 0 <= m_select_tip && m_select_tip < (int)m_tips.size() )
 	{
 		shared_str const& str = m_tips[m_select_tip].text;
 		if ( m_tips_mode == 1 )
@@ -191,7 +199,7 @@ void CConsole::Hide_cmd()
 
 void CConsole::Hide_cmd_esc()
 {
-	if ( 0 <= m_select_tip && m_select_tip < static_cast<int>(m_tips.size()) )
+	if ( 0 <= m_select_tip && m_select_tip < (int)m_tips.size() )
 	{
 		m_disable_tips = true;
 		return;

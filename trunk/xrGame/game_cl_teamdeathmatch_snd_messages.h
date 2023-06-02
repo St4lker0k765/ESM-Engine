@@ -1,5 +1,3 @@
-//TODO xrMorrazzzz: Using, but trash
-
 #pragma once
 enum {
 	ID_TEAM1_WIN = 200,

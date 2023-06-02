@@ -1,8 +1,6 @@
 #ifndef	__XR_SERVER_BATTLEYE_H__
 #define __XR_SERVER_BATTLEYE_H__
 
-//TODO xrMorrazzzz: Using, but trash
-
 #include "battleye.h"
 
 #ifdef BATTLEYE

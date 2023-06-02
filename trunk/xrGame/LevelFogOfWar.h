@@ -1,5 +1,5 @@
 // LevelFogOfWar.h:  для карты уровня в одиночном режиме игры
-// TODO xrMorrazzzz: This not using! Delete!!
+// 
 //////////////////////////////////////////////////////////////////////
 
 #pragma once

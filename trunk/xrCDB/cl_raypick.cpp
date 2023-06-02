@@ -1,5 +1,3 @@
-//TODO xrMorrazzzz: This not using! Delete!!
-
 #include "stdafx.h"
 #pragma hdrstop
 

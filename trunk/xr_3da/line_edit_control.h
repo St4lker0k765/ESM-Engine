@@ -18,22 +18,22 @@ void split_cmd( PSTR first, PSTR second, LPCSTR str );
 
 class base;
 
-enum key_state : u32 // Flags32
+enum key_state // Flags32
 {
-	ks_free   	= static_cast<u32>(0),
-	ks_LShift 	= static_cast<u32>(1) << 0,
-	ks_RShift 	= static_cast<u32>(1) << 1,
-	ks_LCtrl  	= static_cast<u32>(1) << 2,
-	ks_RCtrl  	= static_cast<u32>(1) << 3,
-	ks_LAlt   	= static_cast<u32>(1) << 4,
-	ks_RAlt   	= static_cast<u32>(1) << 5,
-	ks_CapsLock	= static_cast<u32>(1) << 6,
+	ks_free   	= u32(0),
+	ks_LShift 	= u32(1) << 0,
+	ks_RShift 	= u32(1) << 1,
+	ks_LCtrl  	= u32(1) << 2,
+	ks_RCtrl  	= u32(1) << 3,
+	ks_LAlt   	= u32(1) << 4,
+	ks_RAlt   	= u32(1) << 5,
+	ks_CapsLock	= u32(1) << 6,
 
-	ks_Shift  	= static_cast<u32>(ks_LShift | ks_RShift),
-	ks_Ctrl   	= static_cast<u32>(ks_LCtrl | ks_RCtrl),
-	ks_Alt    	= static_cast<u32>(ks_LAlt | ks_RAlt),
+	ks_Shift  	= u32( ks_LShift | ks_RShift ),
+	ks_Ctrl   	= u32( ks_LCtrl  | ks_RCtrl  ),
+	ks_Alt    	= u32( ks_LAlt   | ks_RAlt   ),
 
-	ks_force  	= static_cast<u32>(-1)
+	ks_force  	= u32(-1)
 
 };// enum key_state
 

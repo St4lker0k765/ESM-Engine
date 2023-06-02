@@ -135,7 +135,7 @@ void gen_auth_code()
 		test.push_back			(xr_string("xrxmlparser.dll"));
 //		test.push_back			(xr_string("xr_3da.exe"));
 
-//		FS.auth_generate		(ignore,test);
+		FS.auth_generate		(ignore,test);
 }
 
 IClient::IClient( CTimer* timer )

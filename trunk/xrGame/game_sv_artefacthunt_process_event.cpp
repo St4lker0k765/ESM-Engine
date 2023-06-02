@@ -3,8 +3,6 @@
 #include "xrMessages.h"
 #include "../../xrNetServer/net_utils.h"
 
-//TODO xrMorrazzzz: Using, but trash
-
 void	game_sv_ArtefactHunt::OnEvent (NET_Packet &P, u16 type, u32 time, ClientID sender )
 {
 

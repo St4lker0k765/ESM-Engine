@@ -1,6 +1,4 @@
 #include "stdafx.h"
-
-/*
 #pragma hdrstop
 
 struct	auth_options	{
@@ -98,4 +96,3 @@ void	CLocatorAPI::auth_runtime		(void*	params)
 	xr_delete			(_o);
 	m_auth_lock.Leave	()	;
 }
-*/

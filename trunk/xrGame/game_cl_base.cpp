@@ -18,12 +18,12 @@ game_cl_GameState::game_cl_GameState()
 {
 	m_WeaponUsageStatistic		= xr_new<WeaponUsageStatistic>();
 
-	local_player				= nullptr;
-	m_game_type_name			= nullptr;
+	local_player				= 0;
+	m_game_type_name			= 0;
 
 	shedule.t_min				= 5;
 	shedule.t_max				= 20;
-	m_game_ui_custom			= nullptr;
+	m_game_ui_custom			= NULL;
 	shedule_register			();
 
 	m_u16VotingEnabled			= 0;
@@ -251,7 +251,7 @@ game_PlayerState* game_cl_GameState::GetPlayerByGameID(u32 GameID)
 		game_PlayerState* P = I->second;
 		if (P->GameID == GameID) return P;
 	};
-	return nullptr;
+	return NULL;
 };
 
 game_PlayerState* game_cl_GameState::GetPlayerByOrderID		(u32 idx)

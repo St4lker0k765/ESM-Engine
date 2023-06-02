@@ -140,162 +140,6 @@ int g_svDedicateServerUpdateReate = 100;
 
 ENGINE_API xr_list<LOADING_EVENT>			g_loading_events;
 
-void CRenderDevice::on_idle()
-{
-	if (!b_is_Ready) {
-		Sleep(100);
-		return;
-	}
-
-#ifdef DEDICATED_SERVER
-	u32 FrameStartTime = TimerGlobal.GetElapsed_ms();
-#endif
-	if (psDeviceFlags.test(rsStatistic))	g_bEnableStatGather = TRUE;
-	else									g_bEnableStatGather = FALSE;
-	if (g_loading_events.size())
-	{
-		if (g_loading_events.front()())
-			g_loading_events.pop_front();
-		pApp->LoadDraw();
-		return;
-	}
-	else
-	{
-		/*if ( (!Device.dwPrecacheFrame) && (!g_SASH.IsBenchmarkRunning())
-			&& g_bLoaded)
-			g_SASH.StartBenchmark();*/
-
-		FrameMove();
-	}
-
-	// Precache
-	if (dwPrecacheFrame)
-	{
-		float factor = float(dwPrecacheFrame) / float(dwPrecacheTotal);
-		float angle = PI_MUL_2 * factor;
-		vCameraDirection.set(_sin(angle), 0, _cos(angle));	vCameraDirection.normalize();
-		vCameraTop.set(0, 1, 0);
-		vCameraRight.crossproduct(vCameraTop, vCameraDirection);
-
-		mView.build_camera_dir(vCameraPosition, vCameraDirection, vCameraTop);
-	}
-
-	// Matrices
-	mFullTransform.mul(mProject, mView);
-	m_pRender->SetCacheXform(mView, mProject);
-	//RCache.set_xform_view		( mView				);
-	//RCache.set_xform_project	( mProject			);
-	D3DXMatrixInverse((D3DXMATRIX*)&mInvFullTransform, 0, (D3DXMATRIX*)&mFullTransform);
-
-	vCameraPosition_saved = vCameraPosition;
-	mFullTransform_saved = mFullTransform;
-	mView_saved = mView;
-	mProject_saved = mProject;
-
-	// *** Resume threads
-	// Capture end point - thread must run only ONE cycle
-	// Release start point - allow thread to run
-	mt_csLeave.Enter();
-	mt_csEnter.Leave();
-	Sleep(0);
-
-#ifndef DEDICATED_SERVER
-	Statistic->RenderTOTAL_Real.FrameStart();
-	Statistic->RenderTOTAL_Real.Begin();
-	if (b_is_Active) {
-		if (Begin()) {
-
-			seqRender.Process(rp_Render);
-			if (psDeviceFlags.test(rsCameraPos) || psDeviceFlags.test(rsStatistic) || Statistic->errors.size())
-				Statistic->Show();
-			//	TEST!!!
-			//Statistic->RenderTOTAL_Real.End			();
-			//	Present goes here
-			End();
-		}
-	}
-	Statistic->RenderTOTAL_Real.End();
-	Statistic->RenderTOTAL_Real.FrameEnd();
-	Statistic->RenderTOTAL.accum = Statistic->RenderTOTAL_Real.accum;
-#endif // #ifndef DEDICATED_SERVER
-	// *** Suspend threads
-	// Capture startup point
-	// Release end point - allow thread to wait for startup point
-	mt_csEnter.Enter();
-	mt_csLeave.Leave();
-
-	// Ensure, that second thread gets chance to execute anyway
-	if (dwFrame != mt_Thread_marker) {
-		for (u32 pit = 0; pit < Device.seqParallel.size(); pit++)
-			Device.seqParallel[pit]();
-		Device.seqParallel.clear_not_free();
-		seqFrameMT.Process(rp_Frame);
-	}
-
-#ifdef DEDICATED_SERVER
-	u32 FrameEndTime = TimerGlobal.GetElapsed_ms();
-	u32 FrameTime = (FrameEndTime - FrameStartTime);
-	/*
-	string1024 FPS_str = "";
-	string64 tmp;
-	xr_strcat(FPS_str, "FPS Real - ");
-	if (dwTimeDelta != 0)
-		xr_strcat(FPS_str, ltoa(1000/dwTimeDelta, tmp, 10));
-	else
-		xr_strcat(FPS_str, "~~~");
-	xr_strcat(FPS_str, ", FPS Proj - ");
-	if (FrameTime != 0)
-		xr_strcat(FPS_str, ltoa(1000/FrameTime, tmp, 10));
-	else
-		xr_strcat(FPS_str, "~~~");
-
-*/
-	u32 DSUpdateDelta = 1000 / g_svDedicateServerUpdateReate;
-	if (FrameTime < DSUpdateDelta)
-	{
-		Sleep(DSUpdateDelta - FrameTime);
-		//		Msg("sleep for %d", DSUpdateDelta - FrameTime);
-		//		xr_strcat(FPS_str, ", sleeped for ");
-		//		xr_strcat(FPS_str, ltoa(DSUpdateDelta - FrameTime, tmp, 10));
-	}
-	//	Msg(FPS_str);
-#endif // #ifdef DEDICATED_SERVER
-
-	if (!b_is_Active)
-		Sleep(1);
-}
-
-#ifdef INGAME_EDITOR
-void CRenderDevice::message_loop_editor()
-{
-	m_editor->run();
-	m_editor_finalize(m_editor);
-	xr_delete(m_engine);
-}
-#endif // #ifdef INGAME_EDITOR
-
-void CRenderDevice::message_loop()
-{
-#ifdef INGAME_EDITOR
-	if (editor()) {
-		message_loop_editor();
-		return;
-	}
-#endif // #ifdef INGAME_EDITOR
-
-	MSG						msg;
-	PeekMessage(&msg, NULL, 0U, 0U, PM_NOREMOVE);
-	while (msg.message != WM_QUIT) {
-		if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-
-		on_idle();
-	}
-}
-
 void CRenderDevice::Run			()
 {
 //	DUMP_PHASE;
@@ -330,8 +174,125 @@ void CRenderDevice::Run			()
 
 	m_pRender->ClearTarget();
 
-	message_loop();
+	while( WM_QUIT != msg.message  )
+    {
+		bGotMsg = PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE);
+        if( bGotMsg )
+        {
+              TranslateMessage	( &msg );
+              DispatchMessage	( &msg );
+         }
+		else
+		{
+			if (b_is_Ready) {
 
+#ifdef DEDICATED_SERVER
+				u32 FrameStartTime = TimerGlobal.GetElapsed_ms();
+#endif
+				if (psDeviceFlags.test(rsStatistic))	g_bEnableStatGather = TRUE;
+				else									g_bEnableStatGather = FALSE;
+				if (g_loading_events.size())
+				{
+					if (g_loading_events.front() ())
+						g_loading_events.pop_front();
+
+					pApp->LoadDraw();
+					continue;
+				}
+				else
+					FrameMove();
+
+				// Precache
+				if (dwPrecacheFrame)
+				{
+					float factor = float(dwPrecacheFrame) / float(dwPrecacheTotal);
+					float angle = PI_MUL_2 * factor;
+					vCameraDirection.set(_sin(angle), 0, _cos(angle));	vCameraDirection.normalize();
+					vCameraTop.set(0, 1, 0);
+					vCameraRight.crossproduct(vCameraTop, vCameraDirection);
+
+					mView.build_camera_dir(vCameraPosition, vCameraDirection, vCameraTop);
+				}
+
+				// Matrices
+				mFullTransform.mul(mProject, mView);
+				m_pRender->SetCacheXform(mView, mProject);
+				D3DXMatrixInverse((D3DXMATRIX*)&mInvFullTransform, 0, (D3DXMATRIX*)&mFullTransform);
+
+				// *** Resume threads
+				// Capture end point - thread must run only ONE cycle
+				// Release start point - allow thread to run
+				mt_csLeave.Enter();
+				mt_csEnter.Leave();
+				Sleep(0);
+
+#ifndef DEDICATED_SERVER
+				Statistic->RenderTOTAL_Real.FrameStart();
+				Statistic->RenderTOTAL_Real.Begin();
+				if (b_is_Active) {
+					if (Begin()) {
+
+						seqRender.Process(rp_Render);
+						if (psDeviceFlags.test(rsCameraPos) || psDeviceFlags.test(rsStatistic) || psDeviceFlags.test(rsDrawFPS) || psDeviceFlags.test(rsDrawMemory)||  Statistic->errors.size())
+							Statistic->Show();
+						End();
+					}
+				}
+				Statistic->RenderTOTAL_Real.End();
+				Statistic->RenderTOTAL_Real.FrameEnd();
+				Statistic->RenderTOTAL.accum = Statistic->RenderTOTAL_Real.accum;
+#endif
+				// *** Suspend threads
+				// Capture startup point
+				// Release end point - allow thread to wait for startup point
+				mt_csEnter.Enter();
+				mt_csLeave.Leave();
+
+				// Ensure, that second thread gets chance to execute anyway
+				if (dwFrame != mt_Thread_marker) {
+					for (u32 pit = 0; pit < Device.seqParallel.size(); pit++)
+						Device.seqParallel[pit]();
+					Device.seqParallel.clear_not_free();
+					seqFrameMT.Process(rp_Frame);
+				}
+#ifdef DEDICATED_SERVER
+				u32 FrameEndTime = TimerGlobal.GetElapsed_ms();
+				u32 FrameTime = (FrameEndTime - FrameStartTime);
+				/*
+				string1024 FPS_str = "";
+				string64 tmp;
+				strcat(FPS_str, "FPS Real - ");
+				if (dwTimeDelta != 0)
+					strcat(FPS_str, ltoa(1000/dwTimeDelta, tmp, 10));
+				else
+					strcat(FPS_str, "~~~");
+
+				strcat(FPS_str, ", FPS Proj - ");
+				if (FrameTime != 0)
+					strcat(FPS_str, ltoa(1000/FrameTime, tmp, 10));
+				else
+					strcat(FPS_str, "~~~");
+
+*/
+				u32 DSUpdateDelta = 1000 / g_svDedicateServerUpdateReate;
+				if (FrameTime < DSUpdateDelta)
+				{
+					Sleep(DSUpdateDelta - FrameTime);
+					//					Msg("sleep for %d", DSUpdateDelta - FrameTime);
+					//					strcat(FPS_str, ", sleeped for ");
+					//					strcat(FPS_str, ltoa(DSUpdateDelta - FrameTime, tmp, 10));
+				}
+
+				//				Msg(FPS_str);
+#endif
+
+			}
+			else {
+				Sleep(100);
+			}
+			if (!b_is_Active)	Sleep(1);
+        }
+    }
 	seqAppEnd.Process		(rp_AppEnd);
 
 	// Stop Balance-Thread

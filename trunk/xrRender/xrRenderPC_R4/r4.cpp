@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "r4.h"
 #include "../xrRender/fbasicvisual.h"
-#include "../../xr_3da/xr_object.h"
-#include "../../xr_3da/CustomHUD.h"
-#include "../../xr_3da/igame_persistent.h"
-#include "../../xr_3da/environment.h"
+#include "../../xrEngine/xr_object.h"
+#include "../../xrEngine/CustomHUD.h"
+#include "../../xrEngine/igame_persistent.h"
+#include "../../xrEngine/environment.h"
 #include "../xrRender/SkeletonCustom.h"
 #include "../xrRender/LightTrack.h"
 #include "../xrRender/dxRenderDeviceRender.h"
@@ -14,7 +14,7 @@
 #include "../xrRenderDX10/3DFluid/dx103DFluidManager.h"
 #include "../xrRender/ShaderResourceTraits.h"
 
-#include <D3DX10Core.h>
+#include <d3dx/D3DX10Core.h>
 
 CRender										RImplementation;
 
@@ -413,19 +413,15 @@ void					CRender::create					()
 
 	xrRender_apply_tf			();
 	::PortalTraverser.initialize();
-#ifdef DX10_FLUID_ENABLE
 	FluidManager.Initialize( 70, 70, 70 );
 //	FluidManager.Initialize( 100, 100, 100 );
 	FluidManager.SetScreenSize(Device.dwWidth, Device.dwHeight);
-#endif
 }
 
 void					CRender::destroy				()
 {
 	m_bMakeAsyncSS				= false;
-#ifdef DX10_FLUID_ENABLE
 	FluidManager.Destroy();
-#endif
 	::PortalTraverser.destroy	();
 	//_RELEASE					(q_sync_point[1]);
 	//_RELEASE					(q_sync_point[0]);
@@ -485,9 +481,7 @@ void CRender::reset_end()
 	Target						=	xr_new<CRenderTarget>	();
 
 	xrRender_apply_tf			();
-#ifdef DX10_FLUID_ENABLE
 	FluidManager.SetScreenSize(Device.dwWidth, Device.dwHeight);
-#endif
 
 	// Set this flag true to skip the first render frame,
 	// that some data is not ready in the first frame (for example device camera position)
@@ -678,7 +672,7 @@ CRender::~CRender()
 {
 }
 
-#include "../../xr_3da/GameFont.h"
+#include "../../xrEngine/GameFont.h"
 void	CRender::Statistics	(CGameFont* _F)
 {
 	CGameFont&	F	= *_F;

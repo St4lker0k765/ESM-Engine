@@ -155,7 +155,7 @@ void IGame_Persistent::OnFrame		()
 	Device.Statistic->Particles_destroy	= ps_destroy.size		();
 
 	// Play req particle systems
-	while (!ps_needtoplay.empty())
+	while (ps_needtoplay.size())
 	{
 		CPS_Instance*	psi		= ps_needtoplay.back	();
 		ps_needtoplay.pop_back	();

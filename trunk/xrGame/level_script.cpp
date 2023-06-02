@@ -99,8 +99,8 @@ LPCSTR get_weather_prev()
 
 void set_weather	(LPCSTR weather_name, bool forced)
 {
-	if (!g_pGamePersistent->Environment().USED_COP_WEATHER)
-		forced = true; //Я не уверен что погоду надо форсировано обновлять в ТЧ так не делали
+//	if (!g_pGamePersistent->Environment().USED_COP_WEATHER)
+//		forced = true; //Я не уверен что погоду надо форсировано обновлять в ТЧ так не делали
 
 
 	g_pGamePersistent->Environment().SetWeather(weather_name, forced);

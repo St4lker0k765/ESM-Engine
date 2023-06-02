@@ -31,8 +31,6 @@ void			xrGameSpyServer::CDKey_ShutDown()
 
 //generate a rand nchar challenge
 
-/*
-
 void			xrGameSpyServer::SendChallengeString_2_Client (IClient* C)
 {
 	if (!C) return;
@@ -62,7 +60,7 @@ void			xrGameSpyServer::OnCDKey_Validation				(int LocalID, int res, char* error
 	{
 		Msg						("xrGS::CDKey: Validation failed - <%s>", errormsg);
 		SendConnectResult		(CL, u8(res), u8(1), errormsg);
-	}
+	}*/
 };
 
 void			xrGameSpyServer::OnCDKey_ReValidation			(int LocalID, int hint, char* challenge)
@@ -79,4 +77,3 @@ void			xrGameSpyServer::OnCDKey_ReValidation			(int LocalID, int hint, char* cha
 	P.w_stringZ(CL->m_pChallengeString);
 	SendTo(CL->ID, P);
 }
-*/

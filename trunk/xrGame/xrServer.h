@@ -147,6 +147,8 @@ protected:
 	
 	virtual bool			Check_ServerAccess( IClient* CL, string512& reason )	{ return true; }
 
+	virtual bool			NeedToCheckClient_GameSpy_CDKey		(IClient* CL)	{ return false; }
+
 	void					SendConnectionData		(IClient* CL);
 	void					OnChatMessage			(NET_Packet* P, xrClientData* CL);
 

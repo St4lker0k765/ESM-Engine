@@ -3,8 +3,6 @@
 #include "xrMessages.h"
 #include "GameSpy/GameSpy_GCD_Client.h"
 
-/*
-
 void						CLevel::OnGameSpyChallenge			(NET_Packet* P)
 {
 	Msg("xrGS::CDKey::Level : Responding on Challenge");
@@ -27,4 +25,3 @@ void						CLevel::OnGameSpyChallenge			(NET_Packet* P)
 //	g_pGamePersistent->LoadTitle("st_validating_cdkey");
 };
 
-*/

@@ -137,14 +137,14 @@ int				xrGameSpyServer::GetPlayersCount()
 	if (NumPlayers < 1) return NumPlayers;
 	return NumPlayers - 1;
 };
-/*
+
 bool			xrGameSpyServer::NeedToCheckClient_GameSpy_CDKey	(IClient* CL)
 {
-//	SendChallengeString_2_Client(CL);
+	SendChallengeString_2_Client(CL);
 
 	return true;
 };
-*/
+
 void			xrGameSpyServer::OnCL_Disconnected	(IClient* _CL)
 {
 	inherited::OnCL_Disconnected(_CL);
@@ -160,7 +160,6 @@ void			xrGameSpyServer::OnCL_Disconnected	(IClient* _CL)
 	csPlayers.Leave			();
 }
 
-/*
 u32				xrGameSpyServer::OnMessage(NET_Packet& P, ClientID sender)			// Non-Zero means broadcasting with "flags" as returned
 {
 	u16			type;
@@ -194,7 +193,6 @@ u32				xrGameSpyServer::OnMessage(NET_Packet& P, ClientID sender)			// Non-Zero 
 
 	return	inherited::OnMessage(P, sender);
 };
-*/
 
 bool xrGameSpyServer::Check_ServerAccess( IClient* CL, string512& reason )
 {

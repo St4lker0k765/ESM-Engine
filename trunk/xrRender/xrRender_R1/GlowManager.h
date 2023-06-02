@@ -6,8 +6,8 @@
 #define AFX_GLOWMANAGER_H__EC35911F_479B_469A_845C_1A64D81D0326__INCLUDED_
 #pragma once
 
-#include "..\..\xr_3da\ispatial.h"
-#include "..\..\xr_3da\xr_collide_defs.h"
+#include "../../xr_3da/ispatial.h" //#include "../../xrcdb/ispatial.h" //return this!
+#include "../../xr_3da/xr_collide_defs.h" //#include "../../xrcdb/xr_collide_defs.h" //return this!
 
 class CGlow				: public IRender_Glow, public ISpatial
 {

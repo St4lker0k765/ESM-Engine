@@ -4,7 +4,7 @@
 #include "ResourceManager.h"
 
 dxRenderDeviceRender::dxRenderDeviceRender()
-	:	Resources(nullptr)
+	:	Resources(0)
 {
 	;
 }
@@ -340,11 +340,11 @@ void dxRenderDeviceRender::End()
 	DoAsyncScreenshot();
 
 #if defined(USE_DX10) || defined(USE_DX11)
-	HW.m_pSwapChain->Present(psDeviceFlags.test(rsVSync) ? 1 : 0, 0);
+	HW.m_pSwapChain->Present( 0, 0 );
 #else	//	USE_DX10
 	CHK_DX				(HW.pDevice->EndScene());
 
-	HW.pDevice->Present(nullptr, nullptr, nullptr, nullptr);
+	HW.pDevice->Present( NULL, NULL, NULL, NULL );
 #endif	//	USE_DX10
 	//HRESULT _hr		= HW.pDevice->Present( NULL, NULL, NULL, NULL );
 	//if				(D3DERR_DEVICELOST==_hr)	return;			// we will handle this later
@@ -361,7 +361,7 @@ void dxRenderDeviceRender::ClearTarget()
 	FLOAT ColorRGBA[4] = {0.0f,0.0f,0.0f,0.0f};
 	HW.pContext->ClearRenderTargetView(RCache.get_RT(), ColorRGBA);
 #else	//	USE_DX10
-	CHK_DX(HW.pDevice->Clear(0,nullptr,D3DCLEAR_TARGET,D3DCOLOR_XRGB(0,0,0),1,0));
+	CHK_DX(HW.pDevice->Clear(0,0,D3DCLEAR_TARGET,D3DCOLOR_XRGB(0,0,0),1,0));
 #endif	//	USE_DX10
 }
 

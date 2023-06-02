@@ -80,7 +80,7 @@ void CTextureDescrMngr::LoadLTX()
 #ifdef DEBUG
 			for (const auto& [key, value, comment] : ini.r_section("specification").Data)
 #else
-			for (const auto& [key, value] : ini.r_section("specification").Data)
+			for (const auto& [key, value, comment] : ini.r_section("specification").Data)
 #endif
 			{
 				texture_desc& desc = m_texture_details[key];

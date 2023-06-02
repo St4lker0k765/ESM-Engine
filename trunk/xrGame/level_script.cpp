@@ -18,8 +18,6 @@
 #include "ui/UIDialogWnd.h"
 #include "date_time.h"
 #include "ai_space.h"
-#include "alife_simulator.h"
-#include "alife_time_manager.h"
 #include "gamepersistent.h"
 #include "level_graph.h"
 #include "PHCommander.h"
@@ -123,6 +121,9 @@ float get_wfx_time() { return (g_pGamePersistent->Environment().wfx_time); }
 
 void set_time_factor(float time_factor)
 {
+	if (!OnServer())
+		return;
+
 	Level().Server->game->SetGameTimeFactor(time_factor);
 	GamePersistent().Environment().SetGameTime(Level().GetEnvironmentGameDayTimeSec(), Level().game->GetEnvironmentGameTimeFactor());
 }
@@ -146,21 +147,21 @@ ESingleGameDifficulty get_game_difficulty()
 u32 get_time_days()
 {
 	u32 year = 0, month = 0, day = 0, hours = 0, mins = 0, secs = 0, milisecs = 0;
-	split_time((g_pGameLevel && Level().game) ? Level().GetGameTime() : ai().alife().time_manager().game_time(), year, month, day, hours, mins, secs, milisecs);
+	split_time(Level().GetGameTime(), year, month, day, hours, mins, secs, milisecs);
 	return			day;
 }
 
 u32 get_time_hours()
 {
 	u32 year = 0, month = 0, day = 0, hours = 0, mins = 0, secs = 0, milisecs = 0;
-	split_time((g_pGameLevel && Level().game) ? Level().GetGameTime() : ai().alife().time_manager().game_time(), year, month, day, hours, mins, secs, milisecs);
+	split_time(Level().GetGameTime(), year, month, day, hours, mins, secs, milisecs);
 	return			hours;
 }
 
 u32 get_time_minutes()
 {
 	u32 year = 0, month = 0, day = 0, hours = 0, mins = 0, secs = 0, milisecs = 0;
-	split_time((g_pGameLevel && Level().game) ? Level().GetGameTime() : ai().alife().time_manager().game_time(), year, month, day, hours, mins, secs, milisecs);
+	split_time(Level().GetGameTime(), year, month, day, hours, mins, secs, milisecs);
 	return			mins;
 }
 

@@ -460,16 +460,16 @@ void CEnvironment::OnFrame()
     lerp(current_weight);
 
     //	Igor. Dynamic sun position.
-    if (USED_COP_WEATHER)
-    {
-        if (!::Render->is_sun_static() && m_dynamic_sun_movement)
-           calculate_dynamic_sun_dir();
-    }
-    else
-    {
+//    if (USED_COP_WEATHER)
+//    {
+//        if (!::Render->is_sun_static() && m_dynamic_sun_movement)
+//           calculate_dynamic_sun_dir();
+//    }
+//    else
+//    {
 //        if (Core.Features.test(xrCore::Feature::dynamic_sun_movement))
-             calculate_dynamic_sun_dir();
-    }
+//            calculate_dynamic_sun_dir();
+//    }
 
 #ifndef MASTER_GOLD
     if (CurrentEnv->sun_dir.y > 0)

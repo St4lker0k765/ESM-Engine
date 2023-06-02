@@ -184,6 +184,9 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{56ff2c0f-69a0-4b75-a499-7f294fd340eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\memory">
+      <UniqueIdentifier>{3b901c60-62a3-480b-8f77-130a9cbcabc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cl_intersect.h">
@@ -603,9 +606,6 @@
     <ClInclude Include="..\..\Include\xrRender\ConsoleRender.h">
       <Filter>Interfase implementations\ConsoleRender</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrRender\dxConsoleRender.h">
-      <Filter>Interfase implementations\ConsoleRender</Filter>
-    </ClInclude>
     <ClInclude Include="..\xrRender\dxObjectSpaceRender.h">
       <Filter>Interfase implementations\ObjectSpaceRender</Filter>
     </ClInclude>
@@ -722,6 +722,9 @@
     </ClInclude>
     <ClInclude Include="..\xrRender\Debug\dxPixEventWrapper.h">
       <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xrRender\doug_lea_memory_allocator.h">
+      <Filter>Core\memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1112,12 +1115,6 @@
     <ClCompile Include="..\xrRenderDX10\dx10r_constants_cache.cpp">
       <Filter>Refactored\Execution &amp; 3D\Shaders\Resources\dx10_R_shader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\xrEngine\ai_script_lua_debug.cpp">
-      <Filter>Refactored\Execution &amp; 3D\Shaders\ShaderManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xrEngine\ai_script_lua_extension.cpp">
-      <Filter>Refactored\Execution &amp; 3D\Shaders\ShaderManager</Filter>
-    </ClCompile>
     <ClCompile Include="..\xrRenderDX10\dx10ResourceManager_Resources.cpp">
       <Filter>Refactored\Execution &amp; 3D\Shaders\ShaderManager</Filter>
     </ClCompile>
@@ -1229,9 +1226,6 @@
     <ClCompile Include="..\xrRender\dxRenderDeviceRender.cpp">
       <Filter>Interfase implementations\RenderDeviceRender</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrRender\dxConsoleRender.cpp">
-      <Filter>Interfase implementations\ConsoleRender</Filter>
-    </ClCompile>
     <ClCompile Include="..\xrRender\dxObjectSpaceRender.cpp">
       <Filter>Interfase implementations\ObjectSpaceRender</Filter>
     </ClCompile>
@@ -1312,6 +1306,11 @@
     </ClCompile>
     <ClCompile Include="..\xrRender\Debug\dxPixEventWrapper.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xr_3da\ai_script_lua_debug.cpp" />
+    <ClCompile Include="..\..\xr_3da\ai_script_lua_extension.cpp" />
+    <ClCompile Include="..\xrRender\doug_lea_memory_allocator.c">
+      <Filter>Core\memory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

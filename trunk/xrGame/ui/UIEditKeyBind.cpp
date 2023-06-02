@@ -14,8 +14,8 @@ CUIEditKeyBind::CUIEditKeyBind(bool bPrim)
 	m_pAnimation->Cyclic		(true);
 	m_bChanged					= false;
 	m_lines.SetTextComplexMode	(false);
-	m_keyboard					= nullptr;
-	m_action					= nullptr;
+	m_keyboard					= NULL;
+	m_action					= NULL;
 }
 CUIEditKeyBind::~CUIEditKeyBind()
 {
@@ -33,7 +33,7 @@ u32 cut_string_by_length(CGameFont* pFont, LPCSTR src, LPSTR dst, u32 dst_size, 
 	} else {
 
 		float	text_len					= pFont->SizeOf_(src);
-		UI().ClientToScreenScaledWidth		(text_len);
+		UI()->ClientToScreenScaledWidth		(text_len);
 		VERIFY								(xr_strlen(src)<=dst_size);
 		strcpy								(dst,src);
 
@@ -42,7 +42,7 @@ u32 cut_string_by_length(CGameFont* pFont, LPCSTR src, LPSTR dst, u32 dst_size, 
 			dst[xr_strlen(dst)-1]			= 0;
 			VERIFY							(xr_strlen(dst));
 			text_len						= pFont->SizeOf_(dst);
-			UI().ClientToScreenScaledWidth	(text_len);
+			UI()->ClientToScreenScaledWidth	(text_len);
 		}
 
 		return xr_strlen(dst);
@@ -163,7 +163,7 @@ void CUIEditKeyBind::SetCurrentValue()
 	if(m_keyboard)
 		SetText				(m_keyboard->key_local_name.c_str());
 	else
-		SetText				(nullptr);
+		SetText				(NULL);
 }
 
 void CUIEditKeyBind::SaveValue()
@@ -217,5 +217,5 @@ void CUIEditKeyBind::OnMessage(const char* message){
 		return;
 
 	SetText				("---");
-	m_keyboard			= nullptr;
+	m_keyboard			= NULL;
 }

@@ -29,8 +29,8 @@ public:
 	typedef std::pair<LPCSTR,LPCSTR>				BLEND_ID;
 
 public:
-	using CALLBACK_ID = fastdelegate::FastDelegate<void()>;
-	using CALLBACKS = xr_vector<CALLBACK_ID>;
+	typedef fastdelegate::FastDelegate0<>			CALLBACK_ID;
+	typedef xr_vector<CALLBACK_ID>					CALLBACKS;
 
 private:
 	MotionID				m_animation;

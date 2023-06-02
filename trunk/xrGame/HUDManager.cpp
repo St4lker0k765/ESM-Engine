@@ -27,7 +27,7 @@ CFontManager::CFontManager()
 	FONTS_VEC_IT it		= m_all_fonts.begin();
 	FONTS_VEC_IT it_e	= m_all_fonts.end();
 	for(;it!=it_e;++it)
-		(**it) = nullptr;
+		(**it) = NULL;
 
 	InitializeFonts();
 
@@ -125,7 +125,7 @@ void CFontManager::OnDeviceReset()
 //--------------------------------------------------------------------
 CHUDManager::CHUDManager()
 { 
-	pUI						= nullptr;
+	pUI						= 0;
 	m_pHUDTarget			= xr_new<CHUDTarget>();
 	OnDisconnected			();
 }
@@ -146,7 +146,7 @@ void CHUDManager::Load()
 		return;
 	}
 	pUI					= xr_new<CUI> (this);
-	pUI->Load			(nullptr);
+	pUI->Load			(NULL);
 	OnDisconnected		();
 }
 //--------------------------------------------------------------------
@@ -163,9 +163,9 @@ ENGINE_API extern float psHUD_FOV;
 void CHUDManager::Render_First()
 {
 	if (!psHUD_Flags.is(HUD_WEAPON|HUD_WEAPON_RT))return;
-	if (nullptr==pUI)						return;
+	if (0==pUI)						return;
 	CObject*	O					= g_pGameLevel->CurrentViewEntity();
-	if (nullptr==O)						return;
+	if (0==O)						return;
 	CActor*		A					= smart_cast<CActor*> (O);
 	if (!A)							return;
 	if (A && !A->HUDview())			return;
@@ -180,9 +180,9 @@ void CHUDManager::Render_First()
 void CHUDManager::Render_Last()
 {
 	if (!psHUD_Flags.is(HUD_WEAPON|HUD_WEAPON_RT))return;
-	if (nullptr==pUI)						return;
+	if (0==pUI)						return;
 	CObject*	O					= g_pGameLevel->CurrentViewEntity();
-	if (nullptr==O)						return;
+	if (0==O)						return;
 	CActor*		A					= smart_cast<CActor*> (O);
 	if (A && !A->HUDview())			return;
 	if(O->CLS_ID == CLSID_CAR)
@@ -225,7 +225,7 @@ void  CHUDManager::RenderUI()
 		
 		Fvector2			_pos;
 		_pos.set			(UI_BASE_WIDTH/2.0f, UI_BASE_HEIGHT/2.0f);
-		UI().ClientToScreenScaled(_pos);
+		UI()->ClientToScreenScaled(_pos);
 		pFont->SetAligment	(CGameFont::alCenter);
 		pFont->Out			(_pos.x, _pos.y, _str);
 		pFont->OnRender		();
@@ -269,7 +269,6 @@ void CHUDManager::OnScreenRatioChanged()
 
 	pUI->UIMainIngameWnd				= xr_new<CUIMainIngameWnd>	();
 	pUI->UIMainIngameWnd->Init			();
-	pUI->UIMainIngameWnd->OnConnected(); // reload mini maps
 	pUI->UnLoad							();
 	pUI->Load							(pUI->UIGame());
 }

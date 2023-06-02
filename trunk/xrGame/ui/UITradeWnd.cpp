@@ -69,14 +69,14 @@ struct CUITradeInternal{
 
 CUITradeWnd::CUITradeWnd()
 	:	m_bDealControlsVisible	(false),
-		m_pTrade(nullptr),
-		m_pOthersTrade(nullptr),
+		m_pTrade(NULL),
+		m_pOthersTrade(NULL),
 		bStarted(false)
 {
 	m_uidata = xr_new<CUITradeInternal>();
 	Init();
 	Hide();
-	SetCurrentItem			(nullptr);
+	SetCurrentItem			(NULL);
 }
 
 CUITradeWnd::~CUITradeWnd()
@@ -166,7 +166,7 @@ void CUITradeWnd::Init()
 	AttachChild							(&m_uidata->UIToTalkButton);
 	xml_init.Init3tButton					(uiXml, "button", 1, &m_uidata->UIToTalkButton);
 
-	m_uidata->UIDealMsg					= nullptr;
+	m_uidata->UIDealMsg					= NULL;
 
 	BindDragDropListEnents				(&m_uidata->UIOurBagList);
 	BindDragDropListEnents				(&m_uidata->UIOthersBagList);
@@ -242,7 +242,7 @@ void CUITradeWnd::Update()
 		if( !m_uidata->UIDealMsg->IsActual()){
 			HUD().GetUI()->UIGame()->RemoveCustomStatic("not_enough_money_mine");
 			HUD().GetUI()->UIGame()->RemoveCustomStatic("not_enough_money_other");
-			m_uidata->UIDealMsg			= nullptr;
+			m_uidata->UIDealMsg			= NULL;
 		}
 	}
 }
@@ -254,9 +254,9 @@ void CUITradeWnd::Show()
 	inherited::Show					(true);
 	inherited::Enable				(true);
 
-	SetCurrentItem					(nullptr);
+	SetCurrentItem					(NULL);
 	ResetAll						();
-	m_uidata->UIDealMsg				= nullptr;
+	m_uidata->UIDealMsg				= NULL;
 }
 
 void CUITradeWnd::Hide()
@@ -267,7 +267,7 @@ void CUITradeWnd::Hide()
 	if(bStarted)
 		StopTrade					();
 	
-	m_uidata->UIDealMsg				= nullptr;
+	m_uidata->UIDealMsg				= NULL;
 
 	if(HUD().GetUI()->UIGame()){
 		HUD().GetUI()->UIGame()->RemoveCustomStatic("not_enough_money_mine");
@@ -306,7 +306,7 @@ bool CUITradeWnd::CanMoveToOther(PIItem pItem)
 	float otherMaxWeight	= m_pOthersInv->GetMaxWeight();
 
 	if (!m_pOthersInvOwner->trade_parameters().enabled(
-			CTradeParameters::action_buy(nullptr),
+			CTradeParameters::action_buy(0),
 			pItem->object().cNameSect()
 		))
 		return				(false);
@@ -423,7 +423,7 @@ void CUITradeWnd::PerformTrade()
 
 		m_uidata->UIDealMsg->m_endTime	= Device.fTimeGlobal+2.0f;// sec
 	}
-	SetCurrentItem			(nullptr);
+	SetCurrentItem			(NULL);
 }
 
 void CUITradeWnd::DisableAll()
@@ -590,7 +590,7 @@ CUICellItem* CUITradeWnd::CurrentItem()
 
 PIItem CUITradeWnd::CurrentIItem()
 {
-	return	(m_pCurrentCellItem)?(PIItem)m_pCurrentCellItem->m_pData : nullptr;
+	return	(m_pCurrentCellItem)?(PIItem)m_pCurrentCellItem->m_pData : NULL;
 }
 
 void CUITradeWnd::SetCurrentItem(CUICellItem* itm)
@@ -620,11 +620,11 @@ void CUITradeWnd::SwitchToTalk()
 
 void CUITradeWnd::BindDragDropListEnents(CUIDragDropListEx* lst)
 {
-	lst->m_f_item_drop = fastdelegate::MakeDelegate(this, &CUITradeWnd::OnItemDrop);
-	lst->m_f_item_start_drag = fastdelegate::MakeDelegate(this, &CUITradeWnd::OnItemStartDrag);
-	lst->m_f_item_db_click = fastdelegate::MakeDelegate(this, &CUITradeWnd::OnItemDbClick);
-	lst->m_f_item_selected = fastdelegate::MakeDelegate(this, &CUITradeWnd::OnItemSelected);
-	lst->m_f_item_rbutton_click = fastdelegate::MakeDelegate(this, &CUITradeWnd::OnItemRButtonClick);
+	lst->m_f_item_drop				= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUITradeWnd::OnItemDrop);
+	lst->m_f_item_start_drag		= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUITradeWnd::OnItemStartDrag);
+	lst->m_f_item_db_click			= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUITradeWnd::OnItemDbClick);
+	lst->m_f_item_selected			= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUITradeWnd::OnItemSelected);
+	lst->m_f_item_rbutton_click		= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUITradeWnd::OnItemRButtonClick);
 }
 
 void CUITradeWnd::ColorizeItem(CUICellItem* itm, bool b)

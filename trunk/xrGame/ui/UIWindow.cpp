@@ -72,8 +72,8 @@ void draw_wnds_rects()
 	for(;it!=it_e;++it)
 	{
 		Frect& r = *it;
-		UI().ClientToScreenScaled(r.lt, r.lt.x, r.lt.y);
-		UI().ClientToScreenScaled(r.rb, r.rb.x, r.rb.y);
+		UI()->ClientToScreenScaled(r.lt, r.lt.x, r.lt.y);
+		UI()->ClientToScreenScaled(r.rb, r.rb.x, r.rb.y);
 		draw_rect				(r,color_rgba(255,0,0,255));
 	};
 
@@ -183,11 +183,11 @@ void CUIWindow::Draw(float x, float y){
 
 void CUIWindow::Update()
 {
-	if (GetUICursor().IsVisible())
+	if (GetUICursor()->IsVisible())
 	{
 		bool cursor_on_window;
 
-		Fvector2			temp = GetUICursor().GetCursorPosition();
+		Fvector2			temp = GetUICursor()->GetCursorPosition();
 		Frect				r;
 		GetAbsoluteRect		(r);
 		cursor_on_window	= !!r.in(temp);

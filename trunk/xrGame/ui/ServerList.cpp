@@ -15,7 +15,7 @@
 #include "../GameSpy/GameSpy_Browser.h"
 
 
-CGameSpy_Browser* g_gs_browser = nullptr;
+CGameSpy_Browser* g_gs_browser = NULL;
 
 CServerList::CServerList()
 {

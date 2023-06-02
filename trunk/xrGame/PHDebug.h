@@ -129,7 +129,7 @@ void PH_DBG_SetTrackObject( LPCSTR obj );
 struct CFunctionGraph
 {
 public:
-	using type_function = fastdelegate::FastDelegate<float(float)> ;
+	typedef fastdelegate::FastDelegate1<float,float> type_function;
 private:
 	CStatGraph						*m_stat_graph																																					;
 	type_function					m_function																																						;

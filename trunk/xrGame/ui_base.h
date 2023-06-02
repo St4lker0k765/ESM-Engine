@@ -6,8 +6,6 @@ class CUICursor;
 #include "../Include/xrRender/UIRender.h"
 #include "../Include/xrRender/FactoryPtr.h"
 
-class CUIGameCustom;
-
 #include "ui_defs.h"
 
 class CDeviceResetNotifier :public pureDeviceReset
@@ -39,8 +37,8 @@ public:
 	
 					ui_core							();
 					~ui_core						();
-	CFontManager&	Font							()							{return *m_pFontManager;}
-	CUICursor&		GetUICursor						()							{return *m_pUICursor;}
+	CFontManager*	Font							()							{return m_pFontManager;}
+	CUICursor*		GetUICursor						()							{return m_pUICursor;}
 
 	void			ClientToScreenScaled			(Fvector2& dest, float left, float top);
 	void			ClientToScreenScaled			(Fvector2& src_and_dest);
@@ -61,6 +59,5 @@ public:
 	shared_str		get_xml_name					(LPCSTR fn);
 };
 
-extern CUICursor&	    GetUICursor						();
-extern ui_core&		    UI								();
-extern CUIGameCustom* CurrentGameUI();
+extern CUICursor*	GetUICursor						();
+extern ui_core*		UI								();

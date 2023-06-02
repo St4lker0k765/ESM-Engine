@@ -22,13 +22,13 @@
 
 CUITalkWnd::CUITalkWnd()
 {
-	m_pActor				= nullptr;
+	m_pActor				= NULL;
 
-	m_pOurInvOwner			= nullptr;
-	m_pOthersInvOwner		= nullptr;
+	m_pOurInvOwner			= NULL;
+	m_pOthersInvOwner		= NULL;
 
-	m_pOurDialogManager		= nullptr;
-	m_pOthersDialogManager	= nullptr;
+	m_pOurDialogManager		= NULL;
+	m_pOthersDialogManager	= NULL;
 
 	ToTopicMode				();
 
@@ -218,7 +218,7 @@ void CUITalkWnd::Update()
 		CGameObject* pOurGO = smart_cast<CGameObject*>(m_pOurInvOwner);
 		CGameObject* pOtherGO = smart_cast<CGameObject*>(m_pOthersInvOwner);
 	
-		if(nullptr ==pOurGO || nullptr ==pOtherGO || ((pOurGO->Position().distance_to(pOtherGO->Position())>3.0f)&&!m_pOthersInvOwner->NeedOsoznanieMode()) )
+		if(NULL==pOurGO || NULL==pOtherGO || ((pOurGO->Position().distance_to(pOtherGO->Position())>3.0f)&&!m_pOthersInvOwner->NeedOsoznanieMode()) )
 			Game().StartStopMenu(this,true);
 	}
 
@@ -259,21 +259,21 @@ void CUITalkWnd::Hide()
 	ToTopicMode					();
 
 	if (m_pActor->IsTalking()) m_pActor->StopTalk();
-	m_pActor = nullptr;
+	m_pActor = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 bool  CUITalkWnd::TopicMode			() 
 {
-	return nullptr == m_pCurrentDialog.get();
+	return NULL == m_pCurrentDialog.get();
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void  CUITalkWnd::ToTopicMode		() 
 {
-	m_pCurrentDialog = DIALOG_SHARED_PTR((CPhraseDialog*)nullptr);
+	m_pCurrentDialog = DIALOG_SHARED_PTR((CPhraseDialog*)NULL);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -397,7 +397,7 @@ void CUITalkWnd::PlaySnd(LPCSTR text)
 		VERIFY(m_pActor);
 		if (!m_pActor->OnDialogSoundHandlerStart(m_pOthersInvOwner,fn)) {
 			m_sound.create(fn,st_Effect,sg_SourceType);
-			m_sound.play(nullptr,sm_2D);
+			m_sound.play(0,sm_2D);
 		}
 	}
 }

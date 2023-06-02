@@ -143,7 +143,7 @@ LPCSTR CUITextureMaster::GetTextureFileName(const char* texture_name){
 	if (it != m_textures.end())
 		return *((*it).second.file);
 	R_ASSERT3(false,"CUITextureMaster::GetTextureFileName Can't find texture", texture_name);
-	return nullptr;
+	return 0;
 }
 
 TEX_INFO CUITextureMaster::FindItem(LPCSTR texture_name, LPCSTR def_texture_name)
@@ -155,7 +155,7 @@ TEX_INFO CUITextureMaster::FindItem(LPCSTR texture_name, LPCSTR def_texture_name
 		return (it->second);
 	else{
 		R_ASSERT2(m_textures.find(def_texture_name)!=m_textures.end(),texture_name);
-		return FindItem	(def_texture_name, nullptr);
+		return FindItem	(def_texture_name,NULL);
 	}
 }
 

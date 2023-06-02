@@ -11,7 +11,7 @@ xr_token g_GameModes	[] = {
 	{ "st_deathmatch",			GAME_DEATHMATCH	},
 	{ "st_team_deathmatch",		GAME_TEAMDEATHMATCH	},
 	{ "st_artefacthunt",		GAME_ARTEFACTHUNT	},
-	{ nullptr,						0}
+	{ 0,						0}
 };
 
 CUIOptConCom::CUIOptConCom()

@@ -71,7 +71,7 @@ void CDialogHolder::StartMenu (CUIDialogWnd* pDialog, bool bDoHideIndicators)
 	pDialog->Show					();
 
 	if( pDialog->NeedCursor() )
-		GetUICursor().Show();
+		GetUICursor()->Show();
 
 	if(g_pGameLevel)
 	{
@@ -105,18 +105,18 @@ void CDialogHolder::StopMenu (CUIDialogWnd* pDialog)
 			else					HUD().GetUI()->HideGameIndicators();
 		}
 		RemoveDialogToRender	(pDialog);
-		SetMainInputReceiver	(nullptr,false);
-		pDialog->SetHolder		(nullptr);
+		SetMainInputReceiver	(NULL,false);
+		pDialog->SetHolder		(NULL);
 		pDialog->Hide			();
 	}else{
 		RemoveDialogToRender	(pDialog);
 		SetMainInputReceiver	(pDialog, true);
-		pDialog->SetHolder		(nullptr);
+		pDialog->SetHolder		(NULL);
 		pDialog->Hide			();
 	}
 
 	if(!MainInputReceiver() || !MainInputReceiver()->NeedCursor() )
-		GetUICursor().Hide();
+		GetUICursor()->Hide();
 }
 
 void CDialogHolder::AddDialogToRender(CUIWindow* pDialog)
@@ -157,7 +157,7 @@ CUIDialogWnd* CDialogHolder::MainInputReceiver()
 { 
 	if ( !m_input_receivers.empty() ) 
 		return m_input_receivers.back().m_item; 
-	return nullptr; 
+	return NULL; 
 };
 
 void CDialogHolder::SetMainInputReceiver	(CUIDialogWnd* ir, bool _find_remove)	
@@ -234,5 +234,5 @@ void CDialogHolder::CleanInternals()
 		m_input_receivers.pop_back();
 
 	m_dialogsToRender.clear	();
-	GetUICursor().Hide		();
+	GetUICursor()->Hide		();
 }

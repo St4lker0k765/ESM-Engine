@@ -22,7 +22,7 @@ private:
 	u32							objects_dup_memsz	;
 
 public:
-	using RELCASE_CALLBACK = fastdelegate::FastDelegate<void(CObject*)>;
+	typedef fastdelegate::FastDelegate1<CObject*>	RELCASE_CALLBACK;
 	struct SRelcasePair{
 		int*					m_ID;
 		RELCASE_CALLBACK		m_Callback;

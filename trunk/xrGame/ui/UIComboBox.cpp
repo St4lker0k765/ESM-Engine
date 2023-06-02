@@ -106,7 +106,7 @@ void CUIComboBox::OnListItemSelect()
 	if(bk_itoken_id != m_itoken_id)
 	{
 		SaveValue		();
-		GetMessageTarget()->SendMessage(this, LIST_ITEM_SELECT, nullptr);
+		GetMessageTarget()->SendMessage(this, LIST_ITEM_SELECT, NULL);
 	}
 }
 

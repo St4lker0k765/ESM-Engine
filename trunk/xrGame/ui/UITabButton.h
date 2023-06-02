@@ -21,7 +21,7 @@ public:
 //.	virtual void AssociateWindow(CUIFrameWindow* pWindow);
 //.	virtual CUIFrameWindow* GetAssociatedWindow();
 //.	virtual void ShowAssociatedWindow(bool bShow = true);
-	virtual void SendMessage(CUIWindow* pWnd, s16 msg, void* pData = nullptr);
+	virtual void SendMessage(CUIWindow* pWnd, s16 msg, void* pData = 0);
 	virtual bool OnMouse(float x, float y, EUIMessages mouse_action);
 	virtual bool OnMouseDown(int mouse_btn);
 	virtual void Update();

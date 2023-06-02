@@ -34,7 +34,7 @@ protected:
 class callback_base : public base
 {
 private:
-	typedef		fastdelegate::FastDelegate<void()>		Callback;
+	typedef		fastdelegate::FastDelegate0<void>		Callback;
 
 public:
 					callback_base	( Callback const& callback, key_state state );

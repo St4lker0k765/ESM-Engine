@@ -4,8 +4,8 @@
 #include "UICursor.h"
 #include "HUDManager.h"
 
-CUICursor&	GetUICursor		()	{return UI().GetUICursor();};
-ui_core&	UI				()	{return *GamePersistent().m_pUI_core;};
+CUICursor*	GetUICursor		()	{return UI()->GetUICursor();};
+ui_core*	UI				()	{return GamePersistent().m_pUI_core;};
 extern ENGINE_API Fvector2		g_current_font_scale;
 
 void S2DVert::rotate_pt(const Fvector2& pivot, float cosA, float sinA, float kx)
@@ -92,7 +92,7 @@ sPoly2D* C2DFrustum::ClipPoly	(sPoly2D& S, sPoly2D& D) const
 		}
 
 		// here we end up with complete polygon in 'dest' which is inside plane #i
-		if (dest->size()<3) return nullptr;
+		if (dest->size()<3) return 0;
 	}
 	return dest;
 }
@@ -196,8 +196,8 @@ ui_core::ui_core()
 		m_pFontManager				= xr_new<CFontManager>();
 	}else
 	{
-		m_pUICursor					= nullptr;
-		m_pFontManager				= nullptr;
+		m_pUICursor					= NULL;
+		m_pFontManager				= NULL;
 	}
 	m_bPostprocess				= false;
 	
@@ -243,7 +243,7 @@ void ui_core::pp_stop()
 
 void ui_core::RenderFont()
 {
-	Font().Render();
+	Font()->Render();
 }
 
 bool ui_core::is_16_9_mode()
@@ -256,7 +256,7 @@ shared_str	ui_core::get_xml_name(LPCSTR fn)
 	string_path				str;
 	if(!is_16_9_mode()){
 		sprintf_s(str, "%s", fn);
-		if (nullptr ==strext(fn) ) strcat(str, ".xml");
+		if ( NULL==strext(fn) ) strcat(str, ".xml");
 	}else{
 
 		string_path			str_;
@@ -268,10 +268,10 @@ shared_str	ui_core::get_xml_name(LPCSTR fn)
 		}else
 			sprintf_s				(str, "%s_16", fn);
 
-		if(nullptr ==FS.exist(str_, "$game_config$", "ui\\" , str) )
+		if(NULL==FS.exist(str_, "$game_config$", "ui\\" , str) )
 		{
 			sprintf_s(str, "%s", fn);
-			if (nullptr ==strext(fn) ) strcat(str, ".xml");
+			if ( NULL==strext(fn) ) strcat(str, ".xml");
 		}
 //		Msg("[16-9] get_xml_name for[%s] returns [%s]", fn, str);
 	}

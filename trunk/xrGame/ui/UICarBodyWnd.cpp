@@ -34,7 +34,7 @@ void move_item (u16 from_id, u16 to_id, u16 what_id);
 
 CUICarBodyWnd::CUICarBodyWnd()
 {
-	m_pInventoryBox		= nullptr;
+	m_pInventoryBox		= NULL;
 	Init				();
 	Hide				();
 	m_b_need_update		= false;
@@ -121,8 +121,8 @@ void CUICarBodyWnd::Init()
 	m_pUIPropertiesBox->Init		(0,0,300,300);
 	m_pUIPropertiesBox->Hide		();
 
-	SetCurrentItem					(nullptr);
-	m_pUIStaticDesc->SetText		(nullptr);
+	SetCurrentItem					(NULL);
+	m_pUIStaticDesc->SetText		(NULL);
 
 	m_pUITakeAll					= xr_new<CUI3tButton>(); m_pUITakeAll->SetAutoDelete(true);
 	AttachChild						(m_pUITakeAll);
@@ -137,7 +137,7 @@ void CUICarBodyWnd::Init()
 void CUICarBodyWnd::InitCarBody(CInventoryOwner* pOur, CInventoryBox* pInvBox)
 {
     m_pOurObject									= pOur;
-	m_pOthersObject									= nullptr;
+	m_pOthersObject									= NULL;
 	m_pInventoryBox									= pInvBox;
 	m_pInventoryBox->m_in_use						= true;
 
@@ -156,7 +156,7 @@ void CUICarBodyWnd::InitCarBody(CInventoryOwner* pOur, CInventoryOwner* pOthers)
 
     m_pOurObject									= pOur;
 	m_pOthersObject									= pOthers;
-	m_pInventoryBox									= nullptr;
+	m_pInventoryBox									= NULL;
 	
 	u16 our_id										= smart_cast<CGameObject*>(m_pOurObject)->ID();
 	u16 other_id									= smart_cast<CGameObject*>(m_pOthersObject)->ID();
@@ -164,7 +164,7 @@ void CUICarBodyWnd::InitCarBody(CInventoryOwner* pOur, CInventoryOwner* pOthers)
 	m_pUICharacterInfoLeft->InitCharacter			(our_id);
 	m_pUIOthersIcon->Show							(true);
 	
-	CBaseMonster *monster = nullptr;
+	CBaseMonster *monster = NULL;
 	if(m_pOthersObject) {
 		monster										= smart_cast<CBaseMonster *>(m_pOthersObject);
 		if (monster || m_pOthersObject->use_simplified_visual() ) 
@@ -320,7 +320,7 @@ void CUICarBodyWnd::Show()
 { 
 	InventoryUtilities::SendInfoToActor		("ui_car_body");
 	inherited::Show							();
-	SetCurrentItem							(nullptr);
+	SetCurrentItem							(NULL);
 	InventoryUtilities::UpdateWeight		(*m_pUIOurBagWnd);
 }
 
@@ -343,7 +343,7 @@ CUICellItem* CUICarBodyWnd::CurrentItem()
 
 PIItem CUICarBodyWnd::CurrentIItem()
 {
-	return	(m_pCurrentCellItem)?(PIItem)m_pCurrentCellItem->m_pData : nullptr;
+	return	(m_pCurrentCellItem)?(PIItem)m_pCurrentCellItem->m_pData : NULL;
 }
 
 void CUICarBodyWnd::SetCurrentItem(CUICellItem* itm)
@@ -425,7 +425,7 @@ void CUICarBodyWnd::ActivatePropertiesBox()
 	CBottleItem*			pBottleItem		= smart_cast<CBottleItem*>		(CurrentIItem());
     bool					b_show			= false;
 	
-	LPCSTR _action				= nullptr;
+	LPCSTR _action				= NULL;
 	if(pMedkit || pAntirad)
 	{
 		_action						= "st_use";
@@ -440,7 +440,7 @@ void CUICarBodyWnd::ActivatePropertiesBox()
 		b_show						= true;
 	}
 	if(_action)
-		m_pUIPropertiesBox->AddItem(_action, nullptr, INVENTORY_EAT_ACTION);
+		m_pUIPropertiesBox->AddItem(_action,  NULL, INVENTORY_EAT_ACTION);
 
 
 	if(b_show){
@@ -451,7 +451,7 @@ void CUICarBodyWnd::ActivatePropertiesBox()
 		Frect							vis_rect;
 
 		GetAbsoluteRect					(vis_rect);
-		cursor_pos						= GetUICursor().GetCursorPosition();
+		cursor_pos						= GetUICursor()->GetCursorPosition();
 		cursor_pos.sub					(vis_rect.lt);
 		m_pUIPropertiesBox->Show		(vis_rect, cursor_pos);
 	}
@@ -517,7 +517,7 @@ bool CUICarBodyWnd::OnItemDrop(CUICellItem* itm)
 		CUICellItem* ci			= old_owner->RemoveItem(CurrentItem(), false);
 		new_owner->SetItem		(ci);
 	}
-	SetCurrentItem					(nullptr);
+	SetCurrentItem					(NULL);
 
 	return				true;
 }
@@ -557,7 +557,7 @@ bool CUICarBodyWnd::OnItemDbClick(CUICellItem* itm)
 //.		Actor()->callback		(GameObject::eInvBoxItemTake)(m_pInventoryBox->lua_game_object(), CurrentIItem()->object().lua_game_object() );
 
 	}
-	SetCurrentItem				(nullptr);
+	SetCurrentItem				(NULL);
 
 	return						true;
 }
@@ -618,9 +618,9 @@ bool CUICarBodyWnd::TransferItem(PIItem itm, CInventoryOwner* owner_from, CInven
 
 void CUICarBodyWnd::BindDragDropListEnents(CUIDragDropListEx* lst)
 {
-	lst->m_f_item_drop				= fastdelegate::MakeDelegate(this,&CUICarBodyWnd::OnItemDrop);
-	lst->m_f_item_start_drag		= fastdelegate::MakeDelegate(this,&CUICarBodyWnd::OnItemStartDrag);
-	lst->m_f_item_db_click			= fastdelegate::MakeDelegate(this,&CUICarBodyWnd::OnItemDbClick);
-	lst->m_f_item_selected			= fastdelegate::MakeDelegate(this,&CUICarBodyWnd::OnItemSelected);
-	lst->m_f_item_rbutton_click		= fastdelegate::MakeDelegate(this,&CUICarBodyWnd::OnItemRButtonClick);
+	lst->m_f_item_drop				= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUICarBodyWnd::OnItemDrop);
+	lst->m_f_item_start_drag		= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUICarBodyWnd::OnItemStartDrag);
+	lst->m_f_item_db_click			= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUICarBodyWnd::OnItemDbClick);
+	lst->m_f_item_selected			= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUICarBodyWnd::OnItemSelected);
+	lst->m_f_item_rbutton_click		= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUICarBodyWnd::OnItemRButtonClick);
 }

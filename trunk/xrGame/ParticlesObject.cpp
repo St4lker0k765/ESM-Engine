@@ -73,7 +73,7 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 //----------------------------------------------------
 CParticlesObject::~CParticlesObject()
 {
-	Device.RemoveFromAuxthread5Pool(fastdelegate::FastDelegate<void()>(this, &CParticlesObject::PerformAllTheWork_mt));
+	Device.RemoveFromAuxthread5Pool(fastdelegate::FastDelegate0<>(this, &CParticlesObject::PerformAllTheWork_mt));
 }
 
 void CParticlesObject::UpdateSpatial()
@@ -163,7 +163,7 @@ void CParticlesObject::shedule_Update	(u32 _dt)
 	if (m_bDead)					return;
 	if (psDeviceFlags.test(mtParticles))
 	{
-		fastdelegate::FastDelegate<void()> delegate(this, &CParticlesObject::PerformAllTheWork_mt);
+		fastdelegate::FastDelegate0<> delegate(this, &CParticlesObject::PerformAllTheWork_mt);
 
 		if (::Random.randI(1, 4) == 1)
 			Device.AddToAuxThread_Pool(1, delegate);

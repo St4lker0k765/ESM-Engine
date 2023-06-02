@@ -108,7 +108,7 @@ void CUIPropertiesBox::Hide()
 	CUIWindow::Show(false);
 	CUIWindow::Enable(false);
 
-	m_pMouseCapturer = nullptr;
+	m_pMouseCapturer = NULL;
 	
 	if(GetParent()->GetMouseCapturer() == this)
 		GetParent()->SetCapture(this, false);

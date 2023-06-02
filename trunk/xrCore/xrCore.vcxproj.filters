@@ -341,6 +341,9 @@
     <ClInclude Include="clsid.h">
       <Filter>Math\Extensions</Filter>
     </ClInclude>
+    <ClInclude Include="fastdelegate.h">
+      <Filter>Math\Extensions</Filter>
+    </ClInclude>
     <ClInclude Include="xr_trims.h">
       <Filter>Math\Extensions</Filter>
     </ClInclude>
@@ -500,9 +503,6 @@
     </ClInclude>
     <ClInclude Include="CPU_Misc.h">
       <Filter>CPU</Filter>
-    </ClInclude>
-    <ClInclude Include="FastDelegate.hpp">
-      <Filter>Math\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

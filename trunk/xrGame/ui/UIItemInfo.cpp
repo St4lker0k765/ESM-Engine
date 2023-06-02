@@ -18,16 +18,16 @@
 CUIItemInfo::CUIItemInfo()
 {
 	UIItemImageSize.set			(0.0f,0.0f);
-	UICondProgresBar			= nullptr;
-	UICondition					= nullptr;
-	UICost						= nullptr;
-	UIWeight					= nullptr;
-	UIItemImage					= nullptr;
-	UIDesc						= nullptr;
-	UIWpnParams					= nullptr;
-	UIArtefactParams			= nullptr;
-	UIName						= nullptr;
-	m_pInvItem					= nullptr;
+	UICondProgresBar			= NULL;
+	UICondition					= NULL;
+	UICost						= NULL;
+	UIWeight					= NULL;
+	UIItemImage					= NULL;
+	UIDesc						= NULL;
+	UIWpnParams					= NULL;
+	UIArtefactParams			= NULL;
+	UIName						= NULL;
+	m_pInvItem					= NULL;
 	m_b_force_drawing			= false;
 }
 
@@ -198,7 +198,7 @@ void CUIItemInfo::InitItem(CInventoryItem* pInvItem)
 												0.0f, 
 												float(iGridWidth*INV_GRID_WIDTH),	
 												float(iGridHeight*INV_GRID_HEIGHT)};
-		if(UI().is_16_9_mode())
+		if(UI()->is_16_9_mode())
 			v_r.x2 /= 1.328f;
 
 		UIItemImage->GetUIStaticItem().SetRect	(v_r);

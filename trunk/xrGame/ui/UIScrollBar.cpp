@@ -154,14 +154,14 @@ void CUIScrollBar::UpdateScrollBar()
 	ClampByViewRect();
 }
 
-#include "../uicursor.h"
+#include "..\uicursor.h"
 u32 last_hold_time =0;
 
 bool CUIScrollBar::OnKeyboardHold(int dik)
 {
 	if(dik==MOUSE_1 && (last_hold_time+100)<Device.dwTimeContinual)
 	{
-		Fvector2 cursor_pos			= GetUICursor().GetCursorPosition();
+		Fvector2 cursor_pos			= GetUICursor()->GetCursorPosition();
 		Frect	dec_rect;
 		Frect	inc_rect;
 
@@ -354,6 +354,6 @@ void CUIScrollBar::Draw()
 
 void CUIScrollBar::Refresh()
 {
-	SendMessage(m_ScrollBox, SCROLLBOX_MOVE, nullptr);
+	SendMessage(m_ScrollBox, SCROLLBOX_MOVE, NULL);
 }
 

@@ -76,7 +76,7 @@ void CUIEventsWnd::Init				()
 	xml_init.InitTabControl			(uiXml, "main_wnd:left_frame:filter_tab", 0, m_TaskFilter);
 	m_TaskFilter->SetWindowName		("filter_tab");
 	Register						(m_TaskFilter);
-    AddCallback						("filter_tab",TAB_CHANGED, fastdelegate::MakeDelegate(this,&CUIEventsWnd::OnFilterChanged));
+    AddCallback						("filter_tab",TAB_CHANGED,CUIWndCallback::void_function(this,&CUIEventsWnd::OnFilterChanged));
 /*
     m_primary_or_all_filter_btn		= xr_new<CUI3tButton>(); m_primary_or_all_filter_btn->SetAutoDelete(true);
 	m_UILeftFrame->AttachChild		(m_primary_or_all_filter_btn);
@@ -132,7 +132,7 @@ void CUIEventsWnd::ReloadList(bool bClearOnly)
 	if(!g_actor)				return;
 	GameTasks& tasks			= Actor()->GameTaskManager().GameTasks();
 	GameTasks::iterator it		= tasks.begin();
-	CGameTask* task				= nullptr;
+	CGameTask* task				= NULL;
 	
 	for(;it!=tasks.end();++it)
 	{
@@ -141,7 +141,7 @@ void CUIEventsWnd::ReloadList(bool bClearOnly)
 		R_ASSERT				(task->m_Objectives.size() > 0);
 
 		if( !Filter(task) )		continue;
-		CUITaskItem* pTaskItem	= nullptr;
+		CUITaskItem* pTaskItem	= NULL;
 /*
 		if(task->m_Objectives[0].TaskState()==eTaskUserDefined)
 		{
@@ -290,7 +290,7 @@ bool CUIEventsWnd::ItemHasDescription(CUITaskItem* itm)
 	{
 		SGameTaskObjective	*obj				= itm->Objective();
 		CMapLocation* ml						= obj->LinkedMapLocation();
-		bool bHasLocation						= (nullptr != ml);
+		bool bHasLocation						= (NULL != ml);
 		bool bIsMapMode							= GetDescriptionMode(); 
 		bool b									= (bIsMapMode&&bHasLocation&&ml->SpotEnabled());
 		return b;

@@ -17,7 +17,7 @@ public:
 			void	Init				(CUIXml& xml_doc);
 
 	virtual bool	OnKeyboard			(int dik, EUIMessages keyboard_action);
-	virtual void	SendMessage			(CUIWindow* pWnd, s16 msg, void* pData = nullptr);
+	virtual void	SendMessage			(CUIWindow* pWnd, s16 msg, void* pData = 0);
 
 	void			OnBtn				(int i);
 	void			OnBtnCancel			();

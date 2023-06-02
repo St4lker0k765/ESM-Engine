@@ -38,10 +38,10 @@ struct SChooseItem{
 DEFINE_VECTOR(SChooseItem,ChooseItemVec,ChooseItemVecIt);
 
 // typedef
-typedef fastdelegate::FastDelegate<void(ChooseItemVec&,void*)>	   	TOnChooseFillItems;
-typedef fastdelegate::FastDelegate<void(SChooseItem*, PropItemVec&)>	TOnChooseSelectItem;
-typedef fastdelegate::FastDelegate<void(LPCSTR, HDC, const Irect&)> 	TOnDrawThumbnail;
-typedef fastdelegate::FastDelegate<void()>						   	TOnChooseClose;
+typedef fastdelegate::FastDelegate2<ChooseItemVec&,void*>	   	TOnChooseFillItems;
+typedef fastdelegate::FastDelegate2<SChooseItem*, PropItemVec&>	TOnChooseSelectItem;
+typedef fastdelegate::FastDelegate3<LPCSTR, HDC, const Irect&> 	TOnDrawThumbnail;
+typedef fastdelegate::FastDelegate0<>						   	TOnChooseClose;
 
 typedef void (*TOnChooseFillEvents)();
 

@@ -102,7 +102,7 @@ void CUIPdaContactsWnd::AddContact(CPda* pda)
 	VERIFY(pda);
 
 
-	CUIPdaContactItem* pItem		= nullptr;
+	CUIPdaContactItem* pItem		= NULL;
 	pItem							= xr_new<CUIPdaContactItem>(this);
 	UIListWnd->AddWindow			(pItem, true);
 	pItem->Init						(0,0,UIListWnd->GetWidth(),85);

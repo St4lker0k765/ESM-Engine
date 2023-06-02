@@ -29,11 +29,11 @@ void resptrcode_texture::create(LPCSTR _name)
 //////////////////////////////////////////////////////////////////////
 CTexture::CTexture		()
 {
-	pSurface			= nullptr;
-	m_pSRView			= nullptr;
-	pAVI				= nullptr;
-	pTheora				= nullptr;
-	desc_cache			= nullptr;
+	pSurface			= NULL;
+	m_pSRView			= NULL;
+	pAVI				= NULL;
+	pTheora				= NULL;
+	desc_cache			= 0;
 	seqMSPF				= 0;
 	flags.MemoryUsage	= 0;
 	flags.bLoaded		= false;
@@ -41,7 +41,7 @@ CTexture::CTexture		()
 	flags.seqCycles		= FALSE;
 	flags.bLoadedAsStaging = FALSE;
 	m_material			= 1.0f;
-	bind				= fastdelegate::FastDelegate<void(u32)>(this,&CTexture::apply_load);
+	bind				= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_load);
 }
 
 CTexture::~CTexture()
@@ -109,7 +109,7 @@ void					CTexture::surface_set	(ID3DBaseTexture* surf )
 				if( (desc.SampleDesc.Count <= 1) || (ViewDesc.Format != DXGI_FORMAT_R24_UNORM_X8_TYPELESS) )         
 					CHK_DX(HW.pDevice->CreateShaderResourceView(pSurface, &ViewDesc, &m_pSRView));
         else
-           m_pSRView = nullptr;
+           m_pSRView = 0;
 		}
 		else
 			CHK_DX(HW.pDevice->CreateShaderResourceView(pSurface, NULL, &m_pSRView));
@@ -127,10 +127,10 @@ ID3DBaseTexture*	CTexture::surface_get	()
 
 void CTexture::PostLoad	()
 {
-	if (pTheora)				bind		= fastdelegate::FastDelegate<void(u32)>(this,&CTexture::apply_theora);
-	else if (pAVI)				bind		= fastdelegate::FastDelegate<void(u32)>(this,&CTexture::apply_avi);
-	else if (!seqDATA.empty())	bind		= fastdelegate::FastDelegate<void(u32)>(this,&CTexture::apply_seq);
-	else						bind		= fastdelegate::FastDelegate<void(u32)>(this,&CTexture::apply_normal);
+	if (pTheora)				bind		= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_theora);
+	else if (pAVI)				bind		= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_avi);
+	else if (!seqDATA.empty())	bind		= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_seq);
+	else						bind		= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_normal);
 }
 
 void CTexture::apply_load	(u32 dwStage)	{
@@ -144,7 +144,7 @@ void CTexture::ProcessStaging()
 	VERIFY(pSurface);
 	VERIFY(flags.bLoadedAsStaging);
 
-	ID3DBaseTexture* pTargetSurface = nullptr;
+	ID3DBaseTexture* pTargetSurface = 0;
 
 	D3D_RESOURCE_DIMENSION	type;
 	pSurface->GetType(&type);
@@ -160,7 +160,7 @@ void CTexture::ProcessStaging()
 			TexDesc.BindFlags = D3D_BIND_SHADER_RESOURCE;
 			TexDesc.CPUAccessFlags = 0;
 
-			T = nullptr;
+			T = 0;
 
 			CHK_DX(HW.pDevice->CreateTexture2D( &TexDesc,       // Texture desc
 				NULL,                  // Initial data
@@ -178,7 +178,7 @@ void CTexture::ProcessStaging()
 			TexDesc.BindFlags = D3D_BIND_SHADER_RESOURCE;
 			TexDesc.CPUAccessFlags = 0;
 
-			T = nullptr;
+			T = 0;
 
 			CHK_DX(HW.pDevice->CreateTexture3D( &TexDesc,       // Texture desc
 				NULL,                  // Initial data
@@ -213,7 +213,7 @@ void CTexture::ProcessStaging()
 
 	//	Check if texture was not copied _before_ it was converted.
 	ULONG RefCnt = pSurface->Release();
-	pSurface = nullptr;
+	pSurface = 0;
 
 	VERIFY(!RefCnt);
 
@@ -366,13 +366,13 @@ void CTexture::Preload	()
 void CTexture::Load		()
 {
 	flags.bLoaded					= true;
-	desc_cache						= nullptr;
+	desc_cache						= 0;
 	if (pSurface)					return;
 
 	flags.bUser						= false;
 	flags.MemoryUsage				= 0;
 	if (0==stricmp(*cName,"$null"))	return;
-	if (nullptr!=strstr(*cName,"$user$"))	{
+	if (0!=strstr(*cName,"$user$"))	{
 		flags.bUser	= true;
 		return;
 	}
@@ -396,7 +396,7 @@ void CTexture::Load		()
 			pTheora->Play		(TRUE,Device.dwTimeContinual);
 
 			// Now create texture
-			ID3DTexture2D*	pTexture = nullptr;
+			ID3DTexture2D*	pTexture = 0;
 			u32 _w = pTheora->Width(false);
 			u32 _h = pTheora->Height(false);
 
@@ -414,7 +414,7 @@ void CTexture::Load		()
 			desc.BindFlags = D3D_BIND_SHADER_RESOURCE;
 			desc.CPUAccessFlags = D3D_CPU_ACCESS_WRITE;
 			desc.MiscFlags = 0;
-			HRESULT hrr = HW.pDevice->CreateTexture2D(&desc, nullptr, &pTexture);
+			HRESULT hrr = HW.pDevice->CreateTexture2D(&desc, 0, &pTexture);
 
 			pSurface = pTexture;
 			if (FAILED(hrr))
@@ -422,8 +422,8 @@ void CTexture::Load		()
 				FATAL		("Invalid video stream");
 				R_CHK		(hrr);
 				xr_delete	(pTheora);
-				pSurface	= nullptr;
-				m_pSRView	= nullptr;
+				pSurface	= 0;
+				m_pSRView	= 0;
 			}
 			else
 			{
@@ -443,7 +443,7 @@ void CTexture::Load		()
 				flags.MemoryUsage	= pAVI->m_dwWidth*pAVI->m_dwHeight*4;
 
 				// Now create texture
-				ID3DTexture2D*	pTexture = nullptr;
+				ID3DTexture2D*	pTexture = 0;
 				//HRESULT hrr = HW.pDevice->CreateTexture(
 				//pAVI->m_dwWidth,pAVI->m_dwHeight,1,0,D3DFMT_A8R8G8B8,D3DPOOL_MANAGED,
 				//	&pTexture,NULL
@@ -460,7 +460,7 @@ void CTexture::Load		()
 				desc.BindFlags = D3D_BIND_SHADER_RESOURCE;
 				desc.CPUAccessFlags = D3D_CPU_ACCESS_WRITE;
 				desc.MiscFlags = 0;
-				HRESULT hrr = HW.pDevice->CreateTexture2D(&desc, nullptr, &pTexture);
+				HRESULT hrr = HW.pDevice->CreateTexture2D(&desc, 0, &pTexture);
 
 				pSurface	= pTexture;
 				if (FAILED(hrr))
@@ -468,8 +468,8 @@ void CTexture::Load		()
 					FATAL		("Invalid video stream");
 					R_CHK		(hrr);
 					xr_delete	(pAVI);
-					pSurface = nullptr;
-					m_pSRView	= nullptr;
+					pSurface = 0;
+					m_pSRView	= 0;
 				}
 				else
 				{
@@ -507,13 +507,13 @@ void CTexture::Load		()
 						{
 							// pSurface->SetPriority	(PRIORITY_LOW);
 							seqDATA.push_back(pSurface);
-							m_seqSRView.push_back(nullptr);
-							HW.pDevice->CreateShaderResourceView(seqDATA.back(), nullptr, & m_seqSRView.back());
+							m_seqSRView.push_back(0);
+							HW.pDevice->CreateShaderResourceView(seqDATA.back(), NULL, & m_seqSRView.back());
 							flags.MemoryUsage		+= mem;
 						}
 					}
 				}
-				pSurface	= nullptr;
+				pSurface	= 0;
 				FS.r_close	(_fs);
 			} 
 			else
@@ -561,8 +561,8 @@ void CTexture::Unload	()
 		}
 		seqDATA.clear();
 		m_seqSRView.clear();
-		pSurface	= nullptr;
-		m_pSRView	= nullptr;
+		pSurface	= 0;
+		m_pSRView	= 0;
 	}
 
 #ifdef DEBUG
@@ -574,7 +574,7 @@ void CTexture::Unload	()
 	xr_delete		(pAVI);
 	xr_delete		(pTheora);
 
-	bind			= fastdelegate::FastDelegate<void(u32)>(this,&CTexture::apply_load);
+	bind			= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_load);
 }
 
 void CTexture::desc_update	()

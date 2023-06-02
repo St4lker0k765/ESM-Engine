@@ -459,16 +459,17 @@ void CAI_Stalker::net_Destroy()
 	m_pPhysics_support->in_NetDestroy	();
 
 	Device.remove_from_seq_parallel	(
-		fastdelegate::MakeDelegate(
+		fastdelegate::FastDelegate0<>(
 			this,
 			&CAI_Stalker::update_object_handler
 		)
 	);
 
 #ifdef DEBUG
-	auto f = fastdelegate::MakeDelegate(this, &CAI_Stalker::update_object_handler);
-	auto I = std::find(Device.seqParallel.begin(), Device.seqParallel.end(), f);
-	VERIFY(I == Device.seqParallel.end());
+	fastdelegate::FastDelegate0<>	f = fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler);
+	xr_vector<fastdelegate::FastDelegate0<> >::const_iterator	I;
+	I	= std::find(Device.seqParallel.begin(),Device.seqParallel.end(),f);
+	VERIFY							(I == Device.seqParallel.end());
 #endif // DEBUG
 
 	xr_delete						(m_ce_close);
@@ -640,12 +641,13 @@ void CAI_Stalker::UpdateCL()
 
 	if (g_Alive()) {
 		if (g_mt_config.test(mtObjectHandler) /*&& CObjectHandler::planner().initialized()*/) {
+			auto f = fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler);
 #ifdef DEBUG
-			auto f = fastdelegate::MakeDelegate(this, &CAI_Stalker::update_object_handler);
-			auto I = std::find(Device.seqParallel.begin(), Device.seqParallel.end(), f);
-			VERIFY(I == Device.seqParallel.end());
+			xr_vector<fastdelegate::FastDelegate0<> >::const_iterator	I;
+			I	= std::find(Device.seqParallel.begin(),Device.seqParallel.end(),f);
+			VERIFY							(I == Device.seqParallel.end());
 #endif
-			Device.seqParallel.emplace_back(fastdelegate::MakeDelegate(this, &CAI_Stalker::update_object_handler));
+			Device.seqParallel.emplace_back(f);
 		}
 		else {
 			START_PROFILE("stalker/client_update/object_handler")
@@ -756,7 +758,7 @@ void CAI_Stalker::shedule_Update		( u32 DT )
 		memory().visual().check_visibles();
 #endif
 		if (g_mt_config.test(mtAiVision))
-			Device.seqParallel.push_back(fastdelegate::MakeDelegate(this, &CCustomMonster::Exec_Visibility));
+			Device.seqParallel.push_back(fastdelegate::FastDelegate0<>(this, &CCustomMonster::Exec_Visibility));
 		else
 		{
 			START_PROFILE("stalker/schedule_update/vision")

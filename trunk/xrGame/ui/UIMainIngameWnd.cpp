@@ -82,15 +82,15 @@ const u32	g_clWhite					= 0xffffffff;
 
 CUIMainIngameWnd::CUIMainIngameWnd()
 {
-	m_pActor					= nullptr;
-	m_pWeapon					= nullptr;
-	m_pGrenade					= nullptr;
-	m_pItem						= nullptr;
+	m_pActor					= NULL;
+	m_pWeapon					= NULL;
+	m_pGrenade					= NULL;
+	m_pItem						= NULL;
 	UIZoneMap					= xr_new<CUIZoneMap>();
-	m_pPickUpItem				= nullptr;
+	m_pPickUpItem				= NULL;
 	m_artefactPanel				= xr_new<CUIArtefactPanel>();
-	m_pMPChatWnd				= nullptr;
-	m_pMPLogWnd					= nullptr;	
+	m_pMPChatWnd				= NULL;
+	m_pMPLogWnd					= NULL;	
 }
 
 #include "UIProgressShape.h"
@@ -369,9 +369,9 @@ void CUIMainIngameWnd::Update()
 	m_pActor = smart_cast<CActor*>(Level().CurrentViewEntity());
 	if (!m_pActor) 
 	{
-		m_pItem					= nullptr;
-		m_pWeapon				= nullptr;
-		m_pGrenade				= nullptr;
+		m_pItem					= NULL;
+		m_pWeapon				= NULL;
+		m_pGrenade				= NULL;
 		CUIWindow::Update		();
 		return;
 	}
@@ -405,7 +405,7 @@ void CUIMainIngameWnd::Update()
 		}
 		// ewiArtefact
 		if( (GameID() == GAME_ARTEFACTHUNT) && !(Device.dwFrame%30) ){
-			bool b_Artefact = (nullptr != m_pActor->inventory().ItemFromSlot(ARTEFACT_SLOT));
+			bool b_Artefact = (NULL != m_pActor->inventory().ItemFromSlot(ARTEFACT_SLOT));
 			if(b_Artefact)
 				SetWarningIconColor	(ewiArtefact,0xffffffff);
 			else
@@ -504,7 +504,7 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 	bool flag = false;
 	if (g_bHudAdjustMode)
 	{
-		CWeaponHUD *pWpnHud = nullptr;
+		CWeaponHUD *pWpnHud = NULL;
 		if (m_pWeapon)
 		{
 			pWpnHud = m_pWeapon->GetHUD();
@@ -912,11 +912,11 @@ void CUIMainIngameWnd::RenderQuickInfos()
 	if (!m_pActor)
 		return;
 
-	static CGameObject *pObject			= nullptr;
+	static CGameObject *pObject			= NULL;
 	LPCSTR actor_action					= m_pActor->GetDefaultActionForObject();
-	UIStaticQuickHelp.Show				(nullptr !=actor_action);
+	UIStaticQuickHelp.Show				(NULL!=actor_action);
 
-	if(nullptr !=actor_action){
+	if(NULL!=actor_action){
 		if(stricmp(actor_action,UIStaticQuickHelp.GetText()))
 			UIStaticQuickHelp.SetTextST				(actor_action);
 	}
@@ -1012,7 +1012,7 @@ void CUIMainIngameWnd::InitFlashingIcons(CUIXml* node)
 	int staticsCount = node->GetNodesNum("", 0, flashingIconNodeName);
 
 	CUIXmlInit xml_init;
-	CUIStatic *pIcon = nullptr;
+	CUIStatic *pIcon = NULL;
 	// Пробегаемся по всем нодам и инициализируем из них статики
 	for (int i = 0; i < staticsCount; ++i)
 	{
@@ -1061,7 +1061,7 @@ void CUIMainIngameWnd::AnimateContacts(bool b_snd)
 	UIPdaOnline.ResetClrAnimation	();
 
 	if(b_snd)
-		HUD_SOUND::PlaySound	(m_contactSnd, Fvector().set(0,0,0), nullptr, true );
+		HUD_SOUND::PlaySound	(m_contactSnd, Fvector().set(0,0,0), 0, true );
 
 }
 
@@ -1142,7 +1142,7 @@ void CUIMainIngameWnd::UpdateActiveItemInfo()
 		UIWeaponIcon.Show			(false);
 		UIWeaponSignAmmo.Show		(false);
 		UIWeaponBack.SetText		("");
-		m_pWeapon					= nullptr;
+		m_pWeapon					= NULL;
 	}
 }
 
@@ -1153,11 +1153,11 @@ void CUIMainIngameWnd::OnConnected()
 
 void CUIMainIngameWnd::reset_ui()
 {
-	m_pActor						= nullptr;
-	m_pWeapon						= nullptr;
-	m_pGrenade						= nullptr;
-	m_pItem							= nullptr;
-	m_pPickUpItem					= nullptr;
+	m_pActor						= NULL;
+	m_pWeapon						= NULL;
+	m_pGrenade						= NULL;
+	m_pItem							= NULL;
+	m_pPickUpItem					= NULL;
 	UIMotionIcon.ResetVisibility	();
 }
 
@@ -1184,7 +1184,7 @@ CUIGameTutorial* g_tut = NULL;
 
 //CUIVotingCategory* v = NULL;
 #include "UIFrameWindow.h"
-CUIFrameWindow*		pUIFrame = nullptr;
+CUIFrameWindow*		pUIFrame = NULL;
 
 void test_update()
 {

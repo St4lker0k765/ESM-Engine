@@ -33,7 +33,7 @@ CUISubLine::CUISubLine(const CUISubLine& other){
 	m_color = other.m_color;
 	m_last_in_line = other.m_last_in_line;
 	m_text = other.m_text;
-	m_pTempLine = nullptr;
+	m_pTempLine = NULL;
 #ifdef LOG_ALL_LINES
 	ListSubLinesCount++;
 	dbg_list_sublines.push_back(DBGList());
@@ -52,7 +52,7 @@ CUISubLine& CUISubLine::operator=(const CUISubLine& other){
 
 CUISubLine::CUISubLine(){
 	m_color = 0;
-	m_pTempLine = nullptr;
+	m_pTempLine = NULL;
 	m_last_in_line = false;
 #ifdef LOG_ALL_LINES
 	ListSubLinesCount++;
@@ -65,7 +65,7 @@ CUISubLine::CUISubLine(){
 
 CUISubLine::~CUISubLine(){
 	xr_delete(m_pTempLine);
-	m_pTempLine = nullptr;
+	m_pTempLine = NULL;
 #ifdef LOG_ALL_LINES
 	xr_vector<DBGList>::iterator _it = dbg_list_sublines.begin();
 	bool bOK = false;
@@ -103,6 +103,6 @@ void CUISubLine::Draw(CGameFont* pFont, float x, float y) const{
 	pFont->SetColor(m_color);
 	Fvector2			pos;
 	pos.set				(x, y);
-	UI().ClientToScreenScaled(pos);
+	UI()->ClientToScreenScaled(pos);
 	pFont->Out			(pos.x, pos.y, "%s", m_text.c_str() );
 }

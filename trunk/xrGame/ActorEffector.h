@@ -6,7 +6,7 @@ class CObjectAnimator;
 class CEffectorController;
 class CActor;
 
-typedef fastdelegate::FastDelegate<float()>		GET_KOEFF_FUNC;
+typedef fastdelegate::FastDelegate0<float>		GET_KOEFF_FUNC;
 
 void AddEffector		(CActor* A, int type, const shared_str& sect_name);
 void AddEffector		(CActor* A, int type, const shared_str& sect_name, float factor);
@@ -20,13 +20,13 @@ protected:
 	CEffectorCam*				m_ce;
 	CEffectorPP*				m_pe;
 public:
-								CEffectorController():m_ce(nullptr),m_pe(nullptr)	{}
+								CEffectorController():m_ce(NULL),m_pe(NULL)	{}
 	virtual						~CEffectorController();
 
 				void			SetPP		(CEffectorPP* p)				{m_pe=p;}
 				void			SetCam		(CEffectorCam* p)				{m_ce=p;}
 	virtual		BOOL			Valid		()								{return m_ce||m_pe;};
-	virtual	float            	GetFactor	()								=0;
+	virtual	float xr_stdcall	GetFactor	()								=0;
 };
 
 class CAnimatorCamEffector :public CEffectorCam
@@ -77,7 +77,7 @@ protected:
 public:
 						CAnimatorCamLerpEffectorConst	();
 	void				SetFactor						(float v)		{m_factor=v; clamp(m_factor,0.0f,1.0f);}
-	float	         	GetFactor						()				{return m_factor;}
+	float	xr_stdcall	GetFactor						()				{return m_factor;}
 };
 
 class CCameraEffectorControlled :public CAnimatorCamLerpEffector
@@ -107,7 +107,7 @@ public:
 
 	virtual		BOOL			Valid				();
 				BOOL			InWork				();
-	virtual	float            	GetFactor			();
+	virtual	float xr_stdcall	GetFactor			();
 };
 
 

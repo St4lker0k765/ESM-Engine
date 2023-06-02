@@ -44,7 +44,7 @@ bool CUIListBox::OnMouse(float x, float y, EUIMessages mouse_action)
 CUIListBoxItem* CUIListBox::AddItem(LPCSTR text)
 {
 	if (!text)			
-		return nullptr;
+		return					NULL;
 
 	CUIListBoxItem* pItem		= xr_new<CUIListBoxItem>();
 	pItem->Init					(0,0,this->GetDesiredChildWidth() - 5, m_def_item_height);
@@ -89,7 +89,7 @@ CUIListBoxItem* CUIListBox::GetSelectedItem()
 	if(w)
 		return smart_cast<CUIListBoxItem*>(w);
 	else
-		return nullptr;
+		return NULL;
 
 }
 
@@ -100,7 +100,7 @@ LPCSTR CUIListBox::GetSelectedText()
 	if(w)
 		return smart_cast<IUITextControl*>(w)->GetText();
 	else
-		return nullptr;
+		return NULL;
 }
 
 u32 CUIListBox::GetSelectedIDX()
@@ -204,7 +204,7 @@ CUIListBoxItem* CUIListBox::GetItemByTAG(u32 tag_val)
 		}
 		
 	}
-	return nullptr;
+	return NULL;
 }
 
 CUIListBoxItem* CUIListBox::GetItemByIDX(u32 idx)
@@ -220,7 +220,7 @@ CUIListBoxItem* CUIListBox::GetItemByIDX(u32 idx)
 			++_idx;
 		}
 	}
-	return nullptr;
+	return NULL;
 }
 
 CUIListBoxItem* CUIListBox::GetItemByText(LPCSTR txt)
@@ -235,7 +235,7 @@ CUIListBoxItem* CUIListBox::GetItemByText(LPCSTR txt)
 		}
 		
 	}
-	return nullptr;
+	return NULL;
 }
 
 
@@ -293,7 +293,7 @@ float CUIListBox::GetLongestLength()
 		if (item)
 		{
 			float tmp_len = item->GetFont()->SizeOf_(item->GetText()); //all ok
-			UI().ClientToScreenScaledWidth(tmp_len);
+			UI()->ClientToScreenScaledWidth(tmp_len);
 
 			if (tmp_len > len)
 				len = tmp_len;

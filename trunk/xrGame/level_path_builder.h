@@ -33,10 +33,10 @@ public:
 		m_dest_vertex_id	= dest_vertex_id;
 
 		m_object->m_wait_for_distributed_computation	= true;
-		Device.seqParallel.emplace_back(fastdelegate::MakeDelegate(this,&CLevelPathBuilder::process));
+		Device.seqParallel.emplace_back(fastdelegate::FastDelegate0<>(this,&CLevelPathBuilder::process));
 	}
 
-	void  process				()
+			void __stdcall	process				()
 	{
 		m_object->m_wait_for_distributed_computation	= false;
 		m_object->level_path().build_path	(m_start_vertex_id,m_dest_vertex_id);
@@ -53,7 +53,7 @@ public:
 			m_object->m_wait_for_distributed_computation	= false;
 
 		Device.remove_from_seq_parallel	(
-			fastdelegate::MakeDelegate(
+			fastdelegate::FastDelegate0<>(
 				this,
 				&CLevelPathBuilder::process
 			)

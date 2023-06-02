@@ -401,7 +401,6 @@
     <ClInclude Include="CPU.h" />
     <ClInclude Include="CPU_Misc.h" />
     <ClInclude Include="dump_string.h" />
-    <ClInclude Include="FastDelegate.hpp" />
     <ClInclude Include="FTimer.h" />
     <ClInclude Include="os_clipboard.h" />
     <ClInclude Include="resource.h" />
@@ -440,6 +439,7 @@
     <ClInclude Include="_std_extensions.h" />
     <ClInclude Include="_stl_extensions.h" />
     <ClInclude Include="clsid.h" />
+    <ClInclude Include="fastdelegate.h" />
     <ClInclude Include="xr_trims.h" />
     <CustomBuild Include="FileSystem.h" />
     <ClInclude Include="FS.h" />

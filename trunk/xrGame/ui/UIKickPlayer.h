@@ -21,7 +21,7 @@ public:
 			void	InitBan			(CUIXml& xml_doc);
 
 	virtual bool	OnKeyboard		(int dik, EUIMessages keyboard_action);
-	virtual void	SendMessage		(CUIWindow* pWnd, s16 msg, void* pData = nullptr);
+	virtual void	SendMessage		(CUIWindow* pWnd, s16 msg, void* pData = 0);
 	virtual void	Update			();
 
 	void			OnBtnOk			();

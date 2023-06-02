@@ -20,7 +20,7 @@ CUISequenceVideoItem::CUISequenceVideoItem(CUISequencer* owner):CUISequenceItem(
 {
 	m_flags.set				(etiPlaying|etiNeedStart|etiDelayed|etiBackVisible,FALSE);
 	m_delay					= 0.f;
-	m_wnd					= nullptr;
+	m_wnd					= NULL;
 	m_delay					= 0.f;
 	m_time_start			= 0;
 	m_sync_time				= 0;
@@ -73,7 +73,7 @@ void CUISequenceVideoItem::Load(CUIXml* xml, int idx)
 		m_wnd->SetAlignment								(waCenter);
 		Frect texture_coords							= m_wnd->GetUIStaticItem().GetOriginalRect();
 
-		bool is_16_9									= UI().is_16_9_mode();
+		bool is_16_9									= UI()->is_16_9_mode();
 		float kw_image									= UI_BASE_WIDTH / texture_coords.width();
 
 		Fvector2										wnd_size;
@@ -109,7 +109,7 @@ void CUISequenceVideoItem::Update()
 		}
 	}else return;
 
-	u32 sync_tm				= (nullptr==m_sound[0]._handle())?Device.dwTimeContinual:(m_sound[0]._feedback()?m_sound[0]._feedback()->play_time():m_sync_time);
+	u32 sync_tm				= (0==m_sound[0]._handle())?Device.dwTimeContinual:(m_sound[0]._feedback()?m_sound[0]._feedback()->play_time():m_sync_time);
 	m_sync_time				= sync_tm;
 	// processing A&V
 	if (m_texture->HasTexture()){

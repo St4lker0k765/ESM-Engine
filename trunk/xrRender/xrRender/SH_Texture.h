@@ -78,7 +78,7 @@ public:	//	Public class members (must be encapsulated furthur)
 		u32					bLoadedAsStaging: 1;
 #endif	//	USE_DX10
 	}									flags;
-	fastdelegate::FastDelegate<void(u32)>	bind;
+	fastdelegate::FastDelegate1<u32>	bind;
 
 
 	CAviPlayerCustom*					pAVI;

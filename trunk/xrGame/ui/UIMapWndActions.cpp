@@ -13,7 +13,7 @@ class CSomeMapAction : public WORLD_OPERATOR {
 private:
 	typedef WORLD_OPERATOR	inherited;
 public:
-					CSomeMapAction		(LPCSTR action_name):inherited((CUIMapWnd*)nullptr,action_name){}
+					CSomeMapAction		(LPCSTR action_name):inherited((CUIMapWnd*)NULL,action_name){}
 	virtual	void	initialize			()		{inherited::initialize	();};
 	virtual	void	execute				()		{inherited::execute		();};
 	virtual	void	finalize			()		{inherited::finalize	();};
@@ -71,7 +71,7 @@ class CSomeMapEvaluator : public CPropertyEvaluator<CUIMapWnd>
 private:
 	typedef CPropertyEvaluator<CUIMapWnd>	inherited;
 public:
-					CSomeMapEvaluator	(LPCSTR evaluator_name):inherited((CUIMapWnd*)nullptr,evaluator_name){}
+					CSomeMapEvaluator	(LPCSTR evaluator_name):inherited((CUIMapWnd*)NULL,evaluator_name){}
 	virtual 		~CSomeMapEvaluator	()										{};
 };
 
@@ -79,7 +79,7 @@ class CEvaluatorTargetMapShown : public CSomeMapEvaluator {
 private:
 	typedef CSomeMapEvaluator	inherited;
 public:
-					CEvaluatorTargetMapShown(LPCSTR evaluator_name=nullptr):inherited(evaluator_name){};
+					CEvaluatorTargetMapShown(LPCSTR evaluator_name=0):inherited(evaluator_name){};
 	virtual bool	evaluate			();
 };
 
@@ -87,7 +87,7 @@ class CEvaluatorMapMinimized : public CSomeMapEvaluator {
 private:
 	typedef CSomeMapEvaluator	inherited;
 public:
-					CEvaluatorMapMinimized	(LPCSTR evaluator_name=nullptr):inherited(evaluator_name){};
+					CEvaluatorMapMinimized	(LPCSTR evaluator_name=0):inherited(evaluator_name){};
 	virtual bool	evaluate			();
 };
 
@@ -96,7 +96,7 @@ class CEvaluatorMapResized : public CSomeMapEvaluator {
 private:
 	typedef CSomeMapEvaluator	inherited;
 public:
-	CEvaluatorMapResized(LPCSTR evaluator_name=nullptr):inherited(evaluator_name){};
+	CEvaluatorMapResized(LPCSTR evaluator_name=0):inherited(evaluator_name){};
 	virtual bool	evaluate			();
 };
 
@@ -105,7 +105,7 @@ private:
 	typedef CSomeMapEvaluator	inherited;
 	bool	ret_value;
 public:
-					CEvaluatorMapConst	(bool val=false, LPCSTR evaluator_name=nullptr):inherited(evaluator_name){ret_value=val;};
+					CEvaluatorMapConst	(bool val=false, LPCSTR evaluator_name=0):inherited(evaluator_name){ret_value=val;};
 	virtual bool	evaluate			(){return ret_value;};
 
 };

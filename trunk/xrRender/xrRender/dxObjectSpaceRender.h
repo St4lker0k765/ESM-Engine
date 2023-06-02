@@ -1,11 +1,9 @@
-#ifndef dxObjectSpaceRender_included
-#define dxObjectSpaceRender_included
 #pragma once
 
 #ifdef DEBUG
 
 #include "..\..\Include\xrRender\ObjectSpaceRender.h"
-#include "..\..\xrengine\xr_collide_form.h"
+#include "..\..\xr_3da\xr_collide_form.h"
 class dxObjectSpaceRender : public IObjectSpaceRender
 {
 public:
@@ -24,5 +22,3 @@ private:
 };
 
 #endif // DEBUG
-
-#endif	//	ObjectSpaceRender_included

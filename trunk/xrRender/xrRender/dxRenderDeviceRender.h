@@ -1,5 +1,3 @@
-#ifndef dxRenderDeviceRender_included
-#define dxRenderDeviceRender_included
 #pragma once
 
 #ifndef _EDITOR
@@ -10,7 +8,7 @@
 
 #ifndef _EDITOR
 
-#include "..\..\Include\xrRender\RenderDeviceRender.h"
+#include "../../Include/xrRender/RenderDeviceRender.h"
 #include "xr_effgamma.h"
 
 class CResourceManager;
@@ -79,6 +77,3 @@ private:
 };
 
 #endif //ifndef _EDITOR
-
-
-#endif	//	RenderDeviceRender_included

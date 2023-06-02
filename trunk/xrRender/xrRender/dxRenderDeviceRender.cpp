@@ -2,6 +2,8 @@
 #include "dxRenderDeviceRender.h"
 
 #include "ResourceManager.h"
+#include "..\..\xr_3da\IGame_Persistent.h"
+#include "..\xr_3da\Render.h"
 
 dxRenderDeviceRender::dxRenderDeviceRender()
 	:	Resources(0)

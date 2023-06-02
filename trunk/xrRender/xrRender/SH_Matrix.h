@@ -1,13 +1,11 @@
-#ifndef SH_MATRIX_H
-#define SH_MATRIX_H
 #pragma once
 
-#include "../../xrEngine/WaveForm.h"
+#include "../../xr_3da/WaveForm.h"
 
-class		IReader;
-class		IWriter;
+class	IReader;
+class	IWriter;
 
-class	ECORE_API	CMatrix	: public xr_resource_named								{
+class	CMatrix	: public xr_resource_named								{
 public:
 	enum { modeProgrammable=0, modeTCM, modeS_refl, modeC_refl, modeDetail	};
 	enum
@@ -61,5 +59,3 @@ public:
 
 typedef	resptr_core<CMatrix,resptr_base<CMatrix> >	
 	ref_matrix;
-
-#endif

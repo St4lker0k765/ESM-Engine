@@ -1,16 +1,10 @@
-// Blender.h: interface for the IBlender class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_BLENDER_H__A023332E_C09B_4D93_AA53_57C052CCC075__INCLUDED_)
-#define AFX_BLENDER_H__A023332E_C09B_4D93_AA53_57C052CCC075__INCLUDED_
 #pragma once
 
-#include "../../xrEngine/properties.h"
+#include "../xr_3da/properties.h"
 #include "Blender_Recorder.h"
 
 #pragma pack(push,4)
-class ECORE_API	CBlender_DESC
+class CBlender_DESC
 {
 public:
 	CLASS_ID					CLS;
@@ -31,7 +25,7 @@ public:
 	void						Setup	(LPCSTR N);
 };
 
-class ECORE_API IBlender	: public CPropertyBase
+class IBlender: public CPropertyBase
 {
 	friend class				CBlender_Compile;
 protected:
@@ -54,7 +48,6 @@ public:
 
 	virtual			BOOL		canBeDetailed	()	{ return FALSE; }
 	virtual			BOOL		canBeLMAPped	()	= 0;
-	virtual			BOOL		canUseSteepParallax	()	{ return FALSE; }
 	
 	virtual			void		Save			(IWriter& fs);
 	virtual			void		Load			(IReader& fs, u16 version);
@@ -66,4 +59,3 @@ public:
 };
 #pragma pack(pop)
 
-#endif // !defined(AFX_BLENDER_H__A023332E_C09B_4D93_AA53_57C052CCC075__INCLUDED_)

@@ -5,9 +5,9 @@
 #pragma once
 
 // refs
-class  dxRender_Visual;
+class dxRender_Visual;
 namespace PS	{ 
-	struct  SEmitter; 
+	struct ENGINE_API SEmitter; 
 };
 
 // defs
@@ -16,7 +16,7 @@ class ECORE_API CModelPool
 private:
 	friend class CRender;
 
-	struct str_pred : public std::binary_function<const shared_str&, const shared_str&, bool> 
+	struct str_pred
 	{	
 		IC bool operator()(const shared_str& x, const shared_str& y) const
 		{	return xr_strcmp(x,y)<0;}
@@ -68,8 +68,6 @@ public:
 	void					ClearPool			( BOOL b_complete );
 
 	void					dump 				();
-
-	void					memory_stats		( u32& vb_mem_video, u32& vb_mem_system, u32& ib_mem_video, u32& ib_mem_system );
 #ifdef _EDITOR    
 	void					OnDeviceDestroy		();
 	void 					Render				(dxRender_Visual* m_pVisual, const Fmatrix& mTransform, int priority, bool strictB2F, float m_fLOD);

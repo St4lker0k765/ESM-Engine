@@ -2,13 +2,14 @@
 #pragma hdrstop
 
 #include "ResourceManager.h"
-#include "blenders\blender.h"
+#include "..\xrRender\xrRender\blenders\blender.h"
 
 
 void	CResourceManager::OnDeviceDestroy(BOOL )
 {
-	if (RDEVICE.b_is_Ready)				return;
+	if (Device.b_is_Ready)				return;
 	m_textures_description.UnLoad		();
+//.	xr_delete			(m_description);
 
 	// Matrices
 	for (map_Matrix::iterator m=m_matrices.begin(); m!=m_matrices.end(); m++)	{
@@ -50,7 +51,7 @@ void	CResourceManager::OnDeviceDestroy(BOOL )
 
 void	CResourceManager::OnDeviceCreate	(IReader* F)
 {
-	if (!RDEVICE.b_is_Ready) return;
+	if (!Device.b_is_Ready) return;
 
 	string256	name;
 
@@ -115,6 +116,37 @@ void	CResourceManager::OnDeviceCreate	(IReader* F)
 	}
 
 	m_textures_description.Load				();
+/*
+	// Load detail textures association
+	string256		fname;		
+	FS.update_path	(fname,"$game_textures$","textures.ltx");
+	LPCSTR	Iname	= fname;
+	if (FS.exist(Iname))
+	{
+		xr_delete		(m_description);
+		m_description	= xr_new<CInifile>	(Iname);
+		CInifile&	ini	= *m_description;
+		if (ini.section_exist("association"))
+		{
+			CInifile::Sect& 	data = ini.r_section("association");
+			for (CInifile::SectIt I=data.begin(); I!=data.end(); I++)	
+			{
+				texture_detail			D;
+				string256				T;
+				float					s;
+
+				CInifile::Item& item	= *I;
+				sscanf					(*item.second,"%[^,],%f",T,&s);
+
+				//
+				D.T				= xr_strdup				(T);
+				D.cs			= xr_new<cl_dt_scaler>	(s);
+				LPSTR N			= xr_strdup				(*item.first);
+				m_td.insert		(mk_pair(N,D));
+			}
+		}
+	}
+*/
 }
 
 void	CResourceManager::OnDeviceCreate	(LPCSTR shName)

@@ -4,18 +4,12 @@
 #ifndef PSLibraryH
 #define PSLibraryH
 
-#include "../../include/xrRender/particles_systems_library_interface.hpp"
+#include "..\..\Include\xrRender\particles_systems_library_interface.hpp"
+#include "ParticleEffect.h"
+#include "ParticleGroup.h"
 
-namespace PS {
-	class CPEDef;
-	DEFINE_VECTOR(CPEDef*,PEDVec,PEDIt);
-
-	class CPGDef;
-	DEFINE_VECTOR(CPGDef*,PGDVec,PGDIt);
-} // namespace PS
-
-class ECORE_API CPSLibrary : public particles_systems::library_interface {
-	PS::PEDVec			m_PEDs;
+class ECORE_API CPSLibrary: public particles_systems::library_interface {
+    PS::PEDVec			m_PEDs;
     PS::PGDVec			m_PGDs;
 
 #ifdef _EDITOR    
@@ -27,9 +21,6 @@ public:
 public:
     bool 				Load			(LPCSTR nm);
     bool				Save			(LPCSTR nm);
-    
-	bool				Load2			();
-	bool				Save2			();
 public:
 						CPSLibrary		(){;}
     		 			~CPSLibrary		(){;}
@@ -57,11 +48,13 @@ public:
     void				Reload			();
     bool				Save			();
 
-	virtual	PS::CPGDef const* const*	particles_group_begin	() const;
-	virtual	PS::CPGDef const* const*	particles_group_end		() const;
-	virtual	void						particles_group_next	(PS::CPGDef const* const*& iterator) const;
-	virtual	shared_str const&			particles_group_id		(PS::CPGDef const& particles_group) const;
+    virtual	PS::CPGDef const* const* particles_group_begin() const;
+    virtual	PS::CPGDef const* const* particles_group_end() const;
+    virtual	void						particles_group_next(PS::CPGDef const* const*& iterator) const;
+    virtual	shared_str const& particles_group_id(PS::CPGDef const& particles_group) const;
 };
+
+#define PSLIB_FILENAME 			"particles.xr"
 
 #define PS_LIB_SIGN 			"PS_LIB"
 

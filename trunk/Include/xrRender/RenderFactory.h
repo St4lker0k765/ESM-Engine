@@ -1,5 +1,3 @@
-#ifndef RenderFactory_included
-#define RenderFactory_included
 #pragma once
 
 class IWallMarkArray;
@@ -28,7 +26,6 @@ class IEnvironmentRender;
 class IEnvDescriptorMixerRender;
 class IStatGraphRender;
 class IFlareRender;
-class IConsoleRender;
 class IUIShader;
 class IUISequenceVideoItem;
 
@@ -40,7 +37,6 @@ virtual void Destroy##Class(I##Class *pObject) = 0;
 class IRenderFactory
 {
 public:
-#ifndef _EDITOR
 	/*
 	virtual IStatsRender* CreateStatsRender() = 0;
 	virtual void DestroyStatsRender(IStatsRender *pObject) = 0;
@@ -48,7 +44,6 @@ public:
 	RENDER_FACTORY_INTERFACE(UISequenceVideoItem)
 	RENDER_FACTORY_INTERFACE(UIShader)
 	RENDER_FACTORY_INTERFACE(StatGraphRender)
-	RENDER_FACTORY_INTERFACE(ConsoleRender)
 	RENDER_FACTORY_INTERFACE(RenderDeviceRender)
 #	ifdef DEBUG
 		RENDER_FACTORY_INTERFACE(ObjectSpaceRender)
@@ -56,9 +51,7 @@ public:
 	RENDER_FACTORY_INTERFACE(ApplicationRender)
 	RENDER_FACTORY_INTERFACE(WallMarkArray)
 	RENDER_FACTORY_INTERFACE(StatsRender)
-#endif // _EDITOR
 
-#ifndef _EDITOR
 	RENDER_FACTORY_INTERFACE(EnvironmentRender)
 	RENDER_FACTORY_INTERFACE(EnvDescriptorMixerRender)
 	RENDER_FACTORY_INTERFACE(EnvDescriptorRender)
@@ -67,11 +60,8 @@ public:
 	RENDER_FACTORY_INTERFACE(ThunderboltRender)
 	RENDER_FACTORY_INTERFACE(ThunderboltDescRender)
 	RENDER_FACTORY_INTERFACE(FlareRender)
-#endif // _EDITOR
 	RENDER_FACTORY_INTERFACE(FontRender)
 protected:
 	//virtual IEnvDescriptorRender *CreateEnvDescriptorRender() = 0;
 	//virtual void DestroyEnvDescriptorRender(IEnvDescriptorRender *pObject) = 0;
 };
-
-#endif	//	RenderFactory_included

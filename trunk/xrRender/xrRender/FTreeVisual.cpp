@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "../../xrEngine/igame_persistent.h"
-#include "../../xrEngine/igame_level.h"
-#include "../../xrEngine/environment.h"
-#include "../../xrEngine/fmesh.h"
+#include "../../xr_3da/igame_persistent.h"
+#include "../../xr_3da/igame_level.h"
+#include "../../xr_3da/environment.h"
+#include "../../xr_3da/fmesh.h"
 
 #include "ftreevisual.h"
 
@@ -101,9 +101,18 @@ struct	FTreeVisual_setup
 	{
 		dwFrame					= Device.dwFrame;
 
+		float tm_rot = PI_MUL_2 * Device.fTimeGlobal / ps_r__Tree_w_rot;
 		// Calc wind-vector3, scale
-		float	tm_rot			= PI_MUL_2*Device.fTimeGlobal/ps_r__Tree_w_rot;
-		wind.set				(_sin(tm_rot),0,_cos(tm_rot),0);	wind.normalize	();	wind.mul(ps_r__Tree_w_amp);	// dir1*amplitude
+		CEnvDescriptor& env = *g_pGamePersistent->Environment().CurrentEnv;
+
+		wind.set(_sin(tm_rot), 0, _cos(tm_rot), 0);
+		wind.normalize();
+#if RENDER!=R_R1
+		float fValue = env.m_fTreeAmplitudeIntensity;
+		wind.mul(fValue); // dir1*amplitude
+#else // R1
+		wind.mul(ps_r__Tree_w_amp); // dir1*amplitude
+#endif //-RENDER!=R_R1
 		scale					= 1.f/float(FTreeVisual_quant);
 
 		// setup constants

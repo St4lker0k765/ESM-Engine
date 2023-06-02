@@ -1,5 +1,3 @@
-#ifndef	DebugRender_included
-#define	DebugRender_included
 #pragma once
 
 #ifdef DEBUG
@@ -45,6 +43,4 @@ public:
 #endif	//	DEBUG
 };
 
-#endif // DEBUG
-
-#endif	//	DebugRender_included
+#endif

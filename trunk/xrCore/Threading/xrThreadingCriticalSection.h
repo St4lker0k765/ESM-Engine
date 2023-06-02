@@ -2,6 +2,4 @@
 
 #include "../xrSyncronize.h"
 
-using AccessLock = xrCriticalSection;
-
-using Mutex = std::mutex; //Mutex Threading
+typedef xrCriticalSection AccessLock;

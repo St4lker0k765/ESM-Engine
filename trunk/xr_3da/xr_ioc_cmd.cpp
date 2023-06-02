@@ -158,7 +158,38 @@ public:
 //-----------------------------------------------------------------------
 void 			crashthread			( void* )
 {
-	R_ASSERT2(false, "Crash Thread");
+	Sleep		(1000);
+	Msg			("~ crash thread activated")	;
+	u64			clk		= CPU::GetCLK		()	;
+	CRandom		rndg;
+	rndg.seed	(s32(clk));
+	for (;;)	{
+		Sleep	(1);
+		__try	{
+			//try {
+				union	{
+					struct {
+						u8	_b0;
+						u8	_b1;
+						u8	_b2;
+						u8	_b3;
+					};
+					uintptr_t	_ptri;
+					u32*		_ptr;
+				}		rndptr;
+				rndptr._b0		=	u8(rndg.randI(0,256));
+				rndptr._b1		=	u8(rndg.randI(0,256));
+				rndptr._b2		=	u8(rndg.randI(0,256));
+				rndptr._b3		=	u8(rndg.randI(0,256));
+				rndptr._ptri	&=  (1ul<31ul)-1;
+				*rndptr._ptr	=	0xBAADF00D;
+			//} catch(...) {
+			//	// OK
+			//}
+		} __except	(EXCEPTION_EXECUTE_HANDLER)	{
+			// OK
+		}
+	}
 }
 class CCC_Crash : public IConsole_Command
 {

@@ -1,6 +1,7 @@
 #include "stdafx.h"
+#pragma hdrstop
 
-XRCORE_API BOOL g_bEnableStatGather	= false;
+XRCORE_API BOOL g_bEnableStatGather	= FALSE;
 
 CStatTimer::CStatTimer()
 {

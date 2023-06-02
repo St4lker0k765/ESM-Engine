@@ -20,9 +20,9 @@ public:
 #ifdef DEBUG
 		shared_str	comment;
 #endif
-		Item() : first(nullptr), second(nullptr)
+		Item() : first(0), second(0)
 #ifdef DEBUG
-			, comment(nullptr)
+			, comment(0)
 #endif
 		{};
 	};
@@ -37,7 +37,7 @@ public:
 //.		IC SectCIt		end()		{ return Data.end();	}
 //.		IC size_t		size()		{ return Data.size();	}
 //.		IC void			clear()		{ Data.clear();			}
-	    BOOL			line_exist	(LPCSTR L, LPCSTR* val=nullptr);
+	    BOOL			line_exist	(LPCSTR L, LPCSTR* val=0);
 	};
 	typedef	xr_vector<Sect*>		Root;
 	typedef Root::iterator			RootIt;
@@ -54,10 +54,10 @@ private:
 public:
     BOOL		bSaveAtEnd;
 public:
-				CInifile		( IReader* F, LPCSTR path=nullptr );
+				CInifile		( IReader* F, LPCSTR path=0 );
 				CInifile		( LPCSTR szFileName, BOOL ReadOnly=TRUE, BOOL bLoadAtStart=TRUE, BOOL SaveAtEnd=TRUE);
 	virtual 	~CInifile		( );
-    bool		save_as         ( LPCSTR new_fname=nullptr );
+    bool		save_as         ( LPCSTR new_fname=0 );
 
 	LPCSTR		fname			( ) { return fName; };
 
@@ -113,23 +113,23 @@ public:
 	BOOL		r_line			( LPCSTR S, int L,	LPCSTR* N, LPCSTR* V );
 	BOOL		r_line			( const shared_str& S, int L,	LPCSTR* N, LPCSTR* V );
 
-    void		w_string		( LPCSTR S, LPCSTR L, LPCSTR			V, LPCSTR comment=nullptr );
-	void		w_u8			( LPCSTR S, LPCSTR L, u8				V, LPCSTR comment=nullptr );
-	void		w_u16			( LPCSTR S, LPCSTR L, u16				V, LPCSTR comment=nullptr );
-	void		w_u32			( LPCSTR S, LPCSTR L, u32				V, LPCSTR comment=nullptr );
-    void		w_s8			( LPCSTR S, LPCSTR L, s8				V, LPCSTR comment=nullptr );
-	void		w_s16			( LPCSTR S, LPCSTR L, s16				V, LPCSTR comment=nullptr );
-	void		w_s32			( LPCSTR S, LPCSTR L, s32				V, LPCSTR comment=nullptr );
-	void		w_float			( LPCSTR S, LPCSTR L, float				V, LPCSTR comment=nullptr );
-    void		w_fcolor		( LPCSTR S, LPCSTR L, const Fcolor&		V, LPCSTR comment=nullptr );
-    void		w_color			( LPCSTR S, LPCSTR L, u32				V, LPCSTR comment=nullptr );
-    void		w_ivector2		( LPCSTR S, LPCSTR L, const Ivector2&	V, LPCSTR comment=nullptr );
-	void		w_ivector3		( LPCSTR S, LPCSTR L, const Ivector3&	V, LPCSTR comment=nullptr );
-	void		w_ivector4		( LPCSTR S, LPCSTR L, const Ivector4&	V, LPCSTR comment=nullptr );
-	void		w_fvector2		( LPCSTR S, LPCSTR L, const Fvector2&	V, LPCSTR comment=nullptr );
-	void		w_fvector3		( LPCSTR S, LPCSTR L, const Fvector3&	V, LPCSTR comment=nullptr );
-	void		w_fvector4		( LPCSTR S, LPCSTR L, const Fvector4&	V, LPCSTR comment=nullptr );
-	void		w_bool			( LPCSTR S, LPCSTR L, BOOL				V, LPCSTR comment=nullptr );
+    void		w_string		( LPCSTR S, LPCSTR L, LPCSTR			V, LPCSTR comment=0 );
+	void		w_u8			( LPCSTR S, LPCSTR L, u8				V, LPCSTR comment=0 );
+	void		w_u16			( LPCSTR S, LPCSTR L, u16				V, LPCSTR comment=0 );
+	void		w_u32			( LPCSTR S, LPCSTR L, u32				V, LPCSTR comment=0 );
+    void		w_s8			( LPCSTR S, LPCSTR L, s8				V, LPCSTR comment=0 );
+	void		w_s16			( LPCSTR S, LPCSTR L, s16				V, LPCSTR comment=0 );
+	void		w_s32			( LPCSTR S, LPCSTR L, s32				V, LPCSTR comment=0 );
+	void		w_float			( LPCSTR S, LPCSTR L, float				V, LPCSTR comment=0 );
+    void		w_fcolor		( LPCSTR S, LPCSTR L, const Fcolor&		V, LPCSTR comment=0 );
+    void		w_color			( LPCSTR S, LPCSTR L, u32				V, LPCSTR comment=0 );
+    void		w_ivector2		( LPCSTR S, LPCSTR L, const Ivector2&	V, LPCSTR comment=0 );
+	void		w_ivector3		( LPCSTR S, LPCSTR L, const Ivector3&	V, LPCSTR comment=0 );
+	void		w_ivector4		( LPCSTR S, LPCSTR L, const Ivector4&	V, LPCSTR comment=0 );
+	void		w_fvector2		( LPCSTR S, LPCSTR L, const Fvector2&	V, LPCSTR comment=0 );
+	void		w_fvector3		( LPCSTR S, LPCSTR L, const Fvector3&	V, LPCSTR comment=0 );
+	void		w_fvector4		( LPCSTR S, LPCSTR L, const Fvector4&	V, LPCSTR comment=0 );
+	void		w_bool			( LPCSTR S, LPCSTR L, BOOL				V, LPCSTR comment=0 );
 
     void		remove_line		( LPCSTR S, LPCSTR L );
 };

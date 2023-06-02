@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#pragma hdrstop
 
 #include "fs_internal.h"
 
@@ -11,7 +12,7 @@
 #pragma warning(default:4995)
 
 typedef void DUMMY_STUFF (const void*,const u32&,void*);
-XRCORE_API DUMMY_STUFF	*g_dummy_stuff = nullptr;
+XRCORE_API DUMMY_STUFF	*g_dummy_stuff = 0;
 static std::mutex g_file_mappings_Mutex;
 
 #ifdef M_BORLAND
@@ -147,7 +148,7 @@ void*  FileDecompress	(const char *fn, const char* sign, u32* size)
 	}
     R_ASSERT(strncmp(M,F,8)==0);
 
-	void* ptr = nullptr; u32 SZ;
+	void* ptr = 0; u32 SZ;
 	SZ = _readLZ (H, ptr, filelength(H)-8);
 	_close	(H);
 	if (size) *size = SZ;
@@ -168,7 +169,7 @@ void CMemoryWriter::w	(const void* ptr, u32 count)
 		// reallocate
 		if (mem_size==0)	mem_size=128;
 		while (mem_size <= (position+count)) mem_size*=2;
-		if (nullptr==data)		data = (BYTE*)	Memory.mem_alloc	(mem_size
+		if (0==data)		data = (BYTE*)	Memory.mem_alloc	(mem_size
 #ifdef DEBUG_MEMORY_NAME
 			,		"CMemoryWriter - storage"
 #endif // DEBUG_MEMORY_NAME
@@ -221,7 +222,7 @@ u32	IWriter::chunk_size	()					// returns size of currently opened chunk, 0 othe
 
 void	IWriter::w_compressed(void* ptr, u32 count)
 {
-	BYTE*		dest	= nullptr;
+	BYTE*		dest	= 0;
 	unsigned	dest_sz	= 0;
 	_compressLZ	(&dest,&dest_sz,ptr,count);
 	
@@ -277,7 +278,7 @@ IReader*	IReader::open_chunk(u32 ID)
 		} else {
 			return xr_new<IReader>		(pointer(),	dwSize,			tell()+dwSize);
 		}
-	} else return nullptr;
+	} else return 0;
 };
 void	IReader::close()
 {
@@ -287,7 +288,7 @@ void	IReader::close()
 
 IReader*	IReader::open_chunk_iterator	(u32& ID, IReader* _prev)
 {
-	if (nullptr==_prev)	{
+	if (0==_prev)	{
 		// first
 		rewind		();
 	} else {
@@ -297,7 +298,7 @@ IReader*	IReader::open_chunk_iterator	(u32& ID, IReader* _prev)
 	}
 
 	//	open
-	if			(elapsed()<8)	return nullptr;
+	if			(elapsed()<8)	return		NULL;
 	ID			= r_u32	()		;
 	u32 _size	= r_u32	()		;
 	if ( ID & CFS_CompressMark )
@@ -421,12 +422,12 @@ CCompressedReader::~CCompressedReader()
 CVirtualFileRW::CVirtualFileRW(const char *cFileName) 
 {
 	// Open the file
-	hSrcFile		= CreateFile(cFileName, GENERIC_READ|GENERIC_WRITE, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
+	hSrcFile		= CreateFile(cFileName, GENERIC_READ|GENERIC_WRITE, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
 	R_ASSERT3		(hSrcFile!=INVALID_HANDLE_VALUE,cFileName,Debug.error2string(GetLastError()));
-	Size			= (int)GetFileSize(hSrcFile, nullptr);
+	Size			= (int)GetFileSize(hSrcFile, NULL);
 	R_ASSERT3		(Size,cFileName,Debug.error2string(GetLastError()));
 
-	hSrcMap			= CreateFileMapping (hSrcFile, nullptr, PAGE_READWRITE, 0, 0, nullptr);
+	hSrcMap			= CreateFileMapping (hSrcFile, 0, PAGE_READWRITE, 0, 0, 0);
 	R_ASSERT3		(hSrcMap!=INVALID_HANDLE_VALUE,cFileName,Debug.error2string(GetLastError()));
 
 	data			= (char*)MapViewOfFile (hSrcMap, FILE_MAP_ALL_ACCESS, 0, 0, 0);
@@ -451,12 +452,12 @@ CVirtualFileRW::~CVirtualFileRW()
 CVirtualFileReader::CVirtualFileReader(const char *cFileName) 
 {
 	// Open the file
-	hSrcFile		= CreateFile(cFileName, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, nullptr);
+	hSrcFile		= CreateFile(cFileName, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
 	R_ASSERT3		(hSrcFile!=INVALID_HANDLE_VALUE,cFileName,Debug.error2string(GetLastError()));
-	Size			= (int)GetFileSize(hSrcFile, nullptr);
+	Size			= (int)GetFileSize(hSrcFile, NULL);
 	R_ASSERT3		(Size,cFileName,Debug.error2string(GetLastError()));
 
-	hSrcMap			= CreateFileMapping (hSrcFile, nullptr, PAGE_READONLY, 0, 0, nullptr);
+	hSrcMap			= CreateFileMapping (hSrcFile, 0, PAGE_READONLY, 0, 0, 0);
 	R_ASSERT3		(hSrcMap!=INVALID_HANDLE_VALUE,cFileName,Debug.error2string(GetLastError()));
 
 	data			= (char*)MapViewOfFile (hSrcMap, FILE_MAP_READ, 0, 0, 0);

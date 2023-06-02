@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "ResourceManager.h"
 
 #ifndef _EDITOR

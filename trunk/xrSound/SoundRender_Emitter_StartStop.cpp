@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "SoundRender_Core.h"
 #include "SoundRender_Emitter.h"
 #include "SoundRender_Source.h"
@@ -40,8 +42,8 @@ void CSoundRender_Emitter::i_stop()
 	{
 		Event_ReleaseOwner();
 		VERIFY(this == owner_data->feedback);
-		owner_data->feedback = nullptr;
-		owner_data = nullptr;
+		owner_data->feedback = NULL;
+		owner_data = NULL;
 	}
 	m_current_state = stStopped;
 }

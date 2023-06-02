@@ -1,4 +1,9 @@
+// FVisual.cpp: implementation of the FVisual class.
+//
+//////////////////////////////////////////////////////////////////////
+
 #include "stdafx.h"
+#pragma hdrstop
 
 #pragma warning(disable:4995)
 #include <d3dx9.h>

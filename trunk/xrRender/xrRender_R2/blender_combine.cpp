@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "Blender_combine.h"
 
 CBlender_combine::CBlender_combine	()	{	description.CLS		= 0;	}

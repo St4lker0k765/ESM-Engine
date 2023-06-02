@@ -49,7 +49,7 @@ public:
 };
 struct ENGINE_API		resptrcode_light	: public resptr_base<IRender_Light>
 {
-	void				destroy			()				{ _set(nullptr);						}
+	void				destroy			()				{ _set(NULL);						}
 };
 typedef	resptr_core<IRender_Light,resptrcode_light >	ref_light;
 
@@ -69,7 +69,7 @@ public:
 };
 struct ENGINE_API		resptrcode_glow	: public resptr_base<IRender_Glow>
 {
-	void				destroy			()					{ _set(nullptr);					}
+	void				destroy			()					{ _set(NULL);					}
 };
 typedef	resptr_core<IRender_Glow,resptrcode_glow >		ref_glow;
 
@@ -223,7 +223,7 @@ public:
 	// Models
 	virtual IRenderVisual*			model_CreateParticles	(LPCSTR name)								= 0;
 //	virtual IRender_DetailModel*	model_CreateDM			(IReader*	F)								= 0;
-	virtual IRenderVisual*			model_Create			(LPCSTR name, IReader*	data=nullptr)				= 0;
+	virtual IRenderVisual*			model_Create			(LPCSTR name, IReader*	data=0)				= 0;
 	virtual IRenderVisual*			model_CreateChild		(LPCSTR name, IReader*	data)				= 0;
 	virtual IRenderVisual*			model_Duplicate			(IRenderVisual*	V)						= 0;
 	virtual void					model_Delete			(IRenderVisual* &	V, BOOL bDiscard=FALSE)	= 0;
@@ -240,7 +240,7 @@ public:
 	// Main
 	virtual void					Calculate				()											= 0;
 	virtual void					Render					()											= 0;
-	virtual void					Screenshot				(ScreenshotMode mode=SM_NORMAL, LPCSTR name = nullptr) = 0;
+	virtual void					Screenshot				(ScreenshotMode mode=SM_NORMAL, LPCSTR name = 0) = 0;
 	virtual	void					Screenshot(ScreenshotMode mode, CMemoryWriter& memory_writer) = 0;
 	virtual void					ScreenshotAsyncBegin() = 0;
 	virtual void					ScreenshotAsyncEnd(CMemoryWriter& memory_writer) = 0;

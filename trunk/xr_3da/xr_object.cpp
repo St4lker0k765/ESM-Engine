@@ -37,7 +37,7 @@ void CObject::cNameVisual_set	(shared_str N)
 		NameVisual				= N;
 		renderable.visual		= Render->model_Create	(*N);
 		
-		IKinematics* old_k = old_v ? old_v->dcast_PKinematics() : nullptr;
+		IKinematics* old_k = old_v ? old_v->dcast_PKinematics() : NULL;
 		IKinematics* new_k = renderable.visual->dcast_PKinematics();
 
 		if(old_k && new_k)
@@ -48,7 +48,7 @@ void CObject::cNameVisual_set	(shared_str N)
 		::Render->model_Delete	(old_v);
 	} else {
 		::Render->model_Delete	(renderable.visual);
-		NameVisual				= nullptr;
+		NameVisual				= 0;
 	}
 	OnChangeVisual				();
 }
@@ -101,11 +101,11 @@ CObject::CObject		( )		: ISpatial(g_SpatialSpace)
 	// Transform
 	Props.storage				= 0;
 
-	Parent						= nullptr;
+	Parent						= NULL;
 
-	NameObject					= nullptr;
-	NameSection					= nullptr;
-	NameVisual					= nullptr;
+	NameObject					= NULL;
+	NameSection					= NULL;
+	NameVisual					= NULL;
 
 #ifdef DEBUG
 	dbg_update_shedule			= u32(-1)/2;
@@ -115,9 +115,9 @@ CObject::CObject		( )		: ISpatial(g_SpatialSpace)
 
 CObject::~CObject				( )
 {
-	cNameVisual_set				( nullptr );
-	cName_set					( nullptr );
-	cNameSect_set				( nullptr );
+	cNameVisual_set				( 0 );
+	cName_set					( 0 );
+	cNameSect_set				( 0 );
 }
 
 void CObject::Load				(LPCSTR section )
@@ -146,10 +146,10 @@ BOOL CObject::net_Spawn			(CSE_Abstract* data)
 
 	VERIFY						(_valid(renderable.xform));
 
-	if (nullptr==Visual() && pSettings->line_exist( cNameSect(), "visual" ) )
+	if (0==Visual() && pSettings->line_exist( cNameSect(), "visual" ) )
 		cNameVisual_set	(pSettings->r_string( cNameSect(), "visual" ) );
 
-	if (nullptr==collidable.model) 	{
+	if (0==collidable.model) 	{
 		if (pSettings->line_exist(cNameSect(),"cform")) {
 			VERIFY3				(*NameVisual, "Model isn't assigned for object, but cform requisted",*cName());
 			collidable.model	= xr_new<CCF_Skeleton>	(this);
@@ -179,7 +179,7 @@ void CObject::net_Destroy		()
 	spatial_unregister			();
 //	setDestroy					(true);
 	// remove visual
-	cNameVisual_set				( nullptr );
+	cNameVisual_set				( 0 );
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -244,7 +244,7 @@ void CObject::UpdateCL			()
 
 	if (Parent && spatial.node_ptr)									Debug.fatal	(DEBUG_INFO,"Object %s has parent but is still registered inside spatial DB",*cName());
 
-	if ((nullptr==collidable.model)&&(spatial.type&STYPE_COLLIDEABLE))	Debug.fatal	(DEBUG_INFO,"Object %s registered as 'collidable' but has no collidable model",*cName());
+	if ((0==collidable.model)&&(spatial.type&STYPE_COLLIDEABLE))	Debug.fatal	(DEBUG_INFO,"Object %s registered as 'collidable' but has no collidable model",*cName());
 #endif
 
 	spatial_update				(base_spu_epsP*5,base_spu_epsR*5);
@@ -310,12 +310,12 @@ CObject* CObject::H_SetParent	(CObject* new_parent, bool just_before_destroy)
 	VERIFY2((new_parent==0)||(old_parent==0),"Before set parent - execute H_SetParent(0)");
 
 	// if (Parent) Parent->H_ChildRemove	(this);
-	if (nullptr==old_parent)	OnH_B_Chield		();	// before attach
+	if (0==old_parent)	OnH_B_Chield		();	// before attach
 	else				OnH_B_Independent	(just_before_destroy); // before detach
 	if (new_parent)		spatial_unregister	();
 	else				spatial_register	();
 	Parent				= new_parent;
-	if (nullptr==old_parent)	OnH_A_Chield		();	// after attach
+	if (0==old_parent)	OnH_A_Chield		();	// after attach
 	else				OnH_A_Independent	(); // after detach
 	// if (Parent)	Parent->H_ChildAdd		(this);
 	MakeMeCrow			();

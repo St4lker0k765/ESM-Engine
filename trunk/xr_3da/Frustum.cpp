@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "Frustum.h"
 
 //////////////////////////////////////////////////////////////////////
@@ -333,7 +335,7 @@ sPoly*	CFrustum::ClipPoly(sPoly& S, sPoly& D) const
 		}
 
 		// here we end up with complete polygon in 'dest' which is inside plane #i
-		if (dest->size()<3) return nullptr;
+		if (dest->size()<3) return 0;
 	}
 	return dest;
 }
@@ -348,7 +350,7 @@ BOOL CFrustum::CreateFromClipPoly(Fvector* p, int count, Fvector& vBase, CFrustu
 	sPoly*	dest	= clip.ClipPoly(poly1,poly2);
 
 	// here we end up with complete frustum-polygon in 'dest'
-	if (nullptr==dest)	return false;
+	if (0==dest)	return false;
 
 	CreateFromPoints(dest->begin(),dest->size(),vBase);
 	return	true;

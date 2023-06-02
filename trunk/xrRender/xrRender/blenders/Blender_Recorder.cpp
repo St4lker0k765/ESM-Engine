@@ -1,4 +1,10 @@
+// Blender_Recorder.cpp: implementation of the CBlender_Compile class.
+//
+//////////////////////////////////////////////////////////////////////
+
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "..\ResourceManager.h"
 #include "Blender_Recorder.h"
 #include "Blender.h"

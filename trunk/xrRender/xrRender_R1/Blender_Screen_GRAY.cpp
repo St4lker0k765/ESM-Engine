@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "Blender_Screen_GRAY.h"
 
 // Y =  0.299*Red+0.587*Green+0.114*Blue

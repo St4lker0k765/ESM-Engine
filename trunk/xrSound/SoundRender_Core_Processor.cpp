@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include <cl_intersect.h>
 #include "SoundRender_Core.h"
 #include "SoundRender_Emitter.h"
@@ -180,7 +182,7 @@ void CSoundRender_Core::statistic(CSound_stats *dest, CSound_stats_ext *ext)
 			}
 			else
 			{
-				_I.game_object = nullptr;
+				_I.game_object = 0;
 				_I.game_type = 0;
 				_I.type = st_Effect;
 			}
@@ -193,7 +195,7 @@ float CSoundRender_Core::get_occlusion_to(const Fvector& hear_pt, const Fvector&
 {
 	float occ_value = 1.f;
 
-	if (nullptr != geom_SOM) {
+	if (0 != geom_SOM) {
 		// Calculate RAY params
 		Fvector	pos, dir;
 		pos.random_dir();
@@ -239,7 +241,7 @@ float CSoundRender_Core::get_occlusion(Fvector& P, float R, Fvector* occ)
 	range = dir.magnitude();
 	dir.div(range);
 
-	if (nullptr != geom_MODEL) {
+	if (0 != geom_MODEL) {
 		bool bNeedFullTest = true;
 		// 1. Check cached polygon
 		float _u, _v, _range;
@@ -269,7 +271,7 @@ float CSoundRender_Core::get_occlusion(Fvector& P, float R, Fvector* occ)
 			}
 			}
 		}
-	if (nullptr != geom_SOM) {
+	if (0 != geom_SOM) {
 #ifdef _EDITOR
 		ETOOLS::ray_options(CDB::OPT_CULL);
 		ETOOLS::ray_query(geom_SOM, base, dir, range);

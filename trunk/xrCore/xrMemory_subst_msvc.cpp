@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "xrMemory_align.h"
 #include "xrMemory_pure.h"
 
@@ -67,7 +69,7 @@ void*	xrMemory::mem_alloc		(size_t size
 #endif // DEBUG_MEMORY_MANAGER
 
 	u32		_footer				=	debug_mode?4:0;
-	void*	_ptr				=	nullptr;
+	void*	_ptr				=	0;
 
 	//
 	if (!mem_initialized /*|| debug_mode*/)		
@@ -179,7 +181,7 @@ void*	xrMemory::mem_realloc	(void* P, size_t size
 		return							(result);
 	}
 #endif // PURE_ALLOC
-	if (nullptr==P) {
+	if (0==P) {
 		return mem_alloc	(size
 #	ifdef DEBUG_MEMORY_NAME
 		,_name
@@ -207,7 +209,7 @@ void*	xrMemory::mem_realloc	(void* P, size_t size
 	} else 							p_mode	= 1	;
 
 	void*	_real				= (void*)(((u8*)P)-1);
-	void*	_ptr				= nullptr;
+	void*	_ptr				= NULL;
 	if		(0==p_mode)
 	{
 		u32		_footer			=	debug_mode?4:0;

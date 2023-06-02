@@ -1,20 +1,22 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "xrstring.h"
 
-XRCORE_API	extern		str_container*	g_pStringContainer	= nullptr;
+XRCORE_API	extern		str_container*	g_pStringContainer	= NULL;
 
 #define		HEADER		12			// ref + len + crc
 
 str_value*	str_container::dock		(str_c value)
 {
-	if (nullptr==value)				return nullptr;
+	if (0==value)				return 0;
 
 	cs.Enter					();
 #ifdef DEBUG_MEMORY_MANAGER
 	Memory.stat_strdock			++	;
 #endif // DEBUG_MEMORY_MANAGER
 
-	str_value*	result			= nullptr	;
+	str_value*	result			= 0	;
 
 	// calc len
 	u32		s_len				= xr_strlen(value);
@@ -43,7 +45,7 @@ str_value*	str_container::dock		(str_c value)
 	}
 
 	// it may be the case, string is not fount or has "non-exact" match
-	if (nullptr==result)				{
+	if (0==result)				{
 		// Insert string
 //		DUMP_PHASE;
 

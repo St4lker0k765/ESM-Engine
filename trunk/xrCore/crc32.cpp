@@ -1,6 +1,7 @@
 #include "stdafx.h"
+#pragma hdrstop
 
-static BOOL crc32_ready		= false;
+static BOOL crc32_ready		= FALSE;
 static u32	crc32_table		[256];					// Lookup table array 
 
 inline u32		Reflect		(u32 ref, char ch)		// Reflects CRC bits in the lookup table 

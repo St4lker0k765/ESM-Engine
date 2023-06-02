@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "GameFont.h"
 #include "Render.h"
 #ifdef _EDITOR

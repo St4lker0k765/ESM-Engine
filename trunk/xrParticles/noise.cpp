@@ -1,12 +1,16 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "noise.h"
 
+#ifndef _EDITOR
 #include <xmmintrin.h>
 
 __forceinline int iFloor_SSE(float const x)
 {
 	return _mm_cvtt_ss2si(_mm_set_ss(x));
 }
+#endif
 
 //==============================================================================
 // Perlin's noise from Texturing and Modeling...

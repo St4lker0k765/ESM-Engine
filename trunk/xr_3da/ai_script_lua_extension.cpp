@@ -379,7 +379,7 @@ CLuaVirtualMachine *Script::get_namespace_table(CLuaVirtualMachine *tpLuaVM, LPC
 	LPSTR					S	= S2;
 	for (;;) { 
 		if (!xr_strlen(S))
-			return			(nullptr); 
+			return			(0); 
 		LPSTR				S1 = strchr(S,'.'); 
 		if (S1)
 			*S1				= 0; 
@@ -387,13 +387,13 @@ CLuaVirtualMachine *Script::get_namespace_table(CLuaVirtualMachine *tpLuaVM, LPC
 		lua_gettable 		(tpLuaVM,-2); 
 		if (lua_isnil(tpLuaVM,-1)) { 
 			lua_pop			(tpLuaVM,2); 
-			return			(nullptr);	//	there is no namespace!
+			return			(0);	//	there is no namespace!
 		}
 		else 
 			if (!lua_istable(tpLuaVM,-1)) { 
 				lua_pop		(tpLuaVM,2); 
 				FATAL		(" Error : the namespace name is already being used by the non-table object!\n");
-				return		(nullptr); 
+				return		(0); 
 			} 
 
 			lua_remove		(tpLuaVM,-2);

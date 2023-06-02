@@ -9,7 +9,7 @@
 CTheoraStream::CTheoraStream()                        
 {
 	// clear self
-	source				= nullptr;
+	source				= 0;
 	fpms				= 0.f;
 	d_frame				= -1;
 	tm_total			= 0;
@@ -217,7 +217,7 @@ BOOL CTheoraStream::Load(const char* fname)
 #ifdef _EDITOR
 	source				= FS.r_open(0,fname);
 #else
-	source				= FS.rs_open(nullptr,fname);
+	source				= FS.rs_open(0,fname);
 #endif
 	VERIFY				(source);
 

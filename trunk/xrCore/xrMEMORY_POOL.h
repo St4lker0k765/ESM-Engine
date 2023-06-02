@@ -33,7 +33,7 @@ public:
 	ICF void*			create			()
 	{
 		cs.Enter		();
-		if (nullptr==list)	block_create();
+		if (0==list)	block_create();
 
 		void* E			= list;
 		list			= (u8*)*access(list);

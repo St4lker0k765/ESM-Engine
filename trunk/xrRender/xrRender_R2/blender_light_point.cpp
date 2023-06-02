@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "Blender_light_point.h"
 
 CBlender_accum_point::CBlender_accum_point	()	{	description.CLS		= 0;	}

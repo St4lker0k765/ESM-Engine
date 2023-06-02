@@ -25,7 +25,7 @@ namespace CPU
 			res = RoutineCPUInfo(processors_, physicalCores_, logicalCores_);
 		}
 		catch (...) {
-			MessageBox(nullptr, "1", "CPU info error", MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_TOPMOST);
+			MessageBox(NULL, "1", "CPU info error", MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_TOPMOST);
 		}
 
 		try
@@ -33,7 +33,7 @@ namespace CPU
 			CPUName(cpuName_);
 		}
 		catch (...) {
-			MessageBox(nullptr, "2", "CPU info error", MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_TOPMOST);
+			MessageBox(NULL, "2", "CPU info error", MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_TOPMOST);
 		}
 
 		try
@@ -41,7 +41,7 @@ namespace CPU
 			totalRam_ = TotalRam();
 		}
 		catch (...) {
-			MessageBox(nullptr, "3", "CPU info error", MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_TOPMOST);
+			MessageBox(NULL, "3", "CPU info error", MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_TOPMOST);
 		}
 
 		if (logicalCores_ <= 0) // backup

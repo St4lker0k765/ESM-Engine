@@ -35,7 +35,7 @@ public:
     int		 	    NextKeyFrame 		(int frame);
     int		 	    FirstKeyFrame		(){return Keys.rend()->first;}
     int		 	    LastKeyFrame		(){return Keys.rbegin()->first;}
-    u32*			GetKey				(int frame){KeyPairIt it=Keys.find(frame); return (it!=Keys.end())?&(it->second):nullptr;}
+    u32*			GetKey				(int frame){KeyPairIt it=Keys.find(frame); return (it!=Keys.end())?&(it->second):0;}
 };
 DEFINE_VECTOR(CLAItem*,LAItemVec,LAItemIt);
 

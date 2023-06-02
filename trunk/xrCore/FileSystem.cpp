@@ -3,11 +3,12 @@
 //----------------------------------------------------
 
 #include "stdafx.h"
+#pragma hdrstop
 
 #include "cderr.h"
 #include "commdlg.h"
 
-EFS_Utils*	xr_EFS	= nullptr;
+EFS_Utils*	xr_EFS	= NULL;
 //----------------------------------------------------
 EFS_Utils::EFS_Utils( )
 {
@@ -20,28 +21,28 @@ EFS_Utils::~EFS_Utils()
 xr_string	EFS_Utils::ExtractFileName(LPCSTR src)
 {
 	string_path name;
-	_splitpath	(src,nullptr,nullptr,name,nullptr);
+	_splitpath	(src,0,0,name,0);
     return xr_string(name);
 }
 
 xr_string	EFS_Utils::ExtractFileExt(LPCSTR src)
 {
 	string_path ext;
-	_splitpath	(src,nullptr,nullptr,nullptr,ext);
+	_splitpath	(src,0,0,0,ext);
     return xr_string(ext);
 }
 
 xr_string	EFS_Utils::ExtractFilePath(LPCSTR src)
 {
 	string_path drive,dir;
-	_splitpath	(src,drive,dir,nullptr,nullptr);
+	_splitpath	(src,drive,dir,0,0);
     return xr_string(drive)+dir;
 }
 
 xr_string	EFS_Utils::ExcludeBasePath(LPCSTR full_path, LPCSTR excl_path)
 {
     LPCSTR sub		= strstr(full_path,excl_path);
-	if (nullptr!=sub) 	return xr_string(sub+xr_strlen(excl_path));
+	if (0!=sub) 	return xr_string(sub+xr_strlen(excl_path));
 	else	   		return xr_string(full_path);
 }
 
@@ -106,7 +107,7 @@ bool EFS_Utils::GetOpenName( LPCSTR initial,  string_path& buffer, int sz_buf, b
     if (xr_strlen(buffer)){ 
         string_path		dr;
         if (!(buffer[0]=='\\' && buffer[1]=='\\')){ // if !network
-            _splitpath		(buffer,dr,nullptr,nullptr,nullptr);
+            _splitpath		(buffer,dr,0,0,0);
             if (0==dr[0])	P._update(buffer,buffer); 
         }
     }
@@ -169,7 +170,7 @@ bool EFS_Utils::GetSaveName( LPCSTR initial, string_path& buffer, LPCSTR offset,
     if (xr_strlen(buffer)){ 
         string_path		dr;
         if (!(buffer[0]=='\\' && buffer[1]=='\\')){ // if !network
-            _splitpath		(buffer,dr,nullptr,nullptr,nullptr);
+            _splitpath		(buffer,dr,0,0,0);
             if (0==dr[0])	P._update(buffer,buffer); 
         }
     }

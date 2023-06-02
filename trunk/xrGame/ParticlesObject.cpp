@@ -2,6 +2,8 @@
 // file: PSObject.cpp
 //----------------------------------------------------
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "ParticlesObject.h"
 #include "../xr_3da/defines.h"
 #include "..\Include\xrRender\RenderVisual.h"

@@ -1,4 +1,10 @@
+// FHierrarhyVisual.cpp: implementation of the FHierrarhyVisual class.
+//
+//////////////////////////////////////////////////////////////////////
+
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "FHierrarhyVisual.h"
 #include "../../xr_3da/Fmesh.h"
 #ifndef _EDITOR

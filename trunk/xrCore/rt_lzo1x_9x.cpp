@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#pragma hdrstop
 
 /* lzo1x_9x.c -- implementation of the LZO1X-999 compression algorithm
 
@@ -860,7 +861,7 @@ lzo1x_999_compress_dict     ( const lzo_bytep in , lzo_uint  in_len,
                               const lzo_bytep dict, lzo_uint dict_len )
 {
     return lzo1x_999_compress_level(in, in_len, out, out_len, wrkmem,
-                                    dict, dict_len, nullptr, 8);
+                                    dict, dict_len, 0, 8);
 }
 
 LZO_PUBLIC(int)
@@ -869,7 +870,7 @@ lzo1x_999_compress  ( const lzo_bytep in , lzo_uint  in_len,
                             lzo_voidp wrkmem )
 {
     return lzo1x_999_compress_level(in, in_len, out, out_len, wrkmem,
-                                    nullptr, 0, (lzo_callback_p) nullptr, 8);
+                                    NULL, 0, (lzo_callback_p) 0, 8);
 }
 
 

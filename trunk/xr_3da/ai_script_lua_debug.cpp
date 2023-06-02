@@ -90,7 +90,7 @@ LPCSTR Script::cafEventToString(int iEventCode)
 		default					: NODEFAULT;
 	}
 #ifdef DEBUG
-	return(nullptr);
+	return(0);
 #endif
 }
 

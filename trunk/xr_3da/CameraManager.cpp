@@ -140,7 +140,7 @@ CEffectorCam* CCameraManager::GetCamEffector(ECamEffectorType type)
 { 
 	for (EffectorCamIt it=m_EffectorsCam.begin(); it!=m_EffectorsCam.end(); it++ )
 		if ((*it)->eType==type) return *it;
-	return nullptr;
+	return 0;
 }
 
 CEffectorCam* CCameraManager::AddCamEffector(CEffectorCam* ef)
@@ -176,7 +176,7 @@ CEffectorPP* CCameraManager::GetPPEffector(EEffectorPPType type)
 { 
 	for (EffectorPPIt it=m_EffectorsPP.begin(); it!=m_EffectorsPP.end(); it++ )
 		if ((*it)->Type()==type) return *it;
-	return nullptr;
+	return 0;
 }
 
 CEffectorPP* CCameraManager::AddPPEffector(CEffectorPP* ef) 

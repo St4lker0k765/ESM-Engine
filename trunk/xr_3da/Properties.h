@@ -104,7 +104,7 @@ IC void		xrPWRITE		(IWriter& fs, u32 ID, LPCSTR name, LPCVOID data, u32 size )
 }
 IC void		xrPWRITE_MARKER	(IWriter& fs, LPCSTR name)
 {
-	xrPWRITE	(fs,xrPID_MARKER,name,nullptr,0);
+	xrPWRITE	(fs,xrPID_MARKER,name,0,0);
 }
 
 #define xrPWRITE_PROP(FS,name,ID,data)\

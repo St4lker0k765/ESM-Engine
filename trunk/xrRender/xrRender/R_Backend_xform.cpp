@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "r_backend_xform.h"
 
 void	R_xforms::set_W			(const Fmatrix& m)

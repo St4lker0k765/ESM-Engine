@@ -276,7 +276,7 @@ public:
 		static constexpr u64 autoreload_wpn = 1ull << 0, lock_reload_in_sprint = 1ull << 1;
 	};
 public:
-	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=nullptr, BOOL init_fs=TRUE, LPCSTR fs_fname=nullptr);
+	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0);
 	void		_destroy	();
 	const char* GetEngineVersion();
 };

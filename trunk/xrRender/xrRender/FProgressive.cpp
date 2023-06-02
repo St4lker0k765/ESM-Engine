@@ -1,4 +1,10 @@
+// FProgressive.cpp: implementation of the FProgressive class.
+//
+//////////////////////////////////////////////////////////////////////
+
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "../../xr_3da/fmesh.h"
 #include "FProgressive.h"
 

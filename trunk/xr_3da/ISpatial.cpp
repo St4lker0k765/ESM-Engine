@@ -4,8 +4,8 @@
 #include "xr_object.h"
 #include "PS_Instance.h"
 
-ENGINE_API ISpatial_DB*		g_SpatialSpace			= nullptr;
-ENGINE_API ISpatial_DB*		g_SpatialSpacePhysic	= nullptr;
+ENGINE_API ISpatial_DB*		g_SpatialSpace			= NULL;
+ENGINE_API ISpatial_DB*		g_SpatialSpacePhysic	= NULL;
 
 Fvector	c_spatial_offset	[8]	= 
 {
@@ -26,8 +26,8 @@ ISpatial::ISpatial			(ISpatial_DB* space)
 	spatial.sphere.R		= 0;
 	spatial.node_center.set	(0,0,0);
 	spatial.node_radius		= 0;
-	spatial.node_ptr		= nullptr;
-	spatial.sector			= nullptr;
+	spatial.node_ptr		= NULL;
+	spatial.sector			= NULL;
 	spatial.space			= space;
 }
 ISpatial::~ISpatial			(void)
@@ -68,7 +68,7 @@ void	ISpatial::spatial_register	()
 		// register
 		R_ASSERT				(spatial.space);
 		spatial.space->insert	(this);
-		spatial.sector			=	nullptr;
+		spatial.sector			=	0;
 	}
 }
 
@@ -78,8 +78,8 @@ void	ISpatial::spatial_unregister()
 	{
 		// remove
 		spatial.space->remove	(this);
-		spatial.node_ptr		= nullptr;
-		spatial.sector			= nullptr;
+		spatial.node_ptr		= NULL;
+		spatial.sector			= NULL;
 	} else {
 		// already unregistered
 	}
@@ -114,7 +114,7 @@ void			ISpatial_NODE::_init			(ISpatial_NODE* _parent)
 {
 	parent		=	_parent;
 	children[0]	=	children[1]	=	children[2]	=	children[3]	=
-	children[4]	=	children[5]	=	children[6]	=	children[7]	= nullptr;
+	children[4]	=	children[5]	=	children[6]	=	children[7]	=	NULL;
 	items.clear();
 }
 
@@ -127,7 +127,7 @@ void			ISpatial_NODE::_insert			(ISpatial* S)
 
 void			ISpatial_NODE::_remove			(ISpatial* S)			
 {	
-	S->spatial.node_ptr			= nullptr;
+	S->spatial.node_ptr			=	NULL;
 	xr_vector<ISpatial*>::iterator	it = std::find(items.begin(),items.end(),S);
 	VERIFY				(it!=items.end());
 	items.erase			(it);
@@ -141,7 +141,7 @@ ISpatial_DB::ISpatial_DB()
 	:cs(MUTEX_PROFILE_ID(ISpatial_DB))
 #endif // PROFILE_CRITICAL_SECTIONS
 {
-	m_root					= nullptr;
+	m_root					= NULL;
 	stat_nodes				= 0;
 	stat_objects			= 0;
 }
@@ -157,7 +157,7 @@ ISpatial_DB::~ISpatial_DB()
 
 void			ISpatial_DB::initialize(Fbox& BB)
 {
-	if (nullptr==m_root)			
+	if (0==m_root)			
 	{
 		// initialize
 		Fvector bbc,bbd;
@@ -169,9 +169,9 @@ void			ISpatial_DB::initialize(Fbox& BB)
 		allocator_pool.reserve	(128);
 		m_center.set			(bbc);
 		m_bounds				= _max(_max(bbd.x,bbd.y),bbd.z);
-		rt_insert_object		= nullptr;
-		if (nullptr==m_root)	m_root	= _node_create();
-		m_root->_init			(nullptr);
+		rt_insert_object		= NULL;
+		if (0==m_root)	m_root	= _node_create();
+		m_root->_init			(NULL);
 	}
 }
 ISpatial_NODE*	ISpatial_DB::_node_create		()
@@ -190,7 +190,7 @@ void			ISpatial_DB::_node_destroy(ISpatial_NODE* &P)
 	VERIFY						(P->_empty());
 	stat_nodes					--;
 	allocator_pool.push_back	(P);
-	P							= nullptr;
+	P							= NULL;
 }
 
 void			ISpatial_DB::_insert	(ISpatial_NODE* N, Fvector& n_C, float n_R)
@@ -222,7 +222,7 @@ void			ISpatial_DB::_insert	(ISpatial_NODE* N, Fvector& n_C, float n_R)
 		VERIFY			(octant == _octant(n_C,c_C));				// check table assosiations
 		ISpatial_NODE*	&chield			= N->children[octant];
 
-		if (nullptr==chield)	{
+		if (0==chield)	{
 			chield			=	_node_create();
 			VERIFY			(chield);
 			chield->_init	(N);
@@ -281,7 +281,7 @@ void			ISpatial_DB::insert		(ISpatial* S)
 
 void			ISpatial_DB::_remove	(ISpatial_NODE* N, ISpatial_NODE* N_sub)
 {
-	if (nullptr==N)							return;
+	if (0==N)							return;
 
 	//*** we are assured that node contains N_sub and this subnode is empty
 	u32 octant	= u32(-1);
@@ -321,7 +321,7 @@ void			ISpatial_DB::remove		(ISpatial* S)
 void			ISpatial_DB::update		(u32 nodes/* =8 */)
 {
 #ifdef DEBUG
-	if (nullptr==m_root)	return;
+	if (0==m_root)	return;
 	cs.Enter		();
 	VERIFY			(verify());
 	cs.Leave		();

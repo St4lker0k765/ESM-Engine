@@ -48,7 +48,7 @@ public:
 	int GetID(LPCSTR name);
 	CSoundRender_Environment *Get(LPCSTR name);
 	CSoundRender_Environment *Get(int id);
-	CSoundRender_Environment *Append(CSoundRender_Environment *parent = nullptr);
+	CSoundRender_Environment *Append(CSoundRender_Environment *parent = 0);
 	void Remove(LPCSTR name);
 	void Remove(int id);
 	SE_VEC &Library();

@@ -1,4 +1,9 @@
+// dx10HW.cpp: implementation of the DX10 specialisation of CHW.
+//////////////////////////////////////////////////////////////////////
+
 #include "stdafx.h"
+#pragma hdrstop
+
 #pragma warning(disable:4995)
 #include <d3dx9.h>
 #pragma warning(default:4995)

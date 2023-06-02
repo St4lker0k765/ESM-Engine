@@ -56,7 +56,7 @@ private:
 	u64							m_auth_code		;
 
 	void						Register		(LPCSTR name, u32 vfs, u32 crc, u32 ptr, u32 size_real, u32 size_compressed, u32 modif);
-	void						ProcessArchive	(LPCSTR path, LPCSTR base_path= nullptr);
+	void						ProcessArchive	(LPCSTR path, LPCSTR base_path=NULL);
 	void						ProcessOne		(LPCSTR path, void* F);
 	bool						Recurse			(LPCSTR path);	
 //	bool						CheckExistance	(LPCSTR path);
@@ -103,19 +103,19 @@ private:
 public:
 								CLocatorAPI		();
 								~CLocatorAPI	();
-	void						_initialize		(u32 flags, LPCSTR target_folder=nullptr, LPCSTR fs_name=nullptr);
+	void						_initialize		(u32 flags, LPCSTR target_folder=0, LPCSTR fs_name=0);
 	void						_destroy		();
 
 	CStreamReader*				rs_open			(LPCSTR initial, LPCSTR N);
 	IReader*					r_open			(LPCSTR initial, LPCSTR N);
-	IC IReader*					r_open			(LPCSTR N){return r_open(nullptr,N);}
+	IC IReader*					r_open			(LPCSTR N){return r_open(0,N);}
 	void						r_close			(IReader* &S);
 	void						r_close			(CStreamReader* &fs);
 
 	IWriter*					w_open			(LPCSTR initial, LPCSTR N);
-	IC IWriter*					w_open			(LPCSTR N){return w_open(nullptr,N);}
+	IC IWriter*					w_open			(LPCSTR N){return w_open(0,N);}
 	IWriter*					w_open_ex		(LPCSTR initial, LPCSTR N);
-	IC IWriter*					w_open_ex		(LPCSTR N){return w_open_ex(nullptr,N);}
+	IC IWriter*					w_open_ex		(LPCSTR N){return w_open_ex(0,N);}
 	void						w_close			(IWriter* &S);
 
 	const file*					exist			(LPCSTR N);
@@ -129,9 +129,9 @@ public:
     BOOL						can_modify_file	(LPCSTR path, LPCSTR name);
 
     BOOL 						dir_delete			(LPCSTR path,LPCSTR nm,BOOL remove_files);
-    BOOL 						dir_delete			(LPCSTR full_path,BOOL remove_files){return dir_delete(nullptr,full_path,remove_files);}
+    BOOL 						dir_delete			(LPCSTR full_path,BOOL remove_files){return dir_delete(0,full_path,remove_files);}
     void 						file_delete			(LPCSTR path,LPCSTR nm);
-    void 						file_delete			(LPCSTR full_path){file_delete(nullptr,full_path);}
+    void 						file_delete			(LPCSTR full_path){file_delete(0,full_path);}
 	void 						file_copy			(LPCSTR src, LPCSTR dest);
 	void 						file_rename			(LPCSTR src, LPCSTR dest,bool bOwerwrite=true);
     int							file_length			(LPCSTR src);
@@ -148,7 +148,7 @@ public:
     FS_Path*					append_path			(LPCSTR path_alias, LPCSTR root, LPCSTR add, BOOL recursive);
     LPCSTR						update_path			(string_path& dest, LPCSTR initial, LPCSTR src);
 
-	int							file_list			(FS_FileSet& dest, LPCSTR path, u32 flags=FS_ListFiles, LPCSTR mask=nullptr);
+	int							file_list			(FS_FileSet& dest, LPCSTR path, u32 flags=FS_ListFiles, LPCSTR mask=0);
 //.    void						update_path			(xr_string& dest, LPCSTR initial, LPCSTR src);
 
 	// 

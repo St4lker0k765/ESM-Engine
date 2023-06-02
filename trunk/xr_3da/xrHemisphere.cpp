@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "xrHemisphere.h"
 
 #define HEMI1_VERTS	26
@@ -539,7 +541,7 @@ const Fvector hemi_3[HEMI3_VERTS] =
 
 void ECORE_API xrHemisphereBuild	(int quality, float energy, xrHemisphereIterator* iterator, LPVOID param)
 {
-	const Fvector* hemi=nullptr;
+	const Fvector* hemi=0;
 	int h_count		= xrHemisphereVertices(quality,hemi); VERIFY(h_count>0);
     // Calculate energy
     float total		= (float)h_count;

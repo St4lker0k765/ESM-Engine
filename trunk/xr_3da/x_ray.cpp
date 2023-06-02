@@ -24,7 +24,7 @@
 #define CORE_FEATURE_SET(feature, section) Core.Features.set(xrCore::Feature::feature, READ_IF_EXISTS(pSettings, r_bool, section, #feature, false))
 
 //---------------------------------------------------------------------
-ENGINE_API CInifile* pGameIni		= nullptr;
+ENGINE_API CInifile* pGameIni		= NULL;
 BOOL	g_bIntroFinished			= FALSE;
 extern	void	Intro				( void* fn );
 extern	void	Intro_DSHOW			( void* fn );
@@ -226,11 +226,11 @@ void CheckPrivilegySlowdown		( )
 {
 #ifdef DEBUG
 	if	(strstr(Core.Params,"-slowdown"))	{
-		thread_spawn(slowdownthread,"slowdown",0,nullptr);
+		thread_spawn(slowdownthread,"slowdown",0,0);
 	}
 	if	(strstr(Core.Params,"-slowdown2x"))	{
-		thread_spawn(slowdownthread,"slowdown",0,nullptr);
-		thread_spawn(slowdownthread,"slowdown",0,nullptr);
+		thread_spawn(slowdownthread,"slowdown",0,0);
+		thread_spawn(slowdownthread,"slowdown",0,0);
 	}
 #endif // DEBUG
 }
@@ -288,7 +288,7 @@ void Startup					()
 	
 	// Destroy LOGO
 	DestroyWindow				(logoWindow);
-	logoWindow					= nullptr;
+	logoWindow					= NULL;
 
 	Discord.Init();
 
@@ -367,7 +367,7 @@ struct damn_keys_filter {
 
 		if ( bScreenSaverState )
 			// Disable screensaver
-			SystemParametersInfo( SPI_SETSCREENSAVEACTIVE , FALSE , nullptr, 0 );
+			SystemParametersInfo( SPI_SETSCREENSAVEACTIVE , FALSE , NULL , 0 );
 
 		dwStickyKeysFlags = 0;
 		dwFilterKeysFlags = 0;
@@ -413,7 +413,7 @@ struct damn_keys_filter {
 	{
 		if ( bScreenSaverState )
 			// Restoring screen saver
-			SystemParametersInfo( SPI_SETSCREENSAVEACTIVE , TRUE , nullptr, 0 );
+			SystemParametersInfo( SPI_SETSCREENSAVEACTIVE , TRUE , NULL , 0 );
 
 		if ( dwStickyKeysFlags) {
 			// Restore StickyKeys feature
@@ -449,7 +449,7 @@ BOOL IsOutOfVirtualMemory()
 	MEMORYSTATUSEX statex;
 	DWORD dwPageFileInMB = 0;
 	DWORD dwPhysMemInMB = 0;
-	HINSTANCE hApp = nullptr;
+	HINSTANCE hApp = 0;
 	char	pszError[ VIRT_ERROR_SIZE ];
 	char	pszMessage[ VIRT_MESSAGE_SIZE ];
 
@@ -466,7 +466,7 @@ BOOL IsOutOfVirtualMemory()
 	if ( ( dwPhysMemInMB > 500 ) && ( ( dwPageFileInMB + dwPhysMemInMB ) > 2500  ) )
 		return 0;
 
-	hApp = GetModuleHandle(nullptr);
+	hApp = GetModuleHandle( NULL );
 
 	if ( ! LoadString( hApp , RC_VIRT_MEM_ERROR , pszError , VIRT_ERROR_SIZE ) )
 		return 0;
@@ -474,7 +474,7 @@ BOOL IsOutOfVirtualMemory()
 	if ( ! LoadString( hApp , RC_VIRT_MEM_TEXT , pszMessage , VIRT_MESSAGE_SIZE ) )
 		return 0;
 
-	MessageBox(nullptr, pszMessage , pszError , MB_OK | MB_ICONHAND );
+	MessageBox( NULL , pszMessage , pszError , MB_OK | MB_ICONHAND );
 
 	return 1;
 }
@@ -501,7 +501,7 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 
 	// Check for virtual memory
 
-	if ( ( strstr( lpCmdLine , "--skipmemcheck" ) == nullptr) && IsOutOfVirtualMemory() )
+	if ( ( strstr( lpCmdLine , "--skipmemcheck" ) == NULL ) && IsOutOfVirtualMemory() )
 		return 0;
 
 	// Check for another instance
@@ -510,10 +510,10 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 	
 	HANDLE hCheckPresenceMutex = INVALID_HANDLE_VALUE;
 	hCheckPresenceMutex = OpenMutex( READ_CONTROL , FALSE ,  STALKER_PRESENCE_MUTEX );
-	if ( hCheckPresenceMutex == nullptr) {
+	if ( hCheckPresenceMutex == NULL ) {
 		// New mutex
-		hCheckPresenceMutex = CreateMutex(nullptr, FALSE , STALKER_PRESENCE_MUTEX );
-		if ( hCheckPresenceMutex == nullptr)
+		hCheckPresenceMutex = CreateMutex( NULL , FALSE , STALKER_PRESENCE_MUTEX );
+		if ( hCheckPresenceMutex == NULL )
 			// Shit happens
 			return 2;
 	} else {
@@ -558,7 +558,7 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 	g_temporary_stuff			= &trivial_encryptor::decode;
 	
 	compute_build_id			();
-	Core._initialize			("xray", nullptr, TRUE, fsgame[0] ? fsgame : nullptr);
+	Core._initialize			("xray",NULL, TRUE, fsgame[0] ? fsgame : NULL);
 	InitSettings				();
 
 #ifndef DEDICATED_SERVER
@@ -608,16 +608,16 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 		if (/*xr_strlen(g_sLaunchOnExit_params) && */xr_strlen(g_sLaunchOnExit_app) ) 
 		{
 			string4096 ModuleFileName = "";		
-			GetModuleFileName(nullptr, ModuleFileName, 4096);
+			GetModuleFileName(NULL, ModuleFileName, 4096);
 
 			string4096 ModuleFilePath		= "";
-			char* ModuleName				= nullptr;
+			char* ModuleName				= NULL;
 			GetFullPathName					(ModuleFileName, 4096, ModuleFilePath, &ModuleName);
 			ModuleName[0]					= 0;
 			strcat							(ModuleFilePath, g_sLaunchOnExit_app);
 			_args[0] 						= g_sLaunchOnExit_app;
 			_args[1] 						= g_sLaunchOnExit_params;
-			_args[2] 						= nullptr;		
+			_args[2] 						= NULL;		
 			
 			_spawnv							(_P_NOWAIT, _args[0], _args);//, _envvar);
 		}
@@ -952,7 +952,7 @@ void CApplication::Level_Append		(LPCSTR folder)
 	{
 		sLevelInfo			LI;
 		LI.folder			= xr_strdup(folder);
-		LI.name				= nullptr;
+		LI.name				= 0;
 		Levels.push_back	(LI);
 	}
 }

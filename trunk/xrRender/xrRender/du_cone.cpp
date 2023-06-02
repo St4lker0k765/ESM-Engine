@@ -1,7 +1,10 @@
+//---------------------------------------------------------------------------
 #include "stdafx.h"
+#pragma hdrstop
 
 #include "du_cone.h"
-
+//---------------------------------------------------------------------------
+//#pragma package(smart_init)
 Fvector du_cone_vertices[DU_CONE_NUMVERTEX]=
 {
     {0.0000f,  0.0000f,	 0.0000f}, 

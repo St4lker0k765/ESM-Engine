@@ -1,4 +1,7 @@
+//---------------------------------------------------------------------------
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "../xr_3da/GameMtlLib.h"
 
 void DestroySounds(SoundVec& lst)

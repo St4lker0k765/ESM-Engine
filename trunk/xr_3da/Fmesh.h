@@ -105,7 +105,7 @@ struct ENGINE_API	FSlideWindowItem	{
 	FSlideWindow*	sw;
 	u32				count;
 	u32				reserved[4];
-	FSlideWindowItem() : sw(nullptr),count(0)	{};
+	FSlideWindowItem() : sw(0),count(0)	{};
 };
 
 // OGF_TEXTURE1

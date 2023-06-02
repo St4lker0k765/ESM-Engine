@@ -53,8 +53,8 @@ public:
 
     void	_BCL reset_callback()
     {
-        Callback = nullptr;
-        Callback_Param = nullptr;
+        Callback = 0;
+        Callback_Param = 0;
         Callback_overwrite = FALSE;
         Callback_type = 0;
     }
@@ -344,7 +344,7 @@ public:
     shared_str		    ParentName() { return parent_name; }
     shared_str		    WMap() { return wmap; }
     IC CBone* Parent() { return parent; }
-    IC BOOL			    IsRoot() { return (parent == nullptr); }
+    IC BOOL			    IsRoot() { return (parent == 0); }
     shared_str& NameRef() { return name; }
 
     // transformation

@@ -1,11 +1,14 @@
 //---------------------------------------------------------------------------
 #include 	"stdafx.h"
+#pragma hdrstop
+
 #include 	"SkeletonMotions.h"
+//#include 	"SkeletonAnimated.h"
 #include	"Fmesh.h"
 #include	"motion.h"
 #include	"..\Include\xrRender\Kinematics.h"
 
-motions_container*	g_pMotionsContainer	= nullptr;
+motions_container*	g_pMotionsContainer	= 0;
 
 u16 CPartition::part_id(const shared_str& name) const
 {
@@ -234,7 +237,7 @@ MotionVec* motions_value::bone_motions(shared_str bone_name)
 	BoneMotionMapIt I = m_motions.find(bone_name);
 //	VERIFY			(I != m_motions.end());
 	if (I == m_motions.end())
-		return		(nullptr);
+		return		(0);
 
 	return			(&(*I).second);
 }
@@ -260,10 +263,10 @@ bool motions_container::has(shared_str key)
 
 motions_value* motions_container::dock(shared_str key, IReader *data, vecBones* bones)
 {
-	motions_value*	result		= nullptr	;
+	motions_value*	result		= 0	;
 	SharedMotionsMapIt	I		= container.find	(key);
 	if (I!=container.end())		result = I->second;
-	if (nullptr==result)				{
+	if (0==result)				{
 		// loading motions
 		VERIFY					(data);
 		result					= xr_new<motions_value>();
@@ -351,21 +354,21 @@ bool CMotionDef::StopAtEnd()
 bool shared_motions::create(shared_str key, IReader *data, vecBones* bones)
 {
 	motions_value* v = g_pMotionsContainer->dock(key,data,bones);
-	if (nullptr!=v)
+	if (0!=v)
 		v->m_dwReference++;
 	destroy			();
 	p_				= v;
-    return (nullptr!=v);
+    return (0!=v);
 }
 
 bool shared_motions::create(shared_motions const &rhs)
 {
 	motions_value* v = rhs.p_;
-	if (nullptr!=v)
+	if (0!=v)
 		v->m_dwReference++;
 	destroy			();
 	p_				= v;
-    return (nullptr!=v);
+    return (0!=v);
 }
 
 const motion_marks::interval* motion_marks::pick_mark(const float& t) const
@@ -382,7 +385,7 @@ const motion_marks::interval* motion_marks::pick_mark(const float& t) const
 		if(I.first>t)
 			break;
 	}
-	return nullptr;
+	return NULL;
 }
 
 bool motion_marks::is_mark_between	(float const &t0, float const &t1) const

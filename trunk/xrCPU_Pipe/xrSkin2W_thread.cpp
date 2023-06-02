@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#pragma hdrstop
 
 extern xrSkin4W* skin4W_func;
 

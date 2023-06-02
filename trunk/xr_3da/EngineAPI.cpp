@@ -15,11 +15,11 @@ void __cdecl dummy		(void)	{
 };
 CEngineAPI::CEngineAPI	()
 {
-	hGame			= nullptr;
-	hRender			= nullptr;
-	hTuner			= nullptr;
-	pCreate			= nullptr;
-	pDestroy		= nullptr;
+	hGame			= 0;
+	hRender			= 0;
+	hTuner			= 0;
+	pCreate			= 0;
+	pDestroy		= 0;
 	tune_pause		= dummy	;
 	tune_resume		= dummy	;
 }
@@ -34,7 +34,7 @@ CEngineAPI::~CEngineAPI()
 			xr_free(vid_quality_token[i].name);
 		}
 		xr_free(vid_quality_token);
-		vid_quality_token = nullptr;
+		vid_quality_token = NULL;
 	}
 }
 extern u32 renderer_value; //con cmd
@@ -63,7 +63,7 @@ void CEngineAPI::Initialize(void)
 		// try to initialize R2
 		Log("Loading DLL:", r4_name);
 		hRender = LoadLibrary(r4_name);
-		if (nullptr == hRender) {
+		if (0 == hRender) {
 			// try to load R1
 			Msg("...Failed - incompatible hardware.");
 		}
@@ -73,7 +73,7 @@ void CEngineAPI::Initialize(void)
 		// try to initialize R2
 		Log("Loading DLL:", r3_name);
 		hRender = LoadLibrary(r3_name);
-		if (nullptr == hRender) {
+		if (0 == hRender) {
 			// try to load R1
 			Msg("...Failed - incompatible hardware.");
 		}
@@ -83,14 +83,14 @@ void CEngineAPI::Initialize(void)
 		// try to initialize R2
 		Log				("Loading DLL:",	r2_name);
 		hRender			= LoadLibrary		(r2_name);
-		if (nullptr==hRender)	{
+		if (0==hRender)	{
 			// try to load R1
 			Msg			("...Failed - incompatible hardware.");
 		}
 	}
 #endif
 
-	if (nullptr==hRender)		{
+	if (0==hRender)		{
 		// try to load R1
 		psDeviceFlags.set(rsR3, FALSE);
 		psDeviceFlags.set	(rsR2,FALSE);
@@ -98,7 +98,7 @@ void CEngineAPI::Initialize(void)
 
 		Log				("Loading DLL:",	r1_name);
 		hRender			= LoadLibrary		(r1_name);
-		if (nullptr==hRender)	R_CHK				(GetLastError());
+		if (0==hRender)	R_CHK				(GetLastError());
 		R_ASSERT		(hRender);
 	}
 
@@ -109,7 +109,7 @@ void CEngineAPI::Initialize(void)
 		LPCSTR			g_name	= "xrGame.dll";
 		Log				("Loading DLL:",g_name);
 		hGame			= LoadLibrary	(g_name);
-		if (nullptr==hGame)	R_CHK			(GetLastError());
+		if (0==hGame)	R_CHK			(GetLastError());
 		R_ASSERT2		(hGame,"Game DLL raised exception during loading or there is no game DLL at all");
 		pCreate			= (Factory_Create*)		GetProcAddress(hGame,"xrFactory_Create"		);	R_ASSERT(pCreate);
 		pDestroy		= (Factory_Destroy*)	GetProcAddress(hGame,"xrFactory_Destroy"	);	R_ASSERT(pDestroy);
@@ -122,7 +122,7 @@ void CEngineAPI::Initialize(void)
 		LPCSTR			g_name	= "vTuneAPI.dll";
 		Log				("Loading DLL:",g_name);
 		hTuner			= LoadLibrary	(g_name);
-		if (nullptr==hTuner)	R_CHK			(GetLastError());
+		if (0==hTuner)	R_CHK			(GetLastError());
 		R_ASSERT2		(hTuner,"Intel vTune is not installed");
 		tune_enabled	= TRUE;
 		tune_pause		= (VTPause*)	GetProcAddress(hTuner,"VTPause"		);	R_ASSERT(tune_pause);
@@ -132,10 +132,10 @@ void CEngineAPI::Initialize(void)
 
 void CEngineAPI::Destroy	(void)
 {
-	if (hGame)				{ FreeLibrary(hGame);	hGame	= nullptr; }
-	if (hRender)			{ FreeLibrary(hRender); hRender = nullptr; }
-	pCreate					= nullptr;
-	pDestroy				= nullptr;
+	if (hGame)				{ FreeLibrary(hGame);	hGame	= 0; }
+	if (hRender)			{ FreeLibrary(hRender); hRender = 0; }
+	pCreate					= 0;
+	pDestroy				= 0;
 	Engine.Event._destroy	();
 	XRC.r_clear_compact		();
 }
@@ -149,7 +149,7 @@ extern "C" {
 void CEngineAPI::CreateRendererList()
 {
 	//	TODO: ask renderers if they are supported!
-	if (vid_quality_token != nullptr)		return;
+	if (vid_quality_token != NULL)		return;
 	bool bSupports_r2 = false;
 	bool bSupports_r2_5 = false;
 	bool bSupports_r3 = false;
@@ -211,7 +211,7 @@ void CEngineAPI::CreateRendererList()
 		}
 	}
 
-	hRender = nullptr;
+	hRender = 0;
 
 	xr_vector<LPCSTR>			_tmp;
 	u32 i = 0;
@@ -241,8 +241,8 @@ void CEngineAPI::CreateRendererList()
 
 		if (bBreakLoop) break;
 
-		_tmp.push_back(nullptr);
-		LPCSTR val = nullptr;
+		_tmp.push_back(NULL);
+		LPCSTR val = NULL;
 		switch (i)
 		{
 		case 0: val = "renderer_r1";			break;
@@ -259,7 +259,7 @@ void CEngineAPI::CreateRendererList()
 	vid_quality_token = xr_alloc<xr_token>(_cnt);
 
 	vid_quality_token[_cnt - 1].id = -1;
-	vid_quality_token[_cnt - 1].name = nullptr;
+	vid_quality_token[_cnt - 1].name = NULL;
 
 //#ifdef DEBUG
 		Msg("Available render modes[%d]:", _tmp.size());

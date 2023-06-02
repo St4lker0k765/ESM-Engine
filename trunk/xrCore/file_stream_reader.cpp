@@ -8,23 +8,23 @@ void CFileStreamReader::construct	(LPCSTR file_name, const u32 &window_size)
 			file_name,
 			GENERIC_READ,
 			FILE_SHARE_READ,
-			nullptr,
+			0,
 			OPEN_EXISTING,
 			0,
-			nullptr
+			0
 		);
 
 	VERIFY					(m_file_handle != INVALID_HANDLE_VALUE);
-	u32						file_size = (u32)GetFileSize(m_file_handle, nullptr);
+	u32						file_size = (u32)GetFileSize(m_file_handle,NULL);
 
 	HANDLE					file_mapping_handle =
 		CreateFileMapping(
 			m_file_handle,
-			nullptr,
+			0,
 			PAGE_READONLY,
 			0,
 			0,
-			nullptr
+			0
 		);
 	VERIFY					(file_mapping_handle != INVALID_HANDLE_VALUE);
 

@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "level.h"
 #include "level_sounds.h"
 

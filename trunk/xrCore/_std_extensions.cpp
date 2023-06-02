@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include <codecvt>
 #include <locale>
 #include <time.h>

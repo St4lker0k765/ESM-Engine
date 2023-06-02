@@ -46,17 +46,17 @@ static bool terminate_char( char c, bool check_space = false )
 
 line_edit_control::line_edit_control( u32 str_buffer_size )
 {
-	m_edit_str	= nullptr;
-	m_inserted	= nullptr;
-	m_undo_buf	= nullptr;
-	m_buf0		= nullptr;
-	m_buf1		= nullptr;
-	m_buf2		= nullptr;
-	m_buf3		= nullptr;
+	m_edit_str	= NULL;
+	m_inserted	= NULL;
+	m_undo_buf	= NULL;
+	m_buf0		= NULL;
+	m_buf1		= NULL;
+	m_buf2		= NULL;
+	m_buf3		= NULL;
 
 	for ( u32 i = 0; i < DIK_COUNT; ++i )
 	{
-		m_actions[i] = nullptr;
+		m_actions[i] = NULL;
 	}
 
 	init( str_buffer_size );
@@ -175,7 +175,7 @@ void line_edit_control::init( u32 str_buffer_size, init_mode mode )
 	for ( u32 i = 0; i < DIK_COUNT; ++i )
 	{
 		xr_delete( m_actions[i] );
-		m_actions[i] = nullptr;
+		m_actions[i] = NULL;
 	}
 
 	if ( mode == im_read_only )

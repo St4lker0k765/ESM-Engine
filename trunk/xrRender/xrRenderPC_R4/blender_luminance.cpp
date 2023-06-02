@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "Blender_luminance.h"
 
 CBlender_luminance::CBlender_luminance	()	{	description.CLS		= 0;	}

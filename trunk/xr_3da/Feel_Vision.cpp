@@ -27,7 +27,7 @@ namespace Feel {
 		SFeelParam* fp	= (SFeelParam*)params;
 		float vis		= fp->parent->feel_vision_mtl_transp(result.O, result.element);
 		fp->vis			*= vis;
-		if (nullptr ==result.O && fis_zero(vis)){
+		if (NULL==result.O && fis_zero(vis)){
 			CDB::TRI* T	= g_pGameLevel->ObjectSpace.GetStaticTris()+result.element;
 			Fvector* V	= g_pGameLevel->ObjectSpace.GetStaticVerts();
 			fp->item->Cache.verts[0].set	(V[T->verts[0]]);
@@ -151,7 +151,7 @@ namespace Feel {
 		RQR.r_clear			();
 		xr_vector<feel_visible_Item>::iterator I=feel_visible.begin(),E=feel_visible.end();
 		for (; I!=E; I++){
-			if (nullptr==I->O->CFORM())	{ I->fuzzy = -1; continue; }
+			if (0==I->O->CFORM())	{ I->fuzzy = -1; continue; }
 
 			// verify relation
 			if (positive(I->fuzzy) && I->O->Position().similar(I->cp_LR_dst,lr_granularity) && P.similar(I->cp_LR_src,lr_granularity))
@@ -200,7 +200,7 @@ namespace Feel {
 					}else{
 						// cache outdated. real query.
 						VERIFY(!fis_zero(RD.dir.square_magnitude()));
-						if (g_pGameLevel->ObjectSpace.RayQuery	(RQR, RD, feel_vision_callback, &feel_params, nullptr, nullptr))	{
+						if (g_pGameLevel->ObjectSpace.RayQuery	(RQR, RD, feel_vision_callback, &feel_params, NULL, NULL))	{
 							I->Cache_vis	= feel_params.vis	;
 							I->Cache.set	(P,D,f,TRUE	)		;
 						}else{

@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "ParticleEffectDef.h"
 #include "ParticleEffect.h"
 #ifdef _EDITOR

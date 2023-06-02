@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#pragma hdrstop
 
 #include "rt_lzo1x.h"
 
@@ -11,7 +12,7 @@
 __declspec(thread) HEAP_ALLOC(rtc9_wrkmem,LZO1X_999_MEM_COMPRESS);
 
 
-static u8*  _LZO_Dictionary     = nullptr;
+static u8*  _LZO_Dictionary     = NULL;
 static u32  _LZO_DictionarySize = 0;
 
 
@@ -63,7 +64,7 @@ rtc9_uninitialize()
     {
         xr_free( _LZO_Dictionary );
         
-        _LZO_Dictionary     = nullptr;
+        _LZO_Dictionary     = NULL;
         _LZO_DictionarySize = 0;
     }
 }
@@ -124,15 +125,15 @@ rtc9_decompress( void* dst, u32 dst_len, const void* src, u32 src_len )
     {
         r = lzo1x_decompress_dict_safe( (const lzo_byte*)src, (lzo_uint)src_len, 
                                         (lzo_byte*)dst, (lzo_uintp)&out_size,
-                                        nullptr, _LZO_Dictionary, _LZO_DictionarySize
+                                        NULL, _LZO_Dictionary, _LZO_DictionarySize
                                       );
     }
     else
     {
 	    r = lzo1x_decompress( (const lzo_byte*)src, (lzo_uint)src_len,
                               (lzo_byte*)dst, (lzo_uintp)&out_size,
-		                      nullptr
-	    );
+		                      NULL
+		                    );
     }
 
     VERIFY(r==LZO_E_OK);

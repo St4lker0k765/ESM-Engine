@@ -8,7 +8,7 @@ const u32 dsBufferSize  = 88*1024;
 
 CSoundStream::CSoundStream	( )
 {
-	fName				= nullptr;
+	fName				= 0;
 	fVolume				= 1.0f;
 	fRealVolume			= 1.0f;
 	fBaseVolume			= 1.0f;
@@ -23,15 +23,15 @@ CSoundStream::CSoundStream	( )
 
 	dwStatus			= 0;
 
-	hAcmStream			= nullptr;
+	hAcmStream			= 0;
 	ZeroMemory			(&stream,sizeof(stream));
-	pwfx				= nullptr;
-	psrc				= nullptr;
+	pwfx				= 0;
+	psrc				= 0;
 	dwDecPos			= 0;
-	hf					= nullptr;
+	hf					= 0;
 	DataPos				= 0;
-	WaveSource			= nullptr;
-	WaveDest			= nullptr;
+	WaveSource			= 0;
+	WaveDest			= 0;
 
 	isPause				= false;
 
@@ -99,7 +99,7 @@ void CSoundStream::Stop	( )
 	if (hAcmStream) {
 		code=acmStreamClose(hAcmStream,0);	 VERIFY2(code==0,"Can't close stream");
 	}
-	hAcmStream					= nullptr;
+	hAcmStream					= 0;
 	pBuffer->Stop				( );
 	pBuffer->SetCurrentPosition	( 0 );
 	dwStatus					= 0;
@@ -226,7 +226,7 @@ void CSoundStream::AppWriteDataToBuffer(
     if (DS_OK==pBuffer->Lock(dwOffset, dwSoundBytes, &lpvPtr1, &dwBytes1, &lpvPtr2, &dwBytes2, 0)){
 		// Write to pointers.
 		CopyMemory	(lpvPtr1, lpbSoundData, dwBytes1);
-		if(nullptr != lpvPtr2) CopyMemory (lpvPtr2, lpbSoundData+dwBytes1, dwBytes2);
+		if(NULL != lpvPtr2) CopyMemory (lpvPtr2, lpbSoundData+dwBytes1, dwBytes2);
 		// Release the data back to DSound.
 		CHK_DX(pBuffer->Unlock(lpvPtr1, dwBytes1, lpvPtr2, dwBytes2));
 	}

@@ -89,10 +89,10 @@ public:
 		spatial_updatesector_internal				()	;
 	};
 
-	virtual		CObject*		dcast_CObject		()	{ return nullptr;	}
-	virtual		Feel::Sound*	dcast_FeelSound		()	{ return nullptr;	}
-	virtual		IRenderable*	dcast_Renderable	()	{ return nullptr;	}
-	virtual		IRender_Light*	dcast_Light			()	{ return nullptr; }
+	virtual		CObject*		dcast_CObject		()	{ return 0;	}
+	virtual		Feel::Sound*	dcast_FeelSound		()	{ return 0;	}
+	virtual		IRenderable*	dcast_Renderable	()	{ return 0;	}
+	virtual		IRender_Light*	dcast_Light			()	{ return 0; }
 
 				ISpatial		(ISpatial_DB* space	);
 	virtual		~ISpatial		();

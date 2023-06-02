@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "LevelGameDef.h"
 
 xr_token rpoint_type[]={

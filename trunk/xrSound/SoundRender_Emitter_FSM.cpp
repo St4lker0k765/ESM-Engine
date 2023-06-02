@@ -1,4 +1,6 @@
 ﻿#include "stdafx.h"
+#pragma hdrstop
+
 #include "SoundRender_Emitter.h"
 #include "SoundRender_Core.h"
 #include "SoundRender_Source.h"
@@ -224,8 +226,8 @@ void CSoundRender_Emitter::update(float dt)
 	else if (owner_data)
 	{
 		VERIFY(this == owner_data->feedback);
-		owner_data->feedback = nullptr;
-		owner_data = nullptr;
+		owner_data->feedback = 0;
+		owner_data = 0;
 	}
 }
 

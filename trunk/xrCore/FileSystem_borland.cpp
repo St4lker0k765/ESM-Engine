@@ -3,11 +3,13 @@
 //----------------------------------------------------
 
 #include "stdafx.h"
+#pragma hdrstop
 
 #include "FileSystem.h"
 
 #include <io.h>
 #include <fcntl.h>
+#include <sys\stat.h>
 
 bool EFS_Utils::GetOpenName(LPCSTR initial, xr_string& buffer, bool bMulti, LPCSTR offset, int start_flt_ext )
 {
@@ -59,7 +61,7 @@ BOOL EFS_Utils::CheckLocking(LPCSTR fname, bool bOnlySelf, bool bMsg)//, shared_
 
 	if (bOnlySelf) return (m_LockFiles.find(fn)!=m_LockFiles.end());
 	if (FS.exist(fn)){
-		HANDLE handle=CreateFile(fn,GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+		HANDLE handle=CreateFile(fn,GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
 		CloseHandle(handle);
         if (INVALID_HANDLE_VALUE==handle){
 			if (bMsg)	Msg("#!Access denied. File: '%s' currently locked by any user.",fn);
@@ -76,7 +78,7 @@ BOOL EFS_Utils::LockFile(LPCSTR fname, bool bLog)
 
 	BOOL bRes=false;
 	if (m_LockFiles.find(fn)==m_LockFiles.end()){
-		HANDLE handle=CreateFile(fn,GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+		HANDLE handle=CreateFile(fn,GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
 		if (INVALID_HANDLE_VALUE!=handle){
 			LPSTR lp_fn			= fn;
 			std::pair<HANDLEPairIt, bool> I=m_LockFiles.insert(mk_pair(lp_fn,handle));

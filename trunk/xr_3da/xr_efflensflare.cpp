@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "xr_efflensflare.h"
 
 #include "igame_persistent.h"
@@ -166,7 +168,7 @@ CLensFlare::CLensFlare()
     fGradientValue = 0.f;
 
     // hGeom						= 0;
-    m_Current = nullptr;
+    m_Current = 0;
 
     m_State = lfsNone;
     m_StateBlend = 0.f;
@@ -277,7 +279,7 @@ void CLensFlare::OnFrame(shared_str id)
     Fvector& c = g_pGamePersistent->Environment().CurrentEnv->sun_color;
     LightColor.set(c.x, c.y, c.z, 1.f);
 
-    CLensFlareDescriptor* desc = id.size() ? g_pGamePersistent->Environment().add_flare(m_Palette, id) : nullptr;
+    CLensFlareDescriptor* desc = id.size() ? g_pGamePersistent->Environment().add_flare(m_Palette, id) : 0;
 
     //	LFState			previous_state = m_State;
     switch (m_State)
@@ -308,7 +310,7 @@ void CLensFlare::OnFrame(shared_str id)
     //	Msg				("%6d : [%s] -> [%s]", Device.dwFrame, state_to_string(previous_state), state_to_string(m_State));
     clamp(m_StateBlend, 0.f, 1.f);
 
-    if ((m_Current == nullptr) || (LightColor.magnitude_rgb() == 0.f))
+    if ((m_Current == 0) || (LightColor.magnitude_rgb() == 0.f))
     {
         bRender = false;
         return;
@@ -415,7 +417,7 @@ void CLensFlare::OnFrame(shared_str id)
             {
                 // cache outdated. real query.
                 r_dest.r_clear();
-                if (g_pGameLevel->ObjectSpace.RayQuery(r_dest, RD, material_callback, &TP, nullptr, o_main))
+                if (g_pGameLevel->ObjectSpace.RayQuery(r_dest, RD, material_callback, &TP, NULL, o_main))
                     m_ray_cache[i].result = FALSE;
             }
         }

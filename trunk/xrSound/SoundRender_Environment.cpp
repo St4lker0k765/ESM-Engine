@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "soundrender.h"
 #include "soundrender_environment.h"
 #pragma warning(push)
@@ -150,7 +152,7 @@ void SoundEnvironment_LIB::Load(LPCSTR name)
     IReader *F = FS.r_open(name);
     IReader *C;
     library.reserve(256);
-    for (u32 chunk = 0; nullptr != (C = F->open_chunk(chunk)); chunk++)
+    for (u32 chunk = 0; 0 != (C = F->open_chunk(chunk)); chunk++)
     {
         CSoundRender_Environment *E = xr_new<CSoundRender_Environment>();
         if (E->load(C))
@@ -193,7 +195,7 @@ CSoundRender_Environment *SoundEnvironment_LIB::Get(LPCSTR name)
     for (SE_IT it = library.begin(); it != library.end(); it++)
         if (0 == stricmp(name, *(*it)->name))
             return *it;
-    return nullptr;
+    return NULL;
 }
 CSoundRender_Environment *SoundEnvironment_LIB::Get(int id)
 {

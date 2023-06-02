@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "../../xr_3da/psystem.h"
 
 #ifndef _EDITOR

@@ -8,7 +8,7 @@
 #include "igame_level.h"
 #include "xr_object.h"
 
-SThunderboltDesc::SThunderboltDesc() : m_GradientTop(nullptr), m_GradientCenter(nullptr) {}
+SThunderboltDesc::SThunderboltDesc() : m_GradientTop(0), m_GradientCenter(0) {}
 
 SThunderboltDesc::~SThunderboltDesc()
 {
@@ -162,7 +162,7 @@ SThunderboltCollection::~SThunderboltCollection()
 //----------------------------------------------------------------------------------------------
 CEffect_Thunderbolt::CEffect_Thunderbolt()
 {
-    current = nullptr;
+    current = 0;
     life_time = 0.f;
     state = stIdle;
     next_lightning_time = 0.f;
@@ -291,7 +291,7 @@ void CEffect_Thunderbolt::Bolt(shared_str id, float period, float lt)
     else
     {
         next_lightning_time = Device.fTimeGlobal + period + Random.randF(-period * 0.3f, period * 0.3f);
-        current->snd.play_no_feedback(nullptr, 0, dist / 300.f, &pos, nullptr, nullptr, &Fvector2().set(dist / 2, dist * 2.f));
+        current->snd.play_no_feedback(0, 0, dist / 300.f, &pos, 0, 0, &Fvector2().set(dist / 2, dist * 2.f));
     }
 
     current_direction.invert(); // for env-sun

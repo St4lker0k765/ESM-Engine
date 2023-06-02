@@ -22,10 +22,10 @@ public:
 	template <typename _on_new>
 	T*						dock				(shared_str key, const _on_new& p)
 	{
-		T*	result				= nullptr	;
+		T*	result				= 0	;
 		SharedMapIt	I			= container.find	(key);
 		if (I!=container.end())	result = I->second;
-		if (nullptr==result)			{
+		if (0==result)			{
 			result				= xr_new<T>();
 			result->m_ref_cnt	= 0;
 			if (p(key,result))	container.insert(mk_pair(key,result));
@@ -67,8 +67,8 @@ protected:
 	T*						p_;
 protected:
 	// ref-counting
-	void					destroy				()							{	if (nullptr==p_) return;	p_->m_ref_cnt--; 	if (0==p_->m_ref_cnt)	p_=0;	}
-	void					create				(shared_item const &rhs)	{	T* v = rhs.p_; if (nullptr!=v) v->m_ref_cnt++; destroy(); p_ = v;	}
+	void					destroy				()							{	if (0==p_) return;	p_->m_ref_cnt--; 	if (0==p_->m_ref_cnt)	p_=0;	}
+	void					create				(shared_item const &rhs)	{	T* v = rhs.p_; if (0!=v) v->m_ref_cnt++; destroy(); p_ = v;	}
 public:
 	// construction
 							shared_item			()							{	p_ = 0;											}
@@ -79,7 +79,7 @@ public:
 	const T*				get_value			()							{	return p_;					}
 	// creating
 	template <typename _on_new>
-	void					create				(shared_str key, shared_container<T>* container, const _on_new& p){	T* v = container->dock(key,p); if (nullptr!=v) v->m_ref_cnt++; destroy(); p_ = v;	}
+	void					create				(shared_str key, shared_container<T>* container, const _on_new& p){	T* v = container->dock(key,p); if (0!=v) v->m_ref_cnt++; destroy(); p_ = v;	}
 };
 
 #endif

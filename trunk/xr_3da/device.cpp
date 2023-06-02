@@ -19,7 +19,7 @@ ENGINE_API CRenderDevice Device;
 ENGINE_API BOOL g_bRendering = FALSE; 
 
 BOOL		g_bLoaded = FALSE;
-ref_light	precache_light = nullptr;
+ref_light	precache_light = 0;
 
 BOOL CRenderDevice::Begin	()
 {
@@ -185,7 +185,7 @@ void CRenderDevice::on_idle()
 	m_pRender->SetCacheXform(mView, mProject);
 	//RCache.set_xform_view		( mView				);
 	//RCache.set_xform_project	( mProject			);
-	D3DXMatrixInverse((D3DXMATRIX*)&mInvFullTransform, nullptr, (D3DXMATRIX*)&mFullTransform);
+	D3DXMatrixInverse((D3DXMATRIX*)&mInvFullTransform, 0, (D3DXMATRIX*)&mFullTransform);
 
 	vCameraPosition_saved = vCameraPosition;
 	mFullTransform_saved = mFullTransform;
@@ -284,9 +284,9 @@ void CRenderDevice::message_loop()
 #endif // #ifdef INGAME_EDITOR
 
 	MSG						msg;
-	PeekMessage(&msg, nullptr, 0U, 0U, PM_NOREMOVE);
+	PeekMessage(&msg, NULL, 0U, 0U, PM_NOREMOVE);
 	while (msg.message != WM_QUIT) {
-		if (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE)) {
+		if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 			continue;
@@ -321,7 +321,7 @@ void CRenderDevice::Run			()
 //	InitializeCriticalSection	(&mt_csLeave);
 	mt_csEnter.Enter			();
 	mt_bMustExit				= FALSE;
-	thread_spawn				(mt_Thread,"X-RAY Secondary thread",0,nullptr);
+	thread_spawn				(mt_Thread,"X-RAY Secondary thread",0,0);
 
 	// Message cycle
     PeekMessage					( &msg, nullptr, 0U, 0U, PM_NOREMOVE );

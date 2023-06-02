@@ -100,7 +100,7 @@ class XRCORE_API CMemoryWriter : public IWriter
 	u32				file_size;
 public:
 	CMemoryWriter() {
-		data		= nullptr;
+		data		= 0;
 		position	= 0;
 		mem_size	= 0;
 		file_size	= 0;
@@ -185,7 +185,7 @@ public:
 	// Set file pointer to start of chunk data (0 for root chunk)
 	IC	void		rewind		()			{	impl().seek(0); }
 
-	IC	u32 		find_chunk	(u32 ID, BOOL* bCompressed = nullptr)	
+	IC	u32 		find_chunk	(u32 ID, BOOL* bCompressed = 0)	
 	{
 		u32	dwSize,dwType;
 
@@ -283,7 +283,7 @@ public:
 	IReader*		open_chunk	(u32 ID);
 
 	// iterators
-	IReader*		open_chunk_iterator		(u32& ID, IReader* previous= nullptr);	// NULL=first
+	IReader*		open_chunk_iterator		(u32& ID, IReader* previous=NULL);	// NULL=first
 };
 
 class XRCORE_API CVirtualFileRW : public IReader

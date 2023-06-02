@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#pragma hdrstop
+
 #include "BreakableObject.h"
 #include "xrserver_objects_alife.h"
 #include "PHStaticGeomShell.h"

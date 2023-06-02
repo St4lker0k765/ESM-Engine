@@ -272,7 +272,7 @@ CEnvDescriptor::CEnvDescriptor(shared_str const& identifier) : m_identifier(iden
     lens_flare_id = "";
     tb_id = "";
 
-    env_ambient = nullptr;
+    env_ambient = NULL;
 }
 
 #define C_CHECK(C) \
@@ -334,7 +334,7 @@ void CEnvDescriptor::load(CEnvironment& environment, CInifile& config)
                                                    config.r_string(m_identifier.c_str(), "thunderbolt_collection"));
     bolt_period = (tb_id.size()) ? config.r_float(m_identifier.c_str(), "thunderbolt_period") : 0.f;
     bolt_duration = (tb_id.size()) ? config.r_float(m_identifier.c_str(), "thunderbolt_duration") : 0.f;
-    env_ambient = config.line_exist(m_identifier.c_str(), "ambient") ? environment.AppendEnvAmb(config.r_string(m_identifier.c_str(), "ambient")) : nullptr;
+    env_ambient = config.line_exist(m_identifier.c_str(), "ambient") ? environment.AppendEnvAmb(config.r_string(m_identifier.c_str(), "ambient")) : 0;
 
     if (config.line_exist(m_identifier.c_str(), "sun_shafts_intensity"))
         m_fSunShaftsIntensity = config.r_float(m_identifier.c_str(), "sun_shafts_intensity");
@@ -412,7 +412,7 @@ void CEnvDescriptor::load_shoc(float exec_tm, LPCSTR S, CEnvironment& environmen
     tb_id = environment.eff_Thunderbolt->AppendDef_shoc(environment, pSettings, pSettings->r_string(m_identifier.c_str(), "thunderbolt"));
     bolt_period = (tb_id.size()) ? pSettings->r_float(m_identifier.c_str(), "bolt_period") : 0.f;
     bolt_duration = (tb_id.size()) ? pSettings->r_float(m_identifier.c_str(), "bolt_duration") : 0.f;
-    env_ambient = pSettings->line_exist(m_identifier.c_str(), "env_ambient") ? environment.AppendEnvAmb(pSettings->r_string(m_identifier.c_str(), "env_ambient")) : nullptr;
+    env_ambient = pSettings->line_exist(m_identifier.c_str(), "env_ambient") ? environment.AppendEnvAmb(pSettings->r_string(m_identifier.c_str(), "env_ambient")) : 0;
 
     if (pSettings->line_exist(m_identifier.c_str(), "sun_shafts_intensity"))
         m_fSunShaftsIntensity = pSettings->r_float(m_identifier.c_str(), "sun_shafts_intensity");
@@ -827,8 +827,8 @@ void CEnvironment::unload()
     xr_delete(eff_Rain);
     xr_delete(eff_LensFlare);
     xr_delete(eff_Thunderbolt);
-    CurrentWeather = nullptr;
-    CurrentWeatherName = nullptr;
+    CurrentWeather = 0;
+    CurrentWeatherName = 0;
     CurrentEnv->clear();
     Invalidate();
 

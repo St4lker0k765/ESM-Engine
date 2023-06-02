@@ -493,15 +493,6 @@ public:
 		}
 		return *this; 
 	}
-
-	IC	void	transform(Fvector4& dest, const Fvector4& v)	const 	// preferred to use
-	{
-		dest.w = v.x * _14 + v.y * _24 + v.z * _34 + v.w * _44;
-		dest.x = v.x * _11 + v.y * _21 + v.z * _31 + v.w * _41;
-		dest.y = v.x * _12 + v.y * _22 + v.z * _32 + v.w * _42;
-		dest.z = v.x * _13 + v.y * _23 + v.z * _33 + v.w * _43;
-	}
-
 	ICF	void	transform_tiny		(Tvector &dest, const Tvector &v)	const // preferred to use
 	{
 		dest.x = v.x*_11 + v.y*_21 + v.z*_31 + _41;
@@ -574,9 +565,9 @@ public:
 		return *this; 
     }
 	IC	SelfRef	setXYZ	(T x, T y, T z)	{return setHPB(y,x,z);}
-	IC	SelfRef	setXYZ	(Tvector const& xyz)	{return setHPB(xyz.y,xyz.x,xyz.z);}
+	IC	SelfRef	setXYZ	(Tvector& xyz)	{return setHPB(xyz.y,xyz.x,xyz.z);}
 	IC	SelfRef	setXYZi	(T x, T y, T z)	{return setHPB(-y,-x,-z);}
-	IC	SelfRef	setXYZi	(Tvector const& xyz)	{return setHPB(-xyz.y,-xyz.x,-xyz.z);}
+	IC	SelfRef	setXYZi	(Tvector& xyz)	{return setHPB(-xyz.y,-xyz.x,-xyz.z);}
 	//
 	IC	void	getHPB	(T& h, T& p, T& b) const
 	{

@@ -115,7 +115,8 @@ struct Slice
 	Fvector	m_Vert[4];
 };
 
-void CRenderTarget::accum_volumetric_geom_create()
+//morrazzzz: Доперенести из ЗП!
+/*void CRenderTarget::accum_volumetric_geom_create()
 {
 	u32	dwUsage				= D3DUSAGE_WRITEONLY;
 
@@ -187,3 +188,4 @@ void CRenderTarget::accum_volumetric_geom_destroy()
 	HW.stats_manager.decrement_stats_vb	( g_accum_volumetric_vb );
 	_RELEASE	(g_accum_volumetric_vb);
 }
+*/

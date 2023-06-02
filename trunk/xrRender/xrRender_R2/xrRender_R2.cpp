@@ -1,9 +1,12 @@
 // xrRender_R2.cpp : Defines the entry point for the DLL application.
 //
 #include "stdafx.h"
+#include "../xrRender/xrRender_console.h"
 #include "../xrRender/dxRenderFactory.h"
 #include "../xrRender/dxUIRender.h"
 #include "../xrRender/dxDebugRender.h"
+
+#pragma comment(lib,"xr_3DA")
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
@@ -13,13 +16,13 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH	:
+		if (!xrRender_test_hw())	return FALSE;
 		::Render					= &RImplementation;
-		::RenderFactory				= &RenderFactoryImpl;
-		::DU						= &DUImpl;
-		//::vid_mode_token			= inited by HW;
-		UIRender					= &UIRenderImpl;
+		::RenderFactory = &RenderFactoryImpl;
+		::DU = &DUImpl;
+		UIRender = &UIRenderImpl;
 #ifdef DEBUG
-		DRender						= &DebugRenderImpl;
+		DRender = &DebugRenderImpl;
 #endif // DEBUG
 		xrRender_initconsole		();
 		break	;
@@ -40,12 +43,12 @@ bool _declspec(dllexport) SupportsAdvancedRendering()
 {
 	D3DCAPS9					caps;
 	CHW							_HW;
-	_HW.CreateD3D				();
-	_HW.pD3D->GetDeviceCaps		(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,&caps);
-	_HW.DestroyD3D				();
-	u16		ps_ver_major		= u16 ( u32(u32(caps.PixelShaderVersion)&u32(0xf << 8ul))>>8 );
+	_HW.CreateD3D();
+	_HW.pD3D->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &caps);
+	_HW.DestroyD3D();
+	u16		ps_ver_major = u16(u32(u32(caps.PixelShaderVersion) & u32(0xf << 8ul)) >> 8);
 
-	if (ps_ver_major<3)
+	if (ps_ver_major < 3)
 		return false;
 	else
 		return true;

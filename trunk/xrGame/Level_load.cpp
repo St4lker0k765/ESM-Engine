@@ -88,6 +88,15 @@ BOOL CLevel::Load_GameSpecific_After()
 		}
 	}	
 
+	// Ñáðàñûâàåì ñîñòîÿíèÿ äîæäÿ ïðè çàãðóçêå óðîâíÿ âî èçáåæàíèå ïðîïàæè çâóêà. Real Wolf.
+	if (g_pGamePersistent->pEnvironment)
+	{
+		if (auto rain = g_pGamePersistent->pEnvironment->eff_Rain)
+		{
+			rain->InvalidateState();
+		}
+	}
+
 	if (!g_dedicated_server) {
 		// loading scripts
 		ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorLevel);
@@ -100,11 +109,6 @@ BOOL CLevel::Load_GameSpecific_After()
 
 	if (pSettings->section_exist("engine_callbacks") && pSettings->line_exist("engine_callbacks", "on_change_weather"))
 		on_change_weather_callback = pSettings->r_string("engine_callbacks", "on_change_weather");
-
-	g_pGamePersistent->Environment().SetGameTime(GetEnvironmentGameDayTimeSec(), game->GetEnvironmentGameTimeFactor());
-
-	if (g_pGamePersistent->pEnvironment)
-		g_pGamePersistent->pEnvironment->Invalidate();
 
 	BlockCheatLoad();
 	return TRUE;

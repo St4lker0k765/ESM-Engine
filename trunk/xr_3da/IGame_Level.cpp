@@ -10,17 +10,17 @@
 #include "xrLevel.h"
 #include "CameraManager.h"
 
-ENGINE_API	IGame_Level*	g_pGameLevel	= nullptr;
+ENGINE_API	IGame_Level*	g_pGameLevel	= NULL;
 
 IGame_Level::IGame_Level	()
 {
 	m_pCameras					= xr_new<CCameraManager>(true);
 	g_pGameLevel				= this;
-	pLevel						= nullptr;
+	pLevel						= NULL;
 	bReady						= false;
-	pCurrentEntity				= nullptr;
-	pCurrentViewEntity			= nullptr;
-	pHUD						= nullptr;
+	pCurrentEntity				= NULL;
+	pCurrentViewEntity			= NULL;
+	pHUD						= NULL;
 }
 
 IGame_Level::~IGame_Level	()
@@ -91,6 +91,7 @@ BOOL IGame_Level::Load			(u32 dwNum)
 	g_pGamePersistent->Environment().mods_load	();
 	R_ASSERT					(Load_GameSpecific_Before());
 	Objects.Load				();
+	R_ASSERT					(Load_GameSpecific_After ());
 
 	// Done
 	FS.r_close					( LL_Stream );
@@ -143,7 +144,7 @@ void	IGame_Level::OnFrame		( )
 		pos.random_dir().normalize().mul(::Random.randF(30,100)).add	(Device.vCameraPosition);
 		int		id						= ::Random.randI(Sounds_Random.size());
 		if (Sounds_Random_Enabled)		{
-			Sounds_Random[id].play_at_pos	(nullptr,pos,0);
+			Sounds_Random[id].play_at_pos	(0,pos,0);
 			Sounds_Random[id].set_volume	(1.f);
 			Sounds_Random[id].set_range		(10,200);
 		}

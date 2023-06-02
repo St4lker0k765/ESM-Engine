@@ -305,7 +305,5 @@ void CLevel::InitializeClientGame	(NET_Packet& P)
 	game->set_type_name(game_type_name);
 	game->Init();
 	m_bGameConfigStarted	= TRUE;
-
-	R_ASSERT(Load_GameSpecific_After());
 }
 

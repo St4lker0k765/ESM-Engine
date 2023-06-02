@@ -28,6 +28,7 @@ class IEnvironmentRender;
 class IEnvDescriptorMixerRender;
 class IStatGraphRender;
 class IFlareRender;
+class IConsoleRender;
 class IUIShader;
 class IUISequenceVideoItem;
 
@@ -47,6 +48,7 @@ public:
 	RENDER_FACTORY_INTERFACE(UISequenceVideoItem)
 	RENDER_FACTORY_INTERFACE(UIShader)
 	RENDER_FACTORY_INTERFACE(StatGraphRender)
+	RENDER_FACTORY_INTERFACE(ConsoleRender)
 	RENDER_FACTORY_INTERFACE(RenderDeviceRender)
 #	ifdef DEBUG
 		RENDER_FACTORY_INTERFACE(ObjectSpaceRender)

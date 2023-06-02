@@ -157,9 +157,6 @@
     <Filter Include="Refactored\stats_manager">
       <UniqueIdentifier>{ebb5d745-6418-405b-906f-a34a77f0213a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\ColorMap">
-      <UniqueIdentifier>{ca902331-6b61-4824-8c09-713b0297a906}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -623,15 +620,6 @@
     </ClInclude>
     <ClInclude Include="..\xrRender\light.h">
       <Filter>Lights</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xrRender\ColorMapManager.h">
-      <Filter>Core\ColorMap</Filter>
-    </ClInclude>
-    <ClInclude Include="blender_ssao.h">
-      <Filter>Shading templates</Filter>
-    </ClInclude>
-    <ClInclude Include="blender_light_direct_cascade.h">
-      <Filter>Shading templates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1120,18 +1108,6 @@
     </ClCompile>
     <ClCompile Include="..\xrRenderDX9\dx9r_constants_cache.cpp">
       <Filter>Refactored\Execution &amp; 3D\Shaders\Resources\dx9_R_shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xrRender\ColorMapManager.cpp">
-      <Filter>Core\ColorMap</Filter>
-    </ClCompile>
-    <ClCompile Include="blender_ssao.cpp">
-      <Filter>Shading templates</Filter>
-    </ClCompile>
-    <ClCompile Include="r2_rendertarget_phase_ssao.cpp">
-      <Filter>Core_Target</Filter>
-    </ClCompile>
-    <ClCompile Include="blender_light_direct_cascade.cpp">
-      <Filter>Shading templates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

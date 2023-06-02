@@ -12,12 +12,12 @@
 
 #include "xr_object.h"
 
-xr_token* vid_quality_token = nullptr;
+xr_token* vid_quality_token = NULL;
 
 xr_token							vid_bpp_token							[ ]={
 	{ "16",							16											},
 	{ "32",							32											},
-	{ nullptr,							0											}
+	{ 0,							0											}
 };
 
 void IConsole_Command::add_to_LRU(shared_str const& arg)
@@ -165,7 +165,7 @@ class CCC_Crash : public IConsole_Command
 public:
 	CCC_Crash(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
 	virtual void Execute(LPCSTR args) {
-		thread_spawn	(crashthread,"crash",0,nullptr);
+		thread_spawn	(crashthread,"crash",0,0);
 	}
 };
 
@@ -230,13 +230,13 @@ void CCC_LoadCFG::Execute(LPCSTR args)
 
 		FS.update_path					(cfg_full_name, "$app_data_root$", cfg_name);
 		
-		if(nullptr == FS.exist(cfg_full_name) )
+		if( NULL == FS.exist(cfg_full_name) )
 			strcpy_s						(cfg_full_name, cfg_name);
 		
 		IReader* F						= FS.r_open(cfg_full_name);
 		
 		string1024						str;
-		if (F!= nullptr) {
+		if (F!=NULL) {
 			while (!F->eof()) {
 				F->r_string				(str,sizeof(str));
 				if(allow(str))
@@ -291,7 +291,7 @@ public:
 			Log("! Can't start game without client. Arguments: '%s'.",args);
 			return;
 		}
-		Engine.Event.Defer	("KERNEL:start",u64(xr_strlen(op_server)?xr_strdup(op_server):nullptr),u64(xr_strdup(op_client)));
+		Engine.Event.Defer	("KERNEL:start",u64(xr_strlen(op_server)?xr_strdup(op_server):0),u64(xr_strdup(op_client)));
 	}
 };
 
@@ -318,7 +318,7 @@ class CCC_VidMode : public CCC_Token
 {
 	u32		_dummy;
 public:
-	CCC_VidMode(LPCSTR N) : CCC_Token(N, &_dummy, nullptr) { bEmptyArgsHandled = FALSE; };
+	CCC_VidMode(LPCSTR N) : CCC_Token(N, &_dummy, NULL) { bEmptyArgsHandled = FALSE; };
 	virtual void	Execute(LPCSTR args) {
 		u32 _w, _h;
 		int cnt = sscanf(args, "%dx%d", &_w, &_h);
@@ -454,7 +454,7 @@ class CCC_r2 : public CCC_Token
 {
 	typedef CCC_Token inherited;
 public:
-	CCC_r2(LPCSTR N) : inherited(N, &renderer_value, nullptr){ renderer_value = 3;};
+	CCC_r2(LPCSTR N) : inherited(N, &renderer_value, NULL){ renderer_value = 3;};
 
 	virtual void	Execute	(LPCSTR args)
 	{
@@ -499,9 +499,6 @@ extern Flags32		psEnvFlags;
 //extern float		r__dtex_range;
 
 extern int			g_ErrorLineCount;
-
-extern float puddles_drying;
-extern float puddles_wetting;
 
 
 ENGINE_API int			ps_r__Supersample			= 1;
@@ -641,9 +638,6 @@ if(strstr(Core.Params,"designer"))
 	CMD4(CCC_DR_UsePoints,		"demo_record_step",			&g_iDR_LM_Step, 0, 3);
 }
 	CMD1(CCC_DumpOpenFiles,		"dump_open_files");
-
-	CMD4(CCC_Float, "rain_puddles_drying", &puddles_drying, 0.1f, 20.0f);
-	CMD4(CCC_Float, "rain_puddles_wetting", &puddles_wetting, 0.1f, 20.0f);
 //#endif
 
 

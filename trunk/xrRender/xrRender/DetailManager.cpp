@@ -219,7 +219,7 @@ void CDetailManager::UpdateVisibleM()
 			}
 			// test slots
 			
-			int dwCC = dm_cache1_count*dm_cache1_count;
+			u32 dwCC = dm_cache1_count*dm_cache1_count;
 
 			for (int _i=0; _i < dwCC ; _i++){
 				Slot*	PS		= *MS.slots[_i];

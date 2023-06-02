@@ -19,7 +19,6 @@ void CGammaControl::Update()
 			GenLUT( GC, G );
 			pOutput->SetGammaControl(&G);
 		}
-		_RELEASE(pOutput)
 	}
 }
 

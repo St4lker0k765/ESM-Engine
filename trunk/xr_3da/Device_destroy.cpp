@@ -10,7 +10,7 @@ void CRenderDevice::_Destroy	(BOOL bKeepTextures)
 	DU->OnDeviceDestroy();
 
 	// before destroy
-	b_is_Ready					= false;
+	b_is_Ready					= FALSE;
 	Statistic->OnDeviceDestroy	();
 	::Render->destroy			();
 	m_pRender->OnDeviceDestroy(bKeepTextures);
@@ -23,10 +23,10 @@ void CRenderDevice::Destroy	(void) {
 
 	Log("Destroying Direct3D...");
 
-	ShowCursor	(true);
+	ShowCursor	(TRUE);
 	m_pRender->ValidateHW();
 
-	_Destroy					(false);
+	_Destroy					(FALSE);
 
 	// real destroy
 	m_pRender->DestroyHW();
@@ -42,7 +42,7 @@ void CRenderDevice::Destroy	(void) {
 	seqParallel.clear			();
 
 	RenderFactory->DestroyRenderDeviceRender(m_pRender);
-	m_pRender = nullptr;
+	m_pRender = 0;
 	xr_delete					(Statistic);
 }
 
@@ -50,9 +50,9 @@ void CRenderDevice::Destroy	(void) {
 #include "CustomHUD.h"
 void CRenderDevice::Reset		(bool precache)
 {
-	bool b_16_before	= static_cast<float>(dwWidth)/static_cast<float>(dwHeight) > (1024.0f/768.0f+0.01f);
+	bool b_16_before	= (float)dwWidth/(float)dwHeight > (1024.0f/768.0f+0.01f);
 
-	ShowCursor				(true);
+	ShowCursor				(TRUE);
 	u32 tm_start			= TimerAsync();
 
 	m_pRender->Reset(m_hWnd, dwWidth, dwHeight, fWidth_2, fHeight_2);
@@ -67,12 +67,12 @@ void CRenderDevice::Reset		(bool precache)
 	Msg						("*** RESET [%d ms]",tm_end-tm_start);
 
 #ifndef DEDICATED_SERVER
-	ShowCursor	(false);
+	ShowCursor	(FALSE);
 #endif
 		
 	seqDeviceReset.Process(rp_DeviceReset);
 
-	bool b_16_after	= static_cast<float>(dwWidth)/static_cast<float>(dwHeight) > (1024.0f/768.0f+0.01f);
+	bool b_16_after	= (float)dwWidth/(float)dwHeight > (1024.0f/768.0f+0.01f);
 	if(b_16_after!=b_16_before && g_pGameLevel && g_pGameLevel->pHUD) 
 	g_pGameLevel->pHUD->OnScreenRatioChanged();
 }

@@ -104,9 +104,7 @@ struct	FTreeVisual_setup
 		float tm_rot = PI_MUL_2 * Device.fTimeGlobal / ps_r__Tree_w_rot;
 
 		// Calc wind-vector3, scale
-#if RENDER!=R_R1
 		CEnvDescriptor& env = *g_pGamePersistent->Environment().CurrentEnv;
-#endif
 
 		wind.set(_sin(tm_rot), 0, _cos(tm_rot), 0);
 		wind.normalize();

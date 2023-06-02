@@ -1,59 +1,26 @@
 #include "stdafx.h"
 #include "resource.h"
 
-//extern LRESULT CALLBACK WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ); //TODO xrMorrazzz: Delete this extern! Callback WndProc moved to Device_Initialize.cpp
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	switch (uMsg)
-	{
-	case WM_ACTIVATE:
-	{
-		Device.OnWM_Activate(wParam, lParam);
-	}
-	break;
-	case WM_SETCURSOR:
-		return 1;
-	case WM_SYSCOMMAND:
-		// Prevent moving/sizing and power loss in fullscreen mode
-		switch (wParam)
-		{
-		case SC_MOVE:
-		case SC_SIZE:
-		case SC_MAXIMIZE:
-		case SC_MONITORPOWER:
-			return 1;
-			break;
-		}
-		break;
-	case WM_CLOSE:
-		return 0;
-	case WM_KEYDOWN:
-		break;
-	default:
-		break;
-	}
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}
+extern LRESULT CALLBACK WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 void CRenderDevice::Initialize()
 {
-	Log("# Initializing Engine...");
+	Log("Initializing Engine...");
 	TimerGlobal.Start			();
 	TimerMM.Start				();
 
 	// Unless a substitute hWnd has been specified, create a window to render into
-    if( m_hWnd == nullptr)
+    if( m_hWnd == NULL)
     {
-		const auto*	wnd_class ="_XRAY_1.5";
+		const char*	wndclass ="_XRAY_";
 
         // Register the windows class
-		HINSTANCE hInstance = GetModuleHandle(nullptr);
+		HINSTANCE hInstance = (HINSTANCE)GetModuleHandle(0);
         WNDCLASS wndClass = { 0, WndProc, 0, 0, hInstance,
                               LoadIcon( hInstance, MAKEINTRESOURCE(IDI_ICON1) ),
-                              LoadCursor(nullptr, IDC_ARROW ),
-                              static_cast<HBRUSH>(GetStockObject(BLACK_BRUSH)),
-                              nullptr, wnd_class };
+                              LoadCursor( NULL, IDC_ARROW ),
+                              (HBRUSH)GetStockObject(BLACK_BRUSH),
+                              NULL, wndclass };
         RegisterClass( &wndClass );
 
         // Set the window's initial style
@@ -65,10 +32,10 @@ void CRenderDevice::Initialize()
         AdjustWindowRect( &rc, m_dwWindowStyle, FALSE );
 
         // Create the render window
-		m_hWnd = CreateWindow( wnd_class, "S.T.A.L.K.E.R.: ESM Engine", m_dwWindowStyle,
+		m_hWnd = CreateWindow( wndclass, "S.T.A.L.K.E.R.: ESM Engine", m_dwWindowStyle,
                                /*rc.left, rc.top, */CW_USEDEFAULT, CW_USEDEFAULT,
-                               (rc.right-rc.left), (rc.bottom-rc.top), nullptr,
-                               nullptr, hInstance, nullptr );
+                               (rc.right-rc.left), (rc.bottom-rc.top), 0L,
+                               0, hInstance, 0L );
     }
 
     // Save window properties

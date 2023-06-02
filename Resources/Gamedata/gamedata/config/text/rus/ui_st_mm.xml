@@ -21,9 +21,6 @@
 	<string id="gd_stalker">
 		<text>опытный</text>
 	</string>
-	<string id="renderer_r4">
-		<text>Ул. полное освещение (DX11)</text>
-	</string>
 	<string id="gd_veteran">
 		<text>ветеран</text>
 	</string>
@@ -56,9 +53,6 @@
 	</string>
 	<string id="renderer_r2a">
 		<text>Динамическое освещение объектов</text>
-	</string>
-	<string id="renderer_r3">
-		<text>Ул. полное освещение (DX10)</text>
 	</string>
 	<string id="st_artefacthunt">
 		<text>Охота за артефактом</text>
@@ -165,9 +159,6 @@
 	<string id="ui_mm_disconnect_message">
 		<text>Действительно ли вы желаете отсоединиться?</text>
 	</string>
-	<string id="ui_mm_dof">
-		<text>Глубина резкости</text>
-	</string>
 	<string id="ui_mm_dyn_crosshair">
 		<text>Динамический прицел</text>
 	</string>
@@ -258,21 +249,6 @@
 	<string id="ui_mm_quit_windows_message">
 		<text>Действительно ли вы хотите выйти в Windows?</text>
 	</string>
-	<string id="ui_mm_r2_detail_bump">
-		<text>Детальный рельеф</text>
-	</string>
-	<string id="ui_mm_r2_steep_parallax">
-		<text>Steep parallax</text>
-	</string>
-	<string id="ui_mm_r3_dynamic_wet_surfaces">
-		<text>Намокание плоскостей</text>
-	</string>
-	<string id="ui_mm_r3_gbuffer_opt">
-		<text>Оптимизировать геометр. буфер</text>
-	</string>
-	<string id="ui_mm_r3_volumetric_smoke">
-		<text>Объёмный дым</text>
-	</string>
 	<string id="ui_mm_quit2windows">
 		<text>Выйти в Windows</text>
 	</string>
@@ -300,24 +276,6 @@
 	<string id="ui_mm_simply">
 		<text>Базовые</text>
 	</string>
-	<string id="ui_mm_soft_particles">
-		<text>Мягкие частицы</text>
-	</string>
-	<string id="ui_mm_soft_water">
-		<text>Мягкая вода</text>
-	</string>
-	<string id="ui_mm_r1_detail_textures">
-		<text>Детальные текстуры(R1)</text>
-	</string>
-	<string id="ui_mm_r2_sun_quality">
-		<text>Качество солнца</text>
-	</string>
-	<string id="ui_mm_ssao_quality">
-		<text>Качество SSAO</text>
-	</string>
-	<string id="ui_mm_ssao_mode">
-		<text>Режим SSAO</text>
-	</string>
 	<string id="ui_mm_sound">
 		<text>Звук</text>
 	</string>
@@ -330,14 +288,8 @@
 	<string id="ui_mm_sun_quality">
 		<text>Качество теней</text>
 	</string>
-	<string id="ui_mm_sun_shafts">
-		<text>Солнечные лучи</text>
-	</string>
-	<string id="ui_mm_supersample_1">
-		<text>Сглаживание(R1, R2)</text>
-	</string>
-	<string id="ui_mm_supersample_2">
-		<text>Сглаживание(R3, R4)</text>
+	<string id="ui_mm_supersample">
+		<text>Сглаживание</text>
 	</string>
 	<string id="ui_mm_switch_torch">
 		<text>Использование фонариков AI</text>
@@ -356,9 +308,6 @@
 	</string>
 	<string id="ui_mm_vis_distance">
 		<text>Дальность видимости</text>
-	</string>
-	<string id="ui_mm_volumetric_light">
-		<text>Объёмный свет</text>
 	</string>
 	<string id="ui_mm_vsync">
 		<text>Верт. синхронизация</text>
@@ -380,8 +329,5 @@
 	</string>
 	<string id="ui_st_sell_all">
 		<text>Продать все</text>
-	</string>
-	<string id="ui_mm_r4_enable_tessellation">
-		<text>Тесселяция</text>
 	</string>
 </string_table>

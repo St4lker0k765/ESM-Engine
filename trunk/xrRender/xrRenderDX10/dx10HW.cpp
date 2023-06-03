@@ -386,7 +386,6 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 	};
 	R_CHK(R);
 
-/*
 
 	ID3D10Debug* pDebug = nullptr;
 
@@ -413,7 +412,7 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 		}
 		pDebug_InFo_Queue->Release();
 	}
-*/
+
 
 	_SHOW_REF	("* CREATE: DeviceREF:",HW.pDevice);
 /*

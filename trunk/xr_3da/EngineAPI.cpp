@@ -58,37 +58,51 @@ void CEngineAPI::Initialize(void)
 	LPCSTR			r3_name = "xrRender_R3.dll";
 
 #ifndef DEDICATED_SERVER
-	if (psDeviceFlags.test(rsR3)) {
-		// try to initialize R2
+	if (psDeviceFlags.test(rsR3))
+	{
+		// try to initialize R3
 		Log("Loading DLL:", r3_name);
 		hRender = LoadLibrary(r3_name);
-		if (0 == hRender) {
+		if (0 == hRender)
+		{
 			// try to load R1
-			Msg("...Failed - incompatible hardware.");
+			Msg("! ...Failed - incompatible hardware/pre-Vista OS.");
+			psDeviceFlags.set(rsR2, TRUE);
 		}
+//		else
+//			g_current_renderer = 3;
 	}
 
-	if (psDeviceFlags.test(rsR2) )	{
+
+	if (psDeviceFlags.test(rsR2))
+	{
 		// try to initialize R2
-		Log				("Loading DLL:",	r2_name);
-		hRender			= LoadLibrary		(r2_name);
-		if (0==hRender)	{
+		psDeviceFlags.set(rsR3, FALSE);
+		Log("Loading DLL:", r2_name);
+		hRender = LoadLibrary(r2_name);
+		if (0 == hRender)
+		{
 			// try to load R1
-			Msg			("...Failed - incompatible hardware.");
+			Msg("! ...Failed - incompatible hardware.");
 		}
+		else
+			g_current_renderer = 2;
 	}
 #endif
 
-	if (0==hRender)		{
+
+	if (0 == hRender)
+	{
 		// try to load R1
 		psDeviceFlags.set(rsR3, FALSE);
-		psDeviceFlags.set	(rsR2,FALSE);
-		renderer_value		= 0; //con cmd
+		psDeviceFlags.set(rsR2, FALSE);
+		renderer_value = 0; //con cmd
 
-		Log				("Loading DLL:",	r1_name);
-		hRender			= LoadLibrary		(r1_name);
-		if (0==hRender)	R_CHK				(GetLastError());
-		R_ASSERT		(hRender);
+		Log("Loading DLL:", r1_name);
+		hRender = LoadLibrary(r1_name);
+		if (0 == hRender)	R_CHK(GetLastError());
+		R_ASSERT(hRender);
+		g_current_renderer = 1;
 	}
 
 	Device.ConnectToRender();

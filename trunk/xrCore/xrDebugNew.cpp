@@ -4,7 +4,7 @@
 #include "os_clipboard.h"
 #include "xrdebug.h"
 
-#include "dxerr9.h"
+#include "dxerr.h"
 
 #pragma warning(push)
 #pragma warning(disable:4995)
@@ -30,9 +30,11 @@ extern bool shared_str_initialized;
 
 #ifndef _M_AMD64
 #	ifndef __BORLANDC__
-#		pragma comment(lib,"dxerr9.lib")
+#		pragma comment(lib,"dxerr.lib")
 #	endif
 #endif
+
+#pragma comment(lib, "dxerr.lib")
 
 #include <new.h>
 #include <dbghelp.h>
@@ -384,6 +386,13 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 		get_on_dialog()	(false);
 
 	CS.Leave			();
+}
+
+const char* xrDebug::DXerror2string(const HRESULT code) const
+{
+	static string1024 desc_storage;
+	std::snprintf(desc_storage, sizeof(desc_storage), "Error Code: [%d], Error Name: [%s], Error Text: [%s]", code, DXGetErrorString(code), DXGetErrorDescription(code));
+	return desc_storage;
 }
 
 LPCSTR xrDebug::error2string	(long code)

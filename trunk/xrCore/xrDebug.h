@@ -22,6 +22,7 @@ public:
 	on_dialog*		get_on_dialog		()							{ return m_on_dialog;	}
 	void			set_on_dialog		(on_dialog* on_dialog)		{ m_on_dialog = on_dialog;	}
 
+	const char* DXerror2string(const HRESULT code) const;
 	LPCSTR			error2string		(long  code	);
 
 	void			fail				(const char *e1, const char *file, int line, const char *function, bool &ignore_always);

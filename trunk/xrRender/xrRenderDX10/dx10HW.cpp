@@ -386,6 +386,8 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 	};
 	R_CHK(R);
 
+/*
+
 	ID3D10Debug* pDebug = nullptr;
 
 	if (SUCCEEDED(pDevice->QueryInterface(__uuidof(ID3D10Debug), (void**)&pDebug)))
@@ -411,12 +413,14 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 		}
 		pDebug_InFo_Queue->Release();
 	}
+*/
 
 	_SHOW_REF	("* CREATE: DeviceREF:",HW.pDevice);
+/*
 
 	// Bind Render Target View to slot 0
 	ID3D10RenderTargetView* pRTV = nullptr;
-	pContext->OMSetRenderTargets(1, &pRTV, nullptr);
+	pContext->OMSetRenderTargets(1, &pRTV, nullptr);*/
 	/*
 	switch (GPU)
 	{

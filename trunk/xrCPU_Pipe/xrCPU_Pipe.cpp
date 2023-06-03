@@ -49,6 +49,8 @@ extern "C" {
 		// generic
 		T->skin1W	= xrSkin1W_x86;
 		T->skin2W	= xrSkin2W_x86;
+		T->skin3W = xrSkin3W_x86;
+		T->skin4W = xrSkin4W_x86;
 		skin4W_func = xrSkin4W_x86;
 		T->PLC_calc3 = PLC_calc3_x86;
 		// T->blerp	= xrBoneLerp_x86;

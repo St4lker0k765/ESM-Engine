@@ -28,6 +28,7 @@ light::light		(void)	: ISpatial(g_SpatialSpace)
 	frame_render	= 0;
 
 #if (RENDER==R_R2) || (RENDER==R_R3) || (RENDER==R_R4)
+	virtual_size = .1f; // Ray Twitty (aka Shadows): по умолчанию надо 0.1, чтобы не пришлось вызывать для каждого лайта установку виртуального размера
 	ZeroMemory		(omnipart,sizeof(omnipart));
 	s_spot			= NULL;
 	s_point			= NULL;
@@ -85,8 +86,9 @@ void light::set_texture		(LPCSTR name)
 
 		for( int i = 0; i < bound; ++i )
 		{
-			s_spot_msaa[i].create				(RImplementation.Target->b_accum_spot_msaa[i],strconcat(sizeof(temp),temp,"r2\\accum_spot_",name),name);
-			s_volumetric_msaa[i].create	(RImplementation.Target->b_accum_volumetric_msaa[i],strconcat(sizeof(temp),temp,"r2\\accum_volumetric_",name),name);
+			s_spot_msaa[i].create(RImplementation.Target->b_accum_spot_msaa[i],strconcat(sizeof(temp),temp,"r2\\accum_spot_",name),name);
+			s_point_msaa[i].create(RImplementation.Target->b_accum_point_msaa[i], strconcat(sizeof(temp), temp, "r2\\accum_point_", name), name);
+			s_volumetric_msaa[i].create(RImplementation.Target->b_accum_volumetric_msaa[i],strconcat(sizeof(temp),temp,"r2\\accum_volumetric_",name),name);
 		}
 	}
 #endif // (RENDER!=R_R3) || (RENDER!=R_R4)
@@ -305,6 +307,7 @@ void	light::export_to	(light_Package& package)
 						L->set_rotation		(cmDir[f],	R);
 						L->set_cone			(PI_DIV_2);
 						L->set_range		(range);
+						L->set_virtual_size(virtual_size);
 						L->set_color		(color);
 						L->spatial.sector	= spatial.sector;	//. dangerous?
 						L->s_spot			= s_spot	;

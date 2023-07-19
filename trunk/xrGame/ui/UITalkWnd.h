@@ -23,7 +23,7 @@ class CUITalkWnd: public CUIDialogWnd
 {
 private:
 	typedef CUIDialogWnd inherited;
-	ref_sound			m_sound;
+	ref_sound			m_sound{};
 	void				PlaySnd					(LPCSTR text);
 	void				StopSnd					();
 public:
@@ -33,7 +33,7 @@ public:
 	virtual void		Init();
 
 	virtual bool		StopAnyMove					(){return true;}
-	virtual void		SendMessage					(CUIWindow* pWnd, s16 msg, void* pData = NULL);
+	virtual void		SendMessage					(CUIWindow* pWnd, s16 msg, void* pData = nullptr);
 
 	virtual void		Draw();
 	virtual void		Update();

@@ -6,12 +6,14 @@
 #include "../Include/xrRender/UIRender.h"
 
 CUIProgressShape::CUIProgressShape(){
-	m_pBackground	= NULL;
+	m_pBackground	= nullptr;
 	m_bText			= false;
 	m_pTexture		= xr_new<CUIStatic>();
-	AttachChild		(m_pTexture);	
+	CUIWindow::AttachChild		(m_pTexture);	
 	m_pBackground	= xr_new<CUIStatic>();
-	AttachChild		(m_pBackground);
+	CUIWindow::AttachChild		(m_pBackground);
+
+	m_stage = 0.f;
 };
 
 CUIProgressShape::~CUIProgressShape(){

@@ -301,7 +301,6 @@ void CRenderDevice::Run			()
 //	DUMP_PHASE;
 	g_bLoaded		= FALSE;
 	MSG				msg;
-    BOOL			bGotMsg;
 	Log				("Starting engine...");
 	thread_name		("X-RAY Primary thread");
 

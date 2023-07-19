@@ -21,18 +21,21 @@
 CROS_impl::CROS_impl	()
 {
 	approximate.set		( 0,0,0 );
-	dwFrame				= u32(-1);
-	shadow_recv_frame	= u32(-1);
+	dwFrame				= static_cast<u32>(-1);
+	shadow_recv_frame	= static_cast<u32>(-1);
 	shadow_recv_slot	= -1;
 
 	result_count		= 0;
 	result_iterator		= 0;
-	result_frame		= u32(-1);
+	result_frame		= static_cast<u32>(-1);
 	result_sun			= 0;
 	hemi_value			= 0.5f;
 	hemi_smooth			= 0.5f;
 	sun_value			= 0.2f;
 	sun_smooth			= 0.2f;
+
+	for (size_t i = 0; i < NUM_FACES; ++i)
+		hemi_cube[i] = hemi_cube_smooth[i] = 0;
 
 #if RENDER!=R_R1
 	last_position.set( 0.0f, 0.0f, 0.0f );
@@ -366,7 +369,7 @@ void CROS_impl::calc_sun_value(Fvector& position, CObject* _object)
 #if RENDER==R_R1
 	light*	sun		=		(light*)RImplementation.L_DB->sun_adapted._get()	;
 #else
-	light*	sun		=		(light*)RImplementation.Lights.sun_adapted._get()	;
+	light*	sun		=		static_cast<light*>(RImplementation.Lights.sun_adapted._get())	;
 #endif
 	if	(MODE & IRender_ObjectSpecific::TRACE_SUN)	{
 		if  (--result_sun	< 0)	{
@@ -388,7 +391,7 @@ void CROS_impl::calc_sky_hemi_value(Fvector& position, CObject* _object)
 		sky_rays_uptodate	= _min(sky_rays_uptodate, lt_hemisamples);
 #endif	//	RENDER!=R_R1
 
-		for (u32 it=0; it<(u32)ps_r2_dhemi_count;	it++)		{	// five samples per one frame
+		for (u32 it=0; it<static_cast<u32>(ps_r2_dhemi_count);	it++)		{	// five samples per one frame
 			u32	sample		=	0				;
 			if	(result_count<lt_hemisamples)	{ sample=result_count; result_count++;							}
 			else								{ sample=(result_iterator%lt_hemisamples); result_iterator++;	}
@@ -405,7 +408,7 @@ void CROS_impl::calc_sky_hemi_value(Fvector& position, CObject* _object)
 	//	float	l_i				=	1.f-l_f;
 	int		_pass			=	0;
 	for (int it=0; it<result_count; it++)	if (result[it])	_pass	++;
-	hemi_value				=	float	(_pass)/float(result_count?result_count:1);
+	hemi_value				=	static_cast<float>(_pass)/static_cast<float>(result_count ? result_count : 1);
 	hemi_value				*=	ps_r2_dhemi_sky_scale;
 
 	for (int it=0; it<result_count; it++)
@@ -438,7 +441,7 @@ void CROS_impl::prepare_lights(Fvector& position, IRenderable* O)
 #endif
 		for (u32 o_it=0; o_it<RImplementation.lstSpatial.size(); o_it++)	{
 			ISpatial*	spatial		= RImplementation.lstSpatial[o_it];
-			light*		source		= (light*)	(spatial->dcast_Light());
+			light*		source		= static_cast<light*>(spatial->dcast_Light());
 			VERIFY		(source);	// sanity check
 			float	R				= radius+source->range;
 			if (position.distance_to(source->position) < R
@@ -453,7 +456,7 @@ void CROS_impl::prepare_lights(Fvector& position, IRenderable* O)
 #if RENDER==R_R1 
 		float traceR	= radius*.5f;
 #endif
-		for (s32 id=0; id<s32(track.size()); id++)
+		for (s32 id=0; id<static_cast<s32>(track.size()); id++)
 		{
 			// remove untouched lights
 			xr_vector<CROS_impl::Item>::iterator I	= track.begin()+id;

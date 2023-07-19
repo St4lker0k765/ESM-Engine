@@ -458,15 +458,32 @@ IC void CBackend::ApplyVertexLayout()
 
 	if (it==decl->vs_to_layout.end())
 	{
-		ID3DInputLayout* pLayout;
+		ID3DInputLayout* pLayout = nullptr;
 
-		CHK_DX(HW.pDevice->CreateInputLayout(
-			decl->dx10_dcl_code.data(),
-			decl->dx10_dcl_code.size()-1,
+#pragma todo("Sir LancerKOT: Fix this fucking flight in Lab X16. Temporarily replaced the code!")
+
+		HRESULT res{};
+
+		/*CHK_DX*/ res = HW.pDevice->CreateInputLayout(
+			&decl->dx10_dcl_code[0],
+			decl->dx10_dcl_code.size() - 1,
 			m_pInputSignature->GetBufferPointer(),
 			m_pInputSignature->GetBufferSize(),
 			&pLayout
-			));
+		);
+
+		if (FAILED(res) || !pLayout)
+		{
+#ifdef DEBUG
+			Msg("! Broken vertex layout!!!");
+
+			Msg("* Semantic name: [%s]", &decl->dx10_dcl_code[0].SemanticName);
+			Msg("* SemanticIndex: [%x]", &decl->dx10_dcl_code[0].SemanticIndex);
+			Msg("* Format: [%x]", &decl->dx10_dcl_code[0].Format);
+			Msg("* InputSlot: [%x]", &decl->dx10_dcl_code[0].InputSlot);
+			Msg("* AlignedByteOffset: [%x]", &decl->dx10_dcl_code[0].AlignedByteOffset);
+#endif
+		}
 
 		it = decl->vs_to_layout.insert(
 			std::pair<ID3DBlob*, ID3DInputLayout*>(m_pInputSignature, pLayout)).first;

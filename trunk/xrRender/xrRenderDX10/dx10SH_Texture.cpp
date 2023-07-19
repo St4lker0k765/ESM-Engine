@@ -212,8 +212,11 @@ void CTexture::ProcessStaging()
 	flags.bLoadedAsStaging = FALSE;
 
 	//	Check if texture was not copied _before_ it was converted.
-	ULONG RefCnt = pSurface->Release();
-	pSurface = 0;
+#ifdef DEBUG
+	ULONG RefCnt = 
+#endif
+	pSurface->Release();
+	pSurface = nullptr;
 
 	VERIFY(!RefCnt);
 

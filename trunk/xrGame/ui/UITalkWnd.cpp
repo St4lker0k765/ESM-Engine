@@ -5,10 +5,8 @@
 #include "UITalkDialogWnd.h"
 
 #include "../actor.h"
-#include "../HUDManager.h"
 #include "../UIGameSP.h"
 #include "../PDA.h"
-#include "../character_info.h"
 #include "../level.h"
 
 #include "../PhraseDialog.h"
@@ -22,30 +20,27 @@
 
 CUITalkWnd::CUITalkWnd()
 {
-	m_pActor				= NULL;
+	m_pActor				= nullptr;
 
-	m_pOurInvOwner			= NULL;
-	m_pOthersInvOwner		= NULL;
+	m_pOurInvOwner			= nullptr;
+	m_pOthersInvOwner		= nullptr;
 
-	m_pOurDialogManager		= NULL;
-	m_pOthersDialogManager	= NULL;
+	m_pOurDialogManager		= nullptr;
+	m_pOthersDialogManager	= nullptr;
+
+    UITradeWnd = nullptr;
+	UITalkDialogWnd = nullptr;
 
 	ToTopicMode				();
 
-	Init					();
-	Hide					();
-//.	SetFont					(HUD().Font().pFontHeaderRussian);
+	CUITalkWnd::Init					();
+	CUITalkWnd::Hide					();
 
 	m_bNeedToUpdateQuestions = false;
+	m_pCurrentDialog = nullptr;
 }
 
-//////////////////////////////////////////////////////////////////////////
-
-CUITalkWnd::~CUITalkWnd()
-{
-}
-
-//////////////////////////////////////////////////////////////////////////
+CUITalkWnd::~CUITalkWnd() {}
 
 void CUITalkWnd::Init()
 {
@@ -104,7 +99,6 @@ void CUITalkWnd::InitOthersStartDialog()
 		m_pOthersDialogManager->InitDialog(m_pOurDialogManager, m_pCurrentDialog);
 		
 		//сказать фразу
-		CStringTable stbl;
 		AddAnswer(m_pCurrentDialog->GetPhraseText("0"), m_pOthersInvOwner->Name());
 		m_pOthersDialogManager->SayPhrase(m_pCurrentDialog, "0");
 
@@ -291,7 +285,7 @@ void CUITalkWnd::AskQuestion()
 		{
 
 			string128	s;
-			sprintf_s		(s,"ID = [%s] of selected question is out of range of available dialogs ",UITalkDialogWnd->m_ClickedQuestionID);
+			sprintf_s		(s,"ID = [%s] of selected question is out of range of available dialogs ",UITalkDialogWnd->m_ClickedQuestionID.c_str());
 			VERIFY2(FALSE, s);
 		}
 

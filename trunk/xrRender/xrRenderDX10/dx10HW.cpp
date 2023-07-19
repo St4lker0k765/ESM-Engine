@@ -225,52 +225,6 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 	//	HACK: DX10: Embed hard target format.
 	fTarget = D3DFMT_X8R8G8B8;	//	No match in DX10. D3DFMT_A8B8G8R8->DXGI_FORMAT_R8G8B8A8_UNORM
 	fDepth = selectDepthStencil(fTarget);
-	/*
-	if (bWindowed)
-	{
-		fTarget = mWindowed.Format;
-		R_CHK(pD3D->CheckDeviceType	(DevAdapter,DevT,fTarget,fTarget,TRUE));
-		fDepth  = selectDepthStencil(fTarget);
-	} else {
-		switch (psCurrentBPP) {
-		case 32:
-			fTarget = D3DFMT_X8R8G8B8;
-			if (SUCCEEDED(pD3D->CheckDeviceType(DevAdapter,DevT,fTarget,fTarget,FALSE)))
-				break;
-			fTarget = D3DFMT_A8R8G8B8;
-			if (SUCCEEDED(pD3D->CheckDeviceType(DevAdapter,DevT,fTarget,fTarget,FALSE)))
-				break;
-			fTarget = D3DFMT_R8G8B8;
-			if (SUCCEEDED(pD3D->CheckDeviceType(DevAdapter,DevT,fTarget,fTarget,FALSE)))
-				break;
-			fTarget = D3DFMT_UNKNOWN;
-			break;
-		case 16:
-		default:
-			fTarget = D3DFMT_R5G6B5;
-			if (SUCCEEDED(pD3D->CheckDeviceType(DevAdapter,DevT,fTarget,fTarget,FALSE)))
-				break;
-			fTarget = D3DFMT_X1R5G5B5;
-			if (SUCCEEDED(pD3D->CheckDeviceType(DevAdapter,DevT,fTarget,fTarget,FALSE)))
-				break;
-			fTarget = D3DFMT_X4R4G4B4;
-			if (SUCCEEDED(pD3D->CheckDeviceType(DevAdapter,DevT,fTarget,fTarget,FALSE)))
-				break;
-			fTarget = D3DFMT_UNKNOWN;
-			break;
-		}
-		fDepth  = selectDepthStencil(fTarget);
-	}
-	
-
-	if ((D3DFMT_UNKNOWN==fTarget) || (D3DFMT_UNKNOWN==fTarget))	{
-		Msg					("Failed to initialize graphics hardware.\nPlease try to restart the game.");
-		FlushLog			();
-		MessageBox			(NULL,"Failed to initialize graphics hardware.\nPlease try to restart the game.","Error!",MB_OK|MB_ICONERROR);
-		TerminateProcess	(GetCurrentProcess(),0);
-	}
-
-	*/
 	
 	// Set up the presentation parameters
 	DXGI_SWAP_CHAIN_DESC	&sd	= m_ChainDesc;
@@ -323,7 +277,7 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 
 	UINT createDeviceFlags = 0;
 #ifdef DEBUG
-	createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
+//	createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 #endif
    HRESULT R;
 	// Create the device
@@ -386,7 +340,7 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 	};
 	R_CHK(R);
 
-
+	/*
 	ID3D10Debug* pDebug = nullptr;
 
 	if (SUCCEEDED(pDevice->QueryInterface(__uuidof(ID3D10Debug), (void**)&pDebug)))
@@ -412,7 +366,7 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 		}
 		pDebug_InFo_Queue->Release();
 	}
-
+	*/
 
 	_SHOW_REF	("* CREATE: DeviceREF:",HW.pDevice);
 /*

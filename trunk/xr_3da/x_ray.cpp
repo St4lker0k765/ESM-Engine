@@ -312,11 +312,8 @@ Memory.mem_usage();
 		destroySettings();
 
 	LALib.OnDestroy				( );
-	
-	if(!g_bBenchmark)
-		destroyConsole();
-	else
-		Console->Destroy();
+
+	destroyConsole();
 
 	destroyEngine();
 }
@@ -567,7 +564,7 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 		(void)filter;
 #endif // DEDICATED_SERVER
 
-		FPU::m24r				();
+//		FPU::m24r				();
 		InitEngine				();
 
 		InitInput();

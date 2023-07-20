@@ -504,7 +504,6 @@
     <ClInclude Include="xrImage_Resampler.h" />
     <ClInclude Include="xrTheora_Stream.h" />
     <ClInclude Include="xrTheora_Surface.h" />
-    <ClInclude Include="xrTheora_Surface_mmx.h" />
     <ClInclude Include="doug_lea_memory_allocator.h" />
     <ClInclude Include="Text_Console.h" />
     <ClInclude Include="Properties.h" />
@@ -626,7 +625,6 @@
     <ClCompile Include="xrImage_Resampler.cpp" />
     <ClCompile Include="xrTheora_Stream.cpp" />
     <ClCompile Include="xrTheora_Surface.cpp" />
-    <ClCompile Include="xrTheora_Surface_mmx.cpp" />
     <ClCompile Include="doug_lea_memory_allocator.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_Dedicated|Win32'">
       </PrecompiledHeader>

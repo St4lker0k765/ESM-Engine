@@ -313,8 +313,9 @@ IC void CBackend::Render(D3DPRIMITIVETYPE T, u32 baseV, u32 startV, u32 countV, 
 	//UINT IndexCount,
 	//UINT StartIndexLocation,
 	//INT BaseVertexLocation
-	SRVSManager.Apply();
 	ApplyRTandZB();
+    SRVSManager.Apply();
+
 	ApplyVertexLayout();
 	StateManager.Apply();
 	//	State manager may alter constants
@@ -477,6 +478,7 @@ IC void CBackend::ApplyVertexLayout()
 #ifdef DEBUG
 			Msg("! Broken vertex layout!!!");
 
+			Msg("* Vs name: [%s] | Ps name: [%s]", vs_name, ps_name);
 			Msg("* Semantic name: [%s]", &decl->dx10_dcl_code[0].SemanticName);
 			Msg("* SemanticIndex: [%x]", &decl->dx10_dcl_code[0].SemanticIndex);
 			Msg("* Format: [%x]", &decl->dx10_dcl_code[0].Format);
@@ -761,6 +763,17 @@ ICF void CBackend::ApplyRTandZB()
 {
 	if (m_bChangedRTorZB)
 	{
+#ifdef DEBUG
+		{
+			bool result = false;
+			for(size_t i = 0; i < sizeof(pRT); ++i)
+			{
+				result |= !!pRT[i];
+			}
+			VERIFY(result);
+		}
+#endif
+
 		m_bChangedRTorZB = false;
 		HW.pContext->OMSetRenderTargets(sizeof(pRT)/sizeof(pRT[0]), pRT, pZB);
 	}

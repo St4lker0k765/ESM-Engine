@@ -330,9 +330,6 @@
     <ClInclude Include="xrTheora_Surface.h">
       <Filter>Render\Execution &amp; 3D\Shaders\Textures</Filter>
     </ClInclude>
-    <ClInclude Include="xrTheora_Surface_mmx.h">
-      <Filter>Render\Execution &amp; 3D\Shaders\Textures</Filter>
-    </ClInclude>
     <ClInclude Include="doug_lea_memory_allocator.h">
       <Filter>RenderRef\doug_lea_memory_allocator</Filter>
     </ClInclude>
@@ -576,9 +573,6 @@
       <Filter>Render\Execution &amp; 3D\Shaders\Textures</Filter>
     </ClCompile>
     <ClCompile Include="xrTheora_Surface.cpp">
-      <Filter>Render\Execution &amp; 3D\Shaders\Textures</Filter>
-    </ClCompile>
-    <ClCompile Include="xrTheora_Surface_mmx.cpp">
       <Filter>Render\Execution &amp; 3D\Shaders\Textures</Filter>
     </ClCompile>
     <ClCompile Include="doug_lea_memory_allocator.c">

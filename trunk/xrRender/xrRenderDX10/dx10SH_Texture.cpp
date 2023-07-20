@@ -366,7 +366,7 @@ void CTexture::Preload	()
 	m_material = DEV->m_textures_description.GetMaterial(cName);
 }
 
-void CTexture::Load		()
+void CTexture::Load()
 {
 	flags.bLoaded					= true;
 	desc_cache						= 0;
@@ -374,6 +374,7 @@ void CTexture::Load		()
 
 	flags.bUser						= false;
 	flags.MemoryUsage				= 0;
+	if (!cName) return;
 	if (0==stricmp(*cName,"$null"))	return;
 	if (0!=strstr(*cName,"$user$"))	{
 		flags.bUser	= true;

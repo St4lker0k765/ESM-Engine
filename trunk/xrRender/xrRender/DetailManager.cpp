@@ -203,6 +203,13 @@ void CDetailManager::UpdateVisibleM()
 
 	// Initialize 'vis' and 'cache'
 	// Collect objects for rendering
+	for (u8 i = 0; i != 3; ++i)
+	{
+		vis_list& list = m_visibles[i];
+		for (u32 j = 0; j != list.size(); ++j)
+			list[j].clear_not_free();
+	}
+
 	RDEVICE.Statistic->RenderDUMP_DT_VIS.Begin	();
 	for (int _mz=0; _mz<dm_cache1_line; _mz++){
 		for (int _mx=0; _mx<dm_cache1_line; _mx++){

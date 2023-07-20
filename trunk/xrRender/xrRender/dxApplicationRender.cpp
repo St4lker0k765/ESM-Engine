@@ -269,7 +269,10 @@ void dxApplicationRender::draw_face(ref_shader& sh, Frect& coords, Frect& tex_co
 
 u32 calc_progress_color(u32 idx, u32 total, int stage, int max_stage)
 {
-	float kk			= (float(stage+1)/float(max_stage))*(total);
+	if (idx > (total / 2))
+		idx = total - idx;
+
+	float kk			= (float(stage+1)/float(max_stage))*(total/2.0f);
 	float f				= 1/(exp((float(idx)-kk)*0.5f)+1.0f);
 
 	return color_argb_f		(f,1.0f,1.0f,1.0f);

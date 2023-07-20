@@ -62,7 +62,7 @@ struct	BTHREAD_params
 void	MODEL::build_thread		(void *params)
 {
 	_initialize_cpu_thread		();
-	FPU::m64r					();
+//	FPU::m64r					();
 	BTHREAD_params	P			= *( (BTHREAD_params*)params );
 	P.M->cs.Enter				();
 	P.M->build_internal(P.V, P.Vcnt, P.T, P.Tcnt, P.BC, P.BCP, P.rebuildTrisRequired);

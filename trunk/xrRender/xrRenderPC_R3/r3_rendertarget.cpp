@@ -392,11 +392,11 @@ CRenderTarget::CRenderTarget		()
 		// generic(LDR) RTs
 		rt_Generic_0.create		(r2_RT_generic0,w,h,D3DFMT_A8R8G8B8, 1		);
 		rt_Generic_1.create		(r2_RT_generic1,w,h,D3DFMT_A8R8G8B8, 1		);
+		rt_Generic.create(r2_RT_generic, w, h, D3DFMT_A8R8G8B8, 1);
 		if( RImplementation.o.dx10_msaa )
 		{
 			rt_Generic_0_r.create(r2_RT_generic0_r,w,h,D3DFMT_A8R8G8B8, SampleCount	);
 			rt_Generic_1_r.create(r2_RT_generic1_r,w,h,D3DFMT_A8R8G8B8, SampleCount		);
-			rt_Generic.create	 (r2_RT_generic,w,h,   D3DFMT_A8R8G8B8, 1		);
 		}
 		//	Igor: for volumetric lights
 		//rt_Generic_2.create			(r2_RT_generic2,w,h,D3DFMT_A8R8G8B8		);
@@ -605,7 +605,7 @@ CRenderTarget::CRenderTarget		()
 			//u_setrt						(rt_LUM_pool[it],	0,	0,	0			);
 			//CHK_DX						(HW.pDevice->Clear( 0L, NULL, D3DCLEAR_TARGET,	0x7f7f7f7f,	1.0f, 0L));
 			FLOAT ColorRGBA[4] = { 127.0f/255.0f, 127.0f/255.0f, 127.0f/255.0f, 127.0f/255.0f};
-			HW.pDevice->ClearRenderTargetView(rt_LUM_pool[it]->pRT, ColorRGBA);
+			HW.pContext->ClearRenderTargetView(rt_LUM_pool[it]->pRT, ColorRGBA);
 		}
 		u_setrt						( Device.dwWidth,Device.dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
 	}
@@ -930,7 +930,7 @@ CRenderTarget::CRenderTarget		()
 
 				//	Update texture. Generate mips.
 
-				HW.pDevice->CopySubresourceRegion( t_noise_surf_mipped, 0, 0, 0, 0, t_noise_surf[0], 0, 0 );
+				HW.pContext->CopySubresourceRegion( t_noise_surf_mipped, 0, 0, 0, 0, t_noise_surf[0], 0, 0 );
 	
 				D3DX10FilterTexture(t_noise_surf_mipped, 0, D3DX10_FILTER_POINT);
 			}

@@ -11,7 +11,7 @@ extern xr_token* vid_quality_token;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-void __cdecl dummy		(void)	{
+void __cdecl dummy		()	{
 };
 CEngineAPI::CEngineAPI	()
 {
@@ -49,7 +49,7 @@ ENGINE_API bool is_enough_address_space_available()
 }
 
 
-void CEngineAPI::Initialize(void)
+void CEngineAPI::Initialize()
 {
 	//////////////////////////////////////////////////////////////////////////
 	// render
@@ -133,7 +133,7 @@ void CEngineAPI::Initialize(void)
 	}
 }
 
-void CEngineAPI::Destroy	(void)
+void CEngineAPI::Destroy()
 {
 	if (hGame)				{ FreeLibrary(hGame);	hGame	= 0; }
 	if (hRender)			{ FreeLibrary(hRender); hRender = 0; }
@@ -145,7 +145,7 @@ void CEngineAPI::Destroy	(void)
 
 extern "C" {
 	typedef bool __cdecl SupportsAdvancedRendering(void);
-	typedef bool _declspec(dllexport) SupportsDX10Rendering();
+	typedef bool __declspec(dllexport) SupportsDX10Rendering();
 };
 
 void CEngineAPI::CreateRendererList()

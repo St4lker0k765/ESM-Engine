@@ -10,9 +10,9 @@
 #include "../xrRender/dxRenderDeviceRender.h"
 #include "../xrRender/dxWallMarkArray.h"
 #include "../xrRender/dxUIShader.h"
-
+#ifdef DX10_FLUID_ENABLE
 #include "..\xrRenderDX10\3DFluid\dx103DFluidManager.h"
-
+#endif
 #include <D3DX10Core.h>
 
 CRender										RImplementation;
@@ -241,11 +241,14 @@ void					CRender::create					()
 	if (o.nvdbt)		Msg	("* NV-DBT supported and used");
 
 	// options (smap-pool-size)
-	if (strstr(Core.Params,"-smap1536"))	o.smapsize	= 1536;
+	if (strstr(Core.Params,"-smap1024"))	o.smapsize	= 1024;
+	if (strstr(Core.Params, "-smap1536"))  o.smapsize = 1536;
 	if (strstr(Core.Params,"-smap2048"))	o.smapsize	= 2048;
 	if (strstr(Core.Params,"-smap2560"))	o.smapsize	= 2560;
 	if (strstr(Core.Params,"-smap3072"))	o.smapsize	= 3072;
 	if (strstr(Core.Params,"-smap4096"))	o.smapsize	= 4096;
+	if (strstr(Core.Params, "-smap6144"))	o.smapsize = 6144;
+	if (strstr(Core.Params, "-smap8192"))	o.smapsize = 8192; //Not for all videocards
 
 	// gloss
 	char*	g			= strstr(Core.Params,"-gloss ");
@@ -289,7 +292,7 @@ void					CRender::create					()
 	}
 
 	o.dx10_sm4_1		= ps_r2_ls_flags.test((u32)R3FLAG_USE_DX10_1);
-	o.dx10_sm4_1		= o.dx10_sm4_1 && ( HW.pDevice1 != 0 );
+	o.dx10_sm4_1		= o.dx10_sm4_1 && ( HW.FeatureLevel >= D3D_FEATURE_LEVEL_10_1 );
 
 	//	MSAA option dependencies
 
@@ -631,7 +634,7 @@ void					CRender::rmNear				()
 	IRender_Target* T	=	getTarget	();
 	D3D_VIEWPORT VP		=	{0,0,T->get_width(),T->get_height(),0,0.02f };
 
-	HW.pDevice->RSSetViewports(1, &VP);
+	HW.pContext->RSSetViewports(1, &VP);
 	//CHK_DX				(HW.pDevice->SetViewport(&VP));
 }
 void					CRender::rmFar				()
@@ -639,7 +642,7 @@ void					CRender::rmFar				()
 	IRender_Target* T	=	getTarget	();
 	D3D_VIEWPORT VP		=	{0,0,T->get_width(),T->get_height(),0.99999f,1.f };
 
-	HW.pDevice->RSSetViewports(1, &VP);
+	HW.pContext->RSSetViewports(1, &VP);
 	//CHK_DX				(HW.pDevice->SetViewport(&VP));
 }
 void					CRender::rmNormal			()
@@ -647,7 +650,7 @@ void					CRender::rmNormal			()
 	IRender_Target* T	=	getTarget	();
 	D3D_VIEWPORT VP		= {0,0,T->get_width(),T->get_height(),0,1.f };
 
-	HW.pDevice->RSSetViewports(1, &VP);
+	HW.pContext->RSSetViewports(1, &VP);
 	//CHK_DX				(HW.pDevice->SetViewport(&VP));
 }
 
@@ -688,15 +691,6 @@ void	CRender::Statistics	(CGameFont* _F)
 
 static inline bool match_shader_id		( LPCSTR const debug_shader_id, LPCSTR const full_shader_id, FS_FileSet const& file_set, string_path& result );
 
-/////////
-
-/*
-extern "C"
-{
-LPCSTR WINAPI	D3DXGetPixelShaderProfile	(LPDIRECT3DDEVICE9  pDevice);
-LPCSTR WINAPI	D3DXGetVertexShaderProfile	(LPDIRECT3DDEVICE9	pDevice);
-};
-*/
 static HRESULT create_shader				(
 		LPCSTR const	pTarget,
 		DWORD const*	buffer,
@@ -720,7 +714,7 @@ static HRESULT create_shader				(
 			return		E_FAIL;
 		}
 
-		ID3DShaderReflection *pReflection = 0;
+		ID3DShaderReflection *pReflection = nullptr;
 
 #ifdef USE_DX11
 		_result			= D3DReflect( buffer, buffer_size, IID_ID3DShaderReflection, (void**)&pReflection);
@@ -1299,24 +1293,24 @@ HRESULT	CRender::shader_compile			(
 	{
 		if ('v'==pTarget[0])
       {
-         if( HW.pDevice1 == 0 )
-            pTarget = D3D10GetVertexShaderProfile(HW.pDevice);	// vertex	"vs_4_0"; //
+         if( HW.FeatureLevel == D3D_FEATURE_LEVEL_10_1)
+            pTarget = "vs_4_0";
          else
-            pTarget = "vs_4_1";	// pixel	"ps_4_0"; //
+            pTarget = "vs_4_1";
       }
 		else if ('p'==pTarget[0])
       {
-         if( HW.pDevice1 == 0 )
-            pTarget = D3D10GetPixelShaderProfile(HW.pDevice);	// pixel	"ps_4_0"; //
+         if( HW.FeatureLevel == D3D_FEATURE_LEVEL_10_1)
+            pTarget = "ps_4_0";
          else
-            pTarget = "ps_4_1";	// pixel	"ps_4_0"; //
+            pTarget = "ps_4_1";
       }
 		else if ('g'==pTarget[0])		
       {
-         if( HW.pDevice1 == 0 )
-            pTarget = D3D10GetGeometryShaderProfile(HW.pDevice);	// geometry	"gs_4_0"; //
+         if( HW.FeatureLevel == D3D_FEATURE_LEVEL_10_1)
+            pTarget = "gs_4_0";
          else
-            pTarget = "gs_4_1";	// pixel	"ps_4_0"; //
+            pTarget = "gs_4_1";
       }
 	}
 
